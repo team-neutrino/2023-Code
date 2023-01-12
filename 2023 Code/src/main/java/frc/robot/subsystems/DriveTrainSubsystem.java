@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-
-
 public class DriveTrainSubsystem extends SubsystemBase {
 
   private CANSparkMax m_rmotor1 = new CANSparkMax(Constants.MotorConstants.RMOTOR1, MotorType.kBrushless);
@@ -30,13 +28,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
   m_lmotor1.restoreFactoryDefaults();
   m_rmotor2.restoreFactoryDefaults();
 
-
   m_rmotor1.setInverted(true);
   m_rmotor2.setInverted(true);
   m_lmotor1.setInverted(false);
   m_lmotor2.setInverted(false);
-  
-
   }
 
   public void setMotors(double m_rightMotorSpeed, double m_leftMotorSpeed)
