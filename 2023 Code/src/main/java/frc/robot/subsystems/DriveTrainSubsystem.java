@@ -39,10 +39,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   }
 
-  public void setMotors(double m_motorSpeed1, double m_motorSpeed2)
+  public void setMotors(double m_rightMotorSpeed, double m_leftMotorSpeed)
   {
-    m_rmotors.set(m_motorSpeed1);
-    m_lmotors.set(m_motorSpeed2);
+    m_rmotors.set(m_rightMotorSpeed);
+    m_lmotors.set(m_leftMotorSpeed);
   }
 
 

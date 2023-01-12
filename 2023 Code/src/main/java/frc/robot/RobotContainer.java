@@ -32,8 +32,8 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.DriverControllerPort);
-  private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JoyStickPort2);
-  private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JoyStickPort1);
+  private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JoyStickPort1);
+  private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JoyStickPort2);
 
   
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
