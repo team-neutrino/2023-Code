@@ -24,6 +24,5 @@ public final class Constants {
     public static final int RMOTOR2 = 4;
     public static final int LMOTOR1 = 1;
     public static final int LMOTOR2 = 2;
-
   }
 }

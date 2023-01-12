@@ -9,20 +9,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class DriveTrainDefaultCommand extends CommandBase {
-  DriveTrainSubsystem m_driveTrainSubsystem; 
+  DriveTrainSubsystem m_driveTrainSubsystem;
   Joystick m_leftJoystick;
   Joystick m_rightJoystick;
 
   /** Creates a new DriveCommand. */
-  public DriveTrainDefaultCommand(DriveTrainSubsystem subsystem, Joystick p_leftJoystick, Joystick p_rightJoystick) {
+  public DriveTrainDefaultCommand(
+      DriveTrainSubsystem subsystem, Joystick p_leftJoystick, Joystick p_rightJoystick) {
     // Use addRequirements() here to declare subsystem dependencies.
-     
-      m_driveTrainSubsystem = subsystem;
-      m_leftJoystick = p_leftJoystick;
-      m_rightJoystick = p_rightJoystick;
-      addRequirements(subsystem);
+
+    m_driveTrainSubsystem = subsystem;
+    m_leftJoystick = p_leftJoystick;
+    m_rightJoystick = p_rightJoystick;
+    addRequirements(subsystem);
   }
-  
 
   // Called when the command is initially scheduled.
   @Override
