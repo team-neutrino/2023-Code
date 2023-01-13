@@ -25,4 +25,9 @@ public final class Constants {
     public static final int LMOTOR1 = 1;
     public static final int LMOTOR2 = 2;
   }
+
+  public static class PneumaticsConstants {
+    public static final int CHANNEL_PCM = 7;
+    public static final int MODULE = 0;
+  }
 }
