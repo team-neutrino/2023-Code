@@ -20,14 +20,7 @@ public class PneumaticsSubsystem extends SubsystemBase {
       new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.CHANNEL_PCM);
 
   /** Creates a new PneumaticsSubsystem. */
-  public PneumaticsSubsystem() {
-    //  compressor.enableDigital();
-    // solenoid.set(false);
-  }
-
-  // public void enableCompressor() {
-  //   compressor.enableDigital();
-  // }
+  public PneumaticsSubsystem() {}
 
   public void toggleSolenoid() {
     solenoid.toggle();
