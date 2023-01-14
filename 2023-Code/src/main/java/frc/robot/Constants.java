@@ -20,10 +20,12 @@ public final class Constants {
   }
 
   public static class MotorConstants {
-    public static final int RMOTOR1 = 3;
-    public static final int RMOTOR2 = 4;
-    public static final int LMOTOR1 = 1;
-    public static final int LMOTOR2 = 2;
+    public static final int RMOTOR1 = 11;
+    public static final int RMOTOR2 = 12;
+    public static final int RMOTOR3 = 13;
+    public static final int LMOTOR1 = 14;
+    public static final int LMOTOR2 = 15;
+    public static final int LMOTOR3 = 16;
     public static final int ARM_MOTOR1 = 31;
     public static final int ARM_MOTOR2 = 32;
     public static final int GRABBER_MOTOR1 = 41;
