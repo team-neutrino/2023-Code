@@ -10,6 +10,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class DriveTrainDefaultCommand extends CommandBase {
   DriveTrainSubsystem m_driveTrainSubsystem;
+  
   Joystick m_leftJoystick;
   Joystick m_rightJoystick;
 
@@ -31,7 +32,7 @@ public class DriveTrainDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_driveTrainSubsystem.setMotors(DriveTrainSubsystem.linearAccel(m_leftJoystick.getY()), DriveTrainSubsystem.linearAccel(m_rightJoystick.getY()));
+    m_driveTrainSubsystem.setMotors(m_leftJoystick.getY(), m_rightJoystick.getY());
   }
 
   // Called once the command ends or is interrupted.
