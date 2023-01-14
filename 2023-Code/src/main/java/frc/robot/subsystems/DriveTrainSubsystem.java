@@ -5,8 +5,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -60,44 +60,53 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_encoderL1 = m_lmotor1.getEncoder();
     m_encoderL2 = m_lmotor2.getEncoder();
     m_encoderL3 = m_lmotor3.getEncoder();
-
   }
 
-  public double getR1Pos(){
+  public double getR1Pos() {
     return m_encoderR1.getPosition();
   }
-  public double getR2Pos(){
+
+  public double getR2Pos() {
     return m_encoderR2.getPosition();
   }
-  public double getR3Pos(){
+
+  public double getR3Pos() {
     return m_encoderR3.getPosition();
   }
-  public double getL1Pos(){
+
+  public double getL1Pos() {
     return m_encoderL1.getPosition();
   }
-  public double getL2Pos(){
+
+  public double getL2Pos() {
     return m_encoderL2.getPosition();
   }
-  public double getL3Pos(){
+
+  public double getL3Pos() {
     return m_encoderL3.getPosition();
   }
 
-  public double getR1Vel(){
+  public double getR1Vel() {
     return m_encoderR1.getVelocity();
   }
-  public double getR2Vel(){
+
+  public double getR2Vel() {
     return m_encoderR2.getVelocity();
   }
-  public double getR3Vel(){
+
+  public double getR3Vel() {
     return m_encoderR3.getVelocity();
   }
-  public double getL1Vel(){
+
+  public double getL1Vel() {
     return m_encoderL1.getVelocity();
   }
-  public double getL2Vel(){
+
+  public double getL2Vel() {
     return m_encoderL2.getVelocity();
   }
-  public double getL3Vel(){
+
+  public double getL3Vel() {
     return m_encoderL3.getVelocity();
   }
 
@@ -108,12 +117,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_lmotors.set(m_leftMotorSpeed);
   }
 
-  public double deadzone(double joystickY){
-    if(joystickY<=DEADZONE){
+  public double deadzone(double joystickY) {
+    if (joystickY <= DEADZONE) {
       return 0.0;
-    } else if(joystickY>=1.0){
+    } else if (joystickY >= 1.0) {
       return 1.0;
-    } else{
+    } else {
       return joystickY;
     }
   }
@@ -123,19 +132,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public static double linearAccel(double joystickY){
+  public static double linearAccel(double joystickY) {
     double newSpeed = joystickY;
     return newSpeed;
   }
 
-  public static double slowAccel(double joystickY){
+  public static double slowAccel(double joystickY) {
     double MAXSPEED = 0.7;
-    double newSpeed = (2*MAXSPEED*joystickY) / (1 + Math.abs(joystickY));
+    double newSpeed = (2 * MAXSPEED * joystickY) / (1 + Math.abs(joystickY));
     return newSpeed;
   }
 
-  public static double turboAccel(double joystickY){
-    double newSpeed = Math.pow(joystickY, 3)*1.6 + (0.17*joystickY);
+  public static double turboAccel(double joystickY) {
+    double newSpeed = Math.pow(joystickY, 3) * 1.6 + (0.17 * joystickY);
     return newSpeed;
   }
 }

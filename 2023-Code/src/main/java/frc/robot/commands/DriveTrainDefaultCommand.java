@@ -10,7 +10,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class DriveTrainDefaultCommand extends CommandBase {
   DriveTrainSubsystem m_driveTrainSubsystem;
-  
+
   Joystick m_leftJoystick;
   Joystick m_rightJoystick;
 
@@ -44,6 +44,4 @@ public class DriveTrainDefaultCommand extends CommandBase {
   public boolean isFinished() {
     return false;
   }
-
-
 }
