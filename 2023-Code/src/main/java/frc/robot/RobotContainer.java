@@ -15,6 +15,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -62,6 +63,7 @@ public class RobotContainer {
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
   private final IntakeDefaultCommand m_IntakeDefaultCommand =
       new IntakeDefaultCommand(m_IntakeSubsystem);
+  private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_IntakeSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -94,7 +96,7 @@ public class RobotContainer {
             m_pneumaticsSubsystem::setSolenoidOff,
             m_pneumaticsSubsystem));
 
-    m_leftBumper.whileTrue(m_IntakeDefaultCommand);
+    m_leftBumper.whileTrue(m_IntakeCommand);
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
