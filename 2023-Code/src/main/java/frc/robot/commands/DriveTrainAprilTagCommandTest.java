@@ -32,8 +32,7 @@ public class DriveTrainAprilTagCommandTest extends CommandBase {
   public void execute() {
     if (m_limelight.getTv()) {
       m_drivetrain.setMotors(0.1, 0.1);
-    }
-    else{
+    } else {
       m_drivetrain.setMotors(0, 0);
     }
   }
