@@ -31,7 +31,7 @@ public class DriveTrainDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_driveTrainSubsystem.setMotors(m_leftJoystick.getY(), m_rightJoystick.getY());
+    m_driveTrainSubsystem.setMotors(DriveTrainSubsystem.linearAccel(m_leftJoystick.getY()), DriveTrainSubsystem.linearAccel(m_rightJoystick.getY()));
   }
 
   // Called once the command ends or is interrupted.
@@ -43,4 +43,6 @@ public class DriveTrainDefaultCommand extends CommandBase {
   public boolean isFinished() {
     return false;
   }
+
+
 }
