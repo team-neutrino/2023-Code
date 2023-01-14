@@ -1,7 +1,9 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
+/**
+ * @author Neutrino Controls
+ */
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -13,15 +15,21 @@ public class DriveTrainDefaultCommand extends CommandBase {
   Joystick m_leftJoystick;
   Joystick m_rightJoystick;
 
-  /** Creates a new DriveCommand. */
+  /**
+   * @param p_DriveTrainSubsystem - The drivetrain subsystem
+   * @param p_leftJoystick - Left joystick, moves the left wheels
+   * @param p_rightJoystick - Right joystick, moves the right wheels
+   */
   public DriveTrainDefaultCommand(
-      DriveTrainSubsystem subsystem, Joystick p_leftJoystick, Joystick p_rightJoystick) {
-    // Use addRequirements() here to declare subsystem dependencies.
+      DriveTrainSubsystem p_DriveTrainSubsystem,
+      Joystick p_leftJoystick,
+      Joystick p_rightJoystick) {
 
-    m_driveTrainSubsystem = subsystem;
+    /** Takes subsystem dependencies */
+    m_driveTrainSubsystem = p_DriveTrainSubsystem;
     m_leftJoystick = p_leftJoystick;
     m_rightJoystick = p_rightJoystick;
-    addRequirements(subsystem);
+    addRequirements(p_DriveTrainSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -31,6 +39,7 @@ public class DriveTrainDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    /** Sets the motors to the Y position of the Joysticks */
     m_driveTrainSubsystem.setMotors(m_leftJoystick.getY(), m_rightJoystick.getY());
   }
 

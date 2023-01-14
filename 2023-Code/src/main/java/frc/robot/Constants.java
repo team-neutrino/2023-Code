@@ -13,20 +13,24 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static class OperatorConstants {
-    public static final int JoyStickPortR = 0;
-    public static final int JoyStickPortL = 1;
-    public static final int DriverControllerPort = 2;
+  public static final class OperatorConstants {
+    /** Port IDs of the joysticks */
+    public static final int JOYSTICKPORTR = 0;
+
+    public static final int JOYSTICKPORTL = 1;
+    public static final int DRIVERCONTROLLERPORT = 2;
   }
 
-  public static class MotorConstants {
+  /** CAN IDs of the motors */
+  public static final class MotorConstants {
     public static final int RMOTOR1 = 3;
     public static final int RMOTOR2 = 4;
     public static final int LMOTOR1 = 1;
     public static final int LMOTOR2 = 2;
   }
 
-  public static class PneumaticsConstants {
+  /** Constants related to pnuematics */
+  public static final class PneumaticsConstants {
     public static final int CHANNEL_PCM = 7;
     public static final int MODULE = 0;
   }

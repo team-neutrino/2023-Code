@@ -29,31 +29,34 @@ import frc.robot.subsystems.PneumaticsSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  // SUBSYSTEMS
+  /** SUBSYSTEMS */
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
+
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final PneumaticsSubsystem m_pneumaticsSubsystem = new PneumaticsSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  // CONTROLLERS
+  /** CONTROLLERS */
   private final XboxController m_driverController = new XboxController(4);
-  private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JoyStickPortL);
-  private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JoyStickPortR);
 
-  // BUTTONS
+  private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICKPORTL);
+  private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JOYSTICKPORTR);
+
+  /** BUTTONS */
   private final JoystickButton m_buttonA =
       new JoystickButton(m_driverController, XboxController.Button.kA.value);
+
   private final JoystickButton m_buttonB =
       new JoystickButton(m_driverController, XboxController.Button.kB.value);
 
-  // COMMANDS
+  /** COMMANDS */
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new LimelightSubsystem();
-    // Configure the trigger bindings
+    /** Configure the trigger bindings */
     configureBindings();
   }
 
@@ -67,21 +70,23 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    // Schedule 'ExampleCommand' when 'exampleCondition' changes to 'true'
     m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
 
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    // Pneumatics Testboard
+    /** Pneumatics Testboard */
     m_buttonA.toggleOnTrue(
         Commands.startEnd(
             m_pneumaticsSubsystem::setSolenoidOn,
             m_pneumaticsSubsystem::setSolenoidOff,
             m_pneumaticsSubsystem));
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
+    /**
+     * Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed, cancelling on
+     * release.
+     */
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 

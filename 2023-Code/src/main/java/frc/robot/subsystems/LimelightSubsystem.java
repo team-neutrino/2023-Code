@@ -1,7 +1,9 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
+/**
+ * @author Neutrino Controls
+ */
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -14,34 +16,33 @@ public class LimelightSubsystem extends SubsystemBase {
 
   /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem() {
-    // global instance of the network table and gets the limelight table
+    /** global instance of the network table and gets the limelight table */
     limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
-    // turns off LED
+    /** turns off LED */
     limelight.getEntry("ledMode").setNumber(1);
   }
 
-  // return whether or not the limlight sees a target
+  /** returns whether the limelight sees a target */
   public boolean getTv() {
     NetworkTableEntry tv = limelight.getEntry("tv");
-    double validTarget = tv.getDouble(0.0);
-    if (validTarget == 1) {
+    if (tv.getDouble(0.0) == 1) {
       return true;
     }
     return false;
   }
 
-  // gets id of the april tag that is detected
+  /** gets ID of the AprilTag that is detected */
   public double getID() {
     return limelight.getEntry("tid").getDouble(0.0);
   }
 
-  // gets the x offest between the center of vision and the detected object
+  /** gets the x offset between the center of vision and the detected object */
   public double getTx() {
     return limelight.getEntry("tx").getDouble(0.0);
   }
 
-  // gets the y offest between the center of vision and the detected object
+  /** gets the y offset between the center of vision and the detected object */
   public double getTy() {
     return limelight.getEntry("ty").getDouble(0.0);
   }
