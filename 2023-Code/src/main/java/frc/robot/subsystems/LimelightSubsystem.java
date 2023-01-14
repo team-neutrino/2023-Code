@@ -46,6 +46,11 @@ public class LimelightSubsystem extends SubsystemBase {
     return limelight.getEntry("ty").getDouble(0.0);
   }
 
+  public double testTransformDistance(double tx) {
+    double distanceFromLimelight = Math.tan(tx);
+    return distanceFromLimelight;
+  }
+
   @Override
   public void periodic() {}
 }
