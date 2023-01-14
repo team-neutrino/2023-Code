@@ -20,13 +20,15 @@ public final class Constants {
   }
 
   public static class MotorConstants {
-    public static final int RMOTOR1 = 3;
-    public static final int RMOTOR2 = 4;
-    public static final int LMOTOR1 = 1;
-    public static final int LMOTOR2 = 2;
     public static final int INTAKEMOTOR1 = 21; // intake motors have '2' in front of actual id
     public static final int INTAKEMOTOR2 = 22;
     public static final int INTAKEMOTOR3 = 23;
+    public static final int RMOTOR1 = 11;
+    public static final int RMOTOR2 = 12;
+    public static final int RMOTOR3 = 13;
+    public static final int LMOTOR1 = 14;
+    public static final int LMOTOR2 = 15;
+    public static final int LMOTOR3 = 16;
   }
   // pneumatic engine ids 0 and 1, motors 7,8, 9
 
