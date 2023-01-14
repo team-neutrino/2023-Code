@@ -63,12 +63,42 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   }
 
-  public double getEncoderPos(RelativeEncoder encoder){
-    return encoder.getPosition();
+  public double getR1Pos(){
+    return m_encoderR1.getPosition();
+  }
+  public double getR2Pos(){
+    return m_encoderR2.getPosition();
+  }
+  public double getR3Pos(){
+    return m_encoderR3.getPosition();
+  }
+  public double getL1Pos(){
+    return m_encoderL1.getPosition();
+  }
+  public double getL2Pos(){
+    return m_encoderL2.getPosition();
+  }
+  public double getL3Pos(){
+    return m_encoderL3.getPosition();
   }
 
-  public double getEncoderVel(RelativeEncoder encoder){
-    return encoder.getVelocity();
+  public double getR1Vel(){
+    return m_encoderR1.getVelocity();
+  }
+  public double getR2Vel(){
+    return m_encoderR2.getVelocity();
+  }
+  public double getR3Vel(){
+    return m_encoderR3.getVelocity();
+  }
+  public double getL1Vel(){
+    return m_encoderL1.getVelocity();
+  }
+  public double getL2Vel(){
+    return m_encoderL2.getVelocity();
+  }
+  public double getL3Vel(){
+    return m_encoderL3.getVelocity();
   }
 
   public void setMotors(double m_rightMotorSpeed, double m_leftMotorSpeed) {
