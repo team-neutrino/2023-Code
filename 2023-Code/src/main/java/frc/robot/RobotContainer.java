@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.DriveTrainAprilTagCommandTest;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -46,10 +47,12 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kA.value);
   private final JoystickButton m_buttonB =
       new JoystickButton(m_driverController, XboxController.Button.kB.value);
+    private final JoystickButton m_buttonX = new JoystickButton(m_driverController, XboxController.Button.kX.value);
 
   // COMMANDS
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
+  private final DriveTrainAprilTagCommandTest m_driveTrainAprilTagCommand = new DriveTrainAprilTagCommandTest(m_driveTrain, m_limelight);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -68,7 +71,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
+    m_driveTrain.setDefaultCommand(m_driveTrainAprilTagCommand);
+
 
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
@@ -79,6 +83,8 @@ public class RobotContainer {
             m_pneumaticsSubsystem::setSolenoidOn,
             m_pneumaticsSubsystem::setSolenoidOff,
             m_pneumaticsSubsystem));
+
+    //m_buttonX.whileTrue(m_driveTrainAprilTagCommand);
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
