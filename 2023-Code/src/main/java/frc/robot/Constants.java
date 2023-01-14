@@ -24,10 +24,25 @@ public final class Constants {
     public static final int RMOTOR2 = 4;
     public static final int LMOTOR1 = 1;
     public static final int LMOTOR2 = 2;
+    public static final int ARM_MOTOR1 = 31;
+    public static final int ARM_MOTOR2 = 32;
+    public static final int GRABBER_MOTOR1 = 41;
+    public static final int GRABBER_MOTOR2 = 42;
   }
 
   public static class PneumaticsConstants {
     public static final int CHANNEL_PCM = 7;
     public static final int MODULE = 0;
+    public static final int GRABBER_PISTON1 = 41;
+    public static final int GRABBER_PISTON2 = 42;
+  }
+
+  public static class PIDConstants {
+    public static final int ARM_P = 0;
+    public static final int ARM_I = 0;
+    public static final int ARM_D = 0;
+    public static final int ARM_FF = 0;
+    public static final int ARM_MINIMUM = -1;
+    public static final int ARM_MAXIMUM = 1;
   }
 }
