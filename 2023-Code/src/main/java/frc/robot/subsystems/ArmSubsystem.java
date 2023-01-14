@@ -15,7 +15,7 @@ import frc.robot.Constants;
 
 public class ArmSubsystem extends SubsystemBase {
 
-  private CANSparkMax m_armMotor1 = new CANSparkMax(Constants.MotorConstants.ARM_MOTOR1, MotorType.kBrushless);;
+  private CANSparkMax m_armMotor1 = new CANSparkMax(Constants.MotorConstants.ARM_MOTOR1, MotorType.kBrushless);
   private CANSparkMax m_armMotor2 = new CANSparkMax(Constants.MotorConstants.ARM_MOTOR2, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_armMotor2.getEncoder();
   //private MotorControllerGroup m_motorGroup;
