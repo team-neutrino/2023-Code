@@ -15,8 +15,10 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 
@@ -33,6 +35,7 @@ public class RobotContainer {
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final PneumaticsSubsystem m_pneumaticsSubsystem = new PneumaticsSubsystem();
+  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // CONTROLLERS
@@ -45,10 +48,20 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kA.value);
   private final JoystickButton m_buttonB =
       new JoystickButton(m_driverController, XboxController.Button.kB.value);
+  private final JoystickButton m_buttonX =
+      new JoystickButton(m_driverController, XboxController.Button.kX.value);
+  private final JoystickButton m_buttonY =
+      new JoystickButton(m_driverController, XboxController.Button.kY.value);
+  private final JoystickButton m_leftBumper =
+      new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton m_rightBumper =
+      new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
 
   // COMMANDS
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
+  private final IntakeDefaultCommand m_IntakeDefaultCommand =
+      new IntakeDefaultCommand(m_IntakeSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -69,6 +82,7 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
+    m_IntakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
 
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
@@ -80,6 +94,7 @@ public class RobotContainer {
             m_pneumaticsSubsystem::setSolenoidOff,
             m_pneumaticsSubsystem));
 
+    m_leftBumper.whileTrue(m_IntakeDefaultCommand);
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
