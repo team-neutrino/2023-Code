@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -48,8 +49,8 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kB.value);
 
   // COMMANDS
-  //private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
-    //  new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
+  private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
+      new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -68,7 +69,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-  //  m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
+    m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
 
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
