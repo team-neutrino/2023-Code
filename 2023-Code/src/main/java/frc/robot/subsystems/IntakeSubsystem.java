@@ -35,8 +35,12 @@ public class IntakeSubsystem extends SubsystemBase {
   private Solenoid m_IntakeSolenoid =
       new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.INTAKE_PCM);
 
+
+
+      
   /** Creates a new IntakeSubsystem and initializes the motor controllers. */
-  public IntakeSubsystem() {
+  public IntakeSubsystem() 
+  {
     m_rightMotor.restoreFactoryDefaults();
     m_leftMotor.restoreFactoryDefaults();
     // encoders initialized in constructor to make sure motors are initialized first
@@ -44,30 +48,41 @@ public class IntakeSubsystem extends SubsystemBase {
     m_rightEncoder = m_rightMotor.getEncoder();
   }
 
+  /**
+   * Puts down the intake.
+   */
+  public void setIntakeDown()
+  {
+    m_IntakeSolenoid.set(true);
+  }
+
+  /**
+   * Puts up the intake.
+   */
+  public void setIntakeUp()
+  {
+    m_IntakeSolenoid.set(false);
+  }
+
   /** Puts the intake down and runs it at a fixed speed. */
   public void runIntake() {
-    m_IntakeSolenoid.set(true);
     m_leftMotor.set(.2); // NEED TO MAKE CONSTANT FOR MOTOR SPEED
     m_rightMotor.set(.2);
   }
 
-  /** Sets the motors' inversion status to true. */
-  public void reverseMotors() {
-    m_leftMotor.setInverted(true);
-    m_rightMotor.setInverted(true);
-  }
-
-  /** Sets the motors' inversion status to false. */
-  public void unreverseMotors() {
-    m_leftMotor.setInverted(false);
-    m_rightMotor.setInverted(false);
+  /**
+   * Runs the intake motors in reverse.
+   */
+  public void runIntakeReverse()
+  {
+    m_leftMotor.set(-.2);
+    m_rightMotor.set(-.2);
   }
 
   /** Stops the motors and puts the whole thing up. */
   public void stopIntake() {
     m_leftMotor.set(0);
     m_rightMotor.set(0);
-    m_IntakeSolenoid.set(false);
   }
 
   public double getRightEncoder() {

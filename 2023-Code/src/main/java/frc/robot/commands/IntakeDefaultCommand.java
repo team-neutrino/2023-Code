@@ -30,8 +30,8 @@ public class IntakeDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_IntakeSubsystem.unreverseMotors();
     m_IntakeSubsystem.stopIntake();
+    m_IntakeSubsystem.setIntakeUp();
   }
 
   // Called once the command ends or is interrupted.
