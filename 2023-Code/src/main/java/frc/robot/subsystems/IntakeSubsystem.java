@@ -13,31 +13,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
-  /** Motor for the intake system */
-  private CANSparkMax m_motor1 = new CANSparkMax(
+  /** Motor for the left wheels of the intake system */
+  private CANSparkMax m_leftMotor = new CANSparkMax(
     Constants.MotorConstants.INTAKEMOTOR1,
     MotorType.kBrushless); // motor type subject to change;
 
-  /** Another motor for the intake system. */
-  private CANSparkMax m_motor2 =
+  /** Another motor for the right wheels of the intake system. */
+  private CANSparkMax m_rightMotor =
   new CANSparkMax(
       Constants.MotorConstants.INTAKEMOTOR2,
       MotorType.kBrushless); // motor type subject to change;
 
-  /** ANOTHER motor for the intake system. */
-  private CANSparkMax m_motor3 =
-  new CANSparkMax(
-      Constants.MotorConstants.INTAKEMOTOR3,
-      MotorType.kBrushless); // motor type subject to change;
+  /** Encoder for the left motor */
+  private RelativeEncoder m_leftEncoder;
 
-  /** Encoder for motor1 */
-  private RelativeEncoder m_encoder1;
-
-  /** Encoder for motor2 */
-  private RelativeEncoder m_encoder2;
-
-  /** encoder for motor3 */
-  private RelativeEncoder m_encoder3;
+  /** Encoder for the right motor */
+  private RelativeEncoder m_rightEncoder;
 
   /** Solenoid for the intake. */
   private Solenoid m_IntakeSolenoid =
@@ -45,58 +36,65 @@ public class IntakeSubsystem extends SubsystemBase {
 
   /** Creates a new IntakeSubsystem and initializes the motor controllers. */
   public IntakeSubsystem() {
-    m_motor1.restoreFactoryDefaults();
-    m_motor2.restoreFactoryDefaults();
-    m_motor3.restoreFactoryDefaults();
+    m_rightMotor.restoreFactoryDefaults();
+    m_leftMotor.restoreFactoryDefaults();
     //encoders initialized in constructor to make sure motors are initialized first
-    m_encoder1 = m_motor1.getEncoder();
-    m_encoder2 = m_motor2.getEncoder();
-    m_encoder3 = m_motor3.getEncoder();
+    m_leftEncoder = m_leftMotor.getEncoder();
+    m_rightEncoder = m_rightMotor.getEncoder();
   }
 
   /**
-   * Sets the speed of the intake motors.
-   *
-   * @param p_motorSpeed The speed to set the motors to.
+   * Puts the intake down and runs it at a fixed speed.
    */
-  public void runIntake() {
+  public void runIntake() 
+  {
     m_IntakeSolenoid.set(true);
-    m_motor1.set(.2); // NEED TO MAKE CONSTANT FOR MOTOR SPEED
+    m_leftMotor.set(.2); // NEED TO MAKE CONSTANT FOR MOTOR SPEED
+    m_rightMotor.set(.2);
   }
 
-  public void defaultPosition()
+  /**
+   * Sets the motors' inversion status to true.
+   */
+  public void reverseMotors()
   {
-    stopIntake();
+    m_leftMotor.setInverted(true);
+    m_rightMotor.setInverted(true);
+  }
+
+  /**
+   * Sets the motors' inversion status to false.
+   */
+  public void unreverseMotors()
+  {
+    m_leftMotor.setInverted(false);
+    m_rightMotor.setInverted(false);
+  }
+
+  /**
+   * Stops the motors and puts the whole thing up.
+   */
+  public void stopIntake()
+  {
+    m_leftMotor.set(0);
+    m_rightMotor.set(0);
     m_IntakeSolenoid.set(false);
   }
 
-  /** Stops all motors. */
-  private void stopIntake() {
-    m_motor1.set(0);
-    m_motor2.set(0);
-    m_motor3.set(0);
+  public double getRightEncoder()
+  {
+    return m_rightEncoder.getVelocity();
   }
 
-  public double getEncoder1()
+  public double getLeftEncoder()
   {
-    return m_encoder1.getVelocity();
-  }
-
-  public double getEncoder2()
-  {
-    return m_encoder2.getVelocity();
-  }
-
-  public double getEncoder3()
-  {
-    return m_encoder3.getVelocity();
+    return m_leftEncoder.getVelocity();
   }
 
   /** Resets the endcoders */
   public void resetEncoders() {
-    m_encoder1.setPosition(0);
-    m_encoder2.setPosition(0);
-    m_encoder3.setPosition(0);
+    m_leftEncoder.setPosition(0);
+    m_rightEncoder.setPosition(0);
   }
 
   @Override

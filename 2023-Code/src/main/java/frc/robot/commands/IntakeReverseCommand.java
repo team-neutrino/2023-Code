@@ -7,18 +7,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
-/**
- * This default command serves the sole purpose of ensuring that when 
- * the button is NOT pressed, the intake is up and stopped.
- */
-public class IntakeDefaultCommand extends CommandBase {
-  /** An object of the intake subsystem. */
-  IntakeSubsystem m_IntakeSubsystem;
+public class IntakeReverseCommand extends CommandBase {
 
-  /** Constructor, creates a new IntakeDefaultCommand. */
-  public IntakeDefaultCommand(IntakeSubsystem subsystem) {
-    m_IntakeSubsystem = subsystem;
+  //An object of the intake subsystem
+  private IntakeSubsystem m_intakeSubsystem;
 
+  /** Creates a new IntakeReverseCommand. */
+  public IntakeReverseCommand(IntakeSubsystem subsystem) {
+  m_intakeSubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -29,9 +25,10 @@ public class IntakeDefaultCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_IntakeSubsystem.unreverseMotors();
-    m_IntakeSubsystem.stopIntake();
+  public void execute() 
+  {
+    m_intakeSubsystem.reverseMotors();
+    m_intakeSubsystem.runIntake();
   }
 
   // Called once the command ends or is interrupted.

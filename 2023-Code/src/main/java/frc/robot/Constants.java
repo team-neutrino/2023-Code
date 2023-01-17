@@ -30,11 +30,11 @@ public final class Constants {
     public static final int LMOTOR2 = 15;
     public static final int LMOTOR3 = 16;
   }
-  // pneumatic engine ids 0 and 1, motors 7,8, 9
+  // intake pneumatic ids 0 and 1, intake motor ids 7,8, 9
 
   public static class PneumaticsConstants {
     public static final int CHANNEL_PCM = 7;
-    public static final int INTAKE_PCM = 6;
+    public static final int INTAKE_PCM = 0;
     public static final int MODULE = 0;
   }
 }
