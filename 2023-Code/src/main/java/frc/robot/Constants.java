@@ -31,5 +31,7 @@ public final class Constants {
   public static class PneumaticsConstants {
     public static final int CHANNEL_PCM = 7;
     public static final int MODULE = 0;
+    public static final int SOLENOIDENDGAMERIGHT = 3;
+    public static final int SOLENOIDENDGAMELEFT = 5;
   }
 }

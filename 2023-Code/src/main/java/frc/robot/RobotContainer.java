@@ -14,8 +14,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
+import frc.robot.commands.EndGameDefaultCommand;
+import frc.robot.commands.EndGameToggleCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.EndGameSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
@@ -31,6 +34,7 @@ public class RobotContainer {
 
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
+  private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final PneumaticsSubsystem m_pneumaticsSubsystem = new PneumaticsSubsystem();
 
@@ -45,10 +49,14 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kA.value);
   private final JoystickButton m_buttonB =
       new JoystickButton(m_driverController, XboxController.Button.kB.value);
-
+  private final JoystickButton m_buttonStart =
+      new JoystickButton(m_driverController, XboxController.Button.kStart.value);
   // COMMANDS
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
+  private final EndGameDefaultCommand m_endGameDefaultCommand =
+      new EndGameDefaultCommand(m_endGame);
+  private final EndGameToggleCommand m_EndGameToggleCommand = new EndGameToggleCommand(m_endGame);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -69,7 +77,7 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
-
+    m_endGame.setDefaultCommand(m_endGameDefaultCommand);
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
@@ -83,6 +91,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    m_buttonStart.whileTrue(m_EndGameToggleCommand);
   }
 
   /**
