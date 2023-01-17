@@ -9,12 +9,12 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeReverseCommand extends CommandBase {
 
-  //An object of the intake subsystem
+  // An object of the intake subsystem
   private IntakeSubsystem m_intakeSubsystem;
 
   /** Creates a new IntakeReverseCommand. */
   public IntakeReverseCommand(IntakeSubsystem subsystem) {
-  m_intakeSubsystem = subsystem;
+    m_intakeSubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -25,8 +25,7 @@ public class IntakeReverseCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() 
-  {
+  public void execute() {
     m_intakeSubsystem.reverseMotors();
     m_intakeSubsystem.runIntake();
   }

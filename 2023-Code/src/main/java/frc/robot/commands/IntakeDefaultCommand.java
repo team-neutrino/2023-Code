@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
 /**
- * This default command serves the sole purpose of ensuring that when 
- * the button is NOT pressed, the intake is up and stopped.
+ * This default command serves the sole purpose of ensuring that when the button is NOT pressed, the
+ * intake is up and stopped.
  */
 public class IntakeDefaultCommand extends CommandBase {
   /** An object of the intake subsystem. */

@@ -56,7 +56,7 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
   private final JoystickButton m_rightBumper =
       new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-      
+
   // COMMANDS
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
