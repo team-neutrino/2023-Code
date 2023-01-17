@@ -16,7 +16,6 @@ public class DriveTrainDefaultCommand extends CommandBase {
   /** Creates a new DriveCommand. */
   public DriveTrainDefaultCommand(
       DriveTrainSubsystem subsystem, Joystick p_leftJoystick, Joystick p_rightJoystick) {
-    // Use addRequirements() here to declare subsystem dependencies.
 
     m_driveTrainSubsystem = subsystem;
     m_leftJoystick = p_leftJoystick;
@@ -24,21 +23,17 @@ public class DriveTrainDefaultCommand extends CommandBase {
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     m_driveTrainSubsystem.setMotors(m_leftJoystick.getY(), m_rightJoystick.getY());
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

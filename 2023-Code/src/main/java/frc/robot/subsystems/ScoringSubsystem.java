@@ -11,8 +11,6 @@ import frc.robot.Constants;
 
 public class ScoringSubsystem extends SubsystemBase {
 
-  // Either CTREPCM or REVPH, we use CTRE
-  //Initialization not required for single solenoids
   private Solenoid solenoid =
       new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.GRABBER);
 
@@ -24,12 +22,10 @@ public class ScoringSubsystem extends SubsystemBase {
   }
 
   public void setSolenoidExtend() {
-    // System.out.println("setSolenoidOn() " + getSolenoidValue());
     solenoid.set(true);
   }
 
   public void setSolenoidRetract() {
-    // System.out.println("setSolenoidOff() " + getSolenoidValue());
     solenoid.set(false);
   }
 
@@ -38,7 +34,5 @@ public class ScoringSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+  public void periodic() {}
 }
