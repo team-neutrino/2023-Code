@@ -29,8 +29,7 @@ public final class Constants {
   }
 
   public static class PneumaticsConstants {
-    public static final int GRABBER = 31;
-    public static final int CHANNEL_PCM = 3;
+    public static final int GRABBER = 3;
     public static final int MODULE = 0;
   }
 }

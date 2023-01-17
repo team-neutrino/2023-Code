@@ -14,7 +14,7 @@ public class ScoringSubsystem extends SubsystemBase {
   // Either CTREPCM or REVPH, we use CTRE
   //Initialization not required for single solenoids
   private Solenoid solenoid =
-      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.CHANNEL_PCM);
+      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.GRABBER);
 
   /** Creates a new PneumaticsSubsystem. */
   public ScoringSubsystem() {}
