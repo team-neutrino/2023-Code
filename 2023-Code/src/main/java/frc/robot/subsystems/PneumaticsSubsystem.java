@@ -16,33 +16,33 @@ public class PneumaticsSubsystem extends SubsystemBase {
 
   // Either CTREPCM or REVPH, we use CTRE
   // Initialization not required for single solenoids
-  private Solenoid solenoid =
-      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.CHANNEL_PCM);
+  // private Solenoid solenoid =
+  //     new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.CHANNEL_PCM);
 
   /** Creates a new PneumaticsSubsystem. */
   public PneumaticsSubsystem() {}
 
-  public void toggleSolenoid() {
-    solenoid.toggle();
-  }
+  // public void toggleSolenoid() {
+  //   solenoid.toggle();
+  // }
 
-  public boolean isEnabled() {
-    return compressor.isEnabled();
-  }
+  // public boolean isEnabled() {
+  //   return compressor.isEnabled();
+  // }
 
-  public void setSolenoidOn() {
-    System.out.println("setSolenoidOn() " + getSolenoidValue());
-    solenoid.set(true);
-  }
+  // public void setSolenoidOn() {
+  //   System.out.println("setSolenoidOn() " + getSolenoidValue());
+  //   solenoid.set(true);
+  // }
 
-  public void setSolenoidOff() {
-    System.out.println("setSolenoidOff() " + getSolenoidValue());
-    solenoid.set(false);
-  }
+  // public void setSolenoidOff() {
+  //   System.out.println("setSolenoidOff() " + getSolenoidValue());
+  //   solenoid.set(false);
+  // }
 
-  public boolean getSolenoidValue() {
-    return solenoid.get();
-  }
+  // public boolean getSolenoidValue() {
+  //   return solenoid.get();
+  // }
 
   @Override
   public void periodic() {
