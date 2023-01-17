@@ -7,15 +7,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -36,7 +33,6 @@ public class RobotContainer {
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final PneumaticsSubsystem m_pneumaticsSubsystem = new PneumaticsSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -61,6 +57,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    new PneumaticsSubsystem();
     new LimelightSubsystem();
     // Configure the trigger bindings
     configureBindings();
@@ -79,22 +76,7 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
-    // m_buttonA.toggleOnTrue(m_scoringOpenCommand);
-    // m_buttonA.onTrue(m_scoringDefaultCommand);
     m_buttonA.whileTrue(m_scoringOpenCommand);
-
-    // Pneumatics Testboard
-    // m_buttonA.toggleOnTrue(
-    //     Commands.startEnd(
-    //         m_scoringSubsystem::setSolenoidExtend,
-    //         m_scoringSubsystem::setSolenoidRetract,
-    //         m_scoringSubsystem));
-
-    // m_buttonA.toggleOnTrue(
-    //     Commands.startEnd(
-    //         m_scoringCommand,
-    //         m_scoringCommand,
-    //         m_scoringSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
