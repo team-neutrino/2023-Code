@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimelightSubsystem extends SubsystemBase {
   NetworkTable limelight;
+  int cycle = 0;
+  double[] camTran;
+  //double[] camTran = getCamTran();
 
   /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem() {
@@ -19,6 +22,7 @@ public class LimelightSubsystem extends SubsystemBase {
 
     // turns off LED
     limelight.getEntry("ledMode").setNumber(1);
+
   }
 
   // return whether or not the limlight sees a target
@@ -51,6 +55,29 @@ public class LimelightSubsystem extends SubsystemBase {
     return distanceFromLimelight;
   }
 
+  public double[] getCamTran(){
+    return limelight.getEntry("camtran").getDoubleArray(new double[]{});
+  }
+
+  public void printCamTran(){
+    if (cycle % 50 == 0){
+      System.out.println("Translation X: " + camTran[0]);
+      System.out.println("Translation Y: " + camTran[1]);
+      System.out.println("Translation Z: " + camTran[2]);
+      //System.out.println("Rotation Pitch: " + camTran[3]);
+      //System.out.println("Rotation Yall: " + camTran[4]);
+      //System.out.println("Rotation Roll: " + camTran[5]);
+    }
+  }
+
   @Override
-  public void periodic() {}
+  public void periodic() {
+    cycle++;
+    camTran = getCamTran();
+    printCamTran();
+    //System.out.println(test[0] + " " + test[1] + " " + test[2] + " " + test[3] + " " + test[4] + " " + test[5]);
+    //System.out.println(test.length);
+    //System.out.println(camTran[0]);
+    //System.out.println(camTran[1]);
+  }
 }
