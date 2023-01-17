@@ -7,18 +7,19 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ScoringDefaultCommand;
+import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
+import frc.robot.subsystems.ScoringSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -32,13 +33,13 @@ public class RobotContainer {
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final PneumaticsSubsystem m_pneumaticsSubsystem = new PneumaticsSubsystem();
+  private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // CONTROLLERS
-  private final XboxController m_driverController = new XboxController(4);
-  private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JoyStickPortL);
-  private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JoyStickPortR);
+  private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
+  private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICK_LEFT);
+  private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JOYSTICK_RIGHT);
 
   // BUTTONS
   private final JoystickButton m_buttonA =
@@ -49,9 +50,14 @@ public class RobotContainer {
   // COMMANDS
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
+  private final ScoringDefaultCommand m_scoringDefaultCommand =
+      new ScoringDefaultCommand(m_scoringSubsystem);
+  private final ScoringOpenCommand m_scoringOpenCommand =
+      new ScoringOpenCommand(m_scoringSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    new PneumaticsSubsystem();
     new LimelightSubsystem();
     // Configure the trigger bindings
     configureBindings();
@@ -69,16 +75,8 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
-
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Pneumatics Testboard
-    m_buttonA.toggleOnTrue(
-        Commands.startEnd(
-            m_pneumaticsSubsystem::setSolenoidOn,
-            m_pneumaticsSubsystem::setSolenoidOff,
-            m_pneumaticsSubsystem));
+    m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
+    m_buttonA.whileTrue(m_scoringOpenCommand);
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
@@ -91,7 +89,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
+    // An example command will /be run in autonomous
     return Autos.exampleAuto(m_exampleSubsystem);
   }
 }
