@@ -34,7 +34,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   // SUBSYSTEMS
-  // private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
+  private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
@@ -88,15 +88,7 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    // Pneumatics Testboard
-    m_buttonA.toggleOnTrue(
-        Commands.startEnd(
-            m_pneumaticsSubsystem::setSolenoidOn,
-            m_pneumaticsSubsystem::setSolenoidOff,
-            m_pneumaticsSubsystem));
-    m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
-    m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
-    m_buttonA.whileTrue(m_scoringOpenCommand);
+    
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
