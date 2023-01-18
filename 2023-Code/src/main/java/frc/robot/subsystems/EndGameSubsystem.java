@@ -8,9 +8,9 @@ import frc.robot.Constants;
 public class EndGameSubsystem extends SubsystemBase {
   Solenoid m_frontSolenoid =
       new Solenoid(
-          PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.SOLENOIDENDGAMEFRONT);
+          PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.SOLENOID_FRONT);
   Solenoid m_backSolenoid =
-      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.SOLENOIDENDGAMEBACK);
+      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.SOLENOID_BACK);
 
   public EndGameSubsystem() {}
 

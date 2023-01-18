@@ -31,8 +31,8 @@ public final class Constants {
   public static class PneumaticsConstants {
     public static final int GRABBER = 3;
     public static final int MODULE = 0;
-    public static final int SOLENOIDENDGAMEFRONT = 3;
-    public static final int SOLENOIDENDGAMEBACK = 4;
+    public static final int SOLENOID_FRONT = 3;
+    public static final int SOLENOID_BACK= 4;
   }
 
   public static class VariableConstants {
