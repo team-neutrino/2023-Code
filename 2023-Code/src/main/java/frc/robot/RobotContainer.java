@@ -15,6 +15,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
+import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -36,7 +37,7 @@ public class RobotContainer {
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -63,8 +64,10 @@ public class RobotContainer {
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
   private final IntakeDefaultCommand m_IntakeDefaultCommand =
-      new IntakeDefaultCommand(m_IntakeSubsystem);
-  private final IntakeCommand m_IntakeCommand = new IntakeCommand(m_IntakeSubsystem);
+      new IntakeDefaultCommand(m_intakeSubsystem);
+  private final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
+  private final IntakeReverseCommand m_IntakeReverseCommand =
+      new IntakeReverseCommand(m_intakeSubsystem);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
   private final ScoringOpenCommand m_scoringOpenCommand =
@@ -91,10 +94,10 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
-    m_IntakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
+    m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
     m_buttonA.whileTrue(m_scoringOpenCommand);
 
-    m_buttonX.onTrue(m_IntakeCommand);
+    m_buttonX.onTrue(m_intakeCommand);
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());

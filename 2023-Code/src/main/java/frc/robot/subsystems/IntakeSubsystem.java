@@ -35,13 +35,8 @@ public class IntakeSubsystem extends SubsystemBase {
   private Solenoid m_IntakeSolenoid =
       new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.INTAKE_PCM);
 
-
-
-      
   /** Creates a new IntakeSubsystem and initializes the motor controllers. */
-  public IntakeSubsystem() 
-  {
-    System.out.println("intake subsystem initialized");
+  public IntakeSubsystem() {
     m_rightMotor.restoreFactoryDefaults();
     m_leftMotor.restoreFactoryDefaults();
     // encoders initialized in constructor to make sure motors are initialized first
@@ -49,19 +44,13 @@ public class IntakeSubsystem extends SubsystemBase {
     m_rightEncoder = m_rightMotor.getEncoder();
   }
 
-  /**
-   * Puts down the intake.
-   */
-  public void setIntakeDown()
-  {
+  /** Puts down the intake. */
+  public void setIntakeDown() {
     m_IntakeSolenoid.set(true);
   }
 
-  /**
-   * Puts up the intake.
-   */
-  public void setIntakeUp()
-  {
+  /** Puts up the intake. */
+  public void setIntakeUp() {
     m_IntakeSolenoid.set(false);
   }
 
@@ -71,11 +60,8 @@ public class IntakeSubsystem extends SubsystemBase {
     m_rightMotor.set(.2);
   }
 
-  /**
-   * Runs the intake motors in reverse.
-   */
-  public void runIntakeReverse()
-  {
+  /** Runs the intake motors in reverse. */
+  public void runIntakeReverse() {
     m_leftMotor.set(-.2);
     m_rightMotor.set(-.2);
   }
