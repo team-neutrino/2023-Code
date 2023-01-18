@@ -97,7 +97,7 @@ public class RobotContainer {
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
     m_buttonA.whileTrue(m_scoringOpenCommand);
 
-    m_buttonX.onTrue(m_intakeCommand);
+    m_buttonX.whileTrue(m_intakeCommand);
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());

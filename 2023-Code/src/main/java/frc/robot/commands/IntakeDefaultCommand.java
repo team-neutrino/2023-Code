@@ -25,12 +25,13 @@ public class IntakeDefaultCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //m_IntakeSubsystem.stopIntake(); COMMENTED TEMPORARILY FOR TESTING
+    m_IntakeSubsystem.stopIntake();
     m_IntakeSubsystem.setIntakeUp();
   }
 
