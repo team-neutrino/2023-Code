@@ -34,6 +34,7 @@ public final class Constants {
     public static final int SOLENOIDENDGAMEFRONT = 3;
     public static final int SOLENOIDENDGAMEBACK = 4;
   }
+
   public static class VariableConstants {
     public static final double DEADZONE = 0.1;
   }

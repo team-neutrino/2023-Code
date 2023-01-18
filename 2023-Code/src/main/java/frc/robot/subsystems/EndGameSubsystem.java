@@ -10,8 +10,7 @@ public class EndGameSubsystem extends SubsystemBase {
       new Solenoid(
           PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.SOLENOIDENDGAMEFRONT);
   Solenoid m_backSolenoid =
-      new Solenoid(
-          PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.SOLENOIDENDGAMEBACK);
+      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.SOLENOIDENDGAMEBACK);
 
   public EndGameSubsystem() {}
 
