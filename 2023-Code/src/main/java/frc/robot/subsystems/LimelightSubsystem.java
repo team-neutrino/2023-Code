@@ -14,8 +14,6 @@ public class LimelightSubsystem extends SubsystemBase {
   int cycle = 0;
   double LIMELIGHT_TO_METER_CONVERSION = 0.76189;
 
-  // double[] camTran = getCamTran();
-
   /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem() {
     // global instance of the network table and gets the limelight table
@@ -83,10 +81,5 @@ public class LimelightSubsystem extends SubsystemBase {
   public void periodic() {
     cycle++;
     printCamTran();
-    // System.out.println(test[0] + " " + test[1] + " " + test[2] + " " + test[3] + " " + test[4] +
-    // " " + test[5]);
-    // System.out.println(test.length);
-    // System.out.println(camTran[0]);
-    // System.out.println(camTran[1]);
   }
 }
