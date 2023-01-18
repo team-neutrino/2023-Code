@@ -41,6 +41,7 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem and initializes the motor controllers. */
   public IntakeSubsystem() 
   {
+    System.out.println("intake subsystem initialized");
     m_rightMotor.restoreFactoryDefaults();
     m_leftMotor.restoreFactoryDefaults();
     // encoders initialized in constructor to make sure motors are initialized first
