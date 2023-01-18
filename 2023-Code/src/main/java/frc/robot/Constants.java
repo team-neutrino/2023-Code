@@ -14,20 +14,22 @@ package frc.robot;
  */
 public final class Constants {
   public static class OperatorConstants {
-    public static final int JoyStickPortR = 0;
-    public static final int JoyStickPortL = 1;
-    public static final int DriverControllerPort = 2;
+    public static final int JOYSTICK_RIGHT = 0;
+    public static final int JOYSTICK_LEFT = 1;
+    public static final int XBOX = 4;
   }
 
   public static class MotorConstants {
-    public static final int RMOTOR1 = 3;
-    public static final int RMOTOR2 = 4;
-    public static final int LMOTOR1 = 1;
-    public static final int LMOTOR2 = 2;
+    public static final int RMOTOR1 = 11;
+    public static final int RMOTOR2 = 12;
+    public static final int RMOTOR3 = 13;
+    public static final int LMOTOR1 = 14;
+    public static final int LMOTOR2 = 15;
+    public static final int LMOTOR3 = 16;
   }
 
   public static class PneumaticsConstants {
-    public static final int CHANNEL_PCM = 7;
+    public static final int GRABBER = 3;
     public static final int MODULE = 0;
   }
 }
