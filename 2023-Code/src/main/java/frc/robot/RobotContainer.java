@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -53,12 +54,10 @@ public class RobotContainer {
   private final JoystickButton m_buttonStart =
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
   // COMMANDS
-  // private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
-  //  new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
+  private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
+    new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
   private final EndGameDefaultCommand m_endGameDefaultCommand =
       new EndGameDefaultCommand(m_endGame, m_rightJoystick, m_leftJoystick);
-  private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
-      new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
   private final ScoringOpenCommand m_scoringOpenCommand =
