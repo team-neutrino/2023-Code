@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.EndGameSubsystem;
+import frc.robot.Constants;
 
 public class EndGameDefaultCommand extends CommandBase {
   EndGameSubsystem m_endgame;
@@ -22,8 +23,8 @@ public class EndGameDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    forwardChecker();
-    backwardChecker();
+    frontChecker();
+    backChecker();
   }
 
   @Override
@@ -34,33 +35,33 @@ public class EndGameDefaultCommand extends CommandBase {
     return false;
   }
 
-  private boolean ShouldExtendBackward() {
-    return m_rightJoystick.getY() >= 0.1
-        && m_leftJoystick.getY() >= 0.1
+  private boolean shouldExtendBack() {
+    return m_rightJoystick.getY() >= Constants.VariableConstants.DEADZONE
+        && m_leftJoystick.getY() >= Constants.VariableConstants.DEADZONE
         && m_rightJoystick.getTrigger()
-        && !m_endgame.getSolenoidvalueBackward();
+        && !m_endgame.getSolenoidvalueBack();
   }
 
-  private boolean ShouldExtendForward() {
-    return m_rightJoystick.getY() <= -0.1
-        && m_leftJoystick.getY() <= -0.1
+  private boolean shouldExtendFront() {
+    return m_rightJoystick.getY() <= -Constants.VariableConstants.DEADZONE
+        && m_leftJoystick.getY() <= -Constants.VariableConstants.DEADZONE
         && m_rightJoystick.getTrigger()
-        && !m_endgame.getSolenoidvalueForward();
+        && !m_endgame.getSolenoidvalueFront();
   }
 
-  private void forwardChecker() {
-    if (ShouldExtendForward()) {
-      m_endgame.toggleSolenoidForward();
-    } else if (!m_rightJoystick.getTrigger() && m_endgame.getSolenoidvalueForward()) {
-      m_endgame.toggleSolenoidForward();
+  private void frontChecker() {
+    if (shouldExtendFront()) {
+      m_endgame.toggleSolenoidFront();
+    } else if (!m_rightJoystick.getTrigger() && m_endgame.getSolenoidvalueFront()) {
+      m_endgame.toggleSolenoidFront();
     }
   }
 
-  private void backwardChecker() {
-    if (ShouldExtendBackward()) {
-      m_endgame.toggleSolenoidBackward();
-    } else if (!m_rightJoystick.getTrigger() && m_endgame.getSolenoidvalueBackward()) {
-      m_endgame.toggleSolenoidBackward();
+  private void backChecker() {
+    if (shouldExtendBack()) {
+      m_endgame.toggleSolenoidBack();
+    } else if (!m_rightJoystick.getTrigger() && m_endgame.getSolenoidvalueBack()) {
+      m_endgame.toggleSolenoidBack();
     }
   }
 }

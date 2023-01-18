@@ -6,35 +6,35 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class EndGameSubsystem extends SubsystemBase {
-  Solenoid m_forwardSolenoid =
+  Solenoid m_frontSolenoid =
       new Solenoid(
-          PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.SOLENOIDENDGAMEFORWARD);
-  Solenoid m_backwardSolenoid =
+          PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.SOLENOIDENDGAMEFRONT);
+  Solenoid m_backSolenoid =
       new Solenoid(
-          PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.SOLENOIDENDGAMEBACKWARD);
+          PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.SOLENOIDENDGAMEBACK);
 
   public EndGameSubsystem() {}
 
   @Override
   public void periodic() {}
 
-  // Changes the state of the Right Pistons
-  public void toggleSolenoidForward() {
-    m_forwardSolenoid.toggle();
+  // Changes the state of the Front Pistons
+  public void toggleSolenoidFront() {
+    m_frontSolenoid.toggle();
   }
 
-  // Tells whether or not the pistons controlled by the Right solenoid is extending or not
-  public boolean getSolenoidvalueForward() {
-    return m_forwardSolenoid.get();
+  // Tells whether or not the pistons controlled by the front solenoid is extending or not
+  public boolean getSolenoidvalueFront() {
+    return m_frontSolenoid.get();
   }
 
-  // Changes the state of the Left Pistons
-  public void toggleSolenoidBackward() {
-    m_backwardSolenoid.toggle();
+  // Changes the state of the Back Pistons
+  public void toggleSolenoidBack() {
+    m_backSolenoid.toggle();
   }
 
-  // Tells whether or not the pistons controlled by the left solenoid is extending or not
-  public boolean getSolenoidvalueBackward() {
-    return m_backwardSolenoid.get();
+  // Tells whether or not the pistons controlled by the back solenoid is extending or not
+  public boolean getSolenoidvalueBack() {
+    return m_backSolenoid.get();
   }
 }

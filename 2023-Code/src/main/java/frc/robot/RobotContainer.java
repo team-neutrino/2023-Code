@@ -81,13 +81,15 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    // m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
+    m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
+    m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_endGame.setDefaultCommand(m_endGameDefaultCommand);
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
+    m_buttonA.whileTrue(m_scoringOpenCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
