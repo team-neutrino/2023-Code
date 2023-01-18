@@ -39,6 +39,13 @@ public final class Constants {
     public static final int GRABBER_PISTON2 = 42;
   }
 
+  public static class ArmConstants {
+    public static final double M_PI = Math.PI;
+    public static final double WHEEL_SIZE = 1;
+    public static final double REDUCTION = 1;
+    public static final double ROTATION_TO_INCHES = M_PI*(WHEEL_SIZE/REDUCTION);
+  }
+
   public static class PIDConstants {
     public static final int ARM_P = 0;
     public static final int ARM_I = 0;
