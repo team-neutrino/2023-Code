@@ -14,9 +14,9 @@ package frc.robot;
  */
 public final class Constants {
   public static class OperatorConstants {
-    public static final int JoyStickPortR = 0;
-    public static final int JoyStickPortL = 1;
-    public static final int DriverControllerPort = 2;
+    public static final int JOYSTICK_RIGHT = 0;
+    public static final int JOYSTICK_LEFT = 1;
+    public static final int XBOX = 4;
   }
   
   public static class PDPConstants {
@@ -33,7 +33,13 @@ public final class Constants {
   }
 
   public static class PneumaticsConstants {
-    public static final int CHANNEL_PCM = 7;
+    public static final int GRABBER = 3;
     public static final int MODULE = 0;
+    public static final int SOLENOID_FRONT = 3;
+    public static final int SOLENOID_BACK = 4;
+  }
+
+  public static class VariableConstants {
+    public static final double DEADZONE = 0.1;
   }
 }

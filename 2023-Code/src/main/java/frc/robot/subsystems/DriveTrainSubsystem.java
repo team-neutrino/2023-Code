@@ -33,7 +33,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoderL2;
   private RelativeEncoder m_encoderL3;
 
-  double DEADZONE = 0.1;
   MotorControllerGroup m_rmotors = new MotorControllerGroup(m_rmotor1, m_rmotor2, m_rmotor3);
   MotorControllerGroup m_lmotors = new MotorControllerGroup(m_lmotor1, m_lmotor2, m_lmotor3);
 
@@ -119,7 +118,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public double deadzone(double joystickY) {
     joystickY = Math.abs(joystickY);
-    if (joystickY <= DEADZONE) {
+    if (joystickY <= Constants.VariableConstants.DEADZONE) {
       return 0.0;
     } else if (joystickY >= 1.0) {
       return 1.0;
@@ -129,9 +128,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+  public void periodic() {}
 
   public static double linearAccel(double joystickY) {
     double newSpeed = joystickY;
