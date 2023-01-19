@@ -18,6 +18,10 @@ public final class Constants {
     public static final int JoyStickPortL = 1;
     public static final int DriverControllerPort = 2;
   }
+  
+  public static class PDPConstants {
+    public static final int PDPCANID = 0;
+  }
 
   public static class MotorConstants {
     public static final int RMOTOR1 = 11;
