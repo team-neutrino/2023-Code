@@ -12,7 +12,8 @@ import frc.robot.Constants;
 public class ScoringSubsystem extends SubsystemBase {
 
   private Solenoid solenoid =
-      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.GRABBER);
+      new Solenoid(PneumaticsModuleType.CTREPCM, 1);
+      //should be Constants.PneumaticsConstants.GRABBER
 
   /** Creates a new PneumaticsSubsystem. */
   public ScoringSubsystem() {}
