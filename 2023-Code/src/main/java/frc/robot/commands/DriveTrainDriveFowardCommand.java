@@ -11,9 +11,11 @@ import frc.robot.subsystems.LimelightSubsystem;
 public class DriveTrainDriveFowardCommand extends CommandBase {
   /** Creates a new DriveTrainDriveFowardCommand. */
   DriveTrainSubsystem m_drivetrain;
+
   LimelightSubsystem m_limelight;
 
-  public DriveTrainDriveFowardCommand(DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight) {
+  public DriveTrainDriveFowardCommand(
+      DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drivetrain = p_drivetrain;
     m_limelight = p_limelight;
@@ -27,13 +29,10 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_limelight.getTv()){
-      if (m_limelight.getYaw() > 0.5 && m_limelight.getDistance() > 0.5){
-        m_drivetrain.setMotors(0.2,0.2);
-      }
-
-
-      else if (m_limelight.getDistance() > 0.5){
+    if (m_limelight.getTv()) {
+      if (m_limelight.getYaw() > 0.5 && m_limelight.getDistance() > 0.5) {
+        m_drivetrain.setMotors(0.2, 0.2);
+      } else if (m_limelight.getDistance() > 0.5) {
         m_drivetrain.setMotors(0.2, 0.2);
       }
     }

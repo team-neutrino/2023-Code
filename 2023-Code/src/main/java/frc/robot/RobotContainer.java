@@ -63,7 +63,8 @@ public class RobotContainer {
       new ScoringDefaultCommand(m_scoringSubsystem);
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
-  private final DriveTrainDriveFowardCommand m_DriveTrainDriveFowardCommand = new DriveTrainDriveFowardCommand(m_driveTrain, m_limelight);
+  private final DriveTrainDriveFowardCommand m_DriveTrainDriveFowardCommand =
+      new DriveTrainDriveFowardCommand(m_driveTrain, m_limelight);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
