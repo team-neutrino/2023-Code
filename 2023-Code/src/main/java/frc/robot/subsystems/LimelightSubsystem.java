@@ -48,11 +48,6 @@ public class LimelightSubsystem extends SubsystemBase {
     return limelight.getEntry("ty").getDouble(0.0);
   }
 
-  public double testTransformDistance(double tx) {
-    double distanceFromLimelight = Math.tan(tx);
-    return distanceFromLimelight;
-  }
-
   public double[] getCamTran() {
     return limelight.getEntry("camtran").getDoubleArray(new double[] {});
   }
@@ -60,6 +55,11 @@ public class LimelightSubsystem extends SubsystemBase {
   public double getDistance() {
     double[] camTran = getCamTran();
     return camTran[2] * LIMELIGHT_TO_METER_CONVERSION;
+  }
+
+  public double getYaw() {
+    double[] camTran = getCamTran();
+    return camTran[4];
   }
 
   /* is a print that access and prints the full array that is accessed when getting the camTran. Inert for right now,

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
+import frc.robot.commands.DriveTrainDriveFowardCommand;
 import frc.robot.commands.EndGameDefaultCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ScoringDefaultCommand;
@@ -38,6 +39,7 @@ public class RobotContainer {
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
+  private final LimelightSubsystem m_limelight = new LimelightSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // CONTROLLERS
@@ -61,6 +63,7 @@ public class RobotContainer {
       new ScoringDefaultCommand(m_scoringSubsystem);
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
+  private final DriveTrainDriveFowardCommand m_DriveTrainDriveFowardCommand = new DriveTrainDriveFowardCommand(m_driveTrain, m_limelight);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -86,6 +89,7 @@ public class RobotContainer {
     m_endGame.setDefaultCommand(m_endGameDefaultCommand);
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
+    m_limelight.setDefaultCommand(m_DriveTrainDriveFowardCommand);
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
