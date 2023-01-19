@@ -33,8 +33,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   /** Solenoid for the intake. */
   private Solenoid m_IntakeSolenoid =
-      new Solenoid(PneumaticsModuleType.CTREPCM, 3);
-      //Constants.PneumaticsConstants.INTAKE_PCM
+      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.INTAKE_PCM);
 
   /** Creates a new IntakeSubsystem and initializes the motor controllers. */
   public IntakeSubsystem() {
