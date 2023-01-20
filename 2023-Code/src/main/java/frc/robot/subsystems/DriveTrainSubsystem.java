@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -28,8 +29,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoderL2;
 
   double DEADZONE = 0.1;
-  MotorControllerGroup m_rmotors = new MotorControllerGroup(m_rmotor1, m_rmotor2);
-  MotorControllerGroup m_lmotors = new MotorControllerGroup(m_lmotor1, m_lmotor2);
+  //MotorControllerGroup m_rmotors = new MotorControllerGroup(m_rmotor1, m_rmotor2);
+  //MotorControllerGroup m_lmotors = new MotorControllerGroup(m_lmotor1, m_lmotor2);
 
   /** Creates a new Drivetrain. */
   public DriveTrainSubsystem() {
@@ -83,12 +84,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void setMotors(double m_rightMotorSpeed, double m_leftMotorSpeed) {
-    double leftMotorSpeed = linearAccel(deadzone(m_leftMotorSpeed));
-    double rightMotorSpeed = linearAccel(deadzone(m_rightMotorSpeed));
-    // m_rmotors.set(rightMotorSpeed);
+     double leftMotorSpeed = linearAccel(deadzone(m_leftMotorSpeed));
+     double rightMotorSpeed = linearAccel(deadzone(m_rightMotorSpeed));
+     //m_rmotors.set(rightMotorSpeed);
     // m_lmotors.set(leftMotorSpeed);
-    m_rmotor1.set(1);
-    m_rmotor2.set(1);
+      m_rmotor1.set(1);
+    //m_rmotor2.set(1);
   }
 
   public double deadzone(double joystickY) {
