@@ -18,7 +18,7 @@ public final class Constants {
     public static final int JOYSTICK_LEFT = 1;
     public static final int XBOX = 4;
   }
-  
+
   public static class PDPConstants {
     public static final int PDPCANID = 0;
   }
