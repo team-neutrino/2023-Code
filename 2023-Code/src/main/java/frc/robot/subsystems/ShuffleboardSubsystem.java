@@ -11,7 +11,7 @@ import frc.robot.subsystems.EndGameSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
-
+import edu.wpi.first.networktables.GenericEntry;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -53,7 +53,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   m_driveTrainVariables[5].setDouble(m_driveTrain.getR2Vel());
   m_driveTrainVariables[6].setDouble(m_driveTrain.getL1Vel());
   m_driveTrainVariables[7].setDouble(m_driveTrain.getL2Vel());
-  m_endGameVariables[1].sem_endGame.getSolenoidvalueBack());
+  m_endGameVariables[1].setBoolean(m_endGame.getSolenoidvalueBack());
   m_limelightVariables[0].setBoolean(m_limelight.getTv());
   m_limelightVariables[1].setDouble(m_limelight.getID());
   m_limelightVariables[2].setDouble(m_limelight.getTx());
@@ -64,11 +64,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
   private void driveStaionTab() {
     m_drivestationTab = Shuffleboard.getTab("Drivestation Tab");
-    m_endGameVariables[1] =
-    m_drivestationTab
-        .add("Index Beambreak", false)
-        .withPosition(6, 4)
-        .withSize(1, 1)
-        .getEntry();
+    m_endGameVariables[1] = m_drivestationTab.add("hello", m_driveTrain).;
   }
 }
