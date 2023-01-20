@@ -10,31 +10,32 @@ import frc.robot.Constants;
 
 public class PDP {
 
-  private PowerDistribution m_PDP = new PowerDistribution(Constants.PDPConstants.PDPCANID, ModuleType.kCTRE);
+  private PowerDistribution m_PDP =
+      new PowerDistribution(Constants.PDPConstants.PDPCANID, ModuleType.kCTRE);
   /** Creates a new PDPSubsystem. */
   public PDP() {}
 
-  public double getVoltage(){
+  public double getVoltage() {
     double voltage = m_PDP.getVoltage();
     return voltage;
   }
 
-  public double getCurrent(){
+  public double getCurrent() {
     double totalCurrent = m_PDP.getTotalCurrent();
     return totalCurrent;
   }
 
-  public double getPower(){
+  public double getPower() {
     double totalPower = m_PDP.getTotalPower();
     return totalPower;
   }
 
-  public double getEnergy(){
+  public double getEnergy() {
     double totalEnergy = m_PDP.getTotalEnergy();
     return totalEnergy;
   }
 
-  public double getChannelCurrent(int channel){
+  public double getChannelCurrent(int channel) {
     double current = m_PDP.getCurrent(channel);
     return current;
   }
