@@ -20,7 +20,7 @@ public class LimelightSubsystem extends SubsystemBase {
     limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
     // turns off LED
-    limelight.getEntry("ledMode").setNumber(1);
+    limelight.getEntry("ledMode").setNumber(0);
   }
 
   // return whether or not the limlight sees a target
@@ -54,12 +54,17 @@ public class LimelightSubsystem extends SubsystemBase {
 
   public double getDistance() {
     double[] camTran = getCamTran();
-    return camTran[2] * LIMELIGHT_TO_METER_CONVERSION;
+    return camTran[2] * LIMELIGHT_TO_METER_CONVERSION * -1;
   }
 
   public double getYaw() {
     double[] camTran = getCamTran();
     return camTran[4];
+  }
+
+  public double getX(){
+    double[] camTran = getCamTran();
+    return camTran[0];
   }
 
   /* is a print that access and prints the full array that is accessed when getting the camTran. Inert for right now,
@@ -68,11 +73,11 @@ public class LimelightSubsystem extends SubsystemBase {
   public void printCamTran() {
     if (cycle % 40 == 0) {
       double[] camTran = getCamTran();
-      // System.out.println("Translation X: " + camTran[0]);
+      System.out.println("Translation X: " + camTran[0]);
       // System.out.println("Translation Y: " + camTran[1]);
-      // System.out.println("Translation Z: " + camTran[2]);
+      System.out.println("Translation Z: " + camTran[2] * LIMELIGHT_TO_METER_CONVERSION * -1);
       // System.out.println("Rotation Pitch: " + camTran[3]);
-      System.out.println("Rotation Yall: " + camTran[4]);
+      // System.out.println("Rotation Yaw: " + camTran[4]);
       // System.out.println("Rotation Roll: " + camTran[5]);
     }
   }

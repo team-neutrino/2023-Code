@@ -17,6 +17,6 @@ public class PneumaticsSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    compressor.enableDigital();
+    //  compressor.enableDigital();
   }
 }

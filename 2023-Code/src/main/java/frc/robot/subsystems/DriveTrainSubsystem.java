@@ -120,7 +120,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     joystickY = Math.abs(joystickY);
     if (joystickY <= Constants.VariableConstants.DEADZONE) {
       return 0.0;
-    } else if (joystickY >= 1.0) {
+    } else if (joystickY >= 0.8) {
       return 1.0;
     } else {
       return joystickY;

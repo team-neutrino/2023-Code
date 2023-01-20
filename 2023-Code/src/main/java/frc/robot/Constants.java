@@ -20,22 +20,22 @@ public final class Constants {
   }
 
   public static class MotorConstants {
-    public static final int RMOTOR1 = 11;
-    public static final int RMOTOR2 = 12;
+    public static final int RMOTOR1 = 1;
+    public static final int RMOTOR2 = 2;
     public static final int RMOTOR3 = 13;
-    public static final int LMOTOR1 = 14;
-    public static final int LMOTOR2 = 15;
+    public static final int LMOTOR1 = 3;
+    public static final int LMOTOR2 = 4;
     public static final int LMOTOR3 = 16;
   }
 
   public static class PneumaticsConstants {
-    public static final int GRABBER = 3;
+    public static final int GRABBER = 5;
     public static final int MODULE = 0;
     public static final int SOLENOID_FRONT = 3;
     public static final int SOLENOID_BACK = 4;
   }
 
   public static class VariableConstants {
-    public static final double DEADZONE = 0.1;
+    public static final double DEADZONE = 0.0;
   }
 }

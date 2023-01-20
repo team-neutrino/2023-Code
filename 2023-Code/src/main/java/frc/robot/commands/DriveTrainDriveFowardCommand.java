@@ -27,13 +27,15 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
+
+  //negative == left
+  //positive == right
   @Override
   public void execute() {
-    if (m_limelight.getTv()) {
-      if (m_limelight.getYaw() > 0.5 && m_limelight.getDistance() > 0.5) {
-        m_drivetrain.setMotors(0.2, 0.2);
-      } else if (m_limelight.getDistance() > 0.5) {
-        m_drivetrain.setMotors(0.2, 0.2);
+    if (true) {
+      double leftMotorScale = m_limelight.getX() ;
+      double rightMotorScale = m_limelight.getX() ; 
+      m_drivetrain.setMotors();
       }
     }
   }
