@@ -23,6 +23,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.subsystems.ShuffleboardSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -38,6 +39,7 @@ public class RobotContainer {
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
+  private final ShuffleboardSubsystem m_shuffleboardSubsystem = new ShuffleboardSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // CONTROLLERS
