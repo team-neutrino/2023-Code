@@ -15,6 +15,11 @@
     },
     "open": true
   },
+  "retained": {
+    "limelight": {
+      "open": true
+    }
+  },
   "transitory": {
     "limelight": {
       "open": true

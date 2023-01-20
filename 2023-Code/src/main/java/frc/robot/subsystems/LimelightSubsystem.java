@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimelightSubsystem extends SubsystemBase {
   NetworkTable limelight;
+  int cycle = 0;
+  double LIMELIGHT_TO_METER_CONVERSION = 0.76189;
 
   /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem() {
@@ -46,6 +48,38 @@ public class LimelightSubsystem extends SubsystemBase {
     return limelight.getEntry("ty").getDouble(0.0);
   }
 
+  public double testTransformDistance(double tx) {
+    double distanceFromLimelight = Math.tan(tx);
+    return distanceFromLimelight;
+  }
+
+  public double[] getCamTran() {
+    return limelight.getEntry("camtran").getDoubleArray(new double[] {});
+  }
+
+  public double getDistance() {
+    double[] camTran = getCamTran();
+    return camTran[2] * LIMELIGHT_TO_METER_CONVERSION;
+  }
+
+  /* is a print that access and prints the full array that is accessed when getting the camTran. Inert for right now,
+   * may be used in the shuffleboard subsystem so left here at the wish of Cale.
+   */
+  public void printCamTran() {
+    if (cycle % 40 == 0) {
+      double[] camTran = getCamTran();
+      // System.out.println("Translation X: " + camTran[0]);
+      // System.out.println("Translation Y: " + camTran[1]);
+      // System.out.println("Translation Z: " + camTran[2]);
+      // System.out.println("Rotation Pitch: " + camTran[3]);
+      // System.out.println("Rotation Yall: " + camTran[4]);
+      // System.out.println("Rotation Roll: " + camTran[5]);
+    }
+  }
+
   @Override
-  public void periodic() {}
+  public void periodic() {
+    cycle++;
+    printCamTran();
+  }
 }

@@ -93,7 +93,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public double deadzone(double joystickY) {
     joystickY = Math.abs(joystickY);
-    if (joystickY <= DEADZONE) {
+    if (joystickY <= Constants.VariableConstants.DEADZONE) {
       return 0.0;
     } else if (joystickY >= 1.0) {
       return 1.0;
@@ -103,9 +103,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+  public void periodic() {}
 
   public static double linearAccel(double joystickY) {
     double newSpeed = joystickY;
