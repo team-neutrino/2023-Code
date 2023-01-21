@@ -2,9 +2,9 @@ package frc.robot.util;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
-public class DriverstationInfo {
+public class DriverStationInfo {
 
-  public DriverstationInfo() {}
+  public DriverStationInfo() {}
 
   public double getMatchTime() {
     return DriverStation.getMatchTime();

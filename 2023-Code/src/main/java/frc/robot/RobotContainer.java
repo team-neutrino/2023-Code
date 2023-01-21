@@ -26,7 +26,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
-import frc.robot.util.DriverstationInfo;
+import frc.robot.util.DriverStationInfo;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -37,7 +37,7 @@ import frc.robot.util.DriverstationInfo;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // UTILS
-  private final DriverstationInfo m_driverStation = new DriverstationInfo();
+  private final DriverStationInfo m_driverStation = new DriverStationInfo();
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
