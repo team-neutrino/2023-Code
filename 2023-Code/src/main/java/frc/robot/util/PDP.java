@@ -11,7 +11,7 @@ import frc.robot.Constants;
 public class PDP {
 
   private PowerDistribution m_PDP =
-      new PowerDistribution(Constants.PDPConstants.PDPCANID, ModuleType.kCTRE);
+      new PowerDistribution(Constants.PDPConstants.PDP_CAN_ID, ModuleType.kCTRE);
   /** Creates a new PDPSubsystem. */
   public PDP() {}
 

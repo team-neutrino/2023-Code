@@ -20,7 +20,7 @@ public final class Constants {
   }
 
   public static class PDPConstants {
-    public static final int PDPCANID = 0;
+    public static final int PDP_CAN_ID = 0;
   }
 
   public static class MotorConstants {
