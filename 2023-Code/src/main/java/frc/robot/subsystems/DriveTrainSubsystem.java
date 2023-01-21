@@ -27,7 +27,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoderL1;
   private RelativeEncoder m_encoderL2;
 
-  double DEADZONE = 0.1;
   MotorControllerGroup m_rmotors = new MotorControllerGroup(m_rmotor1, m_rmotor2);
   MotorControllerGroup m_lmotors = new MotorControllerGroup(m_lmotor1, m_lmotor2);
 
