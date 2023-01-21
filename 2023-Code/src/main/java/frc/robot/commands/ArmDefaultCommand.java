@@ -13,7 +13,6 @@ public class ArmDefaultCommand extends CommandBase {
   /** Creates a new ArmDefaultCommand. */
   public ArmDefaultCommand(ArmSubsystem p_armSubsystem) {
     m_armSubsystem = p_armSubsystem; 
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_armSubsystem);
   }
 

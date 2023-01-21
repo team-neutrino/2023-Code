@@ -14,7 +14,6 @@ public class ArmAdjustCommand extends CommandBase {
   public ArmAdjustCommand(ArmSubsystem p_armSubsystem, double p_voltage) {
     m_armSubsystem = p_armSubsystem;
     m_voltage = p_voltage; 
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_armSubsystem);
   }
 

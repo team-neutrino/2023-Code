@@ -15,7 +15,6 @@ import frc.robot.Constants;
 
 public class ArmSubsystem extends SubsystemBase {
 
-  //TODO: turn motor on brakemode
   private CANSparkMax m_armMotor =
       new CANSparkMax(Constants.MotorConstants.ARM_MOTOR1, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_armMotor.getEncoder();
