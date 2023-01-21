@@ -65,11 +65,11 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
   private final JoystickButton m_buttonStart =
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
-  private final JoystickButton m_buttonBack = 
+  private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
   private final Trigger m_leftTrigger =
       new Trigger(() -> TriggerToBoolean.leftTriggerPressed(m_driverController));
-  private final Trigger m_rightTrigger = 
+  private final Trigger m_rightTrigger =
       new Trigger(() -> TriggerToBoolean.rightTriggerPressed(m_driverController));
 
   // COMMANDS
