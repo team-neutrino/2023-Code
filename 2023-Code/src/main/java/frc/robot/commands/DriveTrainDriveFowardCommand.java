@@ -33,9 +33,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   @Override
   public void execute() {
     if (true) {
-      double leftMotorScale = m_limelight.getX() ;
-      double rightMotorScale = m_limelight.getX() ; 
-      m_drivetrain.setMotors();
+      
       }
     }
 

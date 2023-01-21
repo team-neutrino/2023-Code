@@ -7,17 +7,22 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimelightSubsystem extends SubsystemBase {
   NetworkTable limelight;
   int cycle = 0;
   double LIMELIGHT_TO_METER_CONVERSION = 0.76189;
+  double ULTRASONIC_TO_METER_CONVERSION = 1.23;
+  AnalogPotentiometer m_distanceFinder = new AnalogPotentiometer(0,6,0);
 
   /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem() {
     // global instance of the network table and gets the limelight table
     limelight = NetworkTableInstance.getDefault().getTable("limelight");
+
+    
 
     // turns off LED
     limelight.getEntry("ledMode").setNumber(0);
@@ -67,18 +72,29 @@ public class LimelightSubsystem extends SubsystemBase {
     return camTran[0];
   }
 
+  public double lawOfCosines(double sideX, double sideY, double theta){
+    double thetar = theta * (Math.PI / 180);
+    return Math.sqrt(Math.pow(sideX, 2) + Math.pow(sideY, 2) + (2 * sideX * sideY * Math.cos(thetar)));
+  }
+
+  public double lawOfSines(double sideY, double sideZ, double theta){
+    double thetar = theta * (Math.PI / 180);
+    return Math.sinh(sideY * Math.sin(thetar) / sideZ);
+  }
+
   /* is a print that access and prints the full array that is accessed when getting the camTran. Inert for right now,
    * may be used in the shuffleboard subsystem so left here at the wish of Cale.
    */
   public void printCamTran() {
     if (cycle % 40 == 0) {
       double[] camTran = getCamTran();
-      System.out.println("Translation X: " + camTran[0]);
+      // System.out.println("Translation X: " + camTran[0]);
       // System.out.println("Translation Y: " + camTran[1]);
-      System.out.println("Translation Z: " + camTran[2] * LIMELIGHT_TO_METER_CONVERSION * -1);
+      // System.out.println("Translation Z: " + camTran[2] * LIMELIGHT_TO_METER_CONVERSION * -1);
       // System.out.println("Rotation Pitch: " + camTran[3]);
       // System.out.println("Rotation Yaw: " + camTran[4]);
       // System.out.println("Rotation Roll: " + camTran[5]);
+      System.out.println("distance is " + m_distanceFinder.get() * ULTRASONIC_TO_METER_CONVERSION);
     }
   }
 
