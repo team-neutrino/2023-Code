@@ -14,7 +14,6 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.EndGameDefaultCommand;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeReverseCommand;
@@ -63,21 +62,35 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
   private final JoystickButton m_rightBumper =
       new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-
-  // COMMANDS
-  private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
-      new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
-  private final IntakeDefaultCommand m_IntakeDefaultCommand =
-      new IntakeDefaultCommand(m_intakeSubsystem);
-  private final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
-  private final IntakeReverseCommand m_IntakeReverseCommand =
-      new IntakeReverseCommand(m_intakeSubsystem);
   private final JoystickButton m_buttonStart =
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
+
+  // COMMANDS
+
+  private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
+      new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
+
+  // turn both intake motors off and set the entire thing up
+  private final IntakeDefaultCommand m_IntakeDefaultCommand =
+      new IntakeDefaultCommand(m_intakeSubsystem);
+
+  // turn both intake motors on and set the entire thing down
+  private final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
+
+  private final IntakeReverseCommand m_IntakeReverseCommand =
+      new IntakeReverseCommand(m_intakeSubsystem);
+
+  // if the right joystick trigger/button is pressed, both joysticks are pushed past
+  // the deadzone given in the variable constants, and the endgane pneumatics are not
+  // already extended, extend them.
   private final EndGameDefaultCommand m_endGameDefaultCommand =
       new EndGameDefaultCommand(m_endGame, m_rightJoystick, m_leftJoystick);
+
+  // toggles scoring pneumatics to extended position
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
+
+  // toggle scoring pneumatics to retracted position
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
 
@@ -103,16 +116,10 @@ public class RobotContainer {
     m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
-    m_buttonA.whileTrue(m_scoringOpenCommand);
     m_endGame.setDefaultCommand(m_endGameDefaultCommand);
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    m_buttonX.whileTrue(m_intakeCommand);
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
     m_buttonA.whileTrue(m_scoringOpenCommand);
-    m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    m_buttonX.whileTrue(m_intakeCommand);
   }
 
   /**
