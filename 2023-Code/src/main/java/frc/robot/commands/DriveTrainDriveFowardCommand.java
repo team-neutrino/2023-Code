@@ -38,7 +38,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
       m_drivetrain.setMotors();
       }
     }
-  }
+
 
   // Called once the command ends or is interrupted.
   @Override
