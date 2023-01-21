@@ -114,11 +114,11 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    m_buttonX.whileTrue(m_intakeCommand);
+    m_leftTrigger.whileTrue(m_intakeCommand);
+    m_rightTrigger.whileTrue(m_IntakeReverseCommand);
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_buttonA.whileTrue(m_scoringOpenCommand);
-    m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
   /**
