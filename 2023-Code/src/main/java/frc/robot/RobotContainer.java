@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
@@ -42,8 +43,8 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // CONTROLLERS
   private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
-  // private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICK_LEFT);
-  // private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JOYSTICK_RIGHT);
+  private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICK_LEFT);
+  private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JOYSTICK_RIGHT);
 
   // BUTTONS
   private final JoystickButton m_buttonA =
@@ -70,8 +71,16 @@ public class RobotContainer {
   private final ArmDefaultCommand m_armDefaultCommand =
     new ArmDefaultCommand(m_armSubsystem);
 
-  // private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
-  //     new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
+  private final JoystickButton m_buttonBack =
+      new JoystickButton(m_driverController, XboxController.Button.kBack.value);
+  private final Trigger m_leftTrigger =
+      new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
+  private final Trigger m_rightTrigger =
+      new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
+
+  // COMMANDS
+  private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
+      new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
 
   // turn both intake motors off and set the entire thing up
   private final IntakeDefaultCommand m_IntakeDefaultCommand =
@@ -86,8 +95,8 @@ public class RobotContainer {
   // if the right joystick trigger/button is pressed, both joysticks are pushed past
   // the deadzone given in the variable constants, and the endgane pneumatics are not
   // already extended, extend them.
-  // private final EndGameDefaultCommand m_endGameDefaultCommand =
-  //     new EndGameDefaultCommand(m_endGame, m_rightJoystick, m_leftJoystick);
+  private final EndGameDefaultCommand m_endGameDefaultCommand =
+      new EndGameDefaultCommand(m_endGame, m_rightJoystick, m_leftJoystick);
 
   // toggles scoring pneumatics to extended position
   private final ScoringDefaultCommand m_scoringDefaultCommand =
@@ -99,17 +108,17 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    //new PneumaticsSubsystem(); // KEEP THIS
+    new PneumaticsSubsystem();
     new LimelightSubsystem();
 
     configureBindings();
   }
 
   private void configureBindings() {
-    //m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
+    m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
-    //m_endGame.setDefaultCommand(m_endGameDefaultCommand);
+    m_endGame.setDefaultCommand(m_endGameDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
@@ -121,6 +130,8 @@ public class RobotContainer {
     
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
+    m_rightTrigger.whileTrue(m_IntakeReverseCommand);
+    m_leftTrigger.whileTrue(m_intakeCommand);
   }
 
   public Command getAutonomousCommand() {

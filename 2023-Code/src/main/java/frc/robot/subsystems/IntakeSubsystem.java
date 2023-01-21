@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
+
   /** Motor for the left wheels of the intake system */
   private CANSparkMax m_leftMotor =
       new CANSparkMax(
