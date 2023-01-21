@@ -63,6 +63,12 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
   private final JoystickButton m_rightBumper =
       new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
+  private final JoystickButton m_buttonBack =
+      new JoystickButton(m_driverController, XboxController.Button.kBack.value);
+  private final Trigger m_leftTrigger =
+      new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
+  private final Trigger m_rightTrigger =
+      new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
 
   // COMMANDS
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
