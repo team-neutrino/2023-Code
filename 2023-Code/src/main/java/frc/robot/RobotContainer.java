@@ -27,6 +27,7 @@ import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.TriggerToBoolean;
+import frc.robot.util.Driverstationclass;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -36,7 +37,8 @@ import frc.robot.util.TriggerToBoolean;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
+  //UTILS
+  private final Driverstationclass m_driverStation = new Driverstationclass();
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
