@@ -5,22 +5,27 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmSubsystem extends SubsystemBase {
 
-  private CANSparkMax m_armMotor = new CANSparkMax(Constants.MotorConstants.ARM_MOTOR1, MotorType.kBrushless);
+  //TODO: turn motor on brakemode
+  private CANSparkMax m_armMotor =
+      new CANSparkMax(Constants.MotorConstants.ARM_MOTOR1, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_armMotor.getEncoder();
   private SparkMaxPIDController m_pidController;
 
   /** Creates a new ArmSubsystem. */
   public ArmSubsystem() {
     m_armMotor.restoreFactoryDefaults();
+    setSoftLimits();
+
     m_pidController = m_armMotor.getPIDController();
     m_encoder.setPositionConversionFactor(Constants.ArmConstants.ROTATION_TO_INCHES);
     m_pidController.setFeedbackDevice(m_encoder);
@@ -30,22 +35,32 @@ public class ArmSubsystem extends SubsystemBase {
     m_pidController.setD(Constants.PIDConstants.ARM_D);
     m_pidController.setFF(Constants.PIDConstants.ARM_FF);
     m_pidController.setOutputRange(
-      Constants.PIDConstants.ARM_MINIMUM, 
-      Constants.PIDConstants.ARM_MAXIMUM
-    );
+        Constants.PIDConstants.ARM_MINIMUM, Constants.PIDConstants.ARM_MAXIMUM);
   }
 
-  public void setSpeed(double speed) {
-    m_armMotor.set(speed);
+  private void setSoftLimits() {
+    m_armMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
+    m_armMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    m_armMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.ArmConstants.MAX_SOFT_LIM);
+    m_armMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.ArmConstants.MIN_SOFT_LIM);
+  }
+
+  public void turnOff() {
+    m_armMotor.setVoltage(0);
+  }
+
+  public void setVoltage(double voltage) {
+    m_armMotor.setVoltage(voltage);
   }
 
   public void setReference(double rotations) {
-    // multiply angle by some constant
     m_pidController.setReference(rotations, ControlType.kPosition);
   }
 
-  public double getSpeed() {
-    return m_armMotor.get();
+  public double getVoltage() {
+    double appliedOutput = m_armMotor.getAppliedOutput();
+    double busVoltage = m_armMotor.getBusVoltage();
+    return appliedOutput * busVoltage; //chiefdelphi.com/t/get-voltage-from-spark-max/344136/3
   }
 
   public double getPosition() {
@@ -53,5 +68,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    System.out.println("Current arm position: " + getPosition());
+  }
 }

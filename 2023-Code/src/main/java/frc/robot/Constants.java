@@ -28,10 +28,14 @@ public final class Constants {
     public static final int INTAKEMOTOR2 = 22;
     public static final int INTAKEMOTOR3 = 23; // not used currently, may be in the future
     public static final int RMOTOR1 = 11;
-    public static final int RMOTOR2 = 12;
+
+    //change back to 12
+    public static final int RMOTOR2 = 31;
     public static final int LMOTOR1 = 13;
     public static final int LMOTOR2 = 14;
-    public static final int ARM_MOTOR1 = 31;
+
+    //change back to 31
+    public static final int ARM_MOTOR1 = 12;
     public static final int GRABBER_MOTOR1 = 41;
     public static final int GRABBER_MOTOR2 = 42;
   }
@@ -40,11 +44,13 @@ public final class Constants {
     public static final double M_PI = Math.PI;
     public static final double WHEEL_SIZE = 1;
     public static final double REDUCTION = 1;
-    public static final double ROTATION_TO_INCHES = M_PI*(WHEEL_SIZE/REDUCTION);
+    public static final double ROTATION_TO_INCHES = M_PI * (WHEEL_SIZE / REDUCTION);
+    public static final float MIN_SOFT_LIM = -100;
+    public static final float MAX_SOFT_LIM = 100;
   }
 
   public static class PIDConstants {
-    public static final int ARM_P = 0;
+    public static final double ARM_P = 0.2;
     public static final int ARM_I = 0;
     public static final int ARM_D = 0;
     public static final int ARM_FF = 0;
