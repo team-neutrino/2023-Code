@@ -32,12 +32,10 @@ public final class Constants {
   }
 
   public static class PneumaticsConstants {
-    public static final int CHANNEL_PCM = 7;
     public static final int INTAKE_PCM = 0;
-    public static final int GRABBER = 2;
-    public static final int MODULE = 5;
-    public static final int SOLENOID_FRONT = 3;
-    public static final int SOLENOID_BACK = 4;
+    public static final int GRABBER = 1;
+    public static final int SOLENOID_FRONT = 2;
+    public static final int SOLENOID_BACK = 3;
   }
 
   public static class VariableConstants {
