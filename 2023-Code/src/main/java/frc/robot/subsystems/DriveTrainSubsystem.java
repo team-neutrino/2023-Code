@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -84,11 +83,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void setMotors(double rightMotorInput, double leftMotorInput) {
-     double leftMotorSpeed = linearAccel(deadzone(leftMotorInput));
-     double rightMotorSpeed = linearAccel(deadzone(rightMotorInput));
-     m_rmotors.set(rightMotorSpeed);
-     m_lmotors.set(leftMotorSpeed);
-    
+    double leftMotorSpeed = linearAccel(deadzone(leftMotorInput));
+    double rightMotorSpeed = linearAccel(deadzone(rightMotorInput));
+    m_rmotors.set(rightMotorSpeed);
+    m_lmotors.set(leftMotorSpeed);
   }
 
   public double deadzone(double joystickY) {
