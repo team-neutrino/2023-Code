@@ -72,6 +72,10 @@ public class LimelightSubsystem extends SubsystemBase {
     return camTran[0];
   }
 
+  public double getStraightDistance() {
+    return m_distanceFinder.get() * ULTRASONIC_TO_METER_CONVERSION;
+  }
+
   public double lawOfCosines(double sideX, double sideY, double theta){
     double thetar = theta * (Math.PI / 180);
     return Math.sqrt(Math.pow(sideX, 2) + Math.pow(sideY, 2) + (2 * sideX * sideY * Math.cos(thetar)));
@@ -79,7 +83,7 @@ public class LimelightSubsystem extends SubsystemBase {
 
   public double lawOfSines(double sideY, double sideZ, double theta){
     double thetar = theta * (Math.PI / 180);
-    return Math.sinh(sideY * Math.sin(thetar) / sideZ);
+    return Math.asin(sideY * Math.sin(thetar) / sideZ);
   }
 
   /* is a print that access and prints the full array that is accessed when getting the camTran. Inert for right now,

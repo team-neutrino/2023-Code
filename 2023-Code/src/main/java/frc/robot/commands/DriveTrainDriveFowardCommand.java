@@ -11,8 +11,13 @@ import frc.robot.subsystems.LimelightSubsystem;
 public class DriveTrainDriveFowardCommand extends CommandBase {
   /** Creates a new DriveTrainDriveFowardCommand. */
   DriveTrainSubsystem m_drivetrain;
-
   LimelightSubsystem m_limelight;
+  double sideX;
+  double sideY;
+  double sideZ;
+  double theta;
+  double alpha;
+  double sideF;
 
   public DriveTrainDriveFowardCommand(
       DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight) {
@@ -33,7 +38,13 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   @Override
   public void execute() {
     if (true) {
-      
+        sideX = m_limelight.getDistance();
+        sideY = m_limelight.getStraightDistance();
+        theta = m_limelight.getTx();
+        sideZ = m_limelight.lawOfCosines(sideX, sideY, theta);
+        alpha = m_limelight.lawOfSines(sideY, sideZ, theta);
+        sideF = Math.cos(alpha) * sideX;
+        
       }
     }
 
