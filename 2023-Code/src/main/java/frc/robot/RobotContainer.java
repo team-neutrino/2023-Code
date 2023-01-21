@@ -26,7 +26,6 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
-import frc.robot.util.TriggerToBoolean;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -68,9 +67,9 @@ public class RobotContainer {
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
   private final Trigger m_leftTrigger =
-      new Trigger(() -> TriggerToBoolean.leftTriggerPressed(m_driverController));
+      new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
   private final Trigger m_rightTrigger =
-      new Trigger(() -> TriggerToBoolean.rightTriggerPressed(m_driverController));
+      new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
 
   // COMMANDS
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
