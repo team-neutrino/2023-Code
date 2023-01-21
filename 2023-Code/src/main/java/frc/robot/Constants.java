@@ -19,24 +19,21 @@ public final class Constants {
     public static final int XBOX = 4;
   }
 
-  public static class MotorConstants {
-    public static final int RMOTOR1 = 11;
-    public static final int RMOTOR2 = 12;
-    public static final int RMOTOR3 = 13;
-    public static final int LMOTOR1 = 14;
-    public static final int LMOTOR2 = 15;
-    public static final int LMOTOR3 = 16;
-    public static final int ARM_MOTOR1 = 31;
-    public static final int ARM_MOTOR2 = 32;
-    public static final int GRABBER_MOTOR1 = 41;
-    public static final int GRABBER_MOTOR2 = 42;
+  public static class PDPConstants {
+    public static final int PDP_CAN_ID = 0;
   }
 
-  public static class PneumaticsConstants {
-    public static final int GRABBER = 3;
-    public static final int MODULE = 0;
-    public static final int GRABBER_PISTON1 = 41;
-    public static final int GRABBER_PISTON2 = 42;
+  public static class MotorConstants {
+    public static final int INTAKEMOTOR1 = 21; // intake motors have '2' in front of actual id
+    public static final int INTAKEMOTOR2 = 22;
+    public static final int INTAKEMOTOR3 = 23; // not used currently, may be in the future
+    public static final int RMOTOR1 = 11;
+    public static final int RMOTOR2 = 12;
+    public static final int LMOTOR1 = 13;
+    public static final int LMOTOR2 = 14;
+    public static final int ARM_MOTOR1 = 31;
+    public static final int GRABBER_MOTOR1 = 41;
+    public static final int GRABBER_MOTOR2 = 42;
   }
 
   public static class ArmConstants {
@@ -53,5 +50,16 @@ public final class Constants {
     public static final int ARM_FF = 0;
     public static final int ARM_MINIMUM = -1;
     public static final int ARM_MAXIMUM = 1;
+  }
+
+  public static class PneumaticsConstants {
+    public static final int INTAKE_PCM = 0;
+    public static final int GRABBER = 1;
+    public static final int SOLENOID_FRONT = 2;
+    public static final int SOLENOID_BACK = 3;
+  }
+
+  public static class VariableConstants {
+    public static final double DEADZONE = 0.1;
   }
 }
