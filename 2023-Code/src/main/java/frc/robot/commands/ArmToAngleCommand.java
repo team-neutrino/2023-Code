@@ -10,6 +10,7 @@ import frc.robot.subsystems.ArmSubsystem;
 public class ArmToAngleCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private double m_angle;
+
   /** Creates a new ArmToAngleCommand. */
   public ArmToAngleCommand(ArmSubsystem p_armSubsystem, double p_angle) {
     m_armSubsystem = p_armSubsystem;
@@ -18,21 +19,17 @@ public class ArmToAngleCommand extends CommandBase {
     m_angle = p_angle;
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_armSubsystem.setReference(m_angle);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {}
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
