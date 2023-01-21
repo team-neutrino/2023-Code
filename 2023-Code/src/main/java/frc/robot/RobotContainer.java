@@ -26,7 +26,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
-import frc.robot.util.TriggerToBoolean;
+import frc.robot.util.Driverstationclass;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
