@@ -14,12 +14,15 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.EndGameDefaultCommand;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IntakeDefaultCommand;
+import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.EndGameSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -37,6 +40,7 @@ public class RobotContainer {
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -50,15 +54,43 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kA.value);
   private final JoystickButton m_buttonB =
       new JoystickButton(m_driverController, XboxController.Button.kB.value);
+  private final JoystickButton m_buttonX =
+      new JoystickButton(m_driverController, XboxController.Button.kX.value);
+  private final JoystickButton m_buttonY =
+      new JoystickButton(m_driverController, XboxController.Button.kY.value);
+  private final JoystickButton m_leftBumper =
+      new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton m_rightBumper =
+      new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
   private final JoystickButton m_buttonStart =
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
+
   // COMMANDS
+
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
+
+  // turn both intake motors off and set the entire thing up
+  private final IntakeDefaultCommand m_IntakeDefaultCommand =
+      new IntakeDefaultCommand(m_intakeSubsystem);
+
+  // turn both intake motors on and set the entire thing down
+  private final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
+
+  private final IntakeReverseCommand m_IntakeReverseCommand =
+      new IntakeReverseCommand(m_intakeSubsystem);
+
+  // if the right joystick trigger/button is pressed, both joysticks are pushed past
+  // the deadzone given in the variable constants, and the endgane pneumatics are not
+  // already extended, extend them.
   private final EndGameDefaultCommand m_endGameDefaultCommand =
       new EndGameDefaultCommand(m_endGame, m_rightJoystick, m_leftJoystick);
+
+  // toggles scoring pneumatics to extended position
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
+
+  // toggle scoring pneumatics to retracted position
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
 
@@ -83,14 +115,11 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
+    m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
     m_endGame.setDefaultCommand(m_endGameDefaultCommand);
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
     m_buttonA.whileTrue(m_scoringOpenCommand);
-    m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    m_buttonX.whileTrue(m_intakeCommand);
   }
 
   /**

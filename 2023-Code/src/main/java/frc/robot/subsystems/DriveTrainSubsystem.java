@@ -16,7 +16,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private CANSparkMax m_rmotor1 =
       new CANSparkMax(Constants.MotorConstants.RMOTOR1, MotorType.kBrushless);
   private CANSparkMax m_rmotor2 =
-      new CANSparkMax(Constants.MotorConstants.RMOTOR3, MotorType.kBrushless);
+      new CANSparkMax(Constants.MotorConstants.RMOTOR2, MotorType.kBrushless);
   private CANSparkMax m_lmotor1 =
       new CANSparkMax(Constants.MotorConstants.LMOTOR1, MotorType.kBrushless);
   private CANSparkMax m_lmotor2 =
@@ -81,11 +81,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return m_encoderL2.getVelocity();
   }
 
-  public void setMotors(double m_rightMotorSpeed, double m_leftMotorSpeed) {
-    m_leftMotorSpeed = linearAccel(deadzone(m_leftMotorSpeed));
-    m_rightMotorSpeed = linearAccel(deadzone(m_rightMotorSpeed));
-    m_rmotors.set(m_rightMotorSpeed);
-    m_lmotors.set(m_leftMotorSpeed);
+  public void setMotors(double rightMotorInput, double leftMotorInput) {
+    double leftMotorSpeed = linearAccel(deadzone(leftMotorInput));
+    double rightMotorSpeed = linearAccel(deadzone(rightMotorInput));
+    m_rmotors.set(rightMotorSpeed);
+    m_lmotors.set(leftMotorSpeed);
   }
 
   public double deadzone(double joystickY) {
