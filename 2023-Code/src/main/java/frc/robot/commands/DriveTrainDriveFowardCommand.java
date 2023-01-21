@@ -12,12 +12,13 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   /** Creates a new DriveTrainDriveFowardCommand. */
   DriveTrainSubsystem m_drivetrain;
   LimelightSubsystem m_limelight;
-  double sideX;
-  double sideY;
-  double sideZ;
-  double theta;
+  double sideA;
+  double sideB;
+  double sideC;
+  double gamma;
   double alpha;
-  double sideF;
+  double theta;
+  double sideL;
 
   public DriveTrainDriveFowardCommand(
       DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight) {
@@ -38,12 +39,13 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   @Override
   public void execute() {
     if (true) {
-        sideX = m_limelight.getDistance();
-        sideY = m_limelight.getStraightDistance();
-        theta = m_limelight.getTx();
-        sideZ = m_limelight.lawOfCosines(sideX, sideY, theta);
-        alpha = m_limelight.lawOfSines(sideY, sideZ, theta);
-        sideF = Math.cos(alpha) * sideX;
+        sideA = m_limelight.getDistance();
+        sideB = m_limelight.getStraightDistance();
+        gamma = m_limelight.getTx();
+        sideC = m_limelight.lawOfCosines(sideA, sideB, gamma);
+        alpha = m_limelight.lawOfSines(sideA, sideB, gamma);
+        theta = Math.PI - alpha - gamma;
+        sideL = sideA * Math.cos(theta);
         
       }
     }

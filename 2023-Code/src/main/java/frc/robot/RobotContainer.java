@@ -90,11 +90,12 @@ public class RobotContainer {
     m_endGame.setDefaultCommand(m_endGameDefaultCommand);
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
-    m_limelight.setDefaultCommand(m_DriveTrainDriveFowardCommand);
+    // m_limelight.setDefaultCommand(m_DriveTrainDriveFowardCommand);
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_buttonA.whileTrue(m_scoringOpenCommand);
+    //m_buttonA.whileTrue(m_driveTrainDefaultCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 

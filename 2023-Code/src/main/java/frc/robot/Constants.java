@@ -20,11 +20,11 @@ public final class Constants {
   }
 
   public static class MotorConstants {
-    public static final int RMOTOR1 = 1;
-    public static final int RMOTOR2 = 2;
+    public static final int RMOTOR1 = 3;
+    public static final int RMOTOR2 = 4;
     public static final int RMOTOR3 = 13;
-    public static final int LMOTOR1 = 3;
-    public static final int LMOTOR2 = 4;
+    public static final int LMOTOR1 = 1;
+    public static final int LMOTOR2 = 2;
     public static final int LMOTOR3 = 16;
   }
 
@@ -36,6 +36,6 @@ public final class Constants {
   }
 
   public static class VariableConstants {
-    public static final double DEADZONE = 0.0;
+    public static final double DEADZONE = 0.1;
   }
 }

@@ -13,6 +13,8 @@ import frc.robot.Constants;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
+  double cycle = 0;
+
   private CANSparkMax m_rmotor1 =
       new CANSparkMax(Constants.MotorConstants.RMOTOR1, MotorType.kBrushless);
   private CANSparkMax m_rmotor2 =
@@ -59,6 +61,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_encoderL1 = m_lmotor1.getEncoder();
     m_encoderL2 = m_lmotor2.getEncoder();
     m_encoderL3 = m_lmotor3.getEncoder();
+
+    m_encoderR1.setPosition(0);
+    m_encoderR2.setPosition(0);
+    m_encoderL1.setPosition(0);
+    m_encoderL2.setPosition(0);    
   }
 
   public double getR1Pos() {
@@ -116,21 +123,50 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_lmotors.set(m_leftMotorSpeed);
   }
 
+  public void setMotorsStraight(double m_bothMotorSpeed) {
+    m_rmotors.set(m_bothMotorSpeed * -1);
+    m_lmotors.set(m_bothMotorSpeed * -1);
+  }
+
   public double deadzone(double joystickY) {
-    joystickY = Math.abs(joystickY);
-    if (joystickY <= Constants.VariableConstants.DEADZONE) {
+    double absJoystickY = Math.abs(joystickY);
+    if (absJoystickY <= Constants.VariableConstants.DEADZONE) {
       return 0.0;
-    } else if (joystickY >= 0.8) {
+    } else if (absJoystickY >= 0.8) {
       return 1.0;
     } else {
       return joystickY;
     }
   }
 
-  
+  public void printPosition() {
+    if (cycle % 20 == 0){
+      //System.out.println("Positions are " + getL1Pos() + " " + getR1Pos());
+    }
+  }
+
+  public void setMotorPosition(double rmotorset, double lmotorset) {
+    System.out.println("method called");
+    double rmotorPosition = getR1Pos();
+    double lmotorPosition = getL1Pos();
+
+    while (getR1Pos() < rmotorPosition + rmotorset && getL1Pos() < lmotorPosition + lmotorset){
+      m_rmotors.set(0.3);
+      m_lmotors.set(0.3);
+    }
+
+    m_rmotors.set(0);
+    m_lmotors.set(0);
+  }
+
+
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    cycle++;
+    printPosition();
+    
+  }
 
   public static double linearAccel(double joystickY) {
     double newSpeed = joystickY;

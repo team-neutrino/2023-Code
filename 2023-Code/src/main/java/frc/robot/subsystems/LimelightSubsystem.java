@@ -25,7 +25,7 @@ public class LimelightSubsystem extends SubsystemBase {
     
 
     // turns off LED
-    limelight.getEntry("ledMode").setNumber(0);
+    limelight.getEntry("ledMode").setNumber(1);
   }
 
   // return whether or not the limlight sees a target
@@ -78,7 +78,7 @@ public class LimelightSubsystem extends SubsystemBase {
 
   public double lawOfCosines(double sideX, double sideY, double theta){
     double thetar = theta * (Math.PI / 180);
-    return Math.sqrt(Math.pow(sideX, 2) + Math.pow(sideY, 2) + (2 * sideX * sideY * Math.cos(thetar)));
+    return Math.sqrt(Math.pow(sideX, 2) + Math.pow(sideY, 2) - (2 * sideX * sideY * Math.cos(thetar)));
   }
 
   public double lawOfSines(double sideY, double sideZ, double theta){
@@ -98,7 +98,7 @@ public class LimelightSubsystem extends SubsystemBase {
       // System.out.println("Rotation Pitch: " + camTran[3]);
       // System.out.println("Rotation Yaw: " + camTran[4]);
       // System.out.println("Rotation Roll: " + camTran[5]);
-      System.out.println("distance is " + m_distanceFinder.get() * ULTRASONIC_TO_METER_CONVERSION);
+      // System.out.println("distance is " + m_distanceFinder.get() * ULTRASONIC_TO_METER_CONVERSION);
     }
   }
 
