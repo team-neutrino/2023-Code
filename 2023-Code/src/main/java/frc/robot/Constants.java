@@ -25,19 +25,17 @@ public final class Constants {
     public static final int INTAKEMOTOR3 = 23; // not used currently, may be in the future
     public static final int RMOTOR1 = 11;
     public static final int RMOTOR2 = 12;
-    public static final int RMOTOR3 = 13;
-    public static final int LMOTOR1 = 14;
-    public static final int LMOTOR2 = 15;
+    public static final int RMOTOR3 = 13; 
+    public static final int LMOTOR1 = 14; 
+    public static final int LMOTOR2 = 15; 
     public static final int LMOTOR3 = 16;
   }
 
   public static class PneumaticsConstants {
-    public static final int CHANNEL_PCM = 7;
     public static final int INTAKE_PCM = 0;
-    public static final int GRABBER = 2;
-    public static final int MODULE = 5;
-    public static final int SOLENOID_FRONT = 3;
-    public static final int SOLENOID_BACK = 4;
+    public static final int GRABBER = 1;
+    public static final int SOLENOID_FRONT = 2;
+    public static final int SOLENOID_BACK = 3;
   }
 
   public static class VariableConstants {
