@@ -14,7 +14,6 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.EndGameDefaultCommand;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeReverseCommand;
@@ -71,27 +70,27 @@ public class RobotContainer {
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
 
-      //turn both intake motors off and set the entire thing up
+  // turn both intake motors off and set the entire thing up
   private final IntakeDefaultCommand m_IntakeDefaultCommand =
       new IntakeDefaultCommand(m_intakeSubsystem);
 
-      //turn both intake motors on and set the entire thing down
+  // turn both intake motors on and set the entire thing down
   private final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
 
   private final IntakeReverseCommand m_IntakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem);
-      
-      // if the right joystick trigger/button is pressed, both joysticks are pushed past 
-      //the deadzone given in the variable constants, and the endgane pneumatics are not 
-      //already extended, extend them.
+
+  // if the right joystick trigger/button is pressed, both joysticks are pushed past
+  // the deadzone given in the variable constants, and the endgane pneumatics are not
+  // already extended, extend them.
   private final EndGameDefaultCommand m_endGameDefaultCommand =
       new EndGameDefaultCommand(m_endGame, m_rightJoystick, m_leftJoystick);
 
-      //toggles scoring pneumatics to extended position
+  // toggles scoring pneumatics to extended position
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
 
-      //toggle scoring pneumatics to retracted position
+  // toggle scoring pneumatics to retracted position
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
 
