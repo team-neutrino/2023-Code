@@ -13,14 +13,13 @@ public class ArmAdjustCommand extends CommandBase {
   /** Creates a new ArmIterateAngleCommand. */
   public ArmAdjustCommand(ArmSubsystem p_armSubsystem, double p_voltage) {
     m_armSubsystem = p_armSubsystem;
-    m_voltage = p_voltage; 
+    m_voltage = p_voltage;
     addRequirements(m_armSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

@@ -30,7 +30,6 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
-import frc.robot.util.DriverStationInfo;
 
 public class RobotContainer {
   // SUBSYSTEMS
@@ -62,15 +61,11 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
   private final JoystickButton m_buttonStart =
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
-  private final POVButton m_upArrow =
-      new POVButton(m_driverController, 0);
-  private final POVButton m_downArrow =
-      new POVButton(m_driverController, 180);
-    
+  private final POVButton m_upArrow = new POVButton(m_driverController, 0);
+  private final POVButton m_downArrow = new POVButton(m_driverController, 180);
 
   // COMMANDS
-  private final ArmDefaultCommand m_armDefaultCommand =
-    new ArmDefaultCommand(m_armSubsystem);
+  private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
 
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
@@ -128,7 +123,7 @@ public class RobotContainer {
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_buttonX.whileTrue(m_intakeCommand);
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
-    
+
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
     m_rightTrigger.whileTrue(m_IntakeReverseCommand);

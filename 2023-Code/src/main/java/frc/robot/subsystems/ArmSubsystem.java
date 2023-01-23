@@ -59,7 +59,7 @@ public class ArmSubsystem extends SubsystemBase {
   public double getVoltage() {
     double appliedOutput = m_armMotor.getAppliedOutput();
     double busVoltage = m_armMotor.getBusVoltage();
-    return appliedOutput * busVoltage; //chiefdelphi.com/t/get-voltage-from-spark-max/344136/3
+    return appliedOutput * busVoltage; // chiefdelphi.com/t/get-voltage-from-spark-max/344136/3
   }
 
   public double getPosition() {
