@@ -77,13 +77,11 @@ public class LimelightSubsystem extends SubsystemBase {
   }
 
   public double lawOfCosines(double sideX, double sideY, double theta){
-    double thetar = theta * (Math.PI / 180);
-    return Math.sqrt(Math.pow(sideX, 2) + Math.pow(sideY, 2) - (2 * sideX * sideY * Math.cos(thetar)));
+    return Math.sqrt(Math.pow(sideX, 2) + Math.pow(sideY, 2) - (2 * sideX * sideY * Math.cos(theta)));
   }
 
   public double lawOfSines(double sideY, double sideZ, double theta){
-    double thetar = theta * (Math.PI / 180);
-    return Math.asin(sideY * Math.sin(thetar) / sideZ);
+    return Math.asin(sideY * Math.sin(theta) / sideZ);
   }
 
   /* is a print that access and prints the full array that is accessed when getting the camTran. Inert for right now,

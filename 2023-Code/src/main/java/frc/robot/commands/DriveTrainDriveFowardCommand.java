@@ -30,7 +30,9 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println("test");
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
 
@@ -38,17 +40,17 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   //positive == right
   @Override
   public void execute() {
-    if (true) {
-        sideA = m_limelight.getDistance();
-        sideB = m_limelight.getStraightDistance();
-        gamma = m_limelight.getTx();
-        sideC = m_limelight.lawOfCosines(sideA, sideB, gamma);
-        alpha = m_limelight.lawOfSines(sideA, sideB, gamma);
-        theta = Math.PI - alpha - gamma;
-        sideL = sideA * Math.cos(theta);
-        
-      }
-    }
+    System.out.println("running");
+    sideA = m_limelight.getDistance();
+    sideB = m_limelight.getStraightDistance();
+    gamma = m_limelight.getTx() * Math.PI / 180;
+    sideC = m_limelight.lawOfCosines(sideA, sideB, gamma);
+    alpha = m_limelight.lawOfSines(sideA, sideC, gamma);
+    theta = Math.PI - alpha - gamma;
+    sideL = sideA * Math.cos(theta);
+
+    m_drivetrain.turnMotorRight(Math.PI/2);
+  }
 
 
   // Called once the command ends or is interrupted.

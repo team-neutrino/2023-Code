@@ -48,11 +48,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_rmotor2.restoreFactoryDefaults();
     m_lmotor3.restoreFactoryDefaults();
 
-    m_rmotor1.setInverted(true);
-    m_rmotor2.setInverted(true);
+    m_rmotor1.setInverted(false);
+    m_rmotor2.setInverted(false);
     m_rmotor3.setInverted(true);
-    m_lmotor1.setInverted(false);
-    m_lmotor2.setInverted(false);
+    m_lmotor1.setInverted(true);
+    m_lmotor2.setInverted(true);
     m_lmotor3.setInverted(true);
 
     m_encoderR1 = m_rmotor1.getEncoder();
@@ -141,18 +141,33 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public void printPosition() {
     if (cycle % 20 == 0){
-      //System.out.println("Positions are " + getL1Pos() + " " + getR1Pos());
+      System.out.println("Positions are " + getL1Pos() + " " + getR1Pos());
     }
   }
 
   public void setMotorPosition(double rmotorset, double lmotorset) {
-    System.out.println("method called");
+    rmotorset = rmotorset * 15;
+    lmotorset = lmotorset * 15;
     double rmotorPosition = getR1Pos();
     double lmotorPosition = getL1Pos();
 
     while (getR1Pos() < rmotorPosition + rmotorset && getL1Pos() < lmotorPosition + lmotorset){
       m_rmotors.set(0.3);
       m_lmotors.set(0.3);
+    }
+
+    m_rmotors.set(0);
+    m_lmotors.set(0);
+  }
+  
+  public void turnMotorRight(double motorset) {
+    motorset = motorset * 15 * 1.4 / Math.PI;
+    double rmotorPosition = getR1Pos();
+    double lmotorPosition = getL1Pos();
+
+    while (getR1Pos() > rmotorPosition - motorset && getL1Pos() < lmotorPosition + motorset){
+      m_rmotors.set(-0.1);
+      m_lmotors.set(0.1);
     }
 
     m_rmotors.set(0);
