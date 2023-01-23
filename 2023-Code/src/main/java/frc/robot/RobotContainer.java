@@ -33,9 +33,12 @@ import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.DriverStationInfo;
 
 public class RobotContainer {
-  // SUBSYSTEMS
+
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
+
+  // SUBSYSTEMS
+
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
