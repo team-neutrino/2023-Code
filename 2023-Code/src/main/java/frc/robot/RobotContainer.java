@@ -11,18 +11,12 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmToAngleCommand;
->>>>>>> Stashed changes
-=======
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmToAngleCommand;
->>>>>>> main
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.EndGameDefaultCommand;
@@ -39,29 +33,17 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
 // import frc.robot.util.DriverStationInfo;
->>>>>>> Stashed changes
-=======
 import frc.robot.util.DriverStationInfo;
->>>>>>> main
 
 public class RobotContainer {
-<<<<<<< HEAD
-<<<<<<< Updated upstream
   // The robot's subsystems and commands are defined here...
-=======
 
   // UTIL
 //   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
->>>>>>> Stashed changes
-=======
 
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
->>>>>>> main
 
   // SUBSYSTEMS
 
