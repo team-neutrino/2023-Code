@@ -24,6 +24,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.EndGameSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -44,6 +45,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
+  private final LEDSubsystem m_LedSubsystem;
   private final ShuffleboardSubsystem m_shuffleboardSubsystem =
       new ShuffleboardSubsystem(m_scoringSubsystem, m_driveTrain, m_endGame);
 
@@ -90,6 +92,8 @@ public class RobotContainer {
     new LimelightSubsystem();
     // Configure the trigger bindings
     configureBindings();
+    
+    m_LedSubsystem = new LEDSubsystem();
   }
 
   /**
