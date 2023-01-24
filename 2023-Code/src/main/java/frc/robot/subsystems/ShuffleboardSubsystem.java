@@ -21,19 +21,21 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   ScoringSubsystem m_scoring;
   DriveTrainSubsystem m_driveTrain;
   EndGameSubsystem m_endGame;
+  LimelightSubsystem m_limelight;
 
   /** Creates a new ShuffleboardSubsystem. */
   public ShuffleboardSubsystem(
-      ScoringSubsystem p_scoring, DriveTrainSubsystem p_driveTrain, EndGameSubsystem p_endGame) {
+      ScoringSubsystem p_scoring, DriveTrainSubsystem p_driveTrain, EndGameSubsystem p_endGame, LimelightSubsystem p_limelight) {
     m_scoring = p_scoring;
     m_driveTrain = p_driveTrain;
     m_endGame = p_endGame;
+    m_limelight = p_limelight;
     m_drivestationTab = Shuffleboard.getTab("driverstation tab");
 
     //driveStaionTab();
   }
 
-  @Override
+  @Override 
   public void periodic() {
    // m_scoringVariables[0].setBoolean(m_scoring.getSolenoidValue());
     // m_driveTrainVariables[0].setDouble(m_driveTrain.getR1Pos());
