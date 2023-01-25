@@ -105,11 +105,19 @@ public class LimelightSubsystem extends SubsystemBase {
 
   public double[] parseJson() {
     String jsonString = limelight.getEntry("json").getString("not found");
-    //System.out.println(jsonString);
+    System.out.println(jsonString);
     JSONObject jsonObject = new JSONObject(jsonString);
     JSONArray array = jsonObject.getJSONObject("Results").getJSONArray("Fiducial");
-    double x = array.getJSONObject(0).getJSONArray("t6c_ts").getDouble(0);
-    double z = array.getJSONObject(0).getJSONArray("t6s_ts").getDouble(2);
+    System.out.println("array is " + array);
+    //JSONArray x = array.getJSONArray();
+    if (array.length() == 0){
+      return new double[]{};
+    }
+    JSONObject jsonObject2 = array.getJSONObject(0);
+    JSONArray y = jsonObject2.getJSONArray("t6c_ts");
+    double z = y.getDouble(0);
+    System.out.println("z is hghrfhusgrhgrhulg" + z);
+    // double z = array.getJSONObject(0).getJSONArray("t6s_ts").getDouble(2);
     
 
     //double[] doubles = {x, z};
