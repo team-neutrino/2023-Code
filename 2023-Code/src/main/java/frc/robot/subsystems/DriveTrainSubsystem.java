@@ -4,15 +4,26 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
+  // ODOMETRY
+  private DifferentialDriveOdometry m_diffDriveOdometry;
+  private AHRS m_navX = new AHRS(SPI.Port.kMXP);
+
+  // MOTORS
   private CANSparkMax m_rmotor1 =
       new CANSparkMax(Constants.MotorConstants.RMOTOR1, MotorType.kBrushless);
   private CANSparkMax m_rmotor2 =
@@ -32,7 +43,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   /** Creates a new Drivetrain. */
   public DriveTrainSubsystem() {
-
     m_rmotor1.restoreFactoryDefaults();
     m_rmotor2.restoreFactoryDefaults();
     m_lmotor1.restoreFactoryDefaults();
@@ -47,6 +57,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_encoderR2 = m_rmotor2.getEncoder();
     m_encoderL1 = m_lmotor1.getEncoder();
     m_encoderL2 = m_lmotor2.getEncoder();
+
+    m_diffDriveOdometry =
+        new DifferentialDriveOdometry(getGyroYawAsRotation(), getL1Pos(), getR1Pos());
   }
 
   public double getR1Pos() {
@@ -81,6 +94,27 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return m_encoderL2.getVelocity();
   }
 
+  public double getGyroYaw() {
+    return m_navX.getYaw();
+  }
+
+  private Rotation2d getGyroYawAsRotation() {
+    return Rotation2d.fromDegrees(getGyroYaw());
+  }
+
+  public Pose2d getPose2d() {
+    return m_diffDriveOdometry.getPoseMeters();
+  }
+
+  public DifferentialDriveWheelSpeeds getDriveWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(getL1Vel(), getL2Vel());
+  }
+
+  public void setVoltage(double rightVoltage, double leftVoltage) {
+    m_rmotors.setVoltage(rightVoltage);
+    m_lmotors.setVoltage(leftVoltage);
+  }
+
   public void setMotors(double rightMotorInput, double leftMotorInput) {
     double leftMotorSpeed = linearAccel(deadzone(leftMotorInput));
     double rightMotorSpeed = linearAccel(deadzone(rightMotorInput));
@@ -99,9 +133,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     }
   }
 
-  @Override
-  public void periodic() {}
-
   public static double linearAccel(double joystickY) {
     double newSpeed = joystickY;
     return newSpeed;
@@ -116,5 +147,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public static double turboAccel(double joystickY) {
     double newSpeed = Math.pow(joystickY, 3) * 1.6 + (0.17 * joystickY);
     return newSpeed;
+  }
+
+  @Override
+  public void periodic() {
+    m_diffDriveOdometry.update(
+        getGyroYawAsRotation(), m_encoderL1.getPosition(), m_encoderL2.getPosition());
   }
 }

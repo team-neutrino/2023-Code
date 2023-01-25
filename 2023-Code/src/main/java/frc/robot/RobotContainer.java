@@ -14,7 +14,6 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmToAngleCommand;
-import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.EndGameDefaultCommand;
 import frc.robot.commands.IntakeCommand;
@@ -22,12 +21,12 @@ import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
+import frc.robot.commands.autonomous.BasicAutonomousCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.EndGameSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.DriverStationInfo;
@@ -38,7 +37,6 @@ public class RobotContainer {
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
   // SUBSYSTEMS
-
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -46,8 +44,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  // CONTROLLERS
+  // CONTROLLERS (Replace with CommandPS4Controller or CommandJoystick if needed)
   private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
   private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICK_LEFT);
   private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JOYSTICK_RIGHT);
@@ -69,10 +66,6 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
   private final POVButton m_upArrow = new POVButton(m_driverController, 0);
   private final POVButton m_downArrow = new POVButton(m_driverController, 180);
-
-  // COMMANDS
-  private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
-
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
   private final Trigger m_leftTrigger =
@@ -81,37 +74,42 @@ public class RobotContainer {
       new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
 
   // COMMANDS
+  private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
+
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
 
-  // turn both intake motors off and set the entire thing up
+  // Turn both intake motors off and set the entire thing up
   private final IntakeDefaultCommand m_IntakeDefaultCommand =
       new IntakeDefaultCommand(m_intakeSubsystem);
 
-  // turn both intake motors on and set the entire thing down
+  // Turn both intake motors on and set the entire thing down
   private final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
-
   private final IntakeReverseCommand m_IntakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem);
 
-  // if the right joystick trigger/button is pressed, both joysticks are pushed past
+  // If the right joystick trigger/button is pressed, both joysticks are pushed past
   // the deadzone given in the variable constants, and the endgane pneumatics are not
   // already extended, extend them.
   private final EndGameDefaultCommand m_endGameDefaultCommand =
       new EndGameDefaultCommand(m_endGame, m_rightJoystick, m_leftJoystick);
 
-  // toggles scoring pneumatics to extended position
+  // Toggles scoring pneumatics to extended position
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
 
-  // toggle scoring pneumatics to retracted position
+  // Toggle scoring pneumatics to retracted position
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
+
+  // AUTONOMOUS COMMANDS
+  private final BasicAutonomousCommand m_basicAutonomousCommand =
+      new BasicAutonomousCommand(m_scoringSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
-    new LimelightSubsystem();
+    // new LimelightSubsystem();
 
     configureBindings();
   }
@@ -137,6 +135,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return m_basicAutonomousCommand;
   }
 }
