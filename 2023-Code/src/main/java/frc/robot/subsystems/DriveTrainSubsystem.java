@@ -65,7 +65,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_encoderR1.setPosition(0);
     m_encoderR2.setPosition(0);
     m_encoderL1.setPosition(0);
-    m_encoderL2.setPosition(0);    
+    m_encoderL2.setPosition(0);
   }
 
   public double getR1Pos() {
@@ -140,7 +140,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void printPosition() {
-    if (cycle % 20 == 0){
+    if (cycle % 20 == 0) {
       System.out.println("Positions are " + getL1Pos() + " " + getR1Pos());
     }
   }
@@ -151,7 +151,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     double rmotorPosition = getR1Pos();
     double lmotorPosition = getL1Pos();
 
-    while (getR1Pos() < rmotorPosition + rmotorset && getL1Pos() < lmotorPosition + lmotorset){
+    while (getR1Pos() < rmotorPosition + rmotorset && getL1Pos() < lmotorPosition + lmotorset) {
       m_rmotors.set(0.3);
       m_lmotors.set(0.3);
     }
@@ -159,13 +159,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_rmotors.set(0);
     m_lmotors.set(0);
   }
-  
+
   public void turnMotorRight(double motorset) {
     motorset = motorset * 15 * 1.4 / Math.PI;
     double rmotorPosition = getR1Pos();
     double lmotorPosition = getL1Pos();
 
-    while (getR1Pos() > rmotorPosition - motorset && getL1Pos() < lmotorPosition + motorset){
+    while (getR1Pos() > rmotorPosition - motorset && getL1Pos() < lmotorPosition + motorset) {
       m_rmotors.set(-0.1);
       m_lmotors.set(0.1);
     }
@@ -174,13 +174,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_lmotors.set(0);
   }
 
-
-
   @Override
   public void periodic() {
     cycle++;
     printPosition();
-    
   }
 
   public static double linearAccel(double joystickY) {

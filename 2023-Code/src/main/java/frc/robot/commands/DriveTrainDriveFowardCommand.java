@@ -11,6 +11,7 @@ import frc.robot.subsystems.LimelightSubsystem;
 public class DriveTrainDriveFowardCommand extends CommandBase {
   /** Creates a new DriveTrainDriveFowardCommand. */
   DriveTrainSubsystem m_drivetrain;
+
   LimelightSubsystem m_limelight;
   double sideA;
   double sideB;
@@ -36,8 +37,8 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
 
-  //negative == left
-  //positive == right
+  // negative == left
+  // positive == right
   @Override
   public void execute() {
     System.out.println("running");
@@ -49,9 +50,8 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
     theta = Math.PI - alpha - gamma;
     sideL = sideA * Math.cos(theta);
 
-    m_drivetrain.turnMotorRight(Math.PI/2);
+    m_drivetrain.turnMotorRight(Math.PI / 2);
   }
-
 
   // Called once the command ends or is interrupted.
   @Override
