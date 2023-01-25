@@ -13,6 +13,10 @@ public class AutoBalanceCommand extends CommandBase{
     double error;
     double voltage;
 
+    double derivative;
+    double previousError = 0;
+    final double dt = .02;
+
   public AutoBalanceCommand(DriveTrainSubsystem p_drivetrain) {
     m_drivetrain = p_drivetrain;
     addRequirements(m_drivetrain);
@@ -24,7 +28,9 @@ public class AutoBalanceCommand extends CommandBase{
   @Override
   public void execute() {
     error = desiredPos - m_drivetrain.getPitch();
-    voltage = error * Constants.PIDConstants.BALANCE_P;
+    voltage = error * Constants.PIDConstants.BALANCE_P +
+      Constants.PIDConstants.BALANCE_D*(error - previousError)/dt;
+    previousError = error;
     m_drivetrain.setVoltage(voltage);
   }
 
