@@ -10,31 +10,33 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase {
 
-  public AddressableLED m_addressableLED = new AddressableLED(9);
-  public AddressableLEDBuffer m_LedBuffer = new AddressableLEDBuffer(60);
+  public AddressableLED m_addressableLED;
+  public AddressableLEDBuffer m_LedBuffer;
 
-  public void setToPurple(){
-    for (var i = 0; i < m_LedBuffer.getLength(); i++){
-      m_LedBuffer.setRGB(i, 95, 0, 160);
-    }
-  }
+  public void start() {}
 
-  public void start(){}
-
-  public void stop(){}
+  public void stop() {}
 
   /** Creates a new LEDSubsystem. */
   public LEDSubsystem() {
-    m_addressableLED.setLength(500);
+    m_addressableLED = new AddressableLED(9);
+    m_LedBuffer = new AddressableLEDBuffer(8);
+
+    m_addressableLED.setLength(m_LedBuffer.getLength());
     m_addressableLED.setData(m_LedBuffer);
     m_addressableLED.start();
-
+    // setToPurple();
+    // m_addressableLED.setData(m_LedBuffer);
+    // m_addressableLED.start();
+    for (int i = 0; i < m_LedBuffer.getLength(); i++) {
+      m_LedBuffer.setRGB(i, i*70, 0, 255-i*70);
+    }
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    setToPurple();
 
+    m_addressableLED.setData(m_LedBuffer);
   }
 }

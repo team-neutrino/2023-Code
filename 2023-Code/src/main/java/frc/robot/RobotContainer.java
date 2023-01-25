@@ -23,6 +23,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.EndGameSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -98,6 +99,7 @@ public class RobotContainer {
   public RobotContainer() {
     new PneumaticsSubsystem();
     new LimelightSubsystem();
+    new LEDSubsystem();
     // Configure the trigger bindings
     configureBindings();
   }
