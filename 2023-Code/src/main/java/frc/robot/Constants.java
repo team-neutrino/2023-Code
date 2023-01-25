@@ -54,6 +54,9 @@ public final class Constants {
     public static final int ARM_FF = 0;
     public static final int ARM_MINIMUM = -1;
     public static final int ARM_MAXIMUM = 1;
+    public static final double BALANCE_P = 0.01;
+    public static final double BALANCE_I = 0.01;
+    public static final double BALANCE_D = 0.01;
   }
 
   public static class PneumaticsConstants {

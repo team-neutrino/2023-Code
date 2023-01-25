@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
@@ -13,6 +15,8 @@ import frc.robot.Constants;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
+  private AHRS m_navX = new AHRS(SPI.Port.kMXP);
+  
   private CANSparkMax m_rmotor1 =
       new CANSparkMax(Constants.MotorConstants.RMOTOR1, MotorType.kBrushless);
   private CANSparkMax m_rmotor2 =
@@ -97,6 +101,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
     } else {
       return joystickY;
     }
+  }
+
+  public double getPitch() {
+    return m_navX.getPitch();
+  }
+
+  public void setVoltage(double voltage) {
+    m_rmotors.setVoltage(voltage);
+    m_lmotors.setVoltage(voltage);
   }
 
   @Override
