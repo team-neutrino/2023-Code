@@ -11,22 +11,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
-  private GenericEntry m_scoringVariables[] = new GenericEntry[1];
   private GenericEntry m_driveTrainVariables[] = new GenericEntry[7];
-  private GenericEntry m_endGameVariables[] = new GenericEntry[1];
-  private GenericEntry m_limelightVariables[] = new GenericEntry[4];
-  private GenericEntry m_driverStationInfo[] = new GenericEntry[2];
-  private GenericEntry distanceEntry;
 
-  ScoringSubsystem m_scoring;
   DriveTrainSubsystem m_driveTrain;
-  EndGameSubsystem m_endGame;
 
-  public ShuffleboardSubsystem(
-      ScoringSubsystem p_scoring, DriveTrainSubsystem p_driveTrain, EndGameSubsystem p_endGame) {
-    m_scoring = p_scoring;
+  public ShuffleboardSubsystem(DriveTrainSubsystem p_driveTrain) {
     m_driveTrain = p_driveTrain;
-    m_endGame = p_endGame;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
 
     driveStaionTab();

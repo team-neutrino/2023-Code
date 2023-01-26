@@ -46,8 +46,6 @@ public class RobotContainer {
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
-  private final ShuffleboardSubsystem m_shuffleboardSubsystem =
-      new ShuffleboardSubsystem(m_scoringSubsystem, m_driveTrain, m_endGame);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // CONTROLLERS
@@ -115,6 +113,7 @@ public class RobotContainer {
   public RobotContainer() {
     new PneumaticsSubsystem();
     new LimelightSubsystem();
+    new ShuffleboardSubsystem(m_driveTrain);
 
     configureBindings();
   }
