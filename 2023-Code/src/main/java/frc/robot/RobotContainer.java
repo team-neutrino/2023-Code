@@ -27,8 +27,10 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.EndGameSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
 
 public class RobotContainer {
@@ -109,7 +111,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
-    // new LimelightSubsystem();
+    new LimelightSubsystem();
+    new ShuffleboardSubsystem(m_driveTrain);
 
     configureBindings();
   }
