@@ -28,8 +28,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   }
 
   private void driveStaionTab() {
-    m_drivestationTab = Shuffleboard.getTab("Drivestation Tab 2");
-
     m_driveTrainVariables[0] =
         m_drivestationTab
             .add("Right Motor 1 Position", 0)
