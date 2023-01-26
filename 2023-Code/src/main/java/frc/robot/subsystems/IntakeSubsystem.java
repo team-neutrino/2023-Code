@@ -14,77 +14,74 @@ import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  /** Motor for the left wheels of the intake system */
-  private CANSparkMax m_leftMotor =
+  /** Motor for the wheels of the intake system */
+  private CANSparkMax m_wheelsMotor =
       new CANSparkMax(
           Constants.MotorConstants.INTAKEMOTOR1,
           MotorType.kBrushless); // motor type subject to change;
 
-  /** Another motor for the right wheels of the intake system. */
-  private CANSparkMax m_rightMotor =
+  /** Another motor for the setting up and putting down of the intake. */
+  private CANSparkMax m_upDownMotor =
       new CANSparkMax(
           Constants.MotorConstants.INTAKEMOTOR2,
           MotorType.kBrushless); // motor type subject to change;
 
-  /** Encoder for the left motor */
-  private RelativeEncoder m_leftEncoder;
+  /** Encoder for the wheels on the intake */
+  private RelativeEncoder m_wheelsEncoder;
 
-  /** Encoder for the right motor */
-  private RelativeEncoder m_rightEncoder;
+  /** Encoder for the up-down motion of the intake */
+  private RelativeEncoder m_upDownEncoder;
 
-  /** Solenoid for the intake. */
+  /** Solenoid for the intake, controls the in-out motion */
   private Solenoid m_IntakeSolenoid =
       new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.INTAKE_PCM);
 
   /** Creates a new IntakeSubsystem and initializes the motor controllers. */
   public IntakeSubsystem() {
-    m_rightMotor.restoreFactoryDefaults();
-    m_leftMotor.restoreFactoryDefaults();
+    m_wheelsMotor.restoreFactoryDefaults();
+    m_upDownMotor.restoreFactoryDefaults();
     // encoders initialized in constructor to make sure motors are initialized first
-    m_leftEncoder = m_leftMotor.getEncoder();
-    m_rightEncoder = m_rightMotor.getEncoder();
+    m_upDownEncoder = m_upDownMotor.getEncoder();
+    m_wheelsEncoder = m_wheelsMotor.getEncoder();
   }
 
-  /** Puts down the intake. */
+  /** Sets the solenoid to the 'out' position */
   public void setIntakeDown() {
     m_IntakeSolenoid.set(true);
   }
 
-  /** Puts up the intake. */
+  /** Sets the solenoid to the 'in' position. */
   public void setIntakeUp() {
     m_IntakeSolenoid.set(false);
   }
 
-  /** Puts the intake down and runs it at a fixed speed. */
+  /** Runs the wheels motor at a fixed speed. */
   public void runIntake() {
-    m_leftMotor.set(.2); // NEED TO MAKE CONSTANT FOR MOTOR SPEED
-    m_rightMotor.set(.2);
+    m_wheelsMotor.set(.2); // NEED TO MAKE CONSTANT FOR MOTOR SPEED
   }
 
-  /** Runs the intake motors in reverse. */
+  /** Runs the wheels motor in reverse. */
   public void runIntakeReverse() {
-    m_leftMotor.set(-.2);
-    m_rightMotor.set(-.2);
+    m_wheelsMotor.set(-.2);
   }
 
-  /** Stops the motors and puts the whole thing up. */
+  /** Stops the motors. */
   public void stopIntake() {
-    m_leftMotor.set(0);
-    m_rightMotor.set(0);
+    m_wheelsMotor.set(0);
   }
 
-  public double getRightEncoder() {
-    return m_rightEncoder.getVelocity();
+  public double getWheelsEncoder() {
+    return m_wheelsEncoder.getVelocity();
   }
 
-  public double getLeftEncoder() {
-    return m_leftEncoder.getVelocity();
+  public double getUpDownEncoder() {
+    return m_upDownEncoder.getVelocity();
   }
 
   /** Resets the endcoders */
   public void resetEncoders() {
-    m_leftEncoder.setPosition(0);
-    m_rightEncoder.setPosition(0);
+    m_upDownEncoder.setPosition(0);
+    m_wheelsEncoder.setPosition(0);
   }
 
   @Override
