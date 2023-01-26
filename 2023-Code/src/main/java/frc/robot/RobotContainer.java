@@ -104,9 +104,6 @@ public class RobotContainer {
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
 
-  // AUTONOMOUS COMMANDS
-  private final BasicAutonomousCommand m_basicAutonomousCommand =
-      new BasicAutonomousCommand(m_scoringSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -138,6 +135,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return m_basicAutonomousCommand;
+    return new BasicAutonomousCommand(m_scoringSubsystem);
   }
 }
