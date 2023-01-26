@@ -35,15 +35,10 @@ import frc.robot.util.DriverStationInfo;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
-  // UTIL
-  //   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
-
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
   // SUBSYSTEMS
-
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
