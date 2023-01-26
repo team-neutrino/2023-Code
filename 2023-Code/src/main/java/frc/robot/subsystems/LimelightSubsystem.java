@@ -15,6 +15,7 @@ import org.json.JSONObject;
 public class LimelightSubsystem extends SubsystemBase {
   NetworkTable limelight;
   int cycle = 0;
+  double P = 1.5;
   double LIMELIGHT_TO_METER_CONVERSION = 0.76189;
   double ULTRASONIC_TO_METER_CONVERSION = 1.23;
   AnalogPotentiometer m_distanceFinder = new AnalogPotentiometer(0, 6, 0);
@@ -91,10 +92,14 @@ public class LimelightSubsystem extends SubsystemBase {
   public void printCamTran() {
     if (cycle % 40 == 0) {
       double[] camTran = getCamTran();
-      System.out.println(parseJson());
+      double[] jsonOutput = parseJson();
+      if (jsonOutput.length != 0)
+        System.out.println("json file output: x: " + jsonOutput[0] + " z: " + jsonOutput[1]);
+      // System.out.println(parseJson());
       // System.out.println("Translation X: " + camTran[0]);
       // System.out.println("Translation Y: " + camTran[1]);
-      // System.out.println("Translation Z: " + camTran[2] * LIMELIGHT_TO_METER_CONVERSION * -1);
+      // System.out.println("Translation Z: " hhehaeaehaehaeaehahehaeaeh+ camTran[2] *
+      // LIMELIGHT_TO_METER_CONVERSION * -1);
       // System.out.println("Rotation Pitch: " + camTran[3]);
       // System.out.println("Rotation Yaw: " + camTran[4]);
       // System.out.println("Rotation Roll: " + camTran[5]);
@@ -105,24 +110,27 @@ public class LimelightSubsystem extends SubsystemBase {
 
   public double[] parseJson() {
     String jsonString = limelight.getEntry("json").getString("not found");
-    System.out.println(jsonString);
     JSONObject jsonObject = new JSONObject(jsonString);
-    JSONArray array = jsonObject.getJSONObject("Results").getJSONArray("Fiducial");
-    System.out.println("array is " + array);
-    //JSONArray x = array.getJSONArray();
-    if (array.length() == 0){
-      return new double[]{};
+    JSONArray fiducial = jsonObject.getJSONObject("Results").getJSONArray("Fiducial");
+    // JSONArray x = array.getJSONArray();
+    if (fiducial.length() == 0) {
+      return new double[] {};
     }
-    JSONObject jsonObject2 = array.getJSONObject(0);
-    JSONArray y = jsonObject2.getJSONArray("t6c_ts");
-    double z = y.getDouble(0);
-    System.out.println("z is hghrfhusgrhgrhulg" + z);
+    JSONObject jsonObject2 = fiducial.getJSONObject(0);
+    JSONArray t6c_ts = jsonObject2.getJSONArray("t6c_ts");
+    double x = t6c_ts.getDouble(0);
+    double z = t6c_ts.getDouble(2);
+    // System.out.println("z is hghrfhusgrhgrhulg" + z);
     // double z = array.getJSONObject(0).getJSONArray("t6s_ts").getDouble(2);
-    
 
-    //double[] doubles = {x, z};
-    double[] placeholder = {1,2};
-    return placeholder;
+    double[] values = {x, z};
+    return values;
+  }
+
+  public double limelightPID(double setpoint) {
+    double error = getTx();
+    double output = error * P + setpoint;
+    return output;
   }
 
   @Override

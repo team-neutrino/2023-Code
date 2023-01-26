@@ -123,9 +123,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_lmotors.set(m_leftMotorSpeed);
   }
 
-  public void setMotorsStraight(double m_bothMotorSpeed) {
+  public void setMotorsStraight(double m_bothMotorSpeed, double placeholder) {
     m_rmotors.set(m_bothMotorSpeed * -1);
-    m_lmotors.set(m_bothMotorSpeed * -1);
+    m_lmotors.set(m_bothMotorSpeed * 1);
   }
 
   public double deadzone(double joystickY) {
@@ -160,14 +160,36 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_lmotors.set(0);
   }
 
+  public void turnMotor(double motorset) {
+    if (motorset > 0) {
+      turnMotorRight(Math.abs(motorset));
+    } else if (motorset < 0) {
+      turnMotorLeft(Math.abs(motorset));
+    }
+  }
+
   public void turnMotorRight(double motorset) {
-    motorset = motorset * 15 * 1.4 / Math.PI;
+    motorset = motorset * 28 / Math.PI;
     double rmotorPosition = getR1Pos();
     double lmotorPosition = getL1Pos();
 
     while (getR1Pos() > rmotorPosition - motorset && getL1Pos() < lmotorPosition + motorset) {
       m_rmotors.set(-0.1);
       m_lmotors.set(0.1);
+    }
+
+    m_rmotors.set(0);
+    m_lmotors.set(0);
+  }
+
+  public void turnMotorLeft(double motorset) {
+    motorset = motorset * 28 / Math.PI;
+    double rmotorPosition = getR1Pos();
+    double lmotorPosition = getL1Pos();
+
+    while (getR1Pos() < rmotorPosition + motorset && getL1Pos() > lmotorPosition - motorset) {
+      m_rmotors.set(0.1);
+      m_lmotors.set(-0.1);
     }
 
     m_rmotors.set(0);

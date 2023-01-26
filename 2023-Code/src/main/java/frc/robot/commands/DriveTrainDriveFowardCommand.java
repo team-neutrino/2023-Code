@@ -41,16 +41,61 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   // positive == right
   @Override
   public void execute() {
-    System.out.println("running");
+    // System.out.println("running");
+    if (m_limelight.getTv()){
+      double[] array = m_limelight.parseJson();
+      if (array.length != 0){
+        
+        boolean tagOnLeft = array[0]>=0;
+        System.out.println(array[0] + " " + array[1]);
+        double slope = array[1] / array[0];
+        theta = Math.atan(slope);
+        
+        System.out.println("slope is " + slope);
+        System.out.println("theta is " + theta);
+        System.out.println("tan of theta is " + Math.tan(theta));
+        m_drivetrain.turnMotor(theta);
+        
+        System.out.println("set motor position " + (array[0] * -1));
+        m_drivetrain.setMotorPosition(array[0] * -1, array[0] * -1);
+
+        if(tagOnLeft) {
+          m_drivetrain.turnMotor(-Math.PI / 2);
+        }
+        else {
+          m_drivetrain.turnMotor(Math.PI / 2);
+        }
+        
+        array = m_limelight.parseJson();
+        if (array.length != 0){
+        slope = array[1] / array[2];
+        theta = Math.atan(slope);
+
+        double motorSet = m_limelight.limelightPID(theta);
+        if (array[1] > 0){
+          tagOnLeft = true;
+        }
+        if(tagOnLeft) {
+          m_drivetrain.turnMotor(motorSet);
+        }
+        else {
+          m_drivetrain.turnMotor(motorSet);
+        }
+      }
+      }
+    }
+
+    /* 
     sideA = m_limelight.getDistance();
     sideB = m_limelight.getStraightDistance();
     gamma = m_limelight.getTx() * Math.PI / 180;
     sideC = m_limelight.lawOfCosines(sideA, sideB, gamma);
     alpha = m_limelight.lawOfSines(sideA, sideC, gamma);
-    theta = Math.PI - alpha - gamma;
+    // theta = Math.PI - alpha - gamma;
     sideL = sideA * Math.cos(theta);
 
     m_drivetrain.turnMotorRight(Math.PI / 2);
+    */
   }
 
   // Called once the command ends or is interrupted.
