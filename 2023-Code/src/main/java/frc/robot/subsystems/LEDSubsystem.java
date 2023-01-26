@@ -25,18 +25,27 @@ public class LEDSubsystem extends SubsystemBase {
     m_addressableLED.setLength(m_LedBuffer.getLength());
     m_addressableLED.setData(m_LedBuffer);
     m_addressableLED.start();
-    // setToPurple();
-    // m_addressableLED.setData(m_LedBuffer);
-    // m_addressableLED.start();
+
+    // for (int i = 0; i < m_LedBuffer.getLength(); i++) {
+    // m_LedBuffer.setRGB(i, i*70, 0, 255-i*70);
+    // }
+  }
+
+  public void setToPurple() {
     for (int i = 0; i < m_LedBuffer.getLength(); i++) {
-      m_LedBuffer.setRGB(i, i*70, 0, 255-i*70);
+      m_LedBuffer.setRGB(i, 162, 25, 255);
+    }
+  }
+
+  public void setToYellow() {
+    for (int i = 0; i < m_LedBuffer.getLength(); i++) {
+      m_LedBuffer.setRGB(i, 255, 255, 0);
     }
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
     m_addressableLED.setData(m_LedBuffer);
   }
 }
