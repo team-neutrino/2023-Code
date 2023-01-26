@@ -8,24 +8,27 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.util.DriverStationInfo;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
   private GenericEntry m_driveTrainVariables[] = new GenericEntry[7];
   private GenericEntry m_limelightVariables[] = new GenericEntry[8];
-  private GenericEntry m_driverStationInfo[] = new GenericEntry[9];
+  private GenericEntry m_driverStationInfoVariables[] = new GenericEntry[9];
   private GenericEntry m_scoringVariables[] = new GenericEntry[11];
 
   private DriveTrainSubsystem m_driveTrain;
   private LimelightSubsystem m_limelight;
   private ScoringSubsystem m_scoring;
   private EndGameSubsystem m_endGame;
+  private DriverStationInfo m_driverStationInfo;
 
-  public ShuffleboardSubsystem(DriveTrainSubsystem p_driveTrain, ScoringSubsystem p_scoring, LimelightSubsystem p_limelight) {
+  public ShuffleboardSubsystem(DriverStationInfo p_driverStationInfo, DriveTrainSubsystem p_driveTrain, ScoringSubsystem p_scoring, LimelightSubsystem p_limelight) {
 
     m_driveTrain = p_driveTrain;
     m_limelight = p_limelight; 
     m_scoring = p_scoring;
+    m_driverStationInfo = p_driverStationInfo;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
 
     driveStationTab();
@@ -43,6 +46,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[5].setDouble(m_driveTrain.getR2Vel());
     m_driveTrainVariables[6].setDouble(m_driveTrain.getL1Vel());
     m_driveTrainVariables[7].setDouble(m_driveTrain.getL2Vel());
+    m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
   }
 
@@ -78,7 +82,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_limelightVariables[0] = 
       m_drivestationTab.add("Distance", 0).withPosition(7, 0).withSize(1, 1).getEntry();
 
-    m_driverStationInfo[0] = 
+    m_driverStationInfoVariables[0] = 
       m_drivestationTab.add("Match Time", 0).withPosition(0,0).withSize(3,1).getEntry();
 
 
