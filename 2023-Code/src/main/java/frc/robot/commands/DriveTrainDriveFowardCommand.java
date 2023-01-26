@@ -67,20 +67,11 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
         }
         
         array = m_limelight.parseJson();
+        
         if (array.length != 0){
         slope = array[1] / array[2];
         theta = Math.atan(slope);
-
-        double motorSet = m_limelight.limelightPID(theta);
-        if (array[1] > 0){
-          tagOnLeft = true;
-        }
-        if(tagOnLeft) {
-          m_drivetrain.turnMotor(motorSet);
-        }
-        else {
-          m_drivetrain.turnMotor(motorSet);
-        }
+        m_drivetrain.turnMotor(theta);
       }
       }
     }

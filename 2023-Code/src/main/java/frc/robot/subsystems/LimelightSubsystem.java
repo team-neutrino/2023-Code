@@ -127,12 +127,6 @@ public class LimelightSubsystem extends SubsystemBase {
     return values;
   }
 
-  public double limelightPID(double setpoint) {
-    double error = getTx();
-    double output = error * P + setpoint;
-    return output;
-  }
-
   @Override
   public void periodic() {
     cycle++;
