@@ -21,7 +21,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   ScoringSubsystem m_scoring;
   DriveTrainSubsystem m_driveTrain;
   EndGameSubsystem m_endGame;
-  
+
   public ShuffleboardSubsystem(
       ScoringSubsystem p_scoring, DriveTrainSubsystem p_driveTrain, EndGameSubsystem p_endGame) {
     m_scoring = p_scoring;
@@ -32,7 +32,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     driveStaionTab();
   }
 
-  @Override 
+  @Override
   public void periodic() {
     m_driveTrainVariables[0].setDouble(m_driveTrain.getR1Vel());
   }
@@ -40,7 +40,11 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private void driveStaionTab() {
     m_drivestationTab = Shuffleboard.getTab("Drivestation Tab 2");
 
-    m_driveTrainVariables[0] = 
-      m_drivestationTab.add("Right Motor 1 Position", 0).withPosition(0,0).withSize(1,1).getEntry();
+    m_driveTrainVariables[0] =
+        m_drivestationTab
+            .add("Right Motor 1 Position", 0)
+            .withPosition(0, 0)
+            .withSize(1, 1)
+            .getEntry();
   }
 }
