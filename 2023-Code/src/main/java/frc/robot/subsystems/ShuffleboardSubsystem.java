@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
   private GenericEntry m_driveTrainVariables[] = new GenericEntry[7];
-
-  DriveTrainSubsystem m_driveTrain;
+  
+  private DriveTrainSubsystem m_driveTrain;
 
   public ShuffleboardSubsystem(DriveTrainSubsystem p_driveTrain) {
     m_driveTrain = p_driveTrain;
