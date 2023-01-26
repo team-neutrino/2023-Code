@@ -13,9 +13,9 @@ public class AutoBalanceCommand extends CommandBase{
     double error;
     double voltage;
 
-    double integral;
+    double integral = 0;
 
-    double derivative;
+    double derivative = 0;
     double previousError = 0;
     final double dt = .02;
 
