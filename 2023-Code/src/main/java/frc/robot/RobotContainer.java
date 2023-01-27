@@ -46,7 +46,6 @@ public class RobotContainer {
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
-  private final Shuffleboard m_shuffleboard = new Shuffleboard(m_driveTrain);
 
   // CONTROLLERS (Replace with CommandPS4Controller or CommandJoystick if needed)
   private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
