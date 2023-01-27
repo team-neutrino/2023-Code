@@ -10,8 +10,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ArmAdjustCommand;
+import frc.robot.commands.ArmDefaultCommand;
+import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.EndGameDefaultCommand;
@@ -20,6 +24,7 @@ import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.EndGameSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -28,20 +33,20 @@ import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.subsystems.ShuffleboardSubsystem;
+import frc.robot.util.DriverStationInfo;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+
+  // UTIL
+  private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
   // SUBSYSTEMS
+
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
   private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
@@ -69,8 +74,15 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
   private final JoystickButton m_buttonBack = 
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
+  private final POVButton m_upArrow = new POVButton(m_driverController, 0);
+  private final POVButton m_downArrow = new POVButton(m_driverController, 180);
+  private final Trigger m_leftTrigger =
+      new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
+  private final Trigger m_rightTrigger =
+      new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
 
   // COMMANDS
+  private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
 
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
@@ -105,39 +117,35 @@ public class RobotContainer {
     new LimelightSubsystem();
     new LEDSubsystem();
     // Configure the trigger bindings
+    new ShuffleboardSubsystem(m_driveTrain);
+
     configureBindings();
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
     m_endGame.setDefaultCommand(m_endGameDefaultCommand);
+    m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
 
+    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
+    // cancelling on release.
     m_buttonA.whileTrue(m_scoringOpenCommand);
+    m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_buttonX.whileTrue(m_intakeCommand);
 
     // m_buttonStart.whileTrue(new InstantCommand(m_LedSubsystem::setToPurple));
     // m_buttonBack.whileTrue(new InstantCommand(m_LedSubsystem::setToYellow));
+    m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
+
+    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
+    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
+    m_rightTrigger.whileTrue(m_IntakeReverseCommand);
+    m_leftTrigger.whileTrue(m_intakeCommand);
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
-    // An example command will /be run in autonomous
     return Autos.exampleAuto(m_exampleSubsystem);
   }
 }
