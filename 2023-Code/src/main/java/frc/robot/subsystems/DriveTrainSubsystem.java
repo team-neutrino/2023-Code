@@ -109,7 +109,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public void setVoltage(double voltage) {
     m_rmotors.setVoltage(voltage);
-    // m_lmotors.setVoltage(voltage);
+    m_lmotors.setVoltage(voltage);
   }
 
   @Override

@@ -25,6 +25,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     m_driveTrainVariables[0].setDouble(m_driveTrain.getR1Vel());
+    m_driveTrainVariables[1].setDouble(m_driveTrain.getPitch());
   }
 
   private void driveStaionTab() {
@@ -34,5 +35,13 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             .withPosition(0, 0)
             .withSize(1, 1)
             .getEntry();
+
+    m_driveTrainVariables[1] =
+            m_drivestationTab
+                .add("NavX Pitch", 0)
+                .withPosition(1, 1
+                )
+                .withSize(1, 1)
+                .getEntry();
   }
 }

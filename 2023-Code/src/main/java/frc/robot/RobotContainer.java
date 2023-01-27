@@ -133,7 +133,6 @@ public class RobotContainer {
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_buttonX.whileTrue(m_intakeCommand);
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
-    m_leftBumper.whileTrue(new AutoBalanceCommand(m_driveTrain));
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
     m_rightTrigger.whileTrue(m_IntakeReverseCommand);
