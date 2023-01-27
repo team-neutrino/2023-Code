@@ -5,10 +5,10 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -16,7 +16,7 @@ import frc.robot.Constants;
 public class DriveTrainSubsystem extends SubsystemBase {
 
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
-  
+
   private CANSparkMax m_rmotor1 =
       new CANSparkMax(Constants.MotorConstants.RMOTOR1, MotorType.kBrushless);
   private CANSparkMax m_rmotor2 =
@@ -109,11 +109,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public void setVoltage(double voltage) {
     m_rmotors.setVoltage(voltage);
-    m_lmotors.setVoltage(voltage);
+    // m_lmotors.setVoltage(voltage);
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    System.out.println(getPitch());
+  }
 
   public static double linearAccel(double joystickY) {
     double newSpeed = joystickY;
