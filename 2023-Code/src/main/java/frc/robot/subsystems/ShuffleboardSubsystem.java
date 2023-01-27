@@ -23,10 +23,14 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private EndGameSubsystem m_endGame;
   private DriverStationInfo m_driverStationInfo;
 
-  public ShuffleboardSubsystem(DriverStationInfo p_driverStationInfo, DriveTrainSubsystem p_driveTrain, ScoringSubsystem p_scoring, LimelightSubsystem p_limelight) {
+  public ShuffleboardSubsystem(
+      DriverStationInfo p_driverStationInfo,
+      DriveTrainSubsystem p_driveTrain,
+      ScoringSubsystem p_scoring,
+      LimelightSubsystem p_limelight) {
 
     m_driveTrain = p_driveTrain;
-    m_limelight = p_limelight; 
+    m_limelight = p_limelight;
     m_scoring = p_scoring;
     m_driverStationInfo = p_driverStationInfo;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
@@ -47,7 +51,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[6].setDouble(m_driveTrain.getL1Vel());
     m_driveTrainVariables[7].setDouble(m_driveTrain.getL2Vel());
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
-
   }
 
   private void driveStationTab() {
@@ -60,31 +63,52 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             .withSize(1, 1)
             .getEntry();
 
-    m_driveTrainVariables[1] = 
-      m_drivestationTab.add("Right Motor 2 Position", 0).withPosition(0,0).withSize(1,1).getEntry();
+    m_driveTrainVariables[1] =
+        m_drivestationTab
+            .add("Right Motor 2 Position", 0)
+            .withPosition(0, 0)
+            .withSize(1, 1)
+            .getEntry();
 
-    m_driveTrainVariables[2] = 
-      m_drivestationTab.add("Left Motor 1 Position", 0).withPosition(0,0).withSize(1,1).getEntry();
-    
-    m_driveTrainVariables[3] = 
-      m_drivestationTab.add("Left Motor 2 Position", 0).withPosition(0,0).withSize(1,1).getEntry();
+    m_driveTrainVariables[2] =
+        m_drivestationTab
+            .add("Left Motor 1 Position", 0)
+            .withPosition(0, 0)
+            .withSize(1, 1)
+            .getEntry();
 
-    m_driveTrainVariables[5] = 
-      m_drivestationTab.add("Right Motor 2 Velocity", 0).withPosition(0,0).withSize(1,1).getEntry();
+    m_driveTrainVariables[3] =
+        m_drivestationTab
+            .add("Left Motor 2 Position", 0)
+            .withPosition(0, 0)
+            .withSize(1, 1)
+            .getEntry();
 
-    m_driveTrainVariables[6] = 
-      m_drivestationTab.add("Left Motor 1 Velocity", 0).withPosition(0,0).withSize(1,1).getEntry();
-      
-    m_driveTrainVariables[7] = 
-      m_drivestationTab.add("Left Motor 2 Velocity", 0).withPosition(0,0).withSize(1,1).getEntry();
+    m_driveTrainVariables[5] =
+        m_drivestationTab
+            .add("Right Motor 2 Velocity", 0)
+            .withPosition(0, 0)
+            .withSize(1, 1)
+            .getEntry();
 
+    m_driveTrainVariables[6] =
+        m_drivestationTab
+            .add("Left Motor 1 Velocity", 0)
+            .withPosition(0, 0)
+            .withSize(1, 1)
+            .getEntry();
 
-    m_limelightVariables[0] = 
-      m_drivestationTab.add("Distance", 0).withPosition(7, 0).withSize(1, 1).getEntry();
+    m_driveTrainVariables[7] =
+        m_drivestationTab
+            .add("Left Motor 2 Velocity", 0)
+            .withPosition(0, 0)
+            .withSize(1, 1)
+            .getEntry();
 
-    m_driverStationInfoVariables[0] = 
-      m_drivestationTab.add("Match Time", 0).withPosition(0,0).withSize(3,1).getEntry();
+    m_limelightVariables[0] =
+        m_drivestationTab.add("Distance", 0).withPosition(7, 0).withSize(1, 1).getEntry();
 
-
-}
+    m_driverStationInfoVariables[0] =
+        m_drivestationTab.add("Match Time", 0).withPosition(0, 0).withSize(3, 1).getEntry();
+  }
 }
