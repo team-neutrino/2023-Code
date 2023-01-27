@@ -23,7 +23,7 @@ public class BasicAutonomousCommand extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     SequentialCommandGroup testCommandGroup =
         new SequentialCommandGroup(
-            new InstantCommand(p_scoringSubsystem::toggleSolenoid), new WaitCommand(0.5));
+            new InstantCommand(p_scoringSubsystem::toggleSolenoid), new WaitCommand(0.5), new InstantCommand(p_scoringSubsystem::toggleSolenoid));
 
     addCommands(testCommandGroup.repeatedly());
   }

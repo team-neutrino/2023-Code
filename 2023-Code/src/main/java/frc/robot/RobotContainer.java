@@ -22,6 +22,7 @@ import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.commands.autonomous.BasicAutonomousCommand;
+import frc.robot.commands.autonomous.ForwardBackwardCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.EndGameSubsystem;
@@ -147,5 +148,6 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return new BasicAutonomousCommand(m_scoringSubsystem);
+    //return new ForwardBackwardCommand(m_driveTrain);
   }
 }
