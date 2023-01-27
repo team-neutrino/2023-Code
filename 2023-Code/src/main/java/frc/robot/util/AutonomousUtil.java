@@ -4,9 +4,6 @@
 
 package frc.robot.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -17,34 +14,47 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.TrajectoryConfigConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import java.util.ArrayList;
 
 /** Add your docs here. */
 public class AutonomousUtil {
 
-  private final DriveTrainSubsystem m_driveTrainSubsystem = new DriveTrainSubsystem();
-
-  public RamseteCommand generateRamseteCommand(Trajectory trajectory) {
+  public static RamseteCommand generateRamseteCommand(
+      Trajectory trajectory, DriveTrainSubsystem p_driveTrainSubsystem) {
     return new RamseteCommand(
         trajectory,
-        m_driveTrainSubsystem::getPose2d,
+        p_driveTrainSubsystem::getPose2d,
         new RamseteController(
             TrajectoryConfigConstants.K_RAMSETE_BETA, TrajectoryConfigConstants.K_RAMSETE_ZETA),
         new SimpleMotorFeedforward(
             TrajectoryConfigConstants.KS_VOLTS,
             TrajectoryConfigConstants.KV_VOLT_SECONDS_PER_METER),
         TrajectoryConfigConstants.K_DRIVE_KINEMATICS,
-        m_driveTrainSubsystem::getDriveWheelSpeeds,
+        p_driveTrainSubsystem::getDriveWheelSpeeds,
         new PIDController(TrajectoryConfigConstants.KP_DRIVE_VEL, 0, 0),
         new PIDController(TrajectoryConfigConstants.KP_DRIVE_VEL, 0, 0),
-        m_driveTrainSubsystem::setVoltage,
-        m_driveTrainSubsystem);
+        p_driveTrainSubsystem::setVoltage,
+        p_driveTrainSubsystem);
   }
 
-  public Trajectory generateTrajectoryFromPoses(ArrayList<PoseTriplet> tripletList) {
+  public static Trajectory generateTrajectoryFromPoses(ArrayList<PoseTriplet> tripletList) {
     ArrayList<Pose2d> poseArray = new ArrayList<Pose2d>();
-    for(PoseTriplet triplet : tripletList) {
-      poseArray.add(new Pose2d(triplet.getCoord1(), triplet.getCoord2(), Rotation2d.fromDegrees(triplet.getAngle())));
+    for (PoseTriplet triplet : tripletList) {
+      poseArray.add(
+          new Pose2d(
+              triplet.getCoord1(),
+              triplet.getCoord2(),
+              Rotation2d.fromDegrees(triplet.getAngle())));
     }
-    return TrajectoryGenerator.generateTrajectory(poseArray, TrajectoryConfigConstants.m_diffForward);
+    return TrajectoryGenerator.generateTrajectory(
+        poseArray, TrajectoryConfigConstants.m_diffForward);
+  }
+
+  public static RamseteCommand generateRamseteFromPoses(
+      ArrayList<PoseTriplet> tripletList, DriveTrainSubsystem p_driveTrainSubsystem) {
+    Trajectory generatedTrajectory = generateTrajectoryFromPoses(tripletList);
+    RamseteCommand generatedRamseteCommand =
+        generateRamseteCommand(generatedTrajectory, p_driveTrainSubsystem);
+    return generatedRamseteCommand;
   }
 }

@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -36,9 +35,6 @@ import frc.robot.util.DriverStationInfo;
 
 public class RobotContainer {
 
-  // UTIL
-  private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
-
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
@@ -47,8 +43,10 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
 
-  // CONTROLLERS (Replace with CommandPS4Controller or CommandJoystick if needed)
+  // CONTROLLER (Replace with CommandPS4Controller or CommandJoystick if needed)
   private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
+
+  // JOYSTICKS
   private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICK_LEFT);
   private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JOYSTICK_RIGHT);
 
@@ -61,16 +59,22 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kX.value);
   private final JoystickButton m_buttonY =
       new JoystickButton(m_driverController, XboxController.Button.kY.value);
+
+  // BUMPERS
   private final JoystickButton m_leftBumper =
       new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
   private final JoystickButton m_rightBumper =
       new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
+
+  // BUTTON BABIES
   private final JoystickButton m_buttonStart =
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
   private final POVButton m_upArrow = new POVButton(m_driverController, 0);
   private final POVButton m_downArrow = new POVButton(m_driverController, 180);
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
+
+  // TRIGGERS
   private final Trigger m_leftTrigger =
       new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
   private final Trigger m_rightTrigger =
@@ -105,32 +109,38 @@ public class RobotContainer {
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
 
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
     new LimelightSubsystem();
     new ShuffleboardSubsystem(m_driveTrain);
+    new DriverStationInfo();
 
     configureBindings();
+    setDefaultCommands();
   }
 
-  private void configureBindings() {
+  // CALLED IN CONSTRUCTOR
+  private void setDefaultCommands() {
     m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
     m_endGame.setDefaultCommand(m_endGameDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
+  }
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
+  private void configureBindings() {
+
+    // SCORING
     m_buttonA.whileTrue(m_scoringOpenCommand);
-    m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_buttonX.whileTrue(m_intakeCommand);
-    m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
 
+    // ARM
+    m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
+
+    // INTAKE
+    m_buttonX.whileTrue(m_intakeCommand);
     m_rightTrigger.whileTrue(m_IntakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
   }

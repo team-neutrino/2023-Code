@@ -15,7 +15,7 @@ import frc.robot.commands.ExampleCommand;
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
 
-  private SendableChooser<Command> m_autonSelector = new SendableChooser<>(); 
+  private SendableChooser<Command> m_autonSelector = new SendableChooser<>();
   private GenericEntry m_driveTrainVariables[] = new GenericEntry[7];
 
   private DriveTrainSubsystem m_driveTrain;
@@ -48,8 +48,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_autonSelector.addOption("Example Auto 2", new ExampleCommand(m_exampleSubsystem));
   }
 
-  public Command getAuto()
-  {
+  public Command getAuto() {
     return m_autonSelector.getSelected();
   }
 }
