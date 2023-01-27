@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
@@ -25,7 +24,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   public ShuffleboardSubsystem(DriveTrainSubsystem p_driveTrain) {
     m_driveTrain = p_driveTrain;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
-    m_exampleSubsystem = new ExampleSubsystem();
 
     driveStaionTab();
   }

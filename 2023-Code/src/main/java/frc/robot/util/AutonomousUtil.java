@@ -4,10 +4,16 @@
 
 package frc.robot.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.TrajectoryConfigConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -17,7 +23,7 @@ public class AutonomousUtil {
 
   private final DriveTrainSubsystem m_driveTrainSubsystem = new DriveTrainSubsystem();
 
-  public RamseteCommand GenerateRamseteCommand(Trajectory trajectory) {
+  public RamseteCommand generateRamseteCommand(Trajectory trajectory) {
     return new RamseteCommand(
         trajectory,
         m_driveTrainSubsystem::getPose2d,
@@ -32,5 +38,13 @@ public class AutonomousUtil {
         new PIDController(TrajectoryConfigConstants.KP_DRIVE_VEL, 0, 0),
         m_driveTrainSubsystem::setVoltage,
         m_driveTrainSubsystem);
+  }
+
+  public Trajectory generateTrajectoryFromPoses(ArrayList<PoseTriplet> tripletList) {
+    ArrayList<Pose2d> poseArray = new ArrayList<Pose2d>();
+    for(PoseTriplet triplet : tripletList) {
+      poseArray.add(new Pose2d(triplet.getCoord1(), triplet.getCoord2(), Rotation2d.fromDegrees(triplet.getAngle())));
+    }
+    return TrajectoryGenerator.generateTrajectory(poseArray, TrajectoryConfigConstants.m_diffForward);
   }
 }

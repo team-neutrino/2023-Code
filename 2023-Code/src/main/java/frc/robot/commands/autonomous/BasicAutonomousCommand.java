@@ -4,7 +4,6 @@
 
 package frc.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -24,9 +23,9 @@ public class BasicAutonomousCommand extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     SequentialCommandGroup testCommandGroup =
         new SequentialCommandGroup(
-            new InstantCommand(p_scoringSubsystem::toggleSolenoid), new WaitCommand(1));
+            new InstantCommand(p_scoringSubsystem::toggleSolenoid),
+            new WaitCommand(0.5));
 
-    Command repeated = testCommandGroup.repeatedly();
-    addCommands(repeated);
+    addCommands(testCommandGroup.repeatedly());
   }
 }
