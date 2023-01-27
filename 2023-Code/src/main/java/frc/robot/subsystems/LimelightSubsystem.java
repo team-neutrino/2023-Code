@@ -15,6 +15,7 @@ import org.json.JSONObject;
 public class LimelightSubsystem extends SubsystemBase {
   NetworkTable limelight;
   int cycle = 0;
+  int cycle2 = 0;
   double P = 1.5;
   double LIMELIGHT_TO_METER_CONVERSION = 0.76189;
   double ULTRASONIC_TO_METER_CONVERSION = 1.23;
@@ -127,9 +128,28 @@ public class LimelightSubsystem extends SubsystemBase {
     return values;
   }
 
+  public boolean waitBoolean(){
+    cycle2 = 5;
+    System.out.println("this ran at least once");
+    while (cycle2 < 10000000){
+      cycle2++;
+      if (cycle2 % 10000 == 0){
+        System.out.println(cycle2);
+      }
+    if (cycle2 % 1000000 == 0){
+      System.out.println("returned true at 1");
+      return true;
+    }
+  }
+  System.out.println("returned true at 2");
+  return true;
+
+  }
+
   @Override
   public void periodic() {
     cycle++;
+    //cycle2++;
     printCamTran();
   }
 }

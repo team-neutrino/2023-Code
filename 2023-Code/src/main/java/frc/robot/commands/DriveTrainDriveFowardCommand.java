@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 
@@ -46,7 +47,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
       double[] array = m_limelight.parseJson();
       if (array.length != 0){
         
-        boolean tagOnLeft = array[0]>=0;
+        //boolean tagOnLeft = array[0]>=0;
         System.out.println(array[0] + " " + array[1]);
         double slope = array[1] / array[0];
         theta = Math.atan(slope);
@@ -54,27 +55,48 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
         System.out.println("slope is " + slope);
         System.out.println("theta is " + theta);
         System.out.println("tan of theta is " + Math.tan(theta));
-        m_drivetrain.turnMotor(theta);
+        System.out.println("theta in degrees is " + theta * 180/Math.PI);
+        m_drivetrain.turnMotor(theta - 0.3);
         
         System.out.println("set motor position " + (array[0] * -1));
-        m_drivetrain.setMotorPosition(array[0] * -1, array[0] * -1);
+        if (array[0] > 0){
+        m_drivetrain.setMotorPosition(array[0], array[0]);
+        }
+        else {
+          m_drivetrain.setMotorPosition(array[0] * -1, array[0] * -1);
+        }
 
-        if(tagOnLeft) {
+        boolean turnLeft = theta >= 0;
+
+        System.out.println("running 90 degree turn");
+        if(turnLeft) {
+          System.out.println("turning left");
           m_drivetrain.turnMotor(-Math.PI / 2);
         }
         else {
+          System.out.println("turning right");
           m_drivetrain.turnMotor(Math.PI / 2);
         }
+
+        boolean wait = m_limelight.waitBoolean();
         
-        array = m_limelight.parseJson();
-        
-        if (array.length != 0){
-        slope = array[1] / array[2];
+
+        System.out.println("ran wait command");
+        System.out.println("tv is " + m_limelight.getTv());
+        double[] array2 = m_limelight.parseJson();
+        System.out.println("should be running limelight adjust");
+        if (wait){
+        if (array2.length != 0){
+          System.out.println("limelight adjust");
+        slope = array2[1] / array2[0];
+        System.out.println(array2[0] + " " + array2[1]);
         theta = Math.atan(slope);
-        m_drivetrain.turnMotor(theta);
-      }
+        System.out.println("theta limelight adjust " + theta * 180/Math.PI);
+        m_drivetrain.turnMotor(m_limelight.getTx() * Math.PI/180);
       }
     }
+    }
+  }
 
     /* 
     sideA = m_limelight.getDistance();

@@ -163,8 +163,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void turnMotor(double motorset) {
     if (motorset > 0) {
       turnMotorRight(Math.abs(motorset));
+      System.out.println("turning motor right");
     } else if (motorset < 0) {
       turnMotorLeft(Math.abs(motorset));
+      System.out.println("turning motor left");
     }
   }
 
