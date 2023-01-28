@@ -45,6 +45,7 @@ public class RobotContainer {
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
+  private final ShuffleboardSubsystem m_shuffleboardSubsystem = new ShuffleboardSubsystem(m_driveTrain, m_exampleSubsystem);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // CONTROLLERS
@@ -105,12 +106,22 @@ public class RobotContainer {
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
 
+<<<<<<< Updated upstream
+=======
+  private final LEDDefaultCommand m_LedDefaultCommand = new LEDDefaultCommand(m_ledSubsystem);
+
+>>>>>>> Stashed changes
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
     new LimelightSubsystem();
+<<<<<<< Updated upstream
     new ShuffleboardSubsystem(m_driveTrain);
+=======
+    new LEDSubsystem();
+>>>>>>> Stashed changes
 
+    // Configure the trigger bindings
     configureBindings();
   }
 
@@ -120,11 +131,24 @@ public class RobotContainer {
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
     m_endGame.setDefaultCommand(m_endGameDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
+<<<<<<< Updated upstream
+=======
+    m_ledSubsystem.setDefaultCommand(m_LedDefaultCommand);
+>>>>>>> Stashed changes
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_buttonA.whileTrue(m_scoringOpenCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
+<<<<<<< Updated upstream
+=======
+    m_buttonX.whileTrue(m_intakeCommand);
+
+    // LED Buttons
+    m_buttonStart.whileTrue(new InstantCommand(m_ledSubsystem::setToPurple));
+    m_buttonBack.whileTrue(new InstantCommand(m_ledSubsystem::setToYellow));
+
+>>>>>>> Stashed changes
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
 
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
@@ -134,6 +158,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return m_shuffleboardSubsystem.getAutoSelected();
   }
 }
