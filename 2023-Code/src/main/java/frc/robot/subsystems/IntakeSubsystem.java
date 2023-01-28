@@ -99,21 +99,19 @@ public class IntakeSubsystem extends SubsystemBase {
 
   /**
    * Returns the state of the up-down solenoid
-   * 
+   *
    * @return whether or not the solenoid is in the out position.
    */
-  public boolean getUpDownSolenoidValue()
-  {
+  public boolean getUpDownSolenoidValue() {
     return m_upDownSolenoid.get();
   }
 
   /**
    * Returns the state of the SQEEZE solenoid
-   * 
+   *
    * @return Whether or not the solenoid is in the out position.
    */
-  public boolean getSqueezeSolenoidValue()
-  {
+  public boolean getSqueezeSolenoidValue() {
     return m_squeezeSolenoid.get();
   }
 
