@@ -73,8 +73,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[6].setDouble(m_driveTrain.getL1Vel());
     m_driveTrainVariables[7].setDouble(m_driveTrain.getL2Vel());
 
-    m_intakeVariables[4].setBoolean(m_intake.getUpDownSolenoidValue());
-    m_intakeVariables[3].setBoolean(m_intake.getSqueezeSolenoidValue());
     m_scoringVariables[2].setBoolean(m_scoring.getSolenoidValue());
 
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
