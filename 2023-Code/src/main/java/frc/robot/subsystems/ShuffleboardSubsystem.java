@@ -5,8 +5,12 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
@@ -34,5 +38,13 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             .withPosition(0, 0)
             .withSize(1, 1)
             .getEntry();
+  }
+
+  private void addAutonSelector(SendableChooser<Command> p_autoSelector)
+  {
+    m_drivestationTab.add("Autonomous Chooser", p_autoSelector)
+    .withWidget(BuiltInWidgets.kComboBoxChooser)
+    .withPosition(0, 0)
+    .withSize(2, 1);
   }
 }
