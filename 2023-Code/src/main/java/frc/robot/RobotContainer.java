@@ -14,7 +14,6 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmToAngleCommand;
-import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.EndGameDefaultCommand;
 import frc.robot.commands.IntakeCommand;
@@ -46,7 +45,14 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
-  private final ShuffleboardSubsystem m_shuffleboardSubsystem = new ShuffleboardSubsystem();
+  private final ShuffleboardSubsystem m_shuffleboardSubsystem =
+      new ShuffleboardSubsystem(
+          m_driverStationInfo,
+          m_driveTrain,
+          m_scoringSubsystem,
+          m_limelightSubsystem,
+          m_armSubsystem,
+          m_intakeSubsystem);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // CONTROLLERS
@@ -110,14 +116,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
-    new ShuffleboardSubsystem(
-        m_driverStationInfo,
-        m_driveTrain,
-        m_scoringSubsystem,
-        m_limelightSubsystem,
-        m_armSubsystem,
-        m_intakeSubsystem);
 
+    // Configure the trigger bindings
     configureBindings();
   }
 
@@ -141,6 +141,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return m_shuffleboardSubsystem.getAutoSelected();
   }
 }

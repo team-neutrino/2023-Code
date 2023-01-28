@@ -12,7 +12,11 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.Autos;
+import frc.robot.commands.ExampleCommand;
 import frc.robot.util.DriverStationInfo;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
@@ -24,6 +28,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private GenericEntry m_armVariables[] = new GenericEntry[1];
   private GenericEntry m_intakeVariables[] = new GenericEntry[4];
 
+  private SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
+
+  private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private DriveTrainSubsystem m_driveTrain;
   // private LimelightSubsystem m_limelight;
   private ScoringSubsystem m_scoring;
@@ -49,6 +56,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driverStationInfo = p_driverStationInfo;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
 
+    setUpSelector();
     driveStationTab();
   }
 
@@ -65,8 +73,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[6].setDouble(m_driveTrain.getL1Vel());
     m_driveTrainVariables[7].setDouble(m_driveTrain.getL2Vel());
 
-    m_intakeVariables[4].setBoolean(m_intake.getUpDownSolenoidValue());
-    m_intakeVariables[3].setBoolean(m_intake.getSqueezeSolenoidValue());
     m_scoringVariables[2].setBoolean(m_scoring.getSolenoidValue());
 
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
@@ -151,6 +157,12 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_armVariables[0] =
         m_drivestationTab.add("Arm Position", 0).withPosition(0, 0).withSize(1, 1).getEntry();
 
+    m_drivestationTab
+        .add("Autonomous Chooser", m_autoChooser)
+        .withWidget(BuiltInWidgets.kComboBoxChooser)
+        .withPosition(0, 0)
+        .withSize(2, 1);
+
     try {
       LLFeed = new HttpCamera("limelight", "http://10.39.28.92", HttpCameraKind.kMJPGStreamer);
       CameraServer.startAutomaticCapture(LLFeed);
@@ -161,5 +173,14 @@ public class ShuffleboardSubsystem extends SubsystemBase {
           .withWidget(BuiltInWidgets.kCameraStream);
     } catch (VideoException e) {
     }
+  }
+
+  public void setUpSelector() {
+    m_autoChooser.addOption("Auto 1", new ExampleCommand());
+    m_autoChooser.addOption("Auto 2", new Autos());
+  }
+
+  public Command getAutoSelected() {
+    return m_autoChooser.getSelected();
   }
 }
