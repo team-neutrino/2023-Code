@@ -17,11 +17,12 @@ import frc.robot.util.DriverStationInfo;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
-  private GenericEntry m_driveTrainVariables[] = new GenericEntry[8];
+  private ShuffleboardTab m_debugTab;
+  private GenericEntry m_driveTrainVariables[] = new GenericEntry[15];
   private GenericEntry m_limelightVariables[] = new GenericEntry[8];
   private GenericEntry m_driverStationInfoVariables[] = new GenericEntry[9];
   private GenericEntry m_scoringVariables[] = new GenericEntry[11];
-  private GenericEntry m_armVariables[] = new GenericEntry[1];
+  private GenericEntry m_armVariables[] = new GenericEntry[4];
   private GenericEntry m_intakeVariables[] = new GenericEntry[4];
 
   private DriveTrainSubsystem m_driveTrain;
@@ -48,6 +49,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_intake = p_intake;
     m_driverStationInfo = p_driverStationInfo;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
+    m_debugTab = Shuffleboard.getTab("Debug Tab");
 
     driveStationTab();
   }
@@ -64,7 +66,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[5].setDouble(m_driveTrain.getR2Vel());
     m_driveTrainVariables[6].setDouble(m_driveTrain.getL1Vel());
     m_driveTrainVariables[7].setDouble(m_driveTrain.getL2Vel());
-
+   
     m_intakeVariables[4].setBoolean(m_intake.getUpDownSolenoidValue());
     m_intakeVariables[3].setBoolean(m_intake.getSqueezeSolenoidValue());
     m_scoringVariables[2].setBoolean(m_scoring.getSolenoidValue());
@@ -72,6 +74,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
     m_armVariables[0].setDouble(m_arm.getPosition());
+    //m_armVariables[1].setDouble(m_arm.getVoltage());
   }
 
   private void driveStationTab() {
@@ -161,5 +164,12 @@ public class ShuffleboardSubsystem extends SubsystemBase {
           .withWidget(BuiltInWidgets.kCameraStream);
     } catch (VideoException e) {
     }
+  }
+  private void debugTab(){
+    m_debugTab = Shuffleboard.getTab("Debug Tab");
+
+    m_armVariables[1] = 
+        m_debugTab.add("Arm Voltage", 0).withPosition(0,0).withSize(1,1).getEntry();
+
   }
 }
