@@ -4,11 +4,16 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.DriverStationInfo;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
+import edu.wpi.first.cscore.VideoException;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
@@ -24,7 +29,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private EndGameSubsystem m_endGame;
   private DriverStationInfo m_driverStationInfo;
   private ArmSubsystem m_arm;
-
+  private HttpCamera LLFeed;
   public ShuffleboardSubsystem(
       DriverStationInfo p_driverStationInfo,
       DriveTrainSubsystem p_driveTrain,
@@ -36,7 +41,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_limelight = p_limelight;
     m_scoring = p_scoring;
     m_arm = p_arm;
-
     m_driverStationInfo = p_driverStationInfo;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
 
@@ -49,7 +53,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[1].setDouble(m_driveTrain.getR2Pos());
     m_driveTrainVariables[2].setDouble(m_driveTrain.getL1Pos());
     m_driveTrainVariables[3].setDouble(m_driveTrain.getL2Pos());
-    //m_driveTrainVariables[4].setDouble(m_driveTrain.getR1Vel());
+    m_driveTrainVariables[4].setDouble(m_driveTrain.getR1Vel());
     m_driveTrainVariables[5].setDouble(m_driveTrain.getR2Vel());
     m_driveTrainVariables[6].setDouble(m_driveTrain.getL1Vel());
     m_driveTrainVariables[7].setDouble(m_driveTrain.getL2Vel());
@@ -60,11 +64,11 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   }
 
   private void driveStationTab() {
-    m_drivestationTab = Shuffleboard.getTab("Drivestation Tab");
+    m_drivestationTab = Shuffleboard.getTab("Drivestation Tab123");
 
     m_driveTrainVariables[0] =
         m_drivestationTab
-            .add("Right Motor 1 Velocity", 0)
+            .add("Right Motor 1 Position", 0)
             .withPosition(0, 0)
             .withSize(1, 1)
             .getEntry();
@@ -89,6 +93,13 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             .withPosition(0, 3)
             .withSize(1, 1)
             .getEntry();
+
+    m_driveTrainVariables[4] =
+            m_drivestationTab
+                .add("Right Motor 1 Velocity", 0)
+                .withPosition(0, 3)
+                .withSize(1, 1)
+                .getEntry();
 
     m_driveTrainVariables[5] =
         m_drivestationTab
@@ -119,5 +130,22 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     m_armVariables[0] =
         m_drivestationTab.add("Arm Position", 0).withPosition(3, 0).withSize(1, 1).getEntry();
+    
+        try {
+          LLFeed =
+              new HttpCamera(
+                  "limelight", "http://10.39.28.92", HttpCameraKind.kMJPGStreamer);
+                  //limelight.local>:5800
+                  http://10.39.28.92
+                  //http://limelight.local:5800/stream.mjpg
+          CameraServer.startAutomaticCapture(LLFeed);
+          m_drivestationTab
+              .add(LLFeed)
+              .withPosition(0, 3)
+              .withSize(3, 3)
+              .withWidget(BuiltInWidgets.kCameraStream);
+        } catch (VideoException e) {
+        }
+    
   }
 }
