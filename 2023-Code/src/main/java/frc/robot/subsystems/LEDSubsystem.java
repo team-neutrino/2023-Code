@@ -46,11 +46,11 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
-  public void setToOrange(){
+  public void setToOrange() {
     for (int i = 0; i < m_LedBuffer.getLength(); i++) {
       m_LedBuffer.setRGB(i, 255, 94, 5);
+    }
   }
-}
 
   @Override
   public void periodic() {

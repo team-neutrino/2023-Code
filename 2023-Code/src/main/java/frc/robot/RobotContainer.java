@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -73,7 +72,7 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
   private final JoystickButton m_buttonStart =
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
-  private final JoystickButton m_buttonBack = 
+  private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
   private final POVButton m_upArrow = new POVButton(m_driverController, 0);
   private final POVButton m_downArrow = new POVButton(m_driverController, 180);
@@ -112,8 +111,7 @@ public class RobotContainer {
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
 
-  private final LEDDefaultCommand m_LedDefaultCommand = 
-      new LEDDefaultCommand(m_LedSubsystem);
+  private final LEDDefaultCommand m_LedDefaultCommand = new LEDDefaultCommand(m_LedSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -133,7 +131,6 @@ public class RobotContainer {
     m_endGame.setDefaultCommand(m_endGameDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
     m_LedSubsystem.setDefaultCommand(m_LedDefaultCommand);
-    
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
@@ -141,7 +138,7 @@ public class RobotContainer {
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_buttonX.whileTrue(m_intakeCommand);
 
-    //LED Buttons
+    // LED Buttons
     m_buttonStart.whileTrue(new InstantCommand(m_LedSubsystem::setToPurple));
     m_buttonBack.whileTrue(new InstantCommand(m_LedSubsystem::setToYellow));
 
