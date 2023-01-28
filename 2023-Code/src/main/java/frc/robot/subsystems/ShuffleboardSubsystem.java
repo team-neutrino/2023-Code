@@ -19,14 +19,14 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
   private ShuffleboardTab m_debugTab;
   private GenericEntry m_driveTrainVariables[] = new GenericEntry[15];
-  private GenericEntry m_limelightVariables[] = new GenericEntry[8];
+  private GenericEntry m_limelightVariables[] = new GenericEntry[9];
   private GenericEntry m_driverStationInfoVariables[] = new GenericEntry[9];
   private GenericEntry m_scoringVariables[] = new GenericEntry[11];
   private GenericEntry m_armVariables[] = new GenericEntry[4];
   private GenericEntry m_intakeVariables[] = new GenericEntry[4];
 
   private DriveTrainSubsystem m_driveTrain;
-  // private LimelightSubsystem m_limelight;
+  private LimelightSubsystem m_limelight;
   private ScoringSubsystem m_scoring;
   // private EndGameSubsystem m_endGame;
   private DriverStationInfo m_driverStationInfo;
@@ -43,7 +43,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       IntakeSubsystem p_intake) {
 
     m_driveTrain = p_driveTrain;
-    // m_limelight = p_limelight;
+    m_limelight = p_limelight;
     m_scoring = p_scoring;
     m_arm = p_arm;
     m_intake = p_intake;
@@ -66,15 +66,24 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[5].setDouble(m_driveTrain.getR2Vel());
     m_driveTrainVariables[6].setDouble(m_driveTrain.getL1Vel());
     m_driveTrainVariables[7].setDouble(m_driveTrain.getL2Vel());
-   
-    m_intakeVariables[4].setBoolean(m_intake.getUpDownSolenoidValue());
-    m_intakeVariables[3].setBoolean(m_intake.getSqueezeSolenoidValue());
-    m_scoringVariables[2].setBoolean(m_scoring.getSolenoidValue());
+
+    m_scoringVariables[5].setBoolean(m_scoring.getSolenoidValue());
 
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
     m_armVariables[0].setDouble(m_arm.getPosition());
     //m_armVariables[1].setDouble(m_arm.getVoltage());
+
+    m_intakeVariables[0].setDouble(m_intake.getWheelsEncoder());
+    m_intakeVariables[1].setDouble(m_intake.getUpDownEncoder());
+
+    m_limelightVariables[0].setBoolean(m_limelight.getTv());
+    m_limelightVariables[1].setDouble(m_limelight.getID());
+    m_limelightVariables[2].setDouble(m_limelight.getTx());
+    m_limelightVariables[3].setDouble(m_limelight.getTy());
+    m_limelightVariables[4].setDouble(m_limelight.getDistance());
+
+
   }
 
   private void driveStationTab() {
@@ -154,6 +163,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_armVariables[0] =
         m_drivestationTab.add("Arm Position", 0).withPosition(0, 0).withSize(1, 1).getEntry();
 
+    m_limelightVariables[0] =
+
+
     try {
       LLFeed = new HttpCamera("limelight", "http://10.39.28.92", HttpCameraKind.kMJPGStreamer);
       CameraServer.startAutomaticCapture(LLFeed);
@@ -171,5 +183,12 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_armVariables[1] = 
         m_debugTab.add("Arm Voltage", 0).withPosition(0,0).withSize(1,1).getEntry();
 
+    m_intakeVariables[0] =
+        m_debugTab.add("Intake Wheel's Velocity", 0).withPosition(0,1).withSize(1,1).getEntry();
+
+    m_intakeVariables[1] =
+        m_debugTab.add("Up Down Encoder for Velocity", 0).withPosition(0,2).withSize(1,1).getEntry();
+
+    
   }
 }
