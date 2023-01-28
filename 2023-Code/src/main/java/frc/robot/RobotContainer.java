@@ -47,8 +47,8 @@ public class RobotContainer {
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
-  private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
+  private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
   private final ShuffleboardSubsystem m_shuffleboardSubsystem =
       new ShuffleboardSubsystem(
           m_driverStationInfo,
@@ -137,12 +137,12 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_buttonA.whileTrue(m_scoringOpenCommand);
+   // m_buttonA.whileTrue(m_scoringOpenCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_buttonX.whileTrue(m_intakeCommand);
 
     // LED Buttons
-    m_buttonStart.whileTrue(new InstantCommand(m_LedSubsystem::setToPurple));
+    m_buttonA.whileTrue(new InstantCommand(m_LedSubsystem::setToPurple));
     m_buttonBack.whileTrue(new InstantCommand(m_LedSubsystem::setToYellow));
 
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));

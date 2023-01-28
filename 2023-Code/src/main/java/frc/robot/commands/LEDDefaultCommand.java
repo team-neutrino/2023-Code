@@ -9,7 +9,8 @@ public class LEDDefaultCommand extends CommandBase {
 
   public LEDDefaultCommand(LEDSubsystem p_LEDSubsystem) {
     m_LedSubsystem = p_LEDSubsystem;
-  }
+    addRequirements(m_LedSubsystem);
+  } 
 
   @Override
   public void initialize() {}

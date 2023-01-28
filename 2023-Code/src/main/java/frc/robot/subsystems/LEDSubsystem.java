@@ -26,29 +26,25 @@ public class LEDSubsystem extends SubsystemBase {
     m_addressableLED.setData(m_LedBuffer);
     m_addressableLED.start();
     m_LedBuffer.setRGB(0, 256, 0, 0);
-    // m_addressableLED.setData(m_LedBuffer);
-    // m_addressableLED.start();
-
-    // for (int i = 0; i < m_LedBuffer.getLength(); i++) {
-    // m_LedBuffer.setRGB(i, i*70, 0, 255-i*70);
-    // }
   }
 
   public void setToPurple() {
     for (int i = 0; i < m_LedBuffer.getLength(); i++) {
       m_LedBuffer.setRGB(i, 162, 25, 255);
+      System.out.println("purple");
     }
   }
 
   public void setToYellow() {
     for (int i = 0; i < m_LedBuffer.getLength(); i++) {
-      m_LedBuffer.setRGB(i, 255, 255, 0);
+      m_LedBuffer.setRGB(i, 255, 100, 0);
+      System.out.println("yellow");
     }
   }
 
   public void setToOrange() {
     for (int i = 0; i < m_LedBuffer.getLength(); i++) {
-      m_LedBuffer.setRGB(i, 255, 94, 5);
+      m_LedBuffer.setRGB(i, 255, 15, 0);
     }
   }
 
