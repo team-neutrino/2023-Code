@@ -33,7 +33,6 @@ public final class Constants {
     public static final int LMOTOR1 = 13;
     public static final int LMOTOR2 = 14;
 
- 
     public static final int ARM_MOTOR1 = 31;
     public static final int GRABBER_MOTOR1 = 41;
     public static final int GRABBER_MOTOR2 = 42;
