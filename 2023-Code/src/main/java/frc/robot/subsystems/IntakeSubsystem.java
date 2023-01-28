@@ -31,7 +31,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private Solenoid m_upDownSolenoid =
       new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.INTAKE1);
 
-  private Solenoid m_inOutSolenoid =
+  private Solenoid m_squeezeSolenoid =
       new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.INTAKE2);
 
   /** Beam break to detect if a game piece is present in the intake (to squeeeeze) */
@@ -89,12 +89,32 @@ public class IntakeSubsystem extends SubsystemBase {
 
   /** Pushes the intake out a little */
   public void unsqueeze() {
-    m_inOutSolenoid.set(true);
+    m_squeezeSolenoid.set(false);
   }
 
   /** Puts the intake back to its narrow form */
   public void squeeze() {
-    m_inOutSolenoid.set(false);
+    m_squeezeSolenoid.set(true);
+  }
+
+  /**
+   * Returns the state of the up-down solenoid
+   * 
+   * @return whether or not the solenoid is in the out position.
+   */
+  public boolean getUpDownSolenoidValue()
+  {
+    return m_upDownSolenoid.get();
+  }
+
+  /**
+   * Returns the state of the SQEEZE solenoid
+   * 
+   * @return Whether or not the solenoid is in the out position.
+   */
+  public boolean getSqueezeSolenoidValue()
+  {
+    return m_squeezeSolenoid.get();
   }
 
   public double getWheelsEncoder() {
