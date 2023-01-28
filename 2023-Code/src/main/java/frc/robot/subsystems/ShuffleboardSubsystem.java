@@ -54,7 +54,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
   public void setUpSelector(){
     m_autoChooser.addOption("Auto 1", new ExampleCommand(m_exampleSubsystem));
-    m_autoChooser.addOption("Auto 2", new ExampleCommand(m_exampleSubsystem));
+    m_autoChooser.addOption("Auto 2", new Autos(m_exampleSubsystem));
   }
 
   public Command getAutoSelected(){
