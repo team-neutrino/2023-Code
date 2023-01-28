@@ -57,13 +57,18 @@ public final class Constants {
   }
 
   public static class PneumaticsConstants {
-    public static final int INTAKE_PCM = 0;
-    public static final int GRABBER = 1;
-    public static final int SOLENOID_FRONT = 2;
-    public static final int SOLENOID_BACK = 3;
+    public static final int INTAKE1 = 0;
+    public static final int INTAKE2 = 1;
+    public static final int GRABBER = 2;
+    public static final int SOLENOID_FRONT = 3;
+    public static final int SOLENOID_BACK = 4;
   }
 
   public static class VariableConstants {
     public static final double DEADZONE = 0.1;
+  }
+
+  public static class DigitalConstants {
+    public static final int INDEX_BEAMBREAK = 0;
   }
 }

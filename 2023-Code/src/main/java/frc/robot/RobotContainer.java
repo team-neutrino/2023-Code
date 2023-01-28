@@ -34,12 +34,11 @@ import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
 
 public class RobotContainer {
-
+  // The robot's subsystems and commands are defined here...
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
   // SUBSYSTEMS
-
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -70,10 +69,6 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
   private final POVButton m_upArrow = new POVButton(m_driverController, 0);
   private final POVButton m_downArrow = new POVButton(m_driverController, 180);
-
-  // COMMANDS
-  private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
-
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
   private final Trigger m_leftTrigger =
@@ -82,6 +77,7 @@ public class RobotContainer {
       new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
 
   // COMMANDS
+  private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
 
@@ -129,12 +125,11 @@ public class RobotContainer {
     // cancelling on release.
     m_buttonA.whileTrue(m_scoringOpenCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_buttonX.whileTrue(m_intakeCommand);
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
 
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
-    m_rightTrigger.whileTrue(m_IntakeReverseCommand);
+    m_leftBumper.whileTrue(m_IntakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
   }
 
