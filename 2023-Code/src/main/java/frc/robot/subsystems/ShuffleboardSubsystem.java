@@ -191,7 +191,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   }
 
   private void debugTab() {
-    m_debugTab = Shuffleboard.getTab("Debug Tab");
+    m_drivestationTab = Shuffleboard.getTab("Debug Tab");
 
     m_armVariables[1] =
         m_debugTab.add("Arm Voltage", 0).withPosition(0, 0).withSize(1, 1).getEntry();
