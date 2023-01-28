@@ -35,7 +35,7 @@ public class IntakeDefaultCommand extends CommandBase {
   @Override
   public void execute() {
     m_IntakeSubsystem.stopIntake();
-    m_IntakeSubsystem.unsqueeze();
+    m_IntakeSubsystem.squeeze();
     m_IntakeSubsystem.setIntakeUp();
   }
 
