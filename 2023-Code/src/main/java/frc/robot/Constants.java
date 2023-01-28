@@ -61,7 +61,7 @@ public final class Constants {
     public static final int INTAKE2 = 1;
     public static final int GRABBER = 2;
     public static final int SOLENOID_FRONT = 3;
-    public static final int SOLENOID_BACK = 4 ;
+    public static final int SOLENOID_BACK = 4;
   }
 
   public static class VariableConstants {
