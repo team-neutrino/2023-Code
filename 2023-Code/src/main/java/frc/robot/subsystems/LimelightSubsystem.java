@@ -121,10 +121,11 @@ public class LimelightSubsystem extends SubsystemBase {
     JSONArray t6c_ts = jsonObject2.getJSONArray("t6c_ts");
     double x = t6c_ts.getDouble(0);
     double z = t6c_ts.getDouble(2);
+    double y = t6c_ts.getDouble(1);
     // System.out.println("z is hghrfhusgrhgrhulg" + z);
     // double z = array.getJSONObject(0).getJSONArray("t6s_ts").getDouble(2);
 
-    double[] values = {x, z};
+    double[] values = {x, z, y};
     return values;
   }
 
@@ -136,7 +137,7 @@ public class LimelightSubsystem extends SubsystemBase {
       if (cycle2 % 10000 == 0){
         System.out.println(cycle2);
       }
-    if (cycle2 % 1000000 == 0){
+    if (cycle2 % 100000 == 0){
       System.out.println("returned true at 1");
       return true;
     }

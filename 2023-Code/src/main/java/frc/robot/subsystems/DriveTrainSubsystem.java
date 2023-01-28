@@ -171,7 +171,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void turnMotorRight(double motorset) {
-    motorset = motorset * 28 / Math.PI;
+    motorset = motorset * 20 / Math.PI;
     double rmotorPosition = getR1Pos();
     double lmotorPosition = getL1Pos();
 
@@ -185,7 +185,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void turnMotorLeft(double motorset) {
-    motorset = motorset * 28 / Math.PI;
+    motorset = motorset * 20 / Math.PI;
     double rmotorPosition = getR1Pos();
     double lmotorPosition = getL1Pos();
 
