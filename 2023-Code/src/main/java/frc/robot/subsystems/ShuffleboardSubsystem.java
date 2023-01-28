@@ -37,11 +37,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             .getEntry();
 
     m_driveTrainVariables[1] =
-            m_drivestationTab
-                .add("NavX Pitch", 0)
-                .withPosition(1, 1
-                )
-                .withSize(1, 1)
-                .getEntry();
+        m_drivestationTab.add("NavX Pitch", 0).withPosition(1, 1).withSize(1, 1).getEntry();
   }
 }
