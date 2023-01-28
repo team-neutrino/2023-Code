@@ -31,7 +31,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
   private SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
-  private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private DriveTrainSubsystem m_driveTrain;
   private LimelightSubsystem m_limelight;
   private ScoringSubsystem m_scoring;
@@ -60,6 +59,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     setUpSelector();
     driveStationTab();
+    debugTab();
   }
 
   public ShuffleboardSubsystem() {}
@@ -80,18 +80,16 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
     m_armVariables[0].setDouble(m_arm.getPosition());
-    //m_armVariables[1].setDouble(m_arm.getVoltage());
+    m_armVariables[1].setDouble(m_arm.getVoltage());
 
     m_intakeVariables[0].setDouble(m_intake.getWheelsEncoder());
     m_intakeVariables[1].setDouble(m_intake.getUpDownEncoder());
 
-    m_limelightVariables[0].setBoolean(m_limelight.getTv());
+    m_limelightVariables[0].setDouble(m_limelight.getDistance());
     m_limelightVariables[1].setDouble(m_limelight.getID());
     m_limelightVariables[2].setDouble(m_limelight.getTx());
     m_limelightVariables[3].setDouble(m_limelight.getTy());
-    m_limelightVariables[4].setDouble(m_limelight.getDistance());
-
-
+    m_limelightVariables[4].setBoolean(m_limelight.getTv());
   }
 
   private void driveStationTab() {
@@ -178,7 +176,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
         .withSize(2, 1);
 
     m_limelightVariables[0] =
-
+        m_drivestationTab.add("Limelight Distance", 0).withPosition(7, 0).withSize(1, 1).getEntry();
 
     try {
       LLFeed = new HttpCamera("limelight", "http://10.39.28.92", HttpCameraKind.kMJPGStreamer);
@@ -192,21 +190,35 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     }
   }
 
-
-  private void debugTab(){
+  private void debugTab() {
     m_debugTab = Shuffleboard.getTab("Debug Tab");
 
-    m_armVariables[1] = 
-        m_debugTab.add("Arm Voltage", 0).withPosition(0,0).withSize(1,1).getEntry();
+    m_armVariables[1] =
+        m_debugTab.add("Arm Voltage", 0).withPosition(0, 0).withSize(1, 1).getEntry();
 
     m_intakeVariables[0] =
-        m_debugTab.add("Intake Wheel's Velocity", 0).withPosition(0,1).withSize(1,1).getEntry();
+        m_debugTab.add("Intake Wheel's Velocity", 0).withPosition(0, 1).withSize(1, 1).getEntry();
 
     m_intakeVariables[1] =
-        m_debugTab.add("Up Down Encoder for Velocity", 0).withPosition(0,2).withSize(1,1).getEntry();
+        m_debugTab
+            .add("Up Down Encoder for Velocity", 0)
+            .withPosition(0, 2)
+            .withSize(1, 1)
+            .getEntry();
 
-    
+    m_limelightVariables[1] =
+        m_debugTab.add("Limelight ID", 0).withPosition(0, 3).withSize(1, 1).getEntry();
+
+    m_limelightVariables[2] =
+        m_debugTab.add("Limelight Tx", 0).withPosition(1, 3).withSize(1, 1).getEntry();
+
+    m_limelightVariables[3] =
+        m_debugTab.add("Limelight Ty", 0).withPosition(2, 3).withSize(1, 1).getEntry();
+
+    m_limelightVariables[4] =
+        m_debugTab.add("Limelight Tv", 0).withPosition(3, 3).withSize(1, 1).getEntry();
   }
+
   public void setUpSelector() {
     m_autoChooser.addOption("Auto 1", new ExampleCommand());
     m_autoChooser.addOption("Auto 2", new Autos());
@@ -215,5 +227,4 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   public Command getAutoSelected() {
     return m_autoChooser.getSelected();
   }
-  
 }
