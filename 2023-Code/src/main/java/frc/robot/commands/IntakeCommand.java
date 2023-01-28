@@ -28,6 +28,9 @@ public class IntakeCommand extends CommandBase {
   public void execute() {
     m_intakeSubsystem.runIntake();
     m_intakeSubsystem.setIntakeDown();
+    if (m_intakeSubsystem.isGamePiece()) {
+      m_intakeSubsystem.squeeze();
+    }
   }
 
   // Called once the command ends or is interrupted.
