@@ -129,7 +129,7 @@ public class RobotContainer {
 
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
-    m_rightTrigger.whileTrue(m_IntakeReverseCommand);
+    m_leftBumper.whileTrue(m_IntakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
   }
 
