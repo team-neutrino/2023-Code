@@ -22,6 +22,7 @@ import frc.robot.commands.EndGameDefaultCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeReverseCommand;
+import frc.robot.commands.LEDDefaultCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.ArmSubsystem;
@@ -111,6 +112,9 @@ public class RobotContainer {
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
 
+  private final LEDDefaultCommand m_LedDefaultCommand = 
+      new LEDDefaultCommand(m_LedSubsystem);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
@@ -128,6 +132,8 @@ public class RobotContainer {
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
     m_endGame.setDefaultCommand(m_endGameDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
+    m_LedSubsystem.setDefaultCommand(m_LedDefaultCommand);
+    
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
@@ -135,8 +141,10 @@ public class RobotContainer {
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_buttonX.whileTrue(m_intakeCommand);
 
-    // m_buttonStart.whileTrue(new InstantCommand(m_LedSubsystem::setToPurple));
-    // m_buttonBack.whileTrue(new InstantCommand(m_LedSubsystem::setToYellow));
+    //LED Buttons
+    m_buttonStart.whileTrue(new InstantCommand(m_LedSubsystem::setToPurple));
+    m_buttonBack.whileTrue(new InstantCommand(m_LedSubsystem::setToYellow));
+
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
 
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
