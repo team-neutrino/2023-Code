@@ -31,7 +31,7 @@ public final class Constants {
     public static final int RMOTOR1 = 11;
     public static final int RMOTOR2 = 12;
     public static final int LMOTOR1 = 13;
-    public static final int LMOTOR2 = 14; 
+    public static final int LMOTOR2 = 14;
 
     public static final int ARM_MOTOR1 = 31;
     public static final int GRABBER_MOTOR1 = 41;
@@ -57,11 +57,11 @@ public final class Constants {
   }
 
   public static class PneumaticsConstants {
-    public static final int INTAKE1 = 0; 
+    public static final int INTAKE1 = 0;
     public static final int INTAKE2 = 4;
     public static final int GRABBER = 1;
     public static final int SOLENOID_FRONT = 2;
-    public static final int SOLENOID_BACK = 3; 
+    public static final int SOLENOID_BACK = 3;
   }
 
   public static class VariableConstants {
