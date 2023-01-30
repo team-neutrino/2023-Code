@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -123,11 +124,11 @@ public class RobotContainer {
 
   // CALLED IN CONSTRUCTOR
   private void setDefaultCommands() {
-    m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
-    m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
-    m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
-    m_endGame.setDefaultCommand(m_endGameDefaultCommand);
-    m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
+   // m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
+   // m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
+   // m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
+   // m_endGame.setDefaultCommand(m_endGameDefaultCommand);
+   // m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
   }
 
   private void configureBindings() {
@@ -147,7 +148,8 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new BasicAutonomousCommand(m_scoringSubsystem);
-    //return new ForwardBackwardCommand(m_driveTrain);
+    //return new BasicAutonomousCommand(m_scoringSubsystem);
+    return new ForwardBackwardCommand(m_driveTrain);
+    //return new InstantCommand(() -> m_driveTrain.setMotors(0.4, 0));
   }
 }
