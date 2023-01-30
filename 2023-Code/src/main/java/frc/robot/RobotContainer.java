@@ -36,6 +36,9 @@ import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
 
 public class RobotContainer {
+  // The robot's subsystems and commands are defined here...
+  // UTIL
+  private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
@@ -44,6 +47,15 @@ public class RobotContainer {
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
+  private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
+  private final ShuffleboardSubsystem m_shuffleboardSubsystem =
+      new ShuffleboardSubsystem(
+          m_driverStationInfo,
+          m_driveTrain,
+          m_scoringSubsystem,
+          m_limelightSubsystem,
+          m_armSubsystem,
+          m_intakeSubsystem);
 
   // CONTROLLER (Replace with CommandPS4Controller or CommandJoystick if needed)
   private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
@@ -84,6 +96,7 @@ public class RobotContainer {
 
   // COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
+  private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
 
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
@@ -115,9 +128,9 @@ public class RobotContainer {
   public RobotContainer() {
     new PneumaticsSubsystem();
     new LimelightSubsystem();
-    new ShuffleboardSubsystem(m_driveTrain);
     new DriverStationInfo();
 
+    // Configure the trigger bindings
     configureBindings();
     setDefaultCommands();
   }
@@ -135,6 +148,8 @@ public class RobotContainer {
 
     // SCORING
     m_buttonA.whileTrue(m_scoringOpenCommand);
+    m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
 
     // ARM
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
@@ -144,6 +159,7 @@ public class RobotContainer {
     // INTAKE
     m_buttonX.whileTrue(m_intakeCommand);
     m_rightTrigger.whileTrue(m_IntakeReverseCommand);
+    m_leftBumper.whileTrue(m_IntakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
   }
 

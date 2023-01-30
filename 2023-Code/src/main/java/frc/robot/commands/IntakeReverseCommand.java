@@ -28,6 +28,7 @@ public class IntakeReverseCommand extends CommandBase {
   public void execute() {
     m_intakeSubsystem.runIntakeReverse();
     m_intakeSubsystem.setIntakeDown();
+    m_intakeSubsystem.unsqueeze();
   }
 
   // Called once the command ends or is interrupted.
