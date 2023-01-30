@@ -28,9 +28,14 @@ public class IntakeDefaultCommand extends CommandBase {
   public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * This command's purpose is to ensure that the intake is up and not running when the button isn't
+   * pressed.
+   */
   @Override
   public void execute() {
     m_IntakeSubsystem.stopIntake();
+    m_IntakeSubsystem.unsqueeze();
     m_IntakeSubsystem.setIntakeUp();
   }
 

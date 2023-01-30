@@ -21,7 +21,6 @@ public class ScoringOpenCommand extends CommandBase {
 
   @Override
   public void execute() {
-    // System.out.println("running OPEN command");
     m_scoringSubsystem.setSolenoidRetract();
   }
 

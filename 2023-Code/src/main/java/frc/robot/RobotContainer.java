@@ -35,18 +35,26 @@ import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
 
 public class RobotContainer {
-
+  // The robot's subsystems and commands are defined here...
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
   // SUBSYSTEMS
-
   private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
+  private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
+  private final ShuffleboardSubsystem m_shuffleboardSubsystem =
+      new ShuffleboardSubsystem(
+          m_driverStationInfo,
+          m_driveTrain,
+          m_scoringSubsystem,
+          m_limelightSubsystem,
+          m_armSubsystem,
+          m_intakeSubsystem);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // CONTROLLERS
@@ -74,7 +82,7 @@ public class RobotContainer {
   private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
 
   // COMMANDS
-  private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
+  private final ArmDefaultCommand m_ArmDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
   private final AutoBalanceCommand m_AutoBalanceCommand = new AutoBalanceCommand(m_driveTrain);
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
@@ -84,6 +92,7 @@ public class RobotContainer {
       new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
 
   // COMMANDS
+  private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
 
@@ -114,9 +123,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
-    new LimelightSubsystem();
-    new ShuffleboardSubsystem(m_driveTrain);
 
+    // Configure the trigger bindings
     configureBindings();
   }
 
@@ -131,17 +139,16 @@ public class RobotContainer {
     // cancelling on release.
     m_buttonA.whileTrue(m_scoringOpenCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_buttonX.whileTrue(m_intakeCommand);
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
-    m_rightTrigger.whileTrue(m_IntakeReverseCommand);
+    m_leftBumper.whileTrue(m_IntakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
 
     m_rightArrow.onTrue(m_AutoBalanceCommand);
   }
 
   public Command getAutonomousCommand() {
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return m_shuffleboardSubsystem.getAutoSelected();
   }
 }
