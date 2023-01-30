@@ -15,7 +15,6 @@ import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
-import frc.robot.commands.Autos;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.EndGameDefaultCommand;
 import frc.robot.commands.IntakeCommand;

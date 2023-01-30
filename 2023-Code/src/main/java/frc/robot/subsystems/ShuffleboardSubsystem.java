@@ -94,7 +94,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[8] =
         m_drivestationTab.add("NavX Pitch", 0).withPosition(1, 1).withSize(1, 1).getEntry();
 
-        m_driveTrainVariables[1] = m_drivestationTab
+    m_driveTrainVariables[1] =
+        m_drivestationTab
             .add("Right Motor 2 Position", 0)
             .withPosition(0, 1)
             .withSize(1, 1)
