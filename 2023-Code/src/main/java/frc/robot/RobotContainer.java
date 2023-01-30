@@ -14,6 +14,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmToAngleCommand;
+import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.EndGameDefaultCommand;
 import frc.robot.commands.IntakeCommand;
@@ -77,6 +78,11 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
   private final POVButton m_upArrow = new POVButton(m_driverController, 0);
   private final POVButton m_downArrow = new POVButton(m_driverController, 180);
+  private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
+
+  // COMMANDS
+  private final ArmDefaultCommand m_ArmDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
+  private final AutoBalanceCommand m_AutoBalanceCommand = new AutoBalanceCommand(m_driveTrain);
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
   private final Trigger m_leftTrigger =
@@ -133,9 +139,9 @@ public class RobotContainer {
     m_buttonA.whileTrue(m_scoringOpenCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
-
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
+    m_rightArrow.onTrue(m_AutoBalanceCommand);
     m_leftBumper.whileTrue(m_IntakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
   }
