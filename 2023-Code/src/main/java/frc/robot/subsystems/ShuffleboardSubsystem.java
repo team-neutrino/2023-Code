@@ -72,6 +72,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[5].setDouble(m_driveTrain.getR2Vel());
     m_driveTrainVariables[6].setDouble(m_driveTrain.getL1Vel());
     m_driveTrainVariables[7].setDouble(m_driveTrain.getL2Vel());
+    m_driveTrainVariables[8].setDouble(m_driveTrain.getPitch());
 
     m_scoringVariables[2].setBoolean(m_scoring.getSolenoidValue());
 
@@ -89,6 +90,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             .withPosition(0, 0)
             .withSize(1, 1)
             .getEntry();
+
+    m_driveTrainVariables[8] =
+        m_drivestationTab.add("NavX Pitch", 0).withPosition(1, 1).withSize(1, 1).getEntry();
 
     m_driveTrainVariables[1] =
         m_drivestationTab
