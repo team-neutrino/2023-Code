@@ -34,7 +34,6 @@ import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
 
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
@@ -78,7 +77,7 @@ public class RobotContainer {
   private final JoystickButton m_rightBumper =
       new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
 
-  // BUTTON BABIES
+  // BUTTON BABES
   private final JoystickButton m_buttonStart =
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
   private final POVButton m_upArrow = new POVButton(m_driverController, 0);
@@ -161,8 +160,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    // return new BasicAutonomousCommand(m_scoringSubsystem);
     return new ForwardBackwardCommand(m_driveTrain);
-    // return new InstantCommand(() -> m_driveTrain.setMotors(0.4, 0));
   }
 }

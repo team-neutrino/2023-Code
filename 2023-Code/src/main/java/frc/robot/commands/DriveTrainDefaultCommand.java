@@ -28,7 +28,7 @@ public class DriveTrainDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_driveTrainSubsystem.setMotors(0.5, 0.5);
+    m_driveTrainSubsystem.setMotors(m_leftJoystick.getY(), m_rightJoystick.getY());
   }
 
   @Override
