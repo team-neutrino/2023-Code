@@ -77,9 +77,9 @@ public final class Constants {
   }
 
   public static class DriverContants {
-    public static final double GEAR_RATIO = 1.0/8.0;
+    public static final double GEAR_RATIO = 1.0 / 8.0;
     public static final double WHEEL_DIAMETER = 0.127;
     public static final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
-    public static final double ENCODER_CONVERSION = GEAR_RATIO * WHEEL_CIRCUMFERENCE;
+    public static final double ENCODER_CONVERSION = (GEAR_RATIO * WHEEL_CIRCUMFERENCE);
   }
 }

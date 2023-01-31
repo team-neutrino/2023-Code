@@ -24,11 +24,14 @@ public class ForwardBackwardCommand extends SequentialCommandGroup {
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(5, 0, 0)));
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(50, 0, 0)));
 
     forwardBackCommand =
         AutonomousUtil.generateRamseteFromPoses(forwardBackArray, m_driveTrainSubsystem);
 
-    addCommands(forwardBackCommand, new InstantCommand(() -> p_driveTrainSubsystem.setVoltage(0, 0)));
+
+
+    addCommands(
+        forwardBackCommand, new InstantCommand(() -> p_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }

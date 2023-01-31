@@ -6,10 +6,9 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMax.IdleMode;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -67,15 +66,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_encoderL1 = m_lmotor1.getEncoder();
     m_encoderL2 = m_lmotor2.getEncoder();
 
-    // m_encoderR1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
-    // m_encoderR1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
-    // m_encoderR1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
-    // m_encoderR1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
+    m_encoderR1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
+    m_encoderR1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
+    m_encoderR1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
+    m_encoderR1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
 
-    // m_encoderR1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION/60);
-    // m_encoderR1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION/60);
-    // m_encoderR1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION/60);
-    // m_encoderR1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION/60);
+    m_encoderR1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION / 60);
+    m_encoderR1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION / 60);
+    m_encoderR1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION / 60);
+    m_encoderR1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION / 60);
 
     m_diffDriveOdometry =
         new DifferentialDriveOdometry(getGyroYawAsRotation(), getL1Pos(), getR1Pos());
@@ -93,7 +92,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
     resetEncoders();
     m_navX.reset();
     m_diffDriveOdometry.resetPosition(
-        Rotation2d.fromDegrees(getGyroYaw()), m_encoderL1.getPosition(),
+        Rotation2d.fromDegrees(getGyroYaw()),
+        m_encoderL1.getPosition(),
         m_encoderR1.getPosition(),
         pose);
   }
@@ -143,7 +143,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public Pose2d getPose2d() {
-    System.out.println("Pose2d:" + m_diffDriveOdometry.getPoseMeters());
     return m_diffDriveOdometry.getPoseMeters();
   }
 
@@ -151,7 +150,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return new DifferentialDriveWheelSpeeds(getL1Vel(), getR1Vel());
   }
 
-  public void setVoltage(double rightVoltage, double leftVoltage) {
+  public void setVoltage(double leftVoltage, double rightVoltage) {
     m_rmotors.setVoltage(rightVoltage);
     m_lmotors.setVoltage(leftVoltage);
   }
@@ -192,8 +191,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    getPose2d();
+    System.out.println(getPose2d());
     m_diffDriveOdometry.update(
-        getGyroYawAsRotation(), m_encoderL1.getPosition(), m_encoderL2.getPosition());
+        getGyroYawAsRotation(), m_encoderL1.getPosition(), m_encoderR1.getPosition());
   }
 }
