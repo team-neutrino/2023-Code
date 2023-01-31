@@ -11,11 +11,12 @@ public class LEDDefaultCommand extends CommandBase {
   private int m_option;
   private boolean m_beamBreak;
 
-  public LEDDefaultCommand(LEDSubsystem p_LEDSubsystem, int p_option, boolean p_beamBreak) {
+  public LEDDefaultCommand(
+      LEDSubsystem p_LEDSubsystem, int p_option, ScoringSubsystem p_scoringSubsystem) {
     m_LedSubsystem = p_LEDSubsystem;
     m_option = p_option;
-    m_beamBreak = p_beamBreak;
-    addRequirements(m_LedSubsystem);
+    m_ScoringSubsystem = p_scoringSubsystem;
+    addRequirements(m_LedSubsystem, m_ScoringSubsystem);
   }
 
   @Override
@@ -23,20 +24,16 @@ public class LEDDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (m_option == 0) m_LedSubsystem.setToOrange();
-    else if (m_option == 1) m_LedSubsystem.setToYellow();
-    else if (m_option == 2) m_LedSubsystem.setToPurple();
-
-    if (!m_beamBreak) end(m_beamBreak);
+    if (m_option == 1 && m_ScoringSubsystem.getBeamBreak()) m_LedSubsystem.setToYellow();
+    else if (m_option == 2 && m_ScoringSubsystem.getBeamBreak()) m_LedSubsystem.setToPurple();
+    else if (!m_ScoringSubsystem.getBeamBreak()) m_LedSubsystem.setToOrange();
   }
 
   @Override
-  public void end(boolean interrupted) {
-    m_LedSubsystem.setToOrange();
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

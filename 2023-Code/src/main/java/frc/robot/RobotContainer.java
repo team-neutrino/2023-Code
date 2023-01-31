@@ -123,7 +123,7 @@ public class RobotContainer {
       new ScoringOpenCommand(m_scoringSubsystem);
 
   private final LEDDefaultCommand m_LedDefaultCommand =
-      new LEDDefaultCommand(m_LedSubsystem, 0, false);
+      new LEDDefaultCommand(m_LedSubsystem, 0, m_scoringSubsystem);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
@@ -147,8 +147,8 @@ public class RobotContainer {
     m_buttonX.whileTrue(m_intakeCommand);
 
     // LED Buttons
-    m_buttonStart.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 1, true));
-    m_buttonBack.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 2, true));
+    m_buttonStart.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 1, m_scoringSubsystem));
+    m_buttonBack.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 2, m_scoringSubsystem));
 
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));

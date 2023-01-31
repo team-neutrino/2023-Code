@@ -36,7 +36,7 @@ public class ScoringSubsystem extends SubsystemBase {
     return solenoid.get();
   }
 
-  private boolean getBeamBreak() {
+  public boolean getBeamBreak() {
     return m_beamBreak.get();
   }
 
