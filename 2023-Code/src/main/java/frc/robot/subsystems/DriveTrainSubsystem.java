@@ -116,6 +116,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return m_navX.getYaw();
   }
 
+  public double getPitch() {
+    return m_navX.getPitch();
+  }
+
   private Rotation2d getGyroYawAsRotation() {
     return Rotation2d.fromDegrees(getGyroYaw());
   }

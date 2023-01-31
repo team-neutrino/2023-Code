@@ -134,11 +134,11 @@ public class RobotContainer {
 
   // CALLED IN CONSTRUCTOR
   private void setDefaultCommands() {
-    // m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
-    // m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
-    // m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
-    // m_endGame.setDefaultCommand(m_endGameDefaultCommand);
-    // m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
+    m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
+    m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
+    m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
+    m_endGame.setDefaultCommand(m_endGameDefaultCommand);
+    m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
   }
 
   private void configureBindings() {
