@@ -8,6 +8,8 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -48,15 +50,32 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_lmotor1.restoreFactoryDefaults();
     m_rmotor2.restoreFactoryDefaults();
 
+    m_rmotor1.setIdleMode(IdleMode.kBrake);
+    m_rmotor2.setIdleMode(IdleMode.kBrake);
+    m_lmotor1.setIdleMode(IdleMode.kBrake);
+    m_lmotor2.setIdleMode(IdleMode.kBrake);
+
     m_rmotor1.setInverted(true);
     m_rmotor2.setInverted(true);
     m_lmotor1.setInverted(false);
     m_lmotor2.setInverted(false);
 
+    // m_rmotor1.burnFlash();
+
     m_encoderR1 = m_rmotor1.getEncoder();
     m_encoderR2 = m_rmotor2.getEncoder();
     m_encoderL1 = m_lmotor1.getEncoder();
     m_encoderL2 = m_lmotor2.getEncoder();
+
+    // m_encoderR1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
+    // m_encoderR1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
+    // m_encoderR1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
+    // m_encoderR1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
+
+    // m_encoderR1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION/60);
+    // m_encoderR1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION/60);
+    // m_encoderR1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION/60);
+    // m_encoderR1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION/60);
 
     m_diffDriveOdometry =
         new DifferentialDriveOdometry(getGyroYawAsRotation(), getL1Pos(), getR1Pos());
@@ -74,9 +93,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
     resetEncoders();
     m_navX.reset();
     m_diffDriveOdometry.resetPosition(
-        Rotation2d.fromDegrees(getGyroYaw()),
+        Rotation2d.fromDegrees(getGyroYaw()), m_encoderL1.getPosition(),
         m_encoderR1.getPosition(),
-        m_encoderL1.getPosition(),
         pose);
   }
 
@@ -130,7 +148,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public DifferentialDriveWheelSpeeds getDriveWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(getL1Vel(), getL2Vel());
+    return new DifferentialDriveWheelSpeeds(getL1Vel(), getR1Vel());
   }
 
   public void setVoltage(double rightVoltage, double leftVoltage) {

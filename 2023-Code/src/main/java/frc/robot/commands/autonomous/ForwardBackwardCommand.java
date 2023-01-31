@@ -4,6 +4,7 @@
 
 package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -23,11 +24,11 @@ public class ForwardBackwardCommand extends SequentialCommandGroup {
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(15, 0, 0)));
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(5, 0, 0)));
 
     forwardBackCommand =
         AutonomousUtil.generateRamseteFromPoses(forwardBackArray, m_driveTrainSubsystem);
 
-    addCommands(forwardBackCommand);
+    addCommands(forwardBackCommand, new InstantCommand(() -> p_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }
