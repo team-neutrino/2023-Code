@@ -15,7 +15,6 @@ import org.json.JSONObject;
 public class LimelightSubsystem extends SubsystemBase {
   NetworkTable limelight;
   int cycle = 0;
-  int cycle2 = 0;
   double P = 1.5;
   double LIMELIGHT_TO_METER_CONVERSION = 0.76189;
   double ULTRASONIC_TO_METER_CONVERSION = 1.23;
@@ -113,7 +112,7 @@ public class LimelightSubsystem extends SubsystemBase {
     String jsonString = limelight.getEntry("json").getString("not found");
     JSONObject jsonObject = new JSONObject(jsonString);
     JSONArray fiducial = jsonObject.getJSONObject("Results").getJSONArray("Fiducial");
-    // JSONArray x = array.getJSONArray();
+
     if (fiducial.length() == 0) {
       return new double[] {};
     }
@@ -122,35 +121,14 @@ public class LimelightSubsystem extends SubsystemBase {
     double x = t6c_ts.getDouble(0);
     double z = t6c_ts.getDouble(2);
     double y = t6c_ts.getDouble(1);
-    // System.out.println("z is hghrfhusgrhgrhulg" + z);
-    // double z = array.getJSONObject(0).getJSONArray("t6s_ts").getDouble(2);
 
     double[] values = {x, z, y};
     return values;
   }
 
-  public boolean waitBoolean(){
-    cycle2 = 5;
-    System.out.println("this ran at least once");
-    while (cycle2 < 10000000){
-      cycle2++;
-      if (cycle2 % 10000 == 0){
-        System.out.println(cycle2);
-      }
-    if (cycle2 % 100000 == 0){
-      System.out.println("returned true at 1");
-      return true;
-    }
-  }
-  System.out.println("returned true at 2");
-  return true;
-
-  }
-
   @Override
   public void periodic() {
     cycle++;
-    //cycle2++;
     printCamTran();
   }
 }
