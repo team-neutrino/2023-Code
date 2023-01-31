@@ -176,8 +176,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
     double lmotorPosition = getL1Pos();
 
     while (getR1Pos() > rmotorPosition - motorset && getL1Pos() < lmotorPosition + motorset) {
-      m_rmotors.set(-0.1);
-      m_lmotors.set(0.1);
+      m_rmotors.set(-0.05);
+      m_lmotors.set(0.05);
     }
 
     m_rmotors.set(0);
@@ -190,8 +190,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
     double lmotorPosition = getL1Pos();
 
     while (getR1Pos() < rmotorPosition + motorset && getL1Pos() > lmotorPosition - motorset) {
-      m_rmotors.set(0.1);
-      m_lmotors.set(-0.1);
+      m_rmotors.set(0.05);
+      m_lmotors.set(-0.05);
     }
 
     m_rmotors.set(0);

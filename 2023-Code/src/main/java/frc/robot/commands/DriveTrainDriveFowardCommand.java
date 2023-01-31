@@ -45,6 +45,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   public void execute() {
     // System.out.println("running");
     if (m_limelight.getTv()){
+      int ID = m_limelight.getID();
       double[] array = m_limelight.parseJson();
       if (array.length != 0){
         
@@ -63,10 +64,10 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
         System.out.println("theta in degrees is " + theta * 180/Math.PI);
         
         if (theta > 0){
-          m_drivetrain.turnMotor(theta - 0.3);
+          m_drivetrain.turnMotor(theta - 0.25);
         }
         else {
-          m_drivetrain.turnMotor(theta + 0.3);
+          m_drivetrain.turnMotor(theta + 0.25);
         }
         
         System.out.println("set motor position " + (array[0] * -1));
@@ -89,14 +90,24 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
           m_drivetrain.turnMotor(Math.PI / 2);
         }
 
+        int newID = -10;
+        System.out.println("current id is " + m_limelight.getID());
+        System.out.println("comparing against " + ID);
+    
         if (turnLeft){
-          while (m_limelight.getTv() == false){
+          while (m_limelight.getTv() == false || ID != newID){
             m_drivetrain.turnMotor(-0.01);
+            newID = m_limelight.getID();
+            System.out.println("current id is " + newID);
+            System.out.println("comparing against " + ID);
           }
         }
         else {
-          while (m_limelight.getTv() == false){
+          while (m_limelight.getTv() == false || ID != newID){
             m_drivetrain.turnMotor(0.01);
+            newID = m_limelight.getID();
+            System.out.println("current id is " + newID);
+            System.out.println("comparing against " + ID);
           }
         }
 
@@ -156,6 +167,15 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
         }
         */
         //m_drivetrain.turnMotor(m_limelight.getTx() * Math.PI / 180);
+        try {
+          TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+
+
+        m_drivetrain.turnMotor(m_limelight.getTx() * Math.PI / 180);
       }
     }
     }

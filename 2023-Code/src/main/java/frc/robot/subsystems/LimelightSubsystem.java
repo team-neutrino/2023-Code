@@ -41,8 +41,8 @@ public class LimelightSubsystem extends SubsystemBase {
   }
 
   // gets id of the april tag that is detected
-  public double getID() {
-    return limelight.getEntry("tid").getDouble(0.0);
+  public int getID() {
+    return (int) limelight.getEntry("tid").getDouble(0.0);
   }
 
   // gets the x offest between the center of vision and the detected object
