@@ -13,11 +13,11 @@ import frc.robot.subsystems.IntakeSubsystem;
  */
 public class IntakeDefaultCommand extends CommandBase {
   /** An object of the intake subsystem. */
-  IntakeSubsystem m_IntakeSubsystem;
+  IntakeSubsystem m_intakeSubsystem;
 
   /** Constructor, creates a new IntakeDefaultCommand. */
   public IntakeDefaultCommand(IntakeSubsystem subsystem) {
-    m_IntakeSubsystem = subsystem;
+    m_intakeSubsystem = subsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -34,9 +34,9 @@ public class IntakeDefaultCommand extends CommandBase {
    */
   @Override
   public void execute() {
-    m_IntakeSubsystem.stopIntake();
-    m_IntakeSubsystem.unsqueeze();
-    m_IntakeSubsystem.setIntakeUp();
+    m_intakeSubsystem.stopIntake();
+    m_intakeSubsystem.squeeze();
+    m_intakeSubsystem.setIntakeUp();
   }
 
   // Called once the command ends or is interrupted.
