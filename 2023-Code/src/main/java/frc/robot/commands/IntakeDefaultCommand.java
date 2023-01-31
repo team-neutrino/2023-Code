@@ -5,18 +5,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.IntakeSubsystem;
 
-/** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+/**
+ * This default command serves the sole purpose of ensuring that when the button is NOT pressed, the
+ * intake is up and stopped.
+ */
+public class IntakeDefaultCommand extends CommandBase {
+  /** An object of the intake subsystem. */
+  IntakeSubsystem m_intakeSubsystem;
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public ExampleCommand() {
+  /** Constructor, creates a new IntakeDefaultCommand. */
+  public IntakeDefaultCommand(IntakeSubsystem subsystem) {
+    m_intakeSubsystem = subsystem;
+
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -24,10 +28,15 @@ public class ExampleCommand extends CommandBase {
   public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * This command's purpose is to ensure that the intake is up and not running when the button isn't
+   * pressed.
+   */
   @Override
   public void execute() {
-
-    System.out.println("example command is running");
+    m_intakeSubsystem.stopIntake();
+    m_intakeSubsystem.squeeze();
+    m_intakeSubsystem.setIntakeUp();
   }
 
   // Called once the command ends or is interrupted.

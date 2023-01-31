@@ -13,9 +13,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class LimelightSubsystem extends SubsystemBase {
-  NetworkTable limelight;
-  int cycle = 0;
-  double LIMELIGHT_TO_METER_CONVERSION = 0.76189;
+  private NetworkTable limelight;
+  private int cycle = 0;
+  private double LIMELIGHT_TO_METER_CONVERSION = 0.76189;
 
   /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem() {

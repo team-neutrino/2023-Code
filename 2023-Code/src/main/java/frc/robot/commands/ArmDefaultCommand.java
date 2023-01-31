@@ -5,18 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ArmSubsystem;
 
-/** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+public class ArmDefaultCommand extends CommandBase {
+  private ArmSubsystem m_armSubsystem;
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public ExampleCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  /** Creates a new ArmDefaultCommand. */
+  public ArmDefaultCommand(ArmSubsystem p_armSubsystem) {
+    m_armSubsystem = p_armSubsystem;
+    addRequirements(m_armSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -26,8 +23,7 @@ public class ExampleCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    System.out.println("example command is running");
+    m_armSubsystem.turnOff();
   }
 
   // Called once the command ends or is interrupted.
