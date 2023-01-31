@@ -15,10 +15,7 @@ import org.json.JSONObject;
 public class LimelightSubsystem extends SubsystemBase {
   NetworkTable limelight;
   int cycle = 0;
-  double P = 1.5;
   double LIMELIGHT_TO_METER_CONVERSION = 0.76189;
-  double ULTRASONIC_TO_METER_CONVERSION = 1.23;
-  AnalogPotentiometer m_distanceFinder = new AnalogPotentiometer(0, 6, 0);
 
   /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem() {
@@ -71,10 +68,6 @@ public class LimelightSubsystem extends SubsystemBase {
   public double getX() {
     double[] camTran = getCamTran();
     return camTran[0];
-  }
-
-  public double getStraightDistance() {
-    return m_distanceFinder.get() * ULTRASONIC_TO_METER_CONVERSION;
   }
 
   public double lawOfCosines(double sideX, double sideY, double theta) {
