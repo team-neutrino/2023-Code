@@ -21,7 +21,7 @@ import frc.robot.util.DriverStationInfo;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
-  private GenericEntry m_driveTrainVariables[] = new GenericEntry[8];
+  private GenericEntry m_driveTrainVariables[] = new GenericEntry[9];
   private GenericEntry m_limelightVariables[] = new GenericEntry[8];
   private GenericEntry m_driverStationInfoVariables[] = new GenericEntry[9];
   private GenericEntry m_scoringVariables[] = new GenericEntry[11];

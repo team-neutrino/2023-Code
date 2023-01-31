@@ -73,5 +73,6 @@ public final class Constants {
 
   public static class DigitalConstants {
     public static final int INDEX_BEAMBREAK = 0;
+    public static final int GRABBER_BEAMBREAK = 1;
   }
 }
