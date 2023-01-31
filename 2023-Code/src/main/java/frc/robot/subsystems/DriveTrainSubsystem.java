@@ -60,6 +60,24 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     m_diffDriveOdometry =
         new DifferentialDriveOdometry(getGyroYawAsRotation(), getL1Pos(), getR1Pos());
+    resetOdometry(m_diffDriveOdometry.getPoseMeters());
+  }
+
+  public void resetEncoders() {
+    m_encoderR1.setPosition(0);
+    m_encoderR2.setPosition(0);
+    m_encoderL1.setPosition(0);
+    m_encoderL2.setPosition(0);
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    m_navX.reset();
+    m_diffDriveOdometry.resetPosition(
+        Rotation2d.fromDegrees(getGyroYaw()),
+        m_encoderR1.getPosition(),
+        m_encoderL1.getPosition(),
+        pose);
   }
 
   public double getR1Pos() {
@@ -103,6 +121,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public Pose2d getPose2d() {
+    System.out.println("Pose2d:" + m_diffDriveOdometry.getPoseMeters());
     return m_diffDriveOdometry.getPoseMeters();
   }
 
@@ -151,6 +170,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    getPose2d();
     m_diffDriveOdometry.update(
         getGyroYawAsRotation(), m_encoderL1.getPosition(), m_encoderL2.getPosition());
   }
