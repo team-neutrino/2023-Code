@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,6 +14,8 @@ public class ScoringSubsystem extends SubsystemBase {
 
   private Solenoid solenoid =
       new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.GRABBER);
+
+  private DigitalInput m_beamBreak = new DigitalInput(Constants.DigitalConstants.GRABBER_BEAMBREAK);
 
   /** Creates a new PneumaticsSubsystem. */
   public ScoringSubsystem() {}
@@ -31,6 +34,10 @@ public class ScoringSubsystem extends SubsystemBase {
 
   public boolean getSolenoidValue() {
     return solenoid.get();
+  }
+
+  private boolean getBeamBreak() {
+    return m_beamBreak.get();
   }
 
   @Override

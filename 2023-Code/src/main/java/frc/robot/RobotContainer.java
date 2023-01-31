@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -117,8 +116,8 @@ public class RobotContainer {
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
 
-  private final LEDDefaultCommand m_LedDefaultCommand = new LEDDefaultCommand(m_LedSubsystem);
-
+  private final LEDDefaultCommand m_LedDefaultCommand =
+      new LEDDefaultCommand(m_LedSubsystem, 0, false);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
@@ -137,13 +136,13 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-   // m_buttonA.whileTrue(m_scoringOpenCommand);
+    // m_buttonA.whileTrue(m_scoringOpenCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_buttonX.whileTrue(m_intakeCommand);
 
     // LED Buttons
-    m_buttonA.whileTrue(new InstantCommand(m_LedSubsystem::setToPurple));
-    m_buttonBack.whileTrue(new InstantCommand(m_LedSubsystem::setToYellow));
+    m_buttonStart.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 1, true));
+    m_buttonBack.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 2, true));
 
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
 

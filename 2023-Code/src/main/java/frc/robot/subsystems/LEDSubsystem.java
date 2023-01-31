@@ -12,6 +12,7 @@ public class LEDSubsystem extends SubsystemBase {
 
   public AddressableLED m_addressableLED;
   public AddressableLEDBuffer m_LedBuffer;
+  private boolean m_beamBreak;
 
   public void start() {}
 
@@ -31,14 +32,12 @@ public class LEDSubsystem extends SubsystemBase {
   public void setToPurple() {
     for (int i = 0; i < m_LedBuffer.getLength(); i++) {
       m_LedBuffer.setRGB(i, 162, 25, 255);
-      System.out.println("purple");
     }
   }
 
   public void setToYellow() {
     for (int i = 0; i < m_LedBuffer.getLength(); i++) {
       m_LedBuffer.setRGB(i, 255, 100, 0);
-      System.out.println("yellow");
     }
   }
 
