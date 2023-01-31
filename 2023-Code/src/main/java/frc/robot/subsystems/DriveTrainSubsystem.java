@@ -54,12 +54,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_lmotor1.setIdleMode(IdleMode.kBrake);
     m_lmotor2.setIdleMode(IdleMode.kBrake);
 
-    m_rmotor1.setInverted(true);
-    m_rmotor2.setInverted(true);
-    m_lmotor1.setInverted(false);
-    m_lmotor2.setInverted(false);
+    m_rmotor1.setInverted(false);
+    m_rmotor2.setInverted(false);
+    m_lmotor1.setInverted(true);
+    m_lmotor2.setInverted(true);
 
-    // m_rmotor1.burnFlash();
+    m_rmotor1.burnFlash();
+    m_rmotor2.burnFlash();
+    m_lmotor1.burnFlash();
+    m_lmotor2.burnFlash();
 
     m_encoderR1 = m_rmotor1.getEncoder();
     m_encoderR2 = m_rmotor2.getEncoder();
@@ -131,7 +134,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public double getGyroYaw() {
-    return m_navX.getYaw();
+    return -1 * m_navX.getYaw();
   }
 
   public double getPitch() {
