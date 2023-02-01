@@ -13,20 +13,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ForwardBackwardCommand extends SequentialCommandGroup {
-
-  private DriveTrainSubsystem m_driveTrainSubsystem;
-  private ArrayList<PoseTriplet> forwardBackArray;
-  private final RamseteCommand forwardBackCommand;
-
   public ForwardBackwardCommand(DriveTrainSubsystem p_driveTrainSubsystem) {
-    m_driveTrainSubsystem = p_driveTrainSubsystem;
-
-    forwardBackArray =
+    ArrayList<PoseTriplet> forwardBackArray =
         new ArrayList<PoseTriplet>(
             Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(25, 0, 0)));
 
-    forwardBackCommand =
-        AutonomousUtil.generateRamseteFromPoses(forwardBackArray, m_driveTrainSubsystem);
+    RamseteCommand forwardBackCommand =
+        AutonomousUtil.generateRamseteFromPoses(forwardBackArray, p_driveTrainSubsystem);
 
     addCommands(forwardBackCommand);
   }
