@@ -11,11 +11,13 @@ public class AutoProcessCommand extends CommandBase {
   ArmSubsystem m_armSubsystem;
   ScoringSubsystem m_scoringSubsystem;
 
-  public AutoProcessCommand(IntakeSubsystem p_intakeSubsystem, ArmSubsystem p_armSubsystem, ScoringSubsystem p_scoringSubsystem) {
+  public AutoProcessCommand(
+    IntakeSubsystem p_intakeSubsystem,
+    ArmSubsystem p_armSubsystem,
+    ScoringSubsystem p_scoringSubsystem) {
     m_intakeSubsystem = p_intakeSubsystem;
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
-
     addRequirements(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
   }
 
