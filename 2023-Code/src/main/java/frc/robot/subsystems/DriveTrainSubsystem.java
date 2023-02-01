@@ -26,13 +26,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   // MOTORS
   private CANSparkMax m_motorRight1 =
-      new CANSparkMax(Constants.MotorConstants.RMOTOR1, MotorType.kBrushless);
+      new CANSparkMax(Constants.MotorConstants.MOTOR_RIGHT1, MotorType.kBrushless);
   private CANSparkMax m_motorRight2 =
-      new CANSparkMax(Constants.MotorConstants.RMOTOR2, MotorType.kBrushless);
+      new CANSparkMax(Constants.MotorConstants.MOTOR_RIGHT2, MotorType.kBrushless);
   private CANSparkMax m_motorLeft1 =
-      new CANSparkMax(Constants.MotorConstants.LMOTOR1, MotorType.kBrushless);
+      new CANSparkMax(Constants.MotorConstants.MOTOR_LEFT1, MotorType.kBrushless);
   private CANSparkMax m_motorLeft2 =
-      new CANSparkMax(Constants.MotorConstants.LMOTOR2, MotorType.kBrushless);
+      new CANSparkMax(Constants.MotorConstants.MOTOR_LEFT2, MotorType.kBrushless);
 
   private RelativeEncoder m_encoderRight1;
   private RelativeEncoder m_encoderRight2;

@@ -13,9 +13,10 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
   public static class OperatorConstants {
-    public static final int JOYSTICK_RIGHT = 0;
-    public static final int JOYSTICK_LEFT = 1;
+    public static final int JOYSTICK_LEFT = 0;
+    public static final int JOYSTICK_RIGHT = 1;
     public static final int XBOX = 4;
   }
 
@@ -28,10 +29,10 @@ public final class Constants {
     public static final int INTAKEMOTOR2 = 22;
     public static final int INTAKEMOTOR3 = 23; // not used currently, may be in the future
 
-    public static final int RMOTOR1 = 11;
-    public static final int RMOTOR2 = 12;
-    public static final int LMOTOR1 = 13;
-    public static final int LMOTOR2 = 14;
+    public static final int MOTOR_RIGHT1 = 11;
+    public static final int MOTOR_RIGHT2 = 12;
+    public static final int MOTOR_LEFT1 = 13;
+    public static final int MOTOR_LEFT2 = 14;
 
     public static final int ARM_MOTOR1 = 31;
     public static final int GRABBER_MOTOR1 = 41;
