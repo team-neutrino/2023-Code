@@ -11,7 +11,6 @@ public class ArmToAngleCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private double m_angle;
 
-  /** Creates a new ArmToAngleCommand. */
   public ArmToAngleCommand(ArmSubsystem p_armSubsystem, double p_angle) {
     m_armSubsystem = p_armSubsystem;
     addRequirements(m_armSubsystem);
