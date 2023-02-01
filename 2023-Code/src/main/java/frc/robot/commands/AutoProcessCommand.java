@@ -20,10 +20,7 @@ public class AutoProcessCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
-
-  @Override
-  public void execute() {
+  public void initialize() {
     m_intakeSubsystem.unsqueeze();
     m_intakeSubsystem.setIntakeDown();
     m_intakeSubsystem.runIntake();
@@ -41,6 +38,9 @@ public class AutoProcessCommand extends CommandBase {
       }
     }
   }
+
+  @Override
+  public void execute() {}
 
   @Override
   public void end(boolean interrupted) {}
