@@ -34,6 +34,7 @@ public class AutoProcessCommand extends CommandBase{
             m_armSubsystem.setReference(Constants.ArmConstants.ARM_DOWN);
         }
     }
+    else{}
   }
 
   @Override
