@@ -6,13 +6,17 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 
-public class AutoProcessCommand extends CommandBase{
+public class AutoProcessCommand extends CommandBase {
   IntakeSubsystem m_intakeSubsystem;
   ArmSubsystem m_armSubsystem;
   ScoringSubsystem m_scoringSubsystem;
 
-  public AutoProcessCommand() {
-   addRequirements(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
+  public AutoProcessCommand(IntakeSubsystem p_intakeSubsystem, ArmSubsystem p_armSubsystem, ScoringSubsystem p_scoringSubsystem) {
+    m_intakeSubsystem = p_intakeSubsystem;
+    m_armSubsystem = p_armSubsystem;
+    m_scoringSubsystem = p_scoringSubsystem;
+
+    addRequirements(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
   }
 
   @Override
@@ -23,18 +27,19 @@ public class AutoProcessCommand extends CommandBase{
     m_intakeSubsystem.unsqueeze();
     m_intakeSubsystem.setIntakeDown();
     m_intakeSubsystem.runIntake();
-    if(m_intakeSubsystem.isGamePiece()) {
-        m_intakeSubsystem.squeeze();
-        m_intakeSubsystem.stopIntake();
-        m_scoringSubsystem.setScoringOpen();
+
+    if (m_intakeSubsystem.isGamePiece()) {
+      m_intakeSubsystem.squeeze();
+      m_intakeSubsystem.stopIntake();
+      m_scoringSubsystem.setScoringOpen();
+      m_armSubsystem.setReference(Constants.ArmConstants.ARM_DOWN);
+
+      if (m_scoringSubsystem.getBeamBreak()) {
+        m_intakeSubsystem.unsqueeze();
+        m_scoringSubsystem.setScoringClose();
         m_armSubsystem.setReference(Constants.ArmConstants.ARM_DOWN);
-        if(m_scoringSubsystem.getBeamBreak()) {
-            m_intakeSubsystem.unsqueeze();
-            m_scoringSubsystem.setScoringClose();
-            m_armSubsystem.setReference(Constants.ArmConstants.ARM_DOWN);
-        }
+      }
     }
-    else{}
   }
 
   @Override
