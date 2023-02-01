@@ -18,12 +18,12 @@ public class ScoringDefaultCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    m_scoringSubsystem.setSolenoidExtend();
+    m_scoringSubsystem.setScoringClose();
   }
 
   @Override
   public void execute() {
-    m_scoringSubsystem.setSolenoidExtend();
+    m_scoringSubsystem.setScoringClose();
   }
 
   @Override
