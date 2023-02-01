@@ -28,6 +28,6 @@ public class ForwardBackwardCommand extends SequentialCommandGroup {
     forwardBackCommand =
         AutonomousUtil.generateRamseteFromPoses(forwardBackArray, m_driveTrainSubsystem);
 
-    addCommands(new SequentialCommandGroup(forwardBackCommand));
+    addCommands(forwardBackCommand);
   }
 }
