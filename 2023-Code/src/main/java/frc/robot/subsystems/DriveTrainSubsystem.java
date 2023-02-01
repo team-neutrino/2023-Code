@@ -13,12 +13,18 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DriveTrainSubsystem extends SubsystemBase {
+
+  private Joystick m_leftJoystick = 
+      new Joystick(Constants.OperatorConstants.JOYSTICK_LEFT);
+  private Joystick m_rightJoystick = 
+      new Joystick(Constants.OperatorConstants.JOYSTICK_RIGHT);
 
   // ODOMETRY
   private DifferentialDriveOdometry m_diffDriveOdometry;
@@ -166,8 +172,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void setMotors(double leftMotorInput, double rightMotorInput) {
+    boolean turbo = m_leftJoystick.getTrigger() && m_rightJoystick.getTrigger();
+
     double leftMotorSpeed = linearAccel(deadzone(leftMotorInput));
     double rightMotorSpeed = linearAccel(deadzone(rightMotorInput));
+
+    if(turbo){
+      leftMotorSpeed = turboAccel(deadzone(leftMotorInput));
+      rightMotorSpeed = turboAccel(deadzone(rightMotorInput));
+    }
     m_motorGroupLeft.set(leftMotorSpeed);
     m_motorGroupRight.set(rightMotorSpeed);
   }
@@ -188,13 +201,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return newSpeed;
   }
 
-  public static double slowAccel(double joystickY) {
+  public static double turboAccel(double joystickY) {
     double MAXSPEED = 0.7;
     double newSpeed = (2 * MAXSPEED * joystickY) / (1 + Math.abs(joystickY));
     return newSpeed;
   }
 
-  public static double turboAccel(double joystickY) {
+  public static double slowAccel(double joystickY) {
     double newSpeed = Math.pow(joystickY, 3) * 1.6 + (0.17 * joystickY);
     return newSpeed;
   }
