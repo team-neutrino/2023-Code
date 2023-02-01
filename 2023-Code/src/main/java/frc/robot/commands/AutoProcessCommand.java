@@ -37,7 +37,7 @@ public class AutoProcessCommand extends CommandBase {
       if (m_scoringSubsystem.getBeamBreak()) {
         m_intakeSubsystem.unsqueeze();
         m_scoringSubsystem.setScoringClose();
-        m_armSubsystem.setReference(Constants.ArmConstants.ARM_DOWN);
+        m_armSubsystem.setReference(Constants.ArmConstants.ARM_UP);
       }
     }
   }
