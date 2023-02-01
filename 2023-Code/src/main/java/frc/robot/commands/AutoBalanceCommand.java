@@ -35,7 +35,7 @@ public class AutoBalanceCommand extends CommandBase {
         error * Constants.PIDConstants.BALANCE_P
             + Constants.PIDConstants.BALANCE_I * (integral += error) * dt
             + Constants.PIDConstants.BALANCE_D * (error - previousError) / dt;
-    m_drivetrain.setVoltage(voltage);
+    m_drivetrain.setVoltage(voltage, voltage);
   }
 
   @Override
