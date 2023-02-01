@@ -25,59 +25,59 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
 
   // MOTORS
-  private CANSparkMax m_rmotor1 =
+  private CANSparkMax m_motorRight1 =
       new CANSparkMax(Constants.MotorConstants.RMOTOR1, MotorType.kBrushless);
-  private CANSparkMax m_rmotor2 =
+  private CANSparkMax m_motorRight2 =
       new CANSparkMax(Constants.MotorConstants.RMOTOR2, MotorType.kBrushless);
-  private CANSparkMax m_lmotor1 =
+  private CANSparkMax m_motorLeft1 =
       new CANSparkMax(Constants.MotorConstants.LMOTOR1, MotorType.kBrushless);
-  private CANSparkMax m_lmotor2 =
+  private CANSparkMax m_motorLeft2 =
       new CANSparkMax(Constants.MotorConstants.LMOTOR2, MotorType.kBrushless);
 
-  private RelativeEncoder m_encoderR1;
-  private RelativeEncoder m_encoderR2;
-  private RelativeEncoder m_encoderL1;
-  private RelativeEncoder m_encoderL2;
+  private RelativeEncoder m_encoderRight1;
+  private RelativeEncoder m_encoderRight2;
+  private RelativeEncoder m_encoderLeft1;
+  private RelativeEncoder m_encoderLeft2;
 
-  MotorControllerGroup m_rmotors = new MotorControllerGroup(m_rmotor1, m_rmotor2);
-  MotorControllerGroup m_lmotors = new MotorControllerGroup(m_lmotor1, m_lmotor2);
+  MotorControllerGroup m_rmotors = new MotorControllerGroup(m_motorRight1, m_motorRight2);
+  MotorControllerGroup m_lmotors = new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
 
   /** Creates a new Drivetrain. */
   public DriveTrainSubsystem() {
-    m_rmotor1.restoreFactoryDefaults();
-    m_rmotor2.restoreFactoryDefaults();
-    m_lmotor1.restoreFactoryDefaults();
-    m_rmotor2.restoreFactoryDefaults();
+    m_motorRight1.restoreFactoryDefaults();
+    m_motorRight2.restoreFactoryDefaults();
+    m_motorLeft1.restoreFactoryDefaults();
+    m_motorRight2.restoreFactoryDefaults();
 
-    m_rmotor1.setIdleMode(IdleMode.kBrake);
-    m_rmotor2.setIdleMode(IdleMode.kBrake);
-    m_lmotor1.setIdleMode(IdleMode.kBrake);
-    m_lmotor2.setIdleMode(IdleMode.kBrake);
+    m_motorRight1.setIdleMode(IdleMode.kBrake);
+    m_motorRight2.setIdleMode(IdleMode.kBrake);
+    m_motorLeft1.setIdleMode(IdleMode.kBrake);
+    m_motorLeft2.setIdleMode(IdleMode.kBrake);
 
-    m_rmotor1.setInverted(false);
-    m_rmotor2.setInverted(false);
-    m_lmotor1.setInverted(true);
-    m_lmotor2.setInverted(true);
+    m_motorRight1.setInverted(false);
+    m_motorRight2.setInverted(false);
+    m_motorLeft1.setInverted(true);
+    m_motorLeft2.setInverted(true);
 
-    m_rmotor1.burnFlash();
-    m_rmotor2.burnFlash();
-    m_lmotor1.burnFlash();
-    m_lmotor2.burnFlash();
+    m_motorRight1.burnFlash();
+    m_motorRight2.burnFlash();
+    m_motorLeft1.burnFlash();
+    m_motorLeft2.burnFlash();
 
-    m_encoderR1 = m_rmotor1.getEncoder();
-    m_encoderR2 = m_rmotor2.getEncoder();
-    m_encoderL1 = m_lmotor1.getEncoder();
-    m_encoderL2 = m_lmotor2.getEncoder();
+    m_encoderRight1 = m_motorRight1.getEncoder();
+    m_encoderRight2 = m_motorRight2.getEncoder();
+    m_encoderLeft1 = m_motorLeft1.getEncoder();
+    m_encoderLeft2 = m_motorLeft2.getEncoder();
 
-    m_encoderR1.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
-    m_encoderR2.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
-    m_encoderL1.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
-    m_encoderL2.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
+    m_encoderRight1.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
+    m_encoderRight2.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
+    m_encoderLeft1.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
+    m_encoderLeft2.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
 
-    m_encoderR1.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
-    m_encoderR2.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
-    m_encoderL1.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
-    m_encoderL2.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
+    m_encoderRight1.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
+    m_encoderRight2.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
+    m_encoderLeft1.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
+    m_encoderLeft2.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
 
     m_diffDriveOdometry =
         new DifferentialDriveOdometry(getGyroYawAsRotation(), getL1Pos(), getR1Pos());
@@ -85,10 +85,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void resetEncoders() {
-    m_encoderR1.setPosition(0);
-    m_encoderR2.setPosition(0);
-    m_encoderL1.setPosition(0);
-    m_encoderL2.setPosition(0);
+    m_encoderRight1.setPosition(0);
+    m_encoderRight2.setPosition(0);
+    m_encoderLeft1.setPosition(0);
+    m_encoderLeft2.setPosition(0);
   }
 
   public void resetOdometry(Pose2d pose) {
@@ -96,41 +96,41 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_navX.reset();
     m_diffDriveOdometry.resetPosition(
         Rotation2d.fromDegrees(getGyroYaw()),
-        m_encoderL1.getPosition(),
-        m_encoderR1.getPosition(),
+        m_encoderLeft1.getPosition(),
+        m_encoderRight1.getPosition(),
         pose);
   }
 
   public double getR1Pos() {
-    return m_encoderR1.getPosition();
+    return m_encoderRight1.getPosition();
   }
 
   public double getR2Pos() {
-    return m_encoderR2.getPosition();
+    return m_encoderRight2.getPosition();
   }
 
   public double getL1Pos() {
-    return m_encoderL1.getPosition();
+    return m_encoderLeft1.getPosition();
   }
 
   public double getL2Pos() {
-    return m_encoderL2.getPosition();
+    return m_encoderLeft2.getPosition();
   }
 
   public double getR1Vel() {
-    return m_encoderR1.getVelocity();
+    return m_encoderRight1.getVelocity();
   }
 
   public double getR2Vel() {
-    return m_encoderR2.getVelocity();
+    return m_encoderRight2.getVelocity();
   }
 
   public double getL1Vel() {
-    return m_encoderL1.getVelocity();
+    return m_encoderLeft1.getVelocity();
   }
 
   public double getL2Vel() {
-    return m_encoderL2.getVelocity();
+    return m_encoderLeft2.getVelocity();
   }
 
   public double getGyroYaw() {
@@ -196,6 +196,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void periodic() {
     System.out.println(getPose2d());
     m_diffDriveOdometry.update(
-        getGyroYawAsRotation(), m_encoderL1.getPosition(), m_encoderR1.getPosition());
+        getGyroYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
   }
 }

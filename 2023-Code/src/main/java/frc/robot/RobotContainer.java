@@ -23,6 +23,7 @@ import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.LEDDefaultCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
+import frc.robot.commands.autonomous.ForwardBackwardCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.EndGameSubsystem;
@@ -41,7 +42,7 @@ public class RobotContainer {
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
   // SUBSYSTEMS
-  private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
+  private final DriveTrainSubsystem m_driveTrainSubsystem = new DriveTrainSubsystem();
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
@@ -52,7 +53,7 @@ public class RobotContainer {
   private final ShuffleboardSubsystem m_shuffleboardSubsystem =
       new ShuffleboardSubsystem(
           m_driverStationInfo,
-          m_driveTrain,
+          m_driveTrainSubsystem,
           m_scoringSubsystem,
           m_limelightSubsystem,
           m_armSubsystem,
@@ -84,7 +85,8 @@ public class RobotContainer {
 
   // COMMANDS
   private final ArmDefaultCommand m_ArmDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
-  private final AutoBalanceCommand m_AutoBalanceCommand = new AutoBalanceCommand(m_driveTrain);
+  private final AutoBalanceCommand m_AutoBalanceCommand =
+      new AutoBalanceCommand(m_driveTrainSubsystem);
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
   private final POVButton m_upArrow = new POVButton(m_driverController, 0);
@@ -98,7 +100,7 @@ public class RobotContainer {
   // COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
-      new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
+      new DriveTrainDefaultCommand(m_driveTrainSubsystem, m_leftJoystick, m_rightJoystick);
 
   // turn both intake motors off and set the entire thing up
   private final IntakeDefaultCommand m_IntakeDefaultCommand =
@@ -135,7 +137,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
+    m_driveTrainSubsystem.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
     m_endGame.setDefaultCommand(m_endGameDefaultCommand);
@@ -158,6 +160,8 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return m_shuffleboardSubsystem.getAutoSelected();
+    return new ForwardBackwardCommand(m_driveTrainSubsystem);
+    // return m_shuffleboardSubsystem.getAutoSelected().andThen(new InstantCommand(() ->
+    // m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }
