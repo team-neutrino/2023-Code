@@ -46,6 +46,8 @@ public final class Constants {
     public static final double ROTATION_TO_INCHES = M_PI * (WHEEL_SIZE / REDUCTION);
     public static final float MIN_SOFT_LIM = -100;
     public static final float MAX_SOFT_LIM = 100;
+    public static final int ARM_DOWN = 0;
+    public static final int ARM_UP = 90;
   }
 
   public static class PIDConstants {
