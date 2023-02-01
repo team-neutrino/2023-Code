@@ -12,9 +12,9 @@ public class AutoProcessCommand extends CommandBase {
   ScoringSubsystem m_scoringSubsystem;
 
   public AutoProcessCommand(
-    IntakeSubsystem p_intakeSubsystem,
-    ArmSubsystem p_armSubsystem,
-    ScoringSubsystem p_scoringSubsystem) {
+      IntakeSubsystem p_intakeSubsystem,
+      ArmSubsystem p_armSubsystem,
+      ScoringSubsystem p_scoringSubsystem) {
     m_intakeSubsystem = p_intakeSubsystem;
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
@@ -22,14 +22,14 @@ public class AutoProcessCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
-
-  @Override
-  public void execute() {
+  public void initialize() {
     m_intakeSubsystem.unsqueeze();
     m_intakeSubsystem.setIntakeDown();
     m_intakeSubsystem.runIntake();
+  }
 
+  @Override
+  public void execute() {
     if (m_intakeSubsystem.isGamePiece()) {
       m_intakeSubsystem.squeeze();
       m_intakeSubsystem.stopIntake();
