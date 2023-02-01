@@ -45,7 +45,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   /** Creates a new Drivetrain. */
   public DriveTrainSubsystem() {
     m_motorLeft1.restoreFactoryDefaults();
-    m_motorRight2.restoreFactoryDefaults();
+    m_motorLeft2.restoreFactoryDefaults();
     m_motorRight1.restoreFactoryDefaults();
     m_motorRight2.restoreFactoryDefaults();
 
