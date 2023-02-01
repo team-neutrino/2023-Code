@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -23,7 +24,6 @@ import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.LEDDefaultCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
-import frc.robot.commands.autonomous.ForwardBackwardCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.EndGameSubsystem;
@@ -160,8 +160,9 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new ForwardBackwardCommand(m_driveTrainSubsystem);
-    // return m_shuffleboardSubsystem.getAutoSelected().andThen(new InstantCommand(() ->
-    // m_driveTrainSubsystem.setVoltage(0, 0)));
+    // return new ForwardBackwardCommand(m_driveTrainSubsystem);
+    return m_shuffleboardSubsystem
+        .getAutoSelected()
+        .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }

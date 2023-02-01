@@ -39,48 +39,48 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoderLeft1;
   private RelativeEncoder m_encoderLeft2;
 
-  MotorControllerGroup m_rmotors = new MotorControllerGroup(m_motorRight1, m_motorRight2);
-  MotorControllerGroup m_lmotors = new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
+  MotorControllerGroup m_motorGroupRight = new MotorControllerGroup(m_motorRight1, m_motorRight2);
+  MotorControllerGroup m_motorGroupLeft = new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
 
   /** Creates a new Drivetrain. */
   public DriveTrainSubsystem() {
-    m_motorRight1.restoreFactoryDefaults();
-    m_motorRight2.restoreFactoryDefaults();
     m_motorLeft1.restoreFactoryDefaults();
     m_motorRight2.restoreFactoryDefaults();
+    m_motorRight1.restoreFactoryDefaults();
+    m_motorRight2.restoreFactoryDefaults();
 
-    m_motorRight1.setIdleMode(IdleMode.kBrake);
-    m_motorRight2.setIdleMode(IdleMode.kBrake);
     m_motorLeft1.setIdleMode(IdleMode.kBrake);
     m_motorLeft2.setIdleMode(IdleMode.kBrake);
+    m_motorRight1.setIdleMode(IdleMode.kBrake);
+    m_motorRight2.setIdleMode(IdleMode.kBrake);
 
-    m_motorRight1.setInverted(false);
-    m_motorRight2.setInverted(false);
     m_motorLeft1.setInverted(true);
     m_motorLeft2.setInverted(true);
+    m_motorRight1.setInverted(false);
+    m_motorRight2.setInverted(false);
 
-    m_motorRight1.burnFlash();
-    m_motorRight2.burnFlash();
     m_motorLeft1.burnFlash();
     m_motorLeft2.burnFlash();
+    m_motorRight1.burnFlash();
+    m_motorRight2.burnFlash();
 
-    m_encoderRight1 = m_motorRight1.getEncoder();
-    m_encoderRight2 = m_motorRight2.getEncoder();
     m_encoderLeft1 = m_motorLeft1.getEncoder();
     m_encoderLeft2 = m_motorLeft2.getEncoder();
+    m_encoderRight1 = m_motorRight1.getEncoder();
+    m_encoderRight2 = m_motorRight2.getEncoder();
 
-    m_encoderRight1.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
-    m_encoderRight2.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
-    m_encoderLeft1.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
-    m_encoderLeft2.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
+    m_encoderLeft1.setPositionConversionFactor(Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
+    m_encoderLeft2.setPositionConversionFactor(Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
+    m_encoderRight1.setPositionConversionFactor(Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
+    m_encoderRight2.setPositionConversionFactor(Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
 
-    m_encoderRight1.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
-    m_encoderRight2.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
-    m_encoderLeft1.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
-    m_encoderLeft2.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
+    m_encoderLeft1.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
+    m_encoderLeft2.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
+    m_encoderRight1.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
+    m_encoderRight2.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
 
     m_diffDriveOdometry =
-        new DifferentialDriveOdometry(getGyroYawAsRotation(), getL1Pos(), getR1Pos());
+        new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
     resetOdometry(m_diffDriveOdometry.getPoseMeters());
   }
 
@@ -95,7 +95,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     resetEncoders();
     m_navX.reset();
     m_diffDriveOdometry.resetPosition(
-        Rotation2d.fromDegrees(getGyroYaw()),
+        Rotation2d.fromDegrees(getYaw()),
         m_encoderLeft1.getPosition(),
         m_encoderRight1.getPosition(),
         pose);
@@ -133,16 +133,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return m_encoderLeft2.getVelocity();
   }
 
-  public double getGyroYaw() {
-    return -1 * m_navX.getYaw();
+  public double getYaw() {
+    return m_navX.getYaw();
   }
 
   public double getPitch() {
     return m_navX.getPitch();
   }
 
-  private Rotation2d getGyroYawAsRotation() {
-    return Rotation2d.fromDegrees(getGyroYaw());
+  private Rotation2d getYawAsRotation() {
+    return Rotation2d.fromDegrees(getYaw());
   }
 
   public Pose2d getPose2d() {
@@ -154,15 +154,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void setVoltage(double leftVoltage, double rightVoltage) {
-    m_rmotors.setVoltage(rightVoltage);
-    m_lmotors.setVoltage(leftVoltage);
+    m_motorGroupLeft.setVoltage(leftVoltage);
+    m_motorGroupRight.setVoltage(rightVoltage);
   }
 
-  public void setMotors(double rightMotorInput, double leftMotorInput) {
+  public void setMotors(double leftMotorInput, double rightMotorInput) {
     double leftMotorSpeed = linearAccel(deadzone(leftMotorInput));
     double rightMotorSpeed = linearAccel(deadzone(rightMotorInput));
-    m_rmotors.set(rightMotorSpeed);
-    m_lmotors.set(leftMotorSpeed);
+    m_motorGroupLeft.set(leftMotorSpeed);
+    m_motorGroupRight.set(rightMotorSpeed);
   }
 
   public double deadzone(double joystickY) {
@@ -194,8 +194,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println(getPose2d());
     m_diffDriveOdometry.update(
-        getGyroYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
+        getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
   }
 }

@@ -28,10 +28,10 @@ public final class Constants {
     public static final int INTAKEMOTOR2 = 22;
     public static final int INTAKEMOTOR3 = 23; // not used currently, may be in the future
 
-    public static final int RMOTOR1 = 3;
-    public static final int RMOTOR2 = 4;
-    public static final int LMOTOR1 = 1;
-    public static final int LMOTOR2 = 2;
+    public static final int RMOTOR1 = 11;
+    public static final int RMOTOR2 = 12;
+    public static final int LMOTOR1 = 13;
+    public static final int LMOTOR2 = 14;
 
     public static final int ARM_MOTOR1 = 31;
     public static final int GRABBER_MOTOR1 = 41;
@@ -80,6 +80,7 @@ public final class Constants {
     public static final double GEAR_RATIO = 1.0 / 8.0;
     public static final double WHEEL_DIAMETER = 0.127;
     public static final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
-    public static final double ENCODER_CONVERSION = GEAR_RATIO * WHEEL_CIRCUMFERENCE;
+    public static final double ENCODER_POSITION_CONVERSION = GEAR_RATIO * WHEEL_CIRCUMFERENCE;
+    public static final double ENCODER_VELOCITY_CONVERSION = GEAR_RATIO * WHEEL_CIRCUMFERENCE / 60;
   }
 }
