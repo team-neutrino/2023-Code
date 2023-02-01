@@ -28,11 +28,10 @@ public final class Constants {
     public static final int INTAKEMOTOR2 = 22;
     public static final int INTAKEMOTOR3 = 23; // not used currently, may be in the future
 
-    public static final int RMOTOR1 = 3;
-    public static final int RMOTOR2 = 4;
-    // switch these back later
-    public static final int LMOTOR1 = 1;
-    public static final int LMOTOR2 = 2;
+    public static final int RMOTOR1 = 11;
+    public static final int RMOTOR2 = 12;
+    public static final int LMOTOR1 = 13;
+    public static final int LMOTOR2 = 14;
 
     public static final int ARM_MOTOR1 = 31;
     public static final int GRABBER_MOTOR1 = 41;
