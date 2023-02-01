@@ -132,7 +132,6 @@ public class RobotContainer {
   public RobotContainer() {
     new PneumaticsSubsystem();
 
-    // Configure the trigger bindings
     configureBindings();
   }
 
@@ -144,7 +143,7 @@ public class RobotContainer {
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
     m_LedSubsystem.setDefaultCommand(m_LedDefaultCommand);
 
-    // buttons:
+    // Buttons
     m_buttonA.whileTrue(m_scoringOpenCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
