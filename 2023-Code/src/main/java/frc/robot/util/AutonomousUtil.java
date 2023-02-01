@@ -16,7 +16,6 @@ import frc.robot.TrajectoryConfigConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import java.util.ArrayList;
 
-/** Add your docs here. */
 public class AutonomousUtil {
 
   public static RamseteCommand generateRamseteCommand(
@@ -47,7 +46,7 @@ public class AutonomousUtil {
               Rotation2d.fromDegrees(triplet.getAngle())));
     }
     return TrajectoryGenerator.generateTrajectory(
-        poseArray, TrajectoryConfigConstants.m_diffForward);
+        poseArray, TrajectoryConfigConstants.m_ForwardConfig);
   }
 
   public static RamseteCommand generateRamseteFromPoses(

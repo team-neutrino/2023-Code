@@ -69,18 +69,25 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_encoderRight1 = m_motorRight1.getEncoder();
     m_encoderRight2 = m_motorRight2.getEncoder();
 
-    m_encoderLeft1.setPositionConversionFactor(Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
-    m_encoderLeft2.setPositionConversionFactor(Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
-    m_encoderRight1.setPositionConversionFactor(Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
-    m_encoderRight2.setPositionConversionFactor(Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
+    m_encoderLeft1.setPositionConversionFactor(
+        Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
+    m_encoderLeft2.setPositionConversionFactor(
+        Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
+    m_encoderRight1.setPositionConversionFactor(
+        Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
+    m_encoderRight2.setPositionConversionFactor(
+        Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
 
-    m_encoderLeft1.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
-    m_encoderLeft2.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
-    m_encoderRight1.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
-    m_encoderRight2.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
+    m_encoderLeft1.setVelocityConversionFactor(
+        Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
+    m_encoderLeft2.setVelocityConversionFactor(
+        Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
+    m_encoderRight1.setVelocityConversionFactor(
+        Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
+    m_encoderRight2.setVelocityConversionFactor(
+        Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
 
-    m_diffDriveOdometry =
-        new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
+    m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
     resetOdometry(m_diffDriveOdometry.getPoseMeters());
   }
 
