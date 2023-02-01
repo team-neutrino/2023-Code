@@ -35,6 +35,7 @@ public class IntakeDefaultCommand extends CommandBase {
   @Override
   public void execute() {
     m_intakeSubsystem.stopIntake();
+    //in case we're holding a game piece, we'll want to keep holding it
     m_intakeSubsystem.squeeze();
     m_intakeSubsystem.setIntakeUp();
   }
