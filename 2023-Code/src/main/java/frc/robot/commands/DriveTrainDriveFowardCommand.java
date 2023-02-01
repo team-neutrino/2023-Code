@@ -15,6 +15,17 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
   LimelightSubsystem m_limelight;
   double theta;
+  int actionCounter = 0;
+  int ID;
+  double array[];
+  boolean motorStop = false;
+  int firstRun1 = 0;
+  int firstRun2 = 0;
+  int firstRun3 = 0;
+  double rmotorPosition;
+  double lmotorPosition;
+  int newID = -10;
+  boolean turnLeft = false;
 
   public DriveTrainDriveFowardCommand(
       DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight) {
@@ -31,49 +42,95 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_limelight.getTv()) {
-      int ID = m_limelight.getID();
-      double[] array = m_limelight.parseJson();
-      if (array.length != 0) {
-        if (array[2] <= 0) {
-          array[0] = array[0] * -1;
-        }
-        double slope = array[1] / array[0];
-        theta = Math.atan(slope);
+    if (actionCounter == 0){
 
-        if (theta > 0) {
-          m_drivetrain.turnMotor(theta - 0.25);
-        } else {
-          m_drivetrain.turnMotor(theta + 0.25);
-        }
-
-        if (array[0] > 0) {
-          m_drivetrain.setMotorPosition(array[0], array[0]);
-        } else {
-          m_drivetrain.setMotorPosition(array[0] * -1, array[0] * -1);
-        }
-
-        boolean turnLeft = theta >= 0;
-
-        if (turnLeft) {
-          m_drivetrain.turnMotor(-Math.PI / 2);
-        } else {
-          m_drivetrain.turnMotor(Math.PI / 2);
-        }
-
-        int newID = -10;
-
-        if (turnLeft) {
-          while (m_limelight.getTv() == false || ID != newID) {
-            m_drivetrain.turnMotor(-0.01);
-            newID = m_limelight.getID();
+      if (m_limelight.getTv()) {
+        ID = m_limelight.getID();
+        array = m_limelight.parseJson();
+        if (array.length != 0) {
+          if (array[2] <= 0) {
+            array[0] = array[0] * -1;
           }
-        } else {
-          while (m_limelight.getTv() == false || ID != newID) {
-            m_drivetrain.turnMotor(0.01);
-            newID = m_limelight.getID();
-          }
+          double slope = array[1] / array[0];
+          theta = Math.atan(slope);
+          actionCounter++;
+
+    }
+  }
+}
+    else if (actionCounter == 1){
+
+      if (firstRun1 == 0){
+        rmotorPosition = m_drivetrain.getR1Pos();
+        lmotorPosition = m_drivetrain.getL1Pos();
+      }
+
+      if (theta > 0) {
+        motorStop = m_drivetrain.turnMotor(theta - 0.25, rmotorPosition, lmotorPosition);
+      } else {
+        motorStop = m_drivetrain.turnMotor(theta + 0.25, rmotorPosition, lmotorPosition);
+      }
+
+      if (motorStop){
+        actionCounter++;
+      }
+      firstRun1++;
+    }
+
+    else if (actionCounter == 2){
+
+      if (array[0] > 0) {
+        motorStop = m_drivetrain.setMotorPosition(array[0], array[0]);
+      } else {
+        motorStop = m_drivetrain.setMotorPosition(array[0] * -1, array[0] * -1);
+      }
+
+      if (motorStop){
+        actionCounter++;
+      }
+    }
+
+    else if (actionCounter == 3){
+
+      if (firstRun2 == 0){
+        rmotorPosition = m_drivetrain.getR1Pos();
+        lmotorPosition = m_drivetrain.getL2Pos();
+        turnLeft = theta >= 0;
+      }
+
+      boolean stop = false;
+
+      if (turnLeft) {
+        stop = m_drivetrain.turnMotor(-Math.PI / 2, rmotorPosition, lmotorPosition);
+      } else {
+        stop = m_drivetrain.turnMotor(Math.PI / 2, rmotorPosition, lmotorPosition);
+      }
+      if (stop){
+        actionCounter++;
+      }
+      firstRun2++;
+    }
+
+    else if (actionCounter == 4){
+
+      if (turnLeft) {
+
+        m_drivetrain.turnMotor(-0.01);
+        newID = m_limelight.getID();
+
+
+        while (m_limelight.getTv() == false || ID != newID) {
+          m_drivetrain.turnMotor(-0.01);
+          newID = m_limelight.getID();
         }
+      } else {
+        while (m_limelight.getTv() == false || ID != newID) {
+          m_drivetrain.turnMotor(0.01);
+          newID = m_limelight.getID();
+        }
+      }
+
+    }
 
         double limelightAdjust = m_limelight.getTx() * Math.PI / 180;
         if (limelightAdjust > 0) {

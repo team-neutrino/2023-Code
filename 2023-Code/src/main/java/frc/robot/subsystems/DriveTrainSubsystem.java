@@ -200,57 +200,91 @@ public class DriveTrainSubsystem extends SubsystemBase {
     }
   }
 
-  public void setMotorPosition(double rmotorset, double lmotorset) {
+  public boolean setMotorPosition(double rmotorset, double lmotorset) {
     rmotorset = rmotorset * 15;
     lmotorset = lmotorset * 15;
     double rmotorPosition = getR1Pos();
     double lmotorPosition = getL1Pos();
+    boolean stop = false;
 
+    if (getR1Pos() < rmotorPosition + rmotorset && getL1Pos() < lmotorPosition + lmotorset){
+      m_motorGroupRight.set(0.3);
+      m_motorGroupLeft.set(0.3);
+    }
+    else {
+      m_motorGroupRight.set(0);
+      m_motorGroupLeft.set(0);
+      stop = true;
+    }
+    return stop;
+    /* 
     while (getR1Pos() < rmotorPosition + rmotorset && getL1Pos() < lmotorPosition + lmotorset) {
       m_motorGroupRight.set(0.3);
       m_motorGroupLeft.set(0.3);
     }
-
-    m_motorGroupRight.set(0);
-    m_motorGroupLeft.set(0);
+    */
   }
 
-  public void turnMotor(double motorset) {
+  public boolean turnMotor(double motorset, double rmotorPosition, double lmotorPosition) {
+    boolean stop = false;
     if (motorset > 0) {
-      turnMotorRight(Math.abs(motorset));
+      stop = turnMotorRight(Math.abs(motorset), rmotorPosition, lmotorPosition);
       System.out.println("turning motor right");
     } else if (motorset < 0) {
-      turnMotorLeft(Math.abs(motorset));
+      stop = turnMotorLeft(Math.abs(motorset));
       System.out.println("turning motor left");
     }
+    return stop;
   }
 
-  public void turnMotorRight(double motorset) {
+  public boolean turnMotorRight(double motorset, double p_rmotorPosition, double p_lmotorPosition) {
     motorset = motorset * 20 / Math.PI;
     double rmotorPosition = getR1Pos();
     double lmotorPosition = getL1Pos();
+    boolean stop = false;
 
+    if (p_rmotorPosition > rmotorPosition - motorset && p_lmotorPosition < lmotorPosition + motorset){
+      m_motorGroupRight.set(-0.05);
+      m_motorGroupLeft.set(0.05);
+    }
+    else {
+      m_motorGroupRight.set(0);
+      m_motorGroupLeft.set(0);
+      stop = true;
+    }
+    return stop;
+
+    /* 
     while (getR1Pos() > rmotorPosition - motorset && getL1Pos() < lmotorPosition + motorset) {
       m_motorGroupRight.set(-0.05);
       m_motorGroupLeft.set(0.05);
     }
-
-    m_motorGroupRight.set(0);
-    m_motorGroupLeft.set(0);
+    */
   }
 
-  public void turnMotorLeft(double motorset) {
+  public boolean turnMotorLeft(double motorset) {
     motorset = motorset * 20 / Math.PI;
     double rmotorPosition = getR1Pos();
     double lmotorPosition = getL1Pos();
+    boolean stop = false;
 
+    if (getR1Pos() < rmotorPosition + motorset && getL1Pos() > lmotorPosition - motorset){
+      m_motorGroupRight.set(0.05);
+      m_motorGroupLeft.set(-0.05);
+    }
+    else {
+      m_motorGroupRight.set(0);
+      m_motorGroupLeft.set(0);
+      stop = true;
+    }
+    return stop;
+
+    /* 
     while (getR1Pos() < rmotorPosition + motorset && getL1Pos() > lmotorPosition - motorset) {
       m_motorGroupRight.set(0.05);
       m_motorGroupLeft.set(-0.05);
     }
-
-    m_motorGroupRight.set(0);
-    m_motorGroupLeft.set(0);
+    */
   }
 
   public static double linearAccel(double joystickY) {
