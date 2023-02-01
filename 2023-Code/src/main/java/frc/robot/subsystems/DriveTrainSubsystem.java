@@ -69,15 +69,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_encoderL1 = m_lmotor1.getEncoder();
     m_encoderL2 = m_lmotor2.getEncoder();
 
-    m_encoderR1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
-    m_encoderR2.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
-    m_encoderL1.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
-    m_encoderL2.setPositionConversionFactor(Constants.DriverContants.ENCODER_CONVERSION);
+    m_encoderR1.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
+    m_encoderR2.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
+    m_encoderL1.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
+    m_encoderL2.setPositionConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION);
 
-    m_encoderR1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION / 60);
-    m_encoderR2.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION / 60);
-    m_encoderL1.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION / 60);
-    m_encoderL2.setVelocityConversionFactor(Constants.DriverContants.ENCODER_CONVERSION / 60);
+    m_encoderR1.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
+    m_encoderR2.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
+    m_encoderL1.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
+    m_encoderL2.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_CONVERSION / 60);
 
     m_diffDriveOdometry =
         new DifferentialDriveOdometry(getGyroYawAsRotation(), getL1Pos(), getR1Pos());

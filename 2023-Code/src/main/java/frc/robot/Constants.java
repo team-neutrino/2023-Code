@@ -76,7 +76,7 @@ public final class Constants {
     public static final int GRABBER_BEAMBREAK = 1;
   }
 
-  public static class DriverContants {
+  public static class DriverConstants {
     public static final double GEAR_RATIO = 1.0 / 8.0;
     public static final double WHEEL_DIAMETER = 0.127;
     public static final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
