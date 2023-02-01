@@ -21,18 +21,18 @@ import frc.robot.util.DriverStationInfo;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
-  private ShuffleboardTab m_debugTab;
-  private GenericEntry m_driveTrainVariables[] = new GenericEntry[15];
-  private GenericEntry m_limelightVariables[] = new GenericEntry[9];
+  private GenericEntry m_driveTrainVariables[] = new GenericEntry[9];
+  private GenericEntry m_limelightVariables[] = new GenericEntry[8];
   private GenericEntry m_driverStationInfoVariables[] = new GenericEntry[9];
   private GenericEntry m_scoringVariables[] = new GenericEntry[11];
-  private GenericEntry m_armVariables[] = new GenericEntry[4];
+  private GenericEntry m_armVariables[] = new GenericEntry[1];
   private GenericEntry m_intakeVariables[] = new GenericEntry[4];
 
   private SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
+  private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private DriveTrainSubsystem m_driveTrain;
-  private LimelightSubsystem m_limelight;
+  // private LimelightSubsystem m_limelight;
   private ScoringSubsystem m_scoring;
   // private EndGameSubsystem m_endGame;
   private DriverStationInfo m_driverStationInfo;
@@ -49,17 +49,15 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       IntakeSubsystem p_intake) {
 
     m_driveTrain = p_driveTrain;
-    m_limelight = p_limelight;
+    // m_limelight = p_limelight;
     m_scoring = p_scoring;
     m_arm = p_arm;
     m_intake = p_intake;
     m_driverStationInfo = p_driverStationInfo;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
-    m_debugTab = Shuffleboard.getTab("Debug Tab");
 
     setUpSelector();
     driveStationTab();
-    debugTab();
   }
 
   public ShuffleboardSubsystem() {}
@@ -81,16 +79,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
     m_armVariables[0].setDouble(m_arm.getPosition());
-    m_armVariables[1].setDouble(m_arm.getVoltage());
-
-    m_intakeVariables[0].setDouble(m_intake.getWheelsEncoder());
-    m_intakeVariables[1].setDouble(m_intake.getUpDownEncoder());
-
-    m_limelightVariables[0].setDouble(m_limelight.getDistance());
-    m_limelightVariables[1].setDouble(m_limelight.getID());
-    m_limelightVariables[2].setDouble(m_limelight.getTx());
-    m_limelightVariables[3].setDouble(m_limelight.getTy());
-    m_limelightVariables[4].setBoolean(m_limelight.getTv());
   }
 
   private void driveStationTab() {
@@ -102,6 +90,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             .withPosition(0, 0)
             .withSize(1, 1)
             .getEntry();
+
+    m_driveTrainVariables[8] =
+        m_drivestationTab.add("NavX Pitch", 0).withPosition(1, 1).withSize(1, 1).getEntry();
 
     m_driveTrainVariables[1] =
         m_drivestationTab
@@ -176,9 +167,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
         .withPosition(0, 0)
         .withSize(2, 1);
 
-    m_limelightVariables[0] =
-        m_drivestationTab.add("Limelight Distance", 0).withPosition(7, 0).withSize(1, 1).getEntry();
-
     try {
       LLFeed = new HttpCamera("limelight", "http://10.39.28.92", HttpCameraKind.kMJPGStreamer);
       CameraServer.startAutomaticCapture(LLFeed);
@@ -189,38 +177,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
           .withWidget(BuiltInWidgets.kCameraStream);
     } catch (VideoException e) {
     }
-  }
-
-  private void debugTab() {
-    m_drivestationTab = Shuffleboard.getTab("Debug Tab");
-
-    m_armVariables[1] =
-        m_debugTab.add("Arm Voltage", 0).withPosition(0, 0).withSize(1, 1).getEntry();
-
-    m_intakeVariables[0] =
-        m_debugTab.add("Intake Wheel's Velocity", 0).withPosition(0, 1).withSize(1, 1).getEntry();
-
-    m_intakeVariables[1] =
-        m_debugTab
-            .add("Up Down Encoder for Velocity", 0)
-            .withPosition(0, 2)
-            .withSize(1, 1)
-            .getEntry();
-
-    m_limelightVariables[1] =
-        m_debugTab.add("Limelight ID", 0).withPosition(0, 3).withSize(1, 1).getEntry();
-
-    m_limelightVariables[2] =
-        m_debugTab.add("Limelight Tx", 0).withPosition(1, 3).withSize(1, 1).getEntry();
-
-    m_limelightVariables[3] =
-        m_debugTab.add("Limelight Ty", 0).withPosition(2, 3).withSize(1, 1).getEntry();
-
-    m_limelightVariables[4] =
-        m_debugTab.add("Limelight Tv", 0).withPosition(3, 3).withSize(1, 1).getEntry();
-    
-    m_driveTrainVariables[8] =
-        m_debugTab.add("NavX Pitch", 0).withPosition(0, 0).withSize(1, 1).getEntry();
   }
 
   public void setUpSelector() {

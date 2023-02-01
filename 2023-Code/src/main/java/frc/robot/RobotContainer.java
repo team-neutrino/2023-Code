@@ -14,11 +14,13 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmToAngleCommand;
+import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.EndGameDefaultCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeReverseCommand;
+import frc.robot.commands.LEDDefaultCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.ArmSubsystem;
@@ -26,6 +28,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.EndGameSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -45,6 +48,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
+  private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
   private final ShuffleboardSubsystem m_shuffleboardSubsystem =
       new ShuffleboardSubsystem(
           m_driverStationInfo,
@@ -75,10 +79,15 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
   private final JoystickButton m_buttonStart =
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
-  private final POVButton m_upArrow = new POVButton(m_driverController, 0);
-  private final POVButton m_downArrow = new POVButton(m_driverController, 180);
+
+  // COMMANDS
+  private final ArmDefaultCommand m_ArmDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
+  private final AutoBalanceCommand m_AutoBalanceCommand = new AutoBalanceCommand(m_driveTrain);
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
+  private final POVButton m_upArrow = new POVButton(m_driverController, 0);
+  private final POVButton m_downArrow = new POVButton(m_driverController, 180);
+  private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
   private final Trigger m_leftTrigger =
       new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
   private final Trigger m_rightTrigger =
@@ -113,6 +122,8 @@ public class RobotContainer {
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
 
+  private final LEDDefaultCommand m_LedDefaultCommand =
+      new LEDDefaultCommand(m_LedSubsystem, 0, m_scoringSubsystem);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
@@ -127,17 +138,21 @@ public class RobotContainer {
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
     m_endGame.setDefaultCommand(m_endGameDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
+    m_LedSubsystem.setDefaultCommand(m_LedDefaultCommand);
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
+    // buttons:
     m_buttonA.whileTrue(m_scoringOpenCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
-
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
+    m_rightArrow.onTrue(m_AutoBalanceCommand);
     m_leftBumper.whileTrue(m_IntakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
+
+    // LED Buttons
+    m_buttonStart.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 1, m_scoringSubsystem));
+    m_buttonBack.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 2, m_scoringSubsystem));
   }
 
   public Command getAutonomousCommand() {
