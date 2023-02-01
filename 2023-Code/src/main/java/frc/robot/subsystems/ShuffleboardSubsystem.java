@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.util.DriverStationInfo;
 
@@ -27,11 +26,12 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private GenericEntry m_scoringVariables[] = new GenericEntry[11];
   private GenericEntry m_armVariables[] = new GenericEntry[1];
   private GenericEntry m_intakeVariables[] = new GenericEntry[4];
+  private SendableChooser<Command> m_autonSelector = new SendableChooser<>();
 
   private SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
-  private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private DriveTrainSubsystem m_driveTrain;
+  private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   // private LimelightSubsystem m_limelight;
   private ScoringSubsystem m_scoring;
   // private EndGameSubsystem m_endGame;
@@ -181,10 +181,20 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
   public void setUpSelector() {
     m_autoChooser.addOption("Auto 1", new ExampleCommand());
-    m_autoChooser.addOption("Auto 2", new Autos());
+    m_autoChooser.addOption("Auto 2", new ExampleCommand());
   }
 
   public Command getAutoSelected() {
     return m_autoChooser.getSelected();
+  }
+
+  public void setUpAutoSelector() {
+    m_autonSelector.addOption("Example Auto 1", new ExampleCommand());
+    m_autonSelector.addOption("Example Auto 2", new ExampleCommand());
+    m_autonSelector.addOption("Example Auto 2", new ExampleCommand());
+  }
+
+  public Command getAuto() {
+    return m_autonSelector.getSelected();
   }
 }
