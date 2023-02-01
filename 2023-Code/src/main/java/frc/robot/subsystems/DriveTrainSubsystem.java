@@ -20,12 +20,9 @@ import frc.robot.Constants;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
-<<<<<<< HEAD
   double cycle = 0;
-=======
   // ODOMETRY
   private DifferentialDriveOdometry m_diffDriveOdometry;
->>>>>>> main
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
 
   // MOTORS
@@ -63,17 +60,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_motorRight1.setInverted(false);
     m_motorRight2.setInverted(false);
 
-<<<<<<< HEAD
-    m_encoderR1 = m_rmotor1.getEncoder();
-    m_encoderR2 = m_rmotor2.getEncoder();
-    m_encoderL1 = m_lmotor1.getEncoder();
-    m_encoderL2 = m_lmotor2.getEncoder();
-
-    m_encoderR1.setPosition(0);
-    m_encoderR2.setPosition(0);
-    m_encoderL1.setPosition(0);
-    m_encoderL2.setPosition(0);
-=======
     m_motorLeft1.burnFlash();
     m_motorLeft2.burnFlash();
     m_motorRight1.burnFlash();
@@ -104,6 +90,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
     resetOdometry(m_diffDriveOdometry.getPoseMeters());
+
+    m_encoderRight1.setPosition(0);
+    m_encoderRight2.setPosition(0);
+    m_encoderLeft1.setPosition(0);
+    m_encoderLeft2.setPosition(0);
   }
 
   public void resetEncoders() {
@@ -121,7 +112,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
         m_encoderLeft1.getPosition(),
         m_encoderRight1.getPosition(),
         pose);
->>>>>>> main
   }
 
   public double getR1Pos() {
@@ -189,8 +179,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void setMotorsStraight(double m_bothMotorSpeed, double placeholder) {
-    m_rmotors.set(m_bothMotorSpeed * -1);
-    m_lmotors.set(m_bothMotorSpeed * 1);
+    m_motorGroupRight.set(m_bothMotorSpeed * -1);
+    m_motorGroupLeft.set(m_bothMotorSpeed * 1);
   }
 
   public double deadzone(double joystickY) {
@@ -204,7 +194,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     }
   }
 
-<<<<<<< HEAD
   public void printPosition() {
     if (cycle % 20 == 0) {
       System.out.println("Positions are " + getL1Pos() + " " + getR1Pos());
@@ -218,12 +207,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
     double lmotorPosition = getL1Pos();
 
     while (getR1Pos() < rmotorPosition + rmotorset && getL1Pos() < lmotorPosition + lmotorset) {
-      m_rmotors.set(0.3);
-      m_lmotors.set(0.3);
+      m_motorGroupRight.set(0.3);
+      m_motorGroupLeft.set(0.3);
     }
 
-    m_rmotors.set(0);
-    m_lmotors.set(0);
+    m_motorGroupRight.set(0);
+    m_motorGroupLeft.set(0);
   }
 
   public void turnMotor(double motorset) {
@@ -242,12 +231,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
     double lmotorPosition = getL1Pos();
 
     while (getR1Pos() > rmotorPosition - motorset && getL1Pos() < lmotorPosition + motorset) {
-      m_rmotors.set(-0.05);
-      m_lmotors.set(0.05);
+      m_motorGroupRight.set(-0.05);
+      m_motorGroupLeft.set(0.05);
     }
 
-    m_rmotors.set(0);
-    m_lmotors.set(0);
+    m_motorGroupRight.set(0);
+    m_motorGroupLeft.set(0);
   }
 
   public void turnMotorLeft(double motorset) {
@@ -256,32 +245,14 @@ public class DriveTrainSubsystem extends SubsystemBase {
     double lmotorPosition = getL1Pos();
 
     while (getR1Pos() < rmotorPosition + motorset && getL1Pos() > lmotorPosition - motorset) {
-      m_rmotors.set(0.05);
-      m_lmotors.set(-0.05);
+      m_motorGroupRight.set(0.05);
+      m_motorGroupLeft.set(-0.05);
     }
 
-    m_rmotors.set(0);
-    m_lmotors.set(0);
+    m_motorGroupRight.set(0);
+    m_motorGroupLeft.set(0);
   }
 
-  public double getPitch() {
-    return m_navX.getPitch();
-  }
-
-  public void setVoltage(double voltage) {
-    m_rmotors.setVoltage(voltage);
-    m_lmotors.setVoltage(voltage);
-  }
-
-  @Override
-  public void periodic() {
-    cycle++;
-    printPosition();
-    System.out.println(getPitch());
-  }
-
-=======
->>>>>>> main
   public static double linearAccel(double joystickY) {
     double newSpeed = joystickY;
     return newSpeed;
@@ -302,5 +273,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void periodic() {
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
+    cycle++;
+    printPosition();
+    System.out.println(getPitch());
   }
 }

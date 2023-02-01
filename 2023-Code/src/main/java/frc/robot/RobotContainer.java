@@ -123,7 +123,7 @@ public class RobotContainer {
   // private final ScoringOpenCommand m_scoringOpenCommand =
   //  new ScoringOpenCommand(m_scoringSubsystem);
   private final DriveTrainDriveFowardCommand m_DriveTrainDriveFowardCommand =
-      new DriveTrainDriveFowardCommand(m_driveTrain, m_limelightSubsystem);
+      new DriveTrainDriveFowardCommand(m_driveTrainSubsystem, m_limelightSubsystem);
 
   // toggles scoring pneumatics to extended position
   private final ScoringDefaultCommand m_scoringDefaultCommand =
@@ -138,11 +138,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
-<<<<<<< HEAD
     // Configure the trigger bindings
-=======
 
->>>>>>> main
     configureBindings();
   }
 
@@ -154,15 +151,8 @@ public class RobotContainer {
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
     m_LedSubsystem.setDefaultCommand(m_LedDefaultCommand);
 
-<<<<<<< HEAD
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    // m_buttonA.whileTrue(m_scoringOpenCommand);
-    m_buttonA.whileTrue(m_DriveTrainDriveFowardCommand);
-=======
     // Buttons
     m_buttonA.whileTrue(m_scoringOpenCommand);
->>>>>>> main
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
