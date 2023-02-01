@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -21,6 +22,7 @@ import frc.robot.commands.EndGameDefaultCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeReverseCommand;
+import frc.robot.commands.LEDDefaultCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.ArmSubsystem;
@@ -28,6 +30,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.EndGameSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -40,17 +43,18 @@ public class RobotContainer {
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
   // SUBSYSTEMS
-  private final DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
+  private final DriveTrainSubsystem m_driveTrainSubsystem = new DriveTrainSubsystem();
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
+  private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
   private final ShuffleboardSubsystem m_shuffleboardSubsystem =
       new ShuffleboardSubsystem(
           m_driverStationInfo,
-          m_driveTrain,
+          m_driveTrainSubsystem,
           m_scoringSubsystem,
           m_limelightSubsystem,
           m_armSubsystem,
@@ -71,21 +75,24 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kX.value);
   private final JoystickButton m_buttonY =
       new JoystickButton(m_driverController, XboxController.Button.kY.value);
+
+  // BUTTON BABES
   private final JoystickButton m_leftBumper =
       new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
   private final JoystickButton m_rightBumper =
       new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
   private final JoystickButton m_buttonStart =
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
-  private final POVButton m_upArrow = new POVButton(m_driverController, 0);
-  private final POVButton m_downArrow = new POVButton(m_driverController, 180);
-  private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
 
   // COMMANDS
   private final ArmDefaultCommand m_ArmDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
-  private final AutoBalanceCommand m_AutoBalanceCommand = new AutoBalanceCommand(m_driveTrain);
+  private final AutoBalanceCommand m_AutoBalanceCommand =
+      new AutoBalanceCommand(m_driveTrainSubsystem);
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
+  private final POVButton m_upArrow = new POVButton(m_driverController, 0);
+  private final POVButton m_downArrow = new POVButton(m_driverController, 180);
+  private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
   private final Trigger m_leftTrigger =
       new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
   private final Trigger m_rightTrigger =
@@ -94,7 +101,7 @@ public class RobotContainer {
   // COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
-      new DriveTrainDefaultCommand(m_driveTrain, m_leftJoystick, m_rightJoystick);
+      new DriveTrainDefaultCommand(m_driveTrainSubsystem, m_leftJoystick, m_rightJoystick);
 
   // turn both intake motors off and set the entire thing up
   private final IntakeDefaultCommand m_IntakeDefaultCommand =
@@ -126,24 +133,36 @@ public class RobotContainer {
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
 
+  private final LEDDefaultCommand m_LedDefaultCommand =
+      new LEDDefaultCommand(m_LedSubsystem, 0, m_scoringSubsystem);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
+<<<<<<< HEAD
     // Configure the trigger bindings
+=======
+
+>>>>>>> main
     configureBindings();
   }
 
   private void configureBindings() {
-    m_driveTrain.setDefaultCommand(m_driveTrainDefaultCommand);
+    m_driveTrainSubsystem.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
     m_endGame.setDefaultCommand(m_endGameDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
+    m_LedSubsystem.setDefaultCommand(m_LedDefaultCommand);
 
+<<<<<<< HEAD
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_buttonA.whileTrue(m_scoringOpenCommand);
     m_buttonA.whileTrue(m_DriveTrainDriveFowardCommand);
+=======
+    // Buttons
+    m_buttonA.whileTrue(m_scoringOpenCommand);
+>>>>>>> main
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
@@ -151,9 +170,15 @@ public class RobotContainer {
     m_rightArrow.onTrue(m_AutoBalanceCommand);
     m_leftBumper.whileTrue(m_IntakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
+
+    // LED Buttons
+    m_buttonStart.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 1, m_scoringSubsystem));
+    m_buttonBack.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 2, m_scoringSubsystem));
   }
 
   public Command getAutonomousCommand() {
-    return m_shuffleboardSubsystem.getAutoSelected();
+    return m_shuffleboardSubsystem
+        .getAutoSelected()
+        .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }
