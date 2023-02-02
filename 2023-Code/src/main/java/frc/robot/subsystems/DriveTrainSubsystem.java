@@ -200,14 +200,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
     }
   }
 
-  public boolean setMotorPosition(double rmotorset, double lmotorset) {
-    rmotorset = rmotorset * 15;
-    lmotorset = lmotorset * 15;
+  public boolean setMotorPosition(double motorset, double p_rmotorPosition, double p_lmotorPosition) {
+    motorset = motorset * 15;
     double rmotorPosition = getR1Pos();
     double lmotorPosition = getL1Pos();
     boolean stop = false;
 
-    if (getR1Pos() < rmotorPosition + rmotorset && getL1Pos() < lmotorPosition + lmotorset){
+    if (p_rmotorPosition < rmotorPosition + motorset && p_lmotorPosition < lmotorPosition + motorset){
       m_motorGroupRight.set(0.3);
       m_motorGroupLeft.set(0.3);
     }

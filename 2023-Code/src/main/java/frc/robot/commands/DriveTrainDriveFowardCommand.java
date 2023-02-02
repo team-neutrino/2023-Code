@@ -18,17 +18,13 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   int actionCounter = 0;
   int ID;
   double array[];
-  boolean motorStop = false;
-  int firstRun1 = 0;
-  int firstRun2 = 0;
-  int firstRun3 = 0;
-  int firstRun4 = 0;
-  int firstRun5 = 0;
+  int firstRun = 0;
   double rmotorPosition;
   double lmotorPosition;
   int newID = -10;
   boolean turnLeft = false;
   double limelightAdjust;
+  double setPoint;
 
   public DriveTrainDriveFowardCommand(
       DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight) {
@@ -63,39 +59,50 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 }
     else if (actionCounter == 1){
 
-      if (firstRun1 == 0){
+      if (firstRun == 0){
         rmotorPosition = m_drivetrain.getR1Pos();
         lmotorPosition = m_drivetrain.getL1Pos();
       }
 
+      boolean stop = false;
+
       if (theta > 0) {
-        motorStop = m_drivetrain.turnMotor(theta - 0.25, rmotorPosition, lmotorPosition);
+        stop = m_drivetrain.turnMotor(theta - 0.25, rmotorPosition, lmotorPosition);
       } else {
-        motorStop = m_drivetrain.turnMotor(theta + 0.25, rmotorPosition, lmotorPosition);
+        stop = m_drivetrain.turnMotor(theta + 0.25, rmotorPosition, lmotorPosition);
       }
 
-      if (motorStop){
+      if (stop){
         actionCounter++;
       }
-      firstRun1++;
+      firstRun++;
     }
 
     else if (actionCounter == 2){
 
-      if (array[0] > 0) {
-        motorStop = m_drivetrain.setMotorPosition(array[0], array[0]);
-      } else {
-        motorStop = m_drivetrain.setMotorPosition(array[0] * -1, array[0] * -1);
+      if (firstRun == 0){
+        rmotorPosition = m_drivetrain.getR1Pos();
+        lmotorPosition = m_drivetrain.getL1Pos();
       }
 
-      if (motorStop){
-        actionCounter++;
+      boolean stop = false;
+
+      if (array[0] > 0) {
+        stop = m_drivetrain.setMotorPosition(array[0], rmotorPosition, lmotorPosition);
+      } else {
+        stop = m_drivetrain.setMotorPosition(array[0] * -1, rmotorPosition, lmotorPosition);
       }
+
+      if (stop){
+        actionCounter++;
+        firstRun = 0;
+      }
+      firstRun++;
     }
 
     else if (actionCounter == 3){
 
-      if (firstRun2 == 0){
+      if (firstRun == 0){
         rmotorPosition = m_drivetrain.getR1Pos();
         lmotorPosition = m_drivetrain.getL2Pos();
         turnLeft = theta >= 0;
@@ -108,15 +115,17 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
       } else {
         stop = m_drivetrain.turnMotor(Math.PI / 2, rmotorPosition, lmotorPosition);
       }
+
       if (stop){
         actionCounter++;
+        firstRun = 0;
       }
-      firstRun2++;
+      firstRun++;
     }
 
     else if (actionCounter == 4){
 
-      if (firstRun3 == 0){
+      if (firstRun == 0){
         rmotorPosition = m_drivetrain.getR1Pos();
         lmotorPosition = m_drivetrain.getL1Pos();
       }
@@ -154,15 +163,16 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
       if (stop){
         actionCounter++;
+        firstRun = 0;
       }
-      firstRun3++;
+      firstRun++;
     }
 
     else if (actionCounter == 5){
 
       boolean stop = false;
 
-      if (firstRun4 == 0){
+      if (firstRun == 0){
         rmotorPosition = m_drivetrain.getR1Pos();
         lmotorPosition = m_drivetrain.getL1Pos();
         limelightAdjust = m_limelight.getTx() * Math.PI / 180;
@@ -175,56 +185,93 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
       }
 
       stop = m_drivetrain.turnMotor(limelightAdjust, rmotorPosition, lmotorPosition);
-      firstRun4++;
 
       if (stop){
         actionCounter++;
+        firstRun = 0;
       }
+      firstRun++;
     }
 
     else if (actionCounter == 6){
 
-      if (firstRun5 == 0){
+      if (firstRun == 0){
         rmotorPosition = m_drivetrain.getR1Pos();
         lmotorPosition = m_drivetrain.getL1Pos();
       }    
 
-      m_drivetrain.turnMotor(m_limelight.getTx() * Math.PI / 180);
+      boolean stop = false;
 
+      if (firstRun == 25){
+        stop = m_drivetrain.turnMotor(m_limelight.getTx() * Math.PI / 180, rmotorPosition, lmotorPosition);
+      }
+
+      if (stop) {
+        actionCounter++;
+        firstRun = 0;
+      }
+      firstRun++;
     }
 
+    else if (actionCounter == 7){
 
+      if (firstRun == 0){
+        rmotorPosition = m_drivetrain.getR1Pos();
+        lmotorPosition = m_drivetrain.getL1Pos();
+      }    
 
-        try {
-          TimeUnit.MILLISECONDS.sleep(500);
-        } catch (InterruptedException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
+      boolean stop = false;
 
-
-        try {
-          TimeUnit.MILLISECONDS.sleep(300);
-        } catch (InterruptedException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-        System.out.println("tx is " + m_limelight.getTx());
-        m_drivetrain.turnMotor(m_limelight.getTx() * Math.PI / 180 / 2);
-        array = m_limelight.parseJson();
-        double setPoint = array[1] + 1;
-        System.out.println("setpoint is " + setPoint);
-        m_drivetrain.setMotorPosition(setPoint * -1, setPoint * -1);
-
-        try {
-          TimeUnit.MILLISECONDS.sleep(500);
-        } catch (InterruptedException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-
-        m_drivetrain.turnMotor(m_limelight.getTx() * Math.PI / 180);
+      if (firstRun == 15){
+        stop = m_drivetrain.turnMotor(m_limelight.getTx() * Math.PI / 180 / 2, rmotorPosition, lmotorPosition);
       }
+
+      if (stop){
+        actionCounter++;
+        firstRun = 0;
+      }
+      firstRun++;
+    }
+
+    else if (actionCounter == 8){
+
+      if (firstRun == 0){
+        rmotorPosition = m_drivetrain.getR1Pos();
+        lmotorPosition = m_drivetrain.getL1Pos();
+        array = m_limelight.parseJson();
+        setPoint = array[1] + 1;
+      }    
+
+      boolean stop = false;
+
+      stop = m_drivetrain.setMotorPosition(setPoint * -1, rmotorPosition, lmotorPosition);
+
+      if (stop){
+        actionCounter++;
+        firstRun = 0;
+      }
+      firstRun++;
+    }
+
+    else if (actionCounter == 9){
+
+      if (firstRun == 0){
+        rmotorPosition = m_drivetrain.getR1Pos();
+        lmotorPosition = m_drivetrain.getL1Pos();
+      }  
+      
+      boolean stop = false;
+
+      if (firstRun == 25){
+        stop = m_drivetrain.turnMotor(m_limelight.getTx() * Math.PI / 180 / 2, rmotorPosition, lmotorPosition);
+      }
+
+      if (stop){
+        actionCounter++;
+        firstRun = 0;
+      }
+      firstRun++;
+
     }
   }
 
