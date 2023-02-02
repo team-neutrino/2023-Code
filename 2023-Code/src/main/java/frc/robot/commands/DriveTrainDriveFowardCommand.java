@@ -22,10 +22,13 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   int firstRun1 = 0;
   int firstRun2 = 0;
   int firstRun3 = 0;
+  int firstRun4 = 0;
+  int firstRun5 = 0;
   double rmotorPosition;
   double lmotorPosition;
   int newID = -10;
   boolean turnLeft = false;
+  double limelightAdjust;
 
   public DriveTrainDriveFowardCommand(
       DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight) {
@@ -113,33 +116,84 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
     else if (actionCounter == 4){
 
+      if (firstRun3 == 0){
+        rmotorPosition = m_drivetrain.getR1Pos();
+        lmotorPosition = m_drivetrain.getL1Pos();
+      }
+
+      boolean stop = false;
+
       if (turnLeft) {
 
-        m_drivetrain.turnMotor(-0.01);
+        if (m_limelight.getTv() == false || ID != newID){
+        stop = m_drivetrain.turnMotor(-0.01, rmotorPosition, lmotorPosition);
         newID = m_limelight.getID();
+        }
 
-
+        /* 
         while (m_limelight.getTv() == false || ID != newID) {
           m_drivetrain.turnMotor(-0.01);
           newID = m_limelight.getID();
         }
-      } else {
+        */
+      } 
+      
+      else {
+
+        if (m_limelight.getTv() == false || ID != newID){
+          stop = m_drivetrain.turnMotor(0.01, rmotorPosition, lmotorPosition);
+          newID = m_limelight.getID();
+        }
+        /* 
         while (m_limelight.getTv() == false || ID != newID) {
           m_drivetrain.turnMotor(0.01);
           newID = m_limelight.getID();
         }
+        */
       }
+
+      if (stop){
+        actionCounter++;
+      }
+      firstRun3++;
+    }
+
+    else if (actionCounter == 5){
+
+      boolean stop = false;
+
+      if (firstRun4 == 0){
+        rmotorPosition = m_drivetrain.getR1Pos();
+        lmotorPosition = m_drivetrain.getL1Pos();
+        limelightAdjust = m_limelight.getTx() * Math.PI / 180;
+      }
+
+      if (limelightAdjust > 0) {
+        limelightAdjust = limelightAdjust - 0.1;
+      } else {
+        limelightAdjust = limelightAdjust + 0.1;
+      }
+
+      stop = m_drivetrain.turnMotor(limelightAdjust, rmotorPosition, lmotorPosition);
+      firstRun4++;
+
+      if (stop){
+        actionCounter++;
+      }
+    }
+
+    else if (actionCounter == 6){
+
+      if (firstRun5 == 0){
+        rmotorPosition = m_drivetrain.getR1Pos();
+        lmotorPosition = m_drivetrain.getL1Pos();
+      }    
+
+      m_drivetrain.turnMotor(m_limelight.getTx() * Math.PI / 180);
 
     }
 
-        double limelightAdjust = m_limelight.getTx() * Math.PI / 180;
-        if (limelightAdjust > 0) {
-          limelightAdjust = limelightAdjust - 0.1;
-        } else {
-          limelightAdjust = limelightAdjust + 0.1;
-        }
 
-        m_drivetrain.turnMotor(limelightAdjust);
 
         try {
           TimeUnit.MILLISECONDS.sleep(500);
@@ -148,8 +202,6 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
           e.printStackTrace();
         }
 
-        System.out.println("tx " + m_limelight.getTx());
-        m_drivetrain.turnMotor(m_limelight.getTx() * Math.PI / 180);
 
         try {
           TimeUnit.MILLISECONDS.sleep(300);
