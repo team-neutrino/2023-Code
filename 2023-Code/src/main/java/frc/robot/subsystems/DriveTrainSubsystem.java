@@ -213,23 +213,24 @@ public class DriveTrainSubsystem extends SubsystemBase {
     }
   }
 
-  public boolean setMotorPosition(double motorset, double p_rmotorPosition, double p_lmotorPosition) {
+  public boolean setMotorPosition(
+      double motorset, double p_rmotorPosition, double p_lmotorPosition) {
     motorset = motorset * 15;
     double rmotorPosition = getR1Pos();
     double lmotorPosition = getL1Pos();
     boolean stop = false;
 
-    if (p_rmotorPosition < rmotorPosition + motorset && p_lmotorPosition < lmotorPosition + motorset){
+    if (p_rmotorPosition < rmotorPosition + motorset
+        && p_lmotorPosition < lmotorPosition + motorset) {
       m_motorGroupRight.set(0.3);
       m_motorGroupLeft.set(0.3);
-    }
-    else {
+    } else {
       m_motorGroupRight.set(0);
       m_motorGroupLeft.set(0);
       stop = true;
     }
     return stop;
-    /* 
+    /*
     while (getR1Pos() < rmotorPosition + rmotorset && getL1Pos() < lmotorPosition + lmotorset) {
       m_motorGroupRight.set(0.3);
       m_motorGroupLeft.set(0.3);
@@ -255,18 +256,18 @@ public class DriveTrainSubsystem extends SubsystemBase {
     double lmotorPosition = getL1Pos();
     boolean stop = false;
 
-    if (p_rmotorPosition > rmotorPosition - motorset && p_lmotorPosition < lmotorPosition + motorset){
+    if (p_rmotorPosition > rmotorPosition - motorset
+        && p_lmotorPosition < lmotorPosition + motorset) {
       m_motorGroupRight.set(-0.05);
       m_motorGroupLeft.set(0.05);
-    }
-    else {
+    } else {
       m_motorGroupRight.set(0);
       m_motorGroupLeft.set(0);
       stop = true;
     }
     return stop;
 
-    /* 
+    /*
     while (getR1Pos() > rmotorPosition - motorset && getL1Pos() < lmotorPosition + motorset) {
       m_motorGroupRight.set(-0.05);
       m_motorGroupLeft.set(0.05);
@@ -280,18 +281,17 @@ public class DriveTrainSubsystem extends SubsystemBase {
     double lmotorPosition = getL1Pos();
     boolean stop = false;
 
-    if (getR1Pos() < rmotorPosition + motorset && getL1Pos() > lmotorPosition - motorset){
+    if (getR1Pos() < rmotorPosition + motorset && getL1Pos() > lmotorPosition - motorset) {
       m_motorGroupRight.set(0.05);
       m_motorGroupLeft.set(-0.05);
-    }
-    else {
+    } else {
       m_motorGroupRight.set(0);
       m_motorGroupLeft.set(0);
       stop = true;
     }
     return stop;
 
-    /* 
+    /*
     while (getR1Pos() < rmotorPosition + motorset && getL1Pos() > lmotorPosition - motorset) {
       m_motorGroupRight.set(0.05);
       m_motorGroupLeft.set(-0.05);
