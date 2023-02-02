@@ -48,10 +48,20 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
-  public Color getColor(int index) {
-  
-    return getColor(1);
-  
+  public String getColor(int index) {
+    Color orange = new Color(255, 15, 0);
+    Color purple = new Color(162, 25, 255);
+    Color yellow = new Color(255, 100, 0);
+
+    if (m_LedBuffer.getLED(1) == orange) {
+      return "Orange";
+    } else if (m_LedBuffer.getLED(1) == purple) {
+      return "Purple";
+    } else if (m_LedBuffer.getLED(1) == yellow) {
+      return "Yellow";
+    } else {
+      return "Cannot determine color";
+    }
   }
 
   @Override

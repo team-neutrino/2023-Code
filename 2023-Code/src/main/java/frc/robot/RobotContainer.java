@@ -57,7 +57,8 @@ public class RobotContainer {
           m_scoringSubsystem,
           m_limelightSubsystem,
           m_armSubsystem,
-          m_intakeSubsystem);
+          m_intakeSubsystem,
+          m_LedSubsystem);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // CONTROLLERS

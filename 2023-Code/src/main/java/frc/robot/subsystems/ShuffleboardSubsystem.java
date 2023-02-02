@@ -26,6 +26,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private GenericEntry m_scoringVariables[] = new GenericEntry[11];
   private GenericEntry m_armVariables[] = new GenericEntry[1];
   private GenericEntry m_intakeVariables[] = new GenericEntry[4];
+  private GenericEntry m_LEDVariables[] = new GenericEntry[4];
   private SendableChooser<Command> m_autonSelector = new SendableChooser<>();
 
   private SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
@@ -36,6 +37,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private ScoringSubsystem m_scoring;
   // private EndGameSubsystem m_endGame;
   private DriverStationInfo m_driverStationInfo;
+  private LEDSubsystem m_LED;
   private ArmSubsystem m_arm;
   private HttpCamera LLFeed;
   private IntakeSubsystem m_intake;
@@ -46,13 +48,15 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       ScoringSubsystem p_scoring,
       LimelightSubsystem p_limelight,
       ArmSubsystem p_arm,
-      IntakeSubsystem p_intake) {
+      IntakeSubsystem p_intake,
+      LEDSubsystem p_LED) {
 
     m_driveTrain = p_driveTrain;
     // m_limelight = p_limelight;
     m_scoring = p_scoring;
     m_arm = p_arm;
     m_intake = p_intake;
+    m_LED = p_LED;
     m_driverStationInfo = p_driverStationInfo;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
 
@@ -73,7 +77,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[6].setDouble(m_driveTrain.getL1Vel());
     m_driveTrainVariables[7].setDouble(m_driveTrain.getL2Vel());
     m_driveTrainVariables[8].setDouble(m_driveTrain.getPitch());
-
+    m_LEDVariables[0].setString(m_LED.getColor(1));
     m_scoringVariables[2].setBoolean(m_scoring.getSolenoidValue());
 
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
@@ -83,6 +87,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
   private void driveStationTab() {
     m_drivestationTab = Shuffleboard.getTab("Drivestation Tab123");
+
+    m_LEDVariables[0] =
+        m_drivestationTab.add("LED Color", "Off").withPosition(0, 0).withSize(1, 1).getEntry();
 
     m_driveTrainVariables[0] =
         m_drivestationTab
