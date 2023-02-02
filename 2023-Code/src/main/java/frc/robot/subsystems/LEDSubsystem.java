@@ -53,7 +53,6 @@ public class LEDSubsystem extends SubsystemBase {
     Color purple = new Color(162, 25, 255);
     Color yellow = new Color(255, 100, 0);
 
-    System.out.println(m_LedBuffer.getLED(1));
     if (m_LedBuffer.getLED(1).equals(orange)) {
       return "Orange";
     } else if (m_LedBuffer.getLED(1).equals(purple)) {
