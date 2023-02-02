@@ -80,7 +80,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     m_LEDVariables[0].setString(m_LED.getColor());
 
-    m_scoringVariables[2].setBoolean(m_scoring.getSolenoidValue());
+    m_scoringVariables[0].setBoolean(m_scoring.getSolenoidValue());
 
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
@@ -99,9 +99,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             .withPosition(0, 0)
             .withSize(1, 1)
             .getEntry();
-
-    m_driveTrainVariables[8] =
-        m_drivestationTab.add("NavX Pitch", 0).withPosition(1, 1).withSize(1, 1).getEntry();
 
     m_driveTrainVariables[1] =
         m_drivestationTab
@@ -152,17 +149,17 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             .withSize(1, 1)
             .getEntry();
 
-    m_scoringVariables[2] =
+    m_driveTrainVariables[8] =
+        m_drivestationTab.add("NavX Pitch", 0).withPosition(1, 1).withSize(1, 1).getEntry();
+
+    m_scoringVariables[0] =
         m_drivestationTab.add("Grabber Release", 0).withPosition(2, 0).withSize(1, 1).getEntry();
 
-    m_scoringVariables[4] =
+    m_scoringVariables[1] =
         m_drivestationTab.add("Intake Down ", 0).withPosition(3, 0).withSize(1, 1).getEntry();
 
     m_scoringVariables[3] =
         m_drivestationTab.add("Squeeze", 0).withPosition(4, 0).withSize(1, 1).getEntry();
-
-    m_limelightVariables[0] =
-        m_drivestationTab.add("Distance", 0).withPosition(5, 0).withSize(1, 1).getEntry();
 
     m_driverStationInfoVariables[0] =
         m_drivestationTab.add("Match Time", 0).withPosition(6, 0).withSize(3, 1).getEntry();
@@ -175,6 +172,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
         .withWidget(BuiltInWidgets.kComboBoxChooser)
         .withPosition(0, 0)
         .withSize(2, 1);
+
+    m_limelightVariables[0] =
+        m_drivestationTab.add("Distance", 0).withPosition(5, 0).withSize(1, 1).getEntry();
 
     try {
       LLFeed = new HttpCamera("limelight", "http://10.39.28.92", HttpCameraKind.kMJPGStreamer);
