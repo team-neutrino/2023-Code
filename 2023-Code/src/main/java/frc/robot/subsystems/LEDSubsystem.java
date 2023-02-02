@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase {
@@ -44,6 +45,22 @@ public class LEDSubsystem extends SubsystemBase {
   public void setToOrange() {
     for (int i = 0; i < m_LedBuffer.getLength(); i++) {
       m_LedBuffer.setRGB(i, 255, 15, 0);
+    }
+  }
+
+  public String getColor() {
+    Color orange = new Color(255, 15, 0);
+    Color purple = new Color(162, 25, 255);
+    Color yellow = new Color(255, 100, 0);
+
+    if (m_LedBuffer.getLED(1).equals(orange)) {
+      return "Orange";
+    } else if (m_LedBuffer.getLED(1).equals(purple)) {
+      return "Purple";
+    } else if (m_LedBuffer.getLED(1).equals(yellow)) {
+      return "Yellow";
+    } else {
+      return "Cannot determine color";
     }
   }
 

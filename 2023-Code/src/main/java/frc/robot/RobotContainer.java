@@ -64,7 +64,8 @@ public class RobotContainer {
           m_scoringSubsystem,
           m_limelightSubsystem,
           m_armSubsystem,
-          m_intakeSubsystem);
+          m_intakeSubsystem,
+          m_LedSubsystem);
 
   // BUTTONS
   private final JoystickButton m_buttonA =
