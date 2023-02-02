@@ -21,9 +21,6 @@ import frc.robot.Constants;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
-  private Joystick m_leftJoystick = new Joystick(Constants.OperatorConstants.JOYSTICK_LEFT);
-  private Joystick m_rightJoystick = new Joystick(Constants.OperatorConstants.JOYSTICK_RIGHT);
-
   // ODOMETRY
   private DifferentialDriveOdometry m_diffDriveOdometry;
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
@@ -42,12 +39,17 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoderRight2;
   private RelativeEncoder m_encoderLeft1;
   private RelativeEncoder m_encoderLeft2;
-
+  private Joystick m_leftJoystick;
+  private Joystick m_rightJoystick;
   MotorControllerGroup m_motorGroupRight = new MotorControllerGroup(m_motorRight1, m_motorRight2);
   MotorControllerGroup m_motorGroupLeft = new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
 
   /** Creates a new Drivetrain. */
-  public DriveTrainSubsystem() {
+  public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick) {
+
+    m_leftJoystick = p_leftJoystick;
+    m_rightJoystick = p_rightJoystick;
+
     m_motorLeft1.restoreFactoryDefaults();
     m_motorLeft2.restoreFactoryDefaults();
     m_motorRight1.restoreFactoryDefaults();
