@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -38,12 +39,17 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoderRight2;
   private RelativeEncoder m_encoderLeft1;
   private RelativeEncoder m_encoderLeft2;
-
+  private Joystick m_leftJoystick;
+  private Joystick m_rightJoystick;
   MotorControllerGroup m_motorGroupRight = new MotorControllerGroup(m_motorRight1, m_motorRight2);
   MotorControllerGroup m_motorGroupLeft = new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
 
   /** Creates a new Drivetrain. */
-  public DriveTrainSubsystem() {
+  public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick) {
+
+    m_leftJoystick = p_leftJoystick;
+    m_rightJoystick = p_rightJoystick;
+
     m_motorLeft1.restoreFactoryDefaults();
     m_motorLeft2.restoreFactoryDefaults();
     m_motorRight1.restoreFactoryDefaults();
@@ -166,8 +172,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void setMotors(double leftMotorInput, double rightMotorInput) {
+    boolean turbo = m_leftJoystick.getTrigger() && m_rightJoystick.getTrigger();
+
     double leftMotorSpeed = linearAccel(deadzone(leftMotorInput));
     double rightMotorSpeed = linearAccel(deadzone(rightMotorInput));
+
+    if (turbo) {
+      leftMotorSpeed = turboAccel(deadzone(leftMotorInput));
+      rightMotorSpeed = turboAccel(deadzone(rightMotorInput));
+    }
     m_motorGroupLeft.set(leftMotorSpeed);
     m_motorGroupRight.set(rightMotorSpeed);
   }
@@ -188,13 +201,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return newSpeed;
   }
 
-  public static double slowAccel(double joystickY) {
+  public static double turboAccel(double joystickY) {
     double MAXSPEED = 0.7;
     double newSpeed = (2 * MAXSPEED * joystickY) / (1 + Math.abs(joystickY));
     return newSpeed;
   }
 
-  public static double turboAccel(double joystickY) {
+  public static double slowAccel(double joystickY) {
     double newSpeed = Math.pow(joystickY, 3) * 1.6 + (0.17 * joystickY);
     return newSpeed;
   }
