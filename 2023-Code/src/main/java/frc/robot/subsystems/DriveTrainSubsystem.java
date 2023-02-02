@@ -21,10 +21,8 @@ import frc.robot.Constants;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
-  private Joystick m_leftJoystick = 
-      new Joystick(Constants.OperatorConstants.JOYSTICK_LEFT);
-  private Joystick m_rightJoystick = 
-      new Joystick(Constants.OperatorConstants.JOYSTICK_RIGHT);
+  private Joystick m_leftJoystick = new Joystick(Constants.OperatorConstants.JOYSTICK_LEFT);
+  private Joystick m_rightJoystick = new Joystick(Constants.OperatorConstants.JOYSTICK_RIGHT);
 
   // ODOMETRY
   private DifferentialDriveOdometry m_diffDriveOdometry;
@@ -177,7 +175,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     double leftMotorSpeed = linearAccel(deadzone(leftMotorInput));
     double rightMotorSpeed = linearAccel(deadzone(rightMotorInput));
 
-    if(turbo){
+    if (turbo) {
       leftMotorSpeed = turboAccel(deadzone(leftMotorInput));
       rightMotorSpeed = turboAccel(deadzone(rightMotorInput));
     }
