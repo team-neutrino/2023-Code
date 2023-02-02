@@ -35,11 +35,7 @@ public class IntakeDefaultCommand extends CommandBase {
   @Override
   public void execute() {
     m_intakeSubsystem.stopIntake();
-<<<<<<< Updated upstream
-    // in case we're holding a game piece, we'll want to keep holding it
-=======
     // in case we're holding a game piece, we want to keep a hold of it
->>>>>>> Stashed changes
     m_intakeSubsystem.squeeze();
     m_intakeSubsystem.setIntakeUp();
   }
