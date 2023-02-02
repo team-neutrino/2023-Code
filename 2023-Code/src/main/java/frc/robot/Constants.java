@@ -25,8 +25,6 @@ public final class Constants {
 
   public static class MotorConstants {
     public static final int INTAKEMOTOR1 = 21; // intake motors have '2' in front of actual id
-    public static final int INTAKEMOTOR2 = 22;
-    public static final int INTAKEMOTOR3 = 23; // not used currently, may be in the future
 
     public static final int MOTOR_RIGHT1 = 11;
     public static final int MOTOR_RIGHT2 = 12;
@@ -60,8 +58,8 @@ public final class Constants {
   }
 
   public static class PneumaticsConstants {
-    public static final int INTAKE1 = 0;
-    public static final int INTAKE2 = 1;
+    public static final int UP_DOWN_SOLENOID = 0;
+    public static final int IN_OUT_SOLENOID = 1;
     public static final int GRABBER = 2;
     public static final int SOLENOID_FRONT = 3;
     public static final int SOLENOID_BACK = 4;
