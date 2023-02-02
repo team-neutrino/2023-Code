@@ -13,7 +13,6 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
   public static class OperatorConstants {
     public static final int JOYSTICK_LEFT = 0;
     public static final int JOYSTICK_RIGHT = 1;
