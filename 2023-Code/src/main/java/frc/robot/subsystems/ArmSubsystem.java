@@ -54,6 +54,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void setReference(double rotations) {
     m_pidController.setReference(rotations, ControlType.kPosition);
+    System.out.println("move arm");
   }
 
   public double getVoltage() {
