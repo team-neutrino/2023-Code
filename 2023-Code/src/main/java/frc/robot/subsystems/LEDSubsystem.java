@@ -48,7 +48,7 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
-  public String getColor(int index) {
+  public String getColor() {
     Color orange = new Color(255, 15, 0);
     Color purple = new Color(162, 25, 255);
     Color yellow = new Color(255, 100, 0);
