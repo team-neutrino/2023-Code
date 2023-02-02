@@ -41,8 +41,15 @@ public class RobotContainer {
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
+  // Replace with CommandPS4Controller or CommandJoystick if needed
+  // CONTROLLERS
+  private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
+  private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICK_LEFT);
+  private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JOYSTICK_RIGHT);
+
   // SUBSYSTEMS
-  private final DriveTrainSubsystem m_driveTrainSubsystem = new DriveTrainSubsystem();
+  private final DriveTrainSubsystem m_driveTrainSubsystem =
+      new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick);
   private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
@@ -57,13 +64,8 @@ public class RobotContainer {
           m_scoringSubsystem,
           m_limelightSubsystem,
           m_armSubsystem,
-          m_intakeSubsystem);
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  // CONTROLLERS
-  private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
-  private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICK_LEFT);
-  private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JOYSTICK_RIGHT);
+          m_intakeSubsystem,
+          m_LedSubsystem);
 
   // BUTTONS
   private final JoystickButton m_buttonA =
