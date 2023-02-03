@@ -80,6 +80,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     m_scoringVariables[2].setBoolean(m_scoring.getSolenoidValue());
 
+    m_LEDVariables[0].setString(m_LED.getColor());
+
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
     m_armVariables[0].setDouble(m_arm.getPosition());
