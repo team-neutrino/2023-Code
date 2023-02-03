@@ -319,8 +319,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void periodic() {
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
-    cycle++;
-    printPosition();
-    System.out.println(getPitch());
+    //cycle++;
+    //printPosition();
+    //System.out.println(getPitch());
   }
 }
