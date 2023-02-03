@@ -24,6 +24,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   boolean turnLeft = false;
   double limelightAdjust;
   double setPoint;
+  boolean save = false;
 
   public DriveTrainDriveFowardCommand(
       DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight) {
@@ -35,7 +36,9 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println("starting command /n save between command runs = " + save);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -261,7 +264,9 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    save = true;
+  }
 
   // Returns true when the command should end.
   @Override
