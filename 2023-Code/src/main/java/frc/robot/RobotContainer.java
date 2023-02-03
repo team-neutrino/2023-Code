@@ -16,6 +16,7 @@ import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.DriveTrainDriveFowardCommand;
 import frc.robot.commands.EndGameDefaultCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.testCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.EndGameSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -62,6 +63,7 @@ public class RobotContainer {
   //  new ScoringOpenCommand(m_scoringSubsystem);
   private final DriveTrainDriveFowardCommand m_DriveTrainDriveFowardCommand =
       new DriveTrainDriveFowardCommand(m_driveTrain, m_limelight);
+  private final testCommand m_testCommand = new testCommand();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -92,7 +94,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_buttonA.whileTrue(m_scoringOpenCommand);
-    m_buttonA.toggleOnTrue(m_DriveTrainDriveFowardCommand);
+    m_buttonA.toggleOnTrue(m_testCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
