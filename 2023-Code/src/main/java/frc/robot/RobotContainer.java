@@ -157,10 +157,11 @@ public class RobotContainer {
     m_LedSubsystem.setDefaultCommand(m_LedDefaultCommand);
 
     // Buttons
-    m_test.whileTrue(m_driveTrainDefaultCommand);
+    //m_test.whileTrue(m_driveTrainDefaultCommand);
     m_buttonA.whileTrue(m_scoringOpenCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
+    m_buttonX.whileTrue(m_DriveTrainDriveFowardCommand);
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
     m_rightArrow.onTrue(m_AutoBalanceCommand);
