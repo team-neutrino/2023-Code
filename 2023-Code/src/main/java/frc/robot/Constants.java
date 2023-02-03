@@ -26,10 +26,10 @@ public final class Constants {
   public static class MotorConstants {
     public static final int INTAKEMOTOR1 = 21; // intake motors have '2' in front of actual id
 
-    public static final int MOTOR_RIGHT1 = 11;
-    public static final int MOTOR_RIGHT2 = 12;
-    public static final int MOTOR_LEFT1 = 13;
-    public static final int MOTOR_LEFT2 = 14;
+    public static final int MOTOR_RIGHT1 = 3;
+    public static final int MOTOR_RIGHT2 = 4;
+    public static final int MOTOR_LEFT1 = 1;
+    public static final int MOTOR_LEFT2 = 2;
 
     public static final int ARM_MOTOR1 = 31;
     public static final int GRABBER_MOTOR1 = 41;
