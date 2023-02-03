@@ -35,6 +35,7 @@ import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
+import frc.robot.util.PoseProcessor;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
@@ -57,15 +58,15 @@ public class RobotContainer {
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
   private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
-  private final ShuffleboardSubsystem m_shuffleboardSubsystem =
-      new ShuffleboardSubsystem(
-          m_driverStationInfo,
-          m_driveTrainSubsystem,
-          m_scoringSubsystem,
-          m_limelightSubsystem,
-          m_armSubsystem,
-          m_intakeSubsystem,
-          m_LedSubsystem);
+  //private final ShuffleboardSubsystem m_shuffleboardSubsystem =
+    //   new ShuffleboardSubsystem(
+    //       m_driverStationInfo,
+    //       m_driveTrainSubsystem,
+    //       m_scoringSubsystem,
+    //       m_limelightSubsystem,
+    //       m_armSubsystem,
+    //       m_intakeSubsystem,
+    //       m_LedSubsystem);
 
   // BUTTONS
   private final JoystickButton m_buttonA =
@@ -133,6 +134,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
+    new PoseProcessor("util/textFile.txt");
+    System.out.println("Test Test Test Test Test Test Test Test Test Test Test Test ");
 
     configureBindings();
   }
@@ -161,8 +164,9 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return m_shuffleboardSubsystem
-        .getAutoSelected()
-        .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+    // return m_shuffleboardSubsystem
+    //     .getAutoSelected()
+    //     .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+    return null;
   }
 }
