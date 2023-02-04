@@ -244,7 +244,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
       stop = turnMotorRight(Math.abs(motorset), rmotorPosition, lmotorPosition);
       System.out.println("turning motor right");
     } else if (motorset < 0) {
-      stop = turnMotorLeft(Math.abs(motorset));
+      stop = turnMotorLeft(Math.abs(motorset), rmotorPosition, lmotorPosition);
       System.out.println("turning motor left");
     }
     return stop;
@@ -256,12 +256,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
     double lmotorPosition = getL1Pos();
     boolean stop = false;
 
-    if (p_rmotorPosition > rmotorPosition - motorset
-        && p_lmotorPosition < lmotorPosition + motorset) {
+    if (getR1Pos() > p_rmotorPosition - motorset
+        && lmotorPosition < p_lmotorPosition + motorset) {
+          System.out.println(p_rmotorPosition - motorset);
+          System.out.println(rmotorPosition);
       m_motorGroupRight.set(-0.05);
       m_motorGroupLeft.set(0.05);
     } else {
       m_motorGroupRight.set(0);
+
       m_motorGroupLeft.set(0);
       stop = true;
     }
@@ -275,13 +278,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
     */
   }
 
-  public boolean turnMotorLeft(double motorset) {
+  public boolean turnMotorLeft(double motorset, double p_rmotorPosition, double p_lmotorPosition) {
     motorset = motorset * 20 / Math.PI;
     double rmotorPosition = getR1Pos();
     double lmotorPosition = getL1Pos();
     boolean stop = false;
 
-    if (getR1Pos() < rmotorPosition + motorset && getL1Pos() > lmotorPosition - motorset) {
+    if (rmotorPosition < p_rmotorPosition + motorset && lmotorPosition > p_lmotorPosition - motorset) {
       m_motorGroupRight.set(0.05);
       m_motorGroupLeft.set(-0.05);
     } else {

@@ -37,7 +37,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("starting command /n save between command runs = " + save);
+    System.out.println("starting command \nsave between command runs = " + save);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -55,6 +55,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
           double slope = array[1] / array[0];
           theta = Math.atan(slope);
           actionCounter++;
+          System.out.println("ended step 0");
         }
       }
     } else if (actionCounter == 1) {
@@ -62,6 +63,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
       if (firstRun == 0) {
         rmotorPosition = m_drivetrain.getR1Pos();
         lmotorPosition = m_drivetrain.getL1Pos();
+        System.out.println("step one getting motor positions");
       }
 
       boolean stop = false;
@@ -74,6 +76,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
       if (stop) {
         actionCounter++;
+        System.out.println("ended step 1");
       }
       firstRun++;
     } else if (actionCounter == 2) {
@@ -94,6 +97,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
       if (stop) {
         actionCounter++;
         firstRun = 0;
+        System.out.println("ended step 2");
       }
       firstRun++;
     } else if (actionCounter == 3) {
@@ -266,6 +270,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     save = true;
+    actionCounter = 0;
   }
 
   // Returns true when the command should end.
