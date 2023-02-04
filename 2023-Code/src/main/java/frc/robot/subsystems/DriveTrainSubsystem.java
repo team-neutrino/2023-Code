@@ -57,6 +57,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
     resetOdometry(m_diffDriveOdometry.getPoseMeters());
+    setMotors(0.3, 0);
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {

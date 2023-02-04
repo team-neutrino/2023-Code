@@ -19,14 +19,12 @@ public class ArmToAngleCommand extends CommandBase {
       ArmSubsystem p_armSubsystem, ViennaPIDController p_pidController, double p_targetAngle) {
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
-    addRequirements(m_armSubsystem);
     m_targetAngle = p_targetAngle;
+    addRequirements(m_armSubsystem);
   }
 
   @Override
   public void initialize() {
-    // m_armSubsystem.setReference(m_angle);
-
   }
 
   @Override

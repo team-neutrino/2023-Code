@@ -7,11 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ScoringSubsystem;
 
-public class ScoringOpenCommand extends CommandBase {
+public class ScoringCloseCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
 
   /** Creates a new ScoringCommand. */
-  public ScoringOpenCommand(ScoringSubsystem p_scoringSubsystem) {
+  public ScoringCloseCommand(ScoringSubsystem p_scoringSubsystem) {
     m_scoringSubsystem = p_scoringSubsystem;
     addRequirements(m_scoringSubsystem);
   }
@@ -21,7 +21,7 @@ public class ScoringOpenCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_scoringSubsystem.extendSolenoid();
+    m_scoringSubsystem.closeScoring();
   }
 
   @Override
