@@ -138,9 +138,9 @@ public class RobotContainer {
     // Buttons
     m_buttonA.whileTrue(m_scoringOpenCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
-    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
-    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
+    m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, m_intakeSubsystem, 90));
+    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, 1));
+    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, -1));
     m_rightArrow.onTrue(m_AutoBalanceCommand);
     m_leftBumper.whileTrue(m_IntakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);

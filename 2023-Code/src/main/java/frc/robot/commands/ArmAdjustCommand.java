@@ -14,7 +14,8 @@ public class ArmAdjustCommand extends CommandBase {
 
   private double m_voltage;
   /** Creates a new ArmIterateAngleCommand. */
-  public ArmAdjustCommand(ArmSubsystem p_armSubsystem, IntakeSubsystem p_intakeSubsystem, double p_voltage) {
+  public ArmAdjustCommand(
+      ArmSubsystem p_armSubsystem, IntakeSubsystem p_intakeSubsystem, double p_voltage) {
     m_armSubsystem = p_armSubsystem;
     m_intakeSubsystem = p_intakeSubsystem;
     m_voltage = p_voltage;
@@ -28,7 +29,10 @@ public class ArmAdjustCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_armSubsystem.setVoltage(m_voltage);
+    // I hope this returns true if the updownsolenoid is retracted (so the intake is down)
+    if (m_intakeSubsystem.getUpDownSolenoidValue()) {
+      m_armSubsystem.setVoltage(m_voltage);
+    }
   }
 
   // Called once the command ends or is interrupted.
