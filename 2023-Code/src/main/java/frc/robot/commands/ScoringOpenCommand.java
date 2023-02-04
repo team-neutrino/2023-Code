@@ -21,7 +21,7 @@ public class ScoringOpenCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_scoringSubsystem.setScoringOpen();
+    m_scoringSubsystem.extendSolenoid();
   }
 
   @Override
