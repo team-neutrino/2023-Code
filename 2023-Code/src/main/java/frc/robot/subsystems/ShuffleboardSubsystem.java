@@ -98,56 +98,56 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     m_driveTrainVariables[0] =
         m_drivestationTab
-            .add("Right Motor 1 Position", 0)
+            .add("RMotor 1 Pos", 0)
             .withPosition(0, 0)
             .withSize(1, 1)
             .getEntry();
 
     m_driveTrainVariables[1] =
         m_drivestationTab
-            .add("Right Motor 2 Position", 0)
+            .add("RMotor 2 Pos", 0)
             .withPosition(0, 1)
             .withSize(1, 1)
             .getEntry();
 
     m_driveTrainVariables[2] =
         m_drivestationTab
-            .add("Left Motor 1 Position", 0)
+            .add("LMotor 1 Pos", 0)
             .withPosition(0, 2)
             .withSize(1, 1)
             .getEntry();
 
     m_driveTrainVariables[3] =
         m_drivestationTab
-            .add("Left Motor 2 Position", 0)
+            .add("LMotor 2 Pos", 0)
             .withPosition(0, 3)
             .withSize(1, 1)
             .getEntry();
 
     m_driveTrainVariables[4] =
         m_drivestationTab
-            .add("Right Motor 1 Velocity", 0)
+            .add("RMotor 1 Vel", 0)
             .withPosition(0, 3)
             .withSize(1, 1)
             .getEntry();
 
     m_driveTrainVariables[5] =
         m_drivestationTab
-            .add("Right Motor 2 Velocity", 0)
+            .add("RMotor 2 Vel", 0)
             .withPosition(1, 3)
             .withSize(1, 1)
             .getEntry();
 
     m_driveTrainVariables[6] =
         m_drivestationTab
-            .add("Left Motor 1 Velocity", 0)
+            .add("LMotor 1 Vel", 0)
             .withPosition(1, 2)
             .withSize(1, 1)
             .getEntry();
 
     m_driveTrainVariables[7] =
         m_drivestationTab
-            .add("Left Motor 2 Velocity", 0)
+            .add("LMotor 2 Vel", 0)
             .withPosition(1, 1)
             .withSize(1, 1)
             .getEntry();
