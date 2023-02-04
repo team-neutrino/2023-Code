@@ -16,13 +16,14 @@ import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
+import frc.robot.commands.AutoProcessCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.LEDCommand;
+import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
-import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -87,7 +88,6 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
 
   // COMMANDS
-  private final ArmDefaultCommand m_ArmDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
   private final AutoBalanceCommand m_AutoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
   private final JoystickButton m_buttonBack =
@@ -99,12 +99,11 @@ public class RobotContainer {
       new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
   private final Trigger m_rightTrigger =
       new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
-
-  // COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrainSubsystem, m_leftJoystick, m_rightJoystick);
-
+  private final AutoProcessCommand m_autoProcessCommand =
+      new AutoProcessCommand(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
   // turn both intake motors off and set the entire thing up
   private final IntakeDefaultCommand m_IntakeDefaultCommand =
       new IntakeDefaultCommand(m_intakeSubsystem);
@@ -120,8 +119,8 @@ public class RobotContainer {
       new ScoringDefaultCommand(m_scoringSubsystem);
 
   // toggle scoring pneumatics to retracted position
-  private final ScoringOpenCommand m_scoringOpenCommand =
-      new ScoringOpenCommand(m_scoringSubsystem);
+  private final ScoringCloseCommand m_scoringOpenCommand =
+      new ScoringCloseCommand(m_scoringSubsystem);
 
   private final LEDCommand m_LedDefaultCommand =
       new LEDCommand(m_LedSubsystem, LEDColor.ORANGE, m_scoringSubsystem);
@@ -141,6 +140,7 @@ public class RobotContainer {
     // Buttons
     m_buttonA.whileTrue(m_scoringOpenCommand);
     m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    m_buttonX.whileTrue(m_autoProcessCommand);
     m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
