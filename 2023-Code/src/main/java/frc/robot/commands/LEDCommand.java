@@ -17,7 +17,7 @@ public class LEDCommand extends CommandBase {
     m_LedSubsystem = p_LEDSubsystem;
     m_colorMode = p_colorMode;
     m_scoringSubsystem = p_scoringSubsystem;
-    addRequirements(m_LedSubsystem, m_scoringSubsystem);
+    addRequirements(m_LedSubsystem);
   }
 
   @Override
