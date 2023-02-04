@@ -65,6 +65,7 @@ public class RobotContainer {
           m_limelightSubsystem,
           m_armSubsystem,
           m_intakeSubsystem,
+          m_colorsubsystem,
           m_LedSubsystem);
 
   // BUTTONS
