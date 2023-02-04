@@ -17,9 +17,7 @@ public class ScoringDefaultCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-    m_scoringSubsystem.setScoringClose();
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
