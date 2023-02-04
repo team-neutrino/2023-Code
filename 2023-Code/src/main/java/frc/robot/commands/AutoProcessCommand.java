@@ -33,12 +33,12 @@ public class AutoProcessCommand extends CommandBase {
     if (m_intakeSubsystem.isGamePiece()) {
       m_intakeSubsystem.squeeze();
       m_intakeSubsystem.stopIntake();
-      m_scoringSubsystem.setScoringOpen();
+      m_scoringSubsystem.open();
       m_armSubsystem.setReference(Constants.ArmConstants.ARM_DOWN);
 
       if (m_scoringSubsystem.getBeamBreak()) {
         m_intakeSubsystem.unsqueeze();
-        m_scoringSubsystem.setScoringClose();
+        m_scoringSubsystem.close();
         m_armSubsystem.setReference(Constants.ArmConstants.ARM_UP);
       }
     }
