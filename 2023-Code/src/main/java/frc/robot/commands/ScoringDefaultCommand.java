@@ -21,7 +21,7 @@ public class ScoringDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_scoringSubsystem.retractSolenoid();
+    m_scoringSubsystem.openScoring();
   }
 
   @Override
