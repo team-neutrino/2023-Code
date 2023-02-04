@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.LEDColor;
@@ -14,7 +15,7 @@ public class LEDSubsystem extends SubsystemBase {
 
   public AddressableLED m_addressableLED;
   public AddressableLEDBuffer m_LedBuffer;
-  private boolean m_beamBreak;
+  private Timer timer = new Timer();
 
   /** Creates a new LEDSubsystem. */
   public LEDSubsystem() {
@@ -24,25 +25,26 @@ public class LEDSubsystem extends SubsystemBase {
     m_addressableLED.setLength(m_LedBuffer.getLength());
     m_addressableLED.setData(m_LedBuffer);
     m_addressableLED.start();
-    setToOrange();
+    //setToOrange();
+    timer.start();
+  }
+
+  private void setToColor(int r, int g, int b) {
+    for (int i = 0; i < m_LedBuffer.getLength(); i++) {
+      m_LedBuffer.setRGB(i, r, g, b);
+    }
   }
 
   public void setToPurple() {
-    for (int i = 0; i < m_LedBuffer.getLength(); i++) {
-      m_LedBuffer.setRGB(i, 162, 25, 255);
-    }
+    setToColor(210, 25, 210);
   }
-
+  
   public void setToYellow() {
-    for (int i = 0; i < m_LedBuffer.getLength(); i++) {
-      m_LedBuffer.setRGB(i, 255, 100, 0);
-    }
+    setToColor(255, 100, 0);
   }
 
   public void setToOrange() {
-    for (int i = 0; i < m_LedBuffer.getLength(); i++) {
-      m_LedBuffer.setRGB(i, 255, 15, 0);
-    }
+    setToColor(255, 15, 0);
   }
 
   public LEDColor getColor() {
@@ -64,9 +66,19 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
+  private void sarahStrobe() {
+    double timeConst = Math.PI;
+    int r = (int)Math.round(126*Math.cos(timeConst*timer.get())+126);
+    int g = (int)Math.round(126*Math.cos(timeConst/2*timer.get())+126);
+    int b = (int)Math.round(64*Math.sin(2*timeConst*timer.get())+64);
+    for(int i = 0; i < m_LedBuffer.getLength(); ++i)
+      setToColor(r, g, b);
+  }
+
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    //This method will be called once per scheduler run
     m_addressableLED.setData(m_LedBuffer);
+    sarahStrobe();
   }
 }

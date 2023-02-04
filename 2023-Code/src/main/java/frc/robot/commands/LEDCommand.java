@@ -17,7 +17,7 @@ public class LEDCommand extends CommandBase {
     m_LedSubsystem = p_LEDSubsystem;
     m_colorMode = p_colorMode;
     m_scoringSubsystem = p_scoringSubsystem;
-    addRequirements(m_LedSubsystem);
+    addRequirements(m_LedSubsystem, m_scoringSubsystem);
   }
 
   @Override
@@ -26,7 +26,7 @@ public class LEDCommand extends CommandBase {
       m_LedSubsystem.setToPurple();
     }
     if (m_colorMode == LEDColor.YELLOW) {
-    m_LedSubsystem.setToYellow();
+      m_LedSubsystem.setToYellow();
     }
   }
 
