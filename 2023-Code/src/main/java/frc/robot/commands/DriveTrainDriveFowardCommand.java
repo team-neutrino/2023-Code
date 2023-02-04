@@ -38,8 +38,8 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("starting command \nsave between command runs = " + save);
-    System.out.println("lmotorposition " + lmotorPosition);
-    System.out.println("rmotorposition " + rmotorPosition);
+    // System.out.println("lmotorposition " + lmotorPosition);
+    // System.out.println("rmotorposition " + rmotorPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -57,7 +57,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
           double slope = array[1] / array[0];
           theta = Math.atan(slope);
           actionCounter++;
-          System.out.println("ended step 0");
+          // System.out.println("ended step 0");
           System.out.println("theta " + theta);
         }
       }
@@ -66,7 +66,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
       if (firstRun == 0) {
         rmotorPosition = m_drivetrain.getR1Pos() / 0.04987278;
         lmotorPosition = m_drivetrain.getL1Pos() / 0.04987278;
-        System.out.println("step one getting motor positions");
+        // System.out.println("step one getting motor positions");
       }
 
       boolean stop = false;
@@ -84,7 +84,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
         System.out.println("ended step 1");
       }
     } else if (actionCounter == 2) {
-      System.out.println("first run for 2 is " + firstRun);
+      // System.out.println("first run for 2 is " + firstRun);
       if (firstRun == 0) {
         rmotorPosition = m_drivetrain.getR1Pos() / 0.04987278;
         lmotorPosition = m_drivetrain.getL1Pos() / 0.04987278;
@@ -103,7 +103,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
         actionCounter++;
         firstRun = 0;
         System.out.println("ended step 2");
-        System.out.println("firstrun after step 2 " + firstRun);
+        // System.out.println("firstrun after step 2 " + firstRun);
       }
     } else if (actionCounter == 3) {
 
@@ -172,8 +172,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
         firstRun = 0;
         System.out.println("ended step 4");
       }
-    }
-    else if (actionCounter == 5) {
+    } else if (actionCounter == 5) {
       if (firstRun == 0) {
         rmotorPosition = m_drivetrain.getR1Pos() / 0.04987278;
         lmotorPosition = m_drivetrain.getL1Pos() / 0.04987278;
@@ -181,23 +180,19 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
       boolean stop = false;
 
-      if (turnLeft){
+      if (turnLeft) {
         stop = m_drivetrain.turnMotor(-0.1, rmotorPosition, lmotorPosition);
-      }
-      else {
+      } else {
         stop = m_drivetrain.turnMotor(0.1, rmotorPosition, lmotorPosition);
       }
 
       firstRun++;
-      if (stop){
+      if (stop) {
         actionCounter++;
         firstRun = 0;
         System.out.println("ended step 5");
       }
-    }
-
-
-    else if (actionCounter == 6) {
+    } else if (actionCounter == 6) {
 
       boolean stop = false;
 
@@ -232,11 +227,11 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
       boolean stop = false;
 
-      if (firstRun == 25) {
+      if (firstRun >= 25) {
         stop =
             m_drivetrain.turnMotor(
                 m_limelight.getTx() * Math.PI / 180, rmotorPosition, lmotorPosition);
-                System.out.println("tx for 7 is " + m_limelight.getTx());
+        System.out.println("tx for 7 is " + m_limelight.getTx());
       }
 
       firstRun++;
@@ -254,7 +249,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
       boolean stop = false;
 
-      if (firstRun == 15) {
+      if (firstRun >= 15) {
         stop =
             m_drivetrain.turnMotor(
                 m_limelight.getTx() * Math.PI / 180 / 2, rmotorPosition, lmotorPosition);
@@ -284,7 +279,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
         actionCounter++;
         firstRun = 0;
       }
-    } else if (actionCounter == 10) {
+    } else if (actionCounter >= 10) {
 
       if (firstRun == 0) {
         rmotorPosition = m_drivetrain.getR1Pos() / 0.04987278;
@@ -293,7 +288,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
       boolean stop = false;
 
-      if (firstRun == 25) {
+      if (firstRun >= 25) {
         stop =
             m_drivetrain.turnMotor(
                 m_limelight.getTx() * Math.PI / 180 / 2, rmotorPosition, lmotorPosition);
