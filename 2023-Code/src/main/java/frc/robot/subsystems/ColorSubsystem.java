@@ -21,6 +21,8 @@ public class ColorSubsystem extends SubsystemBase {
   private boolean m_isYellow;
   private boolean m_isPurple;
 
+
+  // use sensor to get correct RGB values
   private final Color C_Yellow = new Color(220, 167, 0);
   private final Color C_Purple = new Color(164, 148, 246);
 
@@ -49,21 +51,37 @@ public class ColorSubsystem extends SubsystemBase {
     return m_colorSensor.getColor();
   }
 
+  public String getPiece() {
+    if (m_isYellow) {
+      return "Cone";
+    }
+    else if (m_isPurple) {
+      return "Cube";
+    }
+    else {
+      return "No piece";
+    }
+  }
+
  
   public boolean isYellow(Color detectedColor) {
     ColorMatchResult matchResult = m_colorMatcher.matchClosestColor(detectedColor);
     boolean isYellow = false;
-    if (C_Yellow == matchResult.color ) 
+    if (C_Yellow.equals(matchResult.color)) {
     isYellow = true;
     return isYellow;
+    }
+    return false;
   }
 
 
   public boolean isPurple(Color detectedColor) {
     ColorMatchResult matchResult = m_colorMatcher.matchClosestColor(detectedColor);
     boolean isPurple = false;
-    if (C_Purple == matchResult.color) 
+    if (C_Purple.equals(matchResult.color)) {
     isPurple = true;
     return isPurple;
+    }
+    return false;
   }
 }
