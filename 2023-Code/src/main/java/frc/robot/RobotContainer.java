@@ -18,16 +18,15 @@ import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.AutoProcessCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
-import frc.robot.commands.EndGameDefaultCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeReverseCommand;
-import frc.robot.commands.LEDDefaultCommand;
+import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.EndGameSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
@@ -36,21 +35,29 @@ import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
+import frc.robot.util.LEDColor;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
+  // Replace with CommandPS4Controller or CommandJoystick if needed
+  // CONTROLLERS
+  private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
+  private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICK_LEFT);
+  private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JOYSTICK_RIGHT);
+
   // SUBSYSTEMS
-  private final DriveTrainSubsystem m_driveTrainSubsystem = new DriveTrainSubsystem();
-  private final EndGameSubsystem m_endGame = new EndGameSubsystem();
+  private final DriveTrainSubsystem m_driveTrainSubsystem =
+      new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick);
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
   private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
+  private final ColorSubsystem m_colorsubsystem = new ColorSubsystem();
   private final ShuffleboardSubsystem m_shuffleboardSubsystem =
       new ShuffleboardSubsystem(
           m_driverStationInfo,
@@ -58,13 +65,8 @@ public class RobotContainer {
           m_scoringSubsystem,
           m_limelightSubsystem,
           m_armSubsystem,
-          m_intakeSubsystem);
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  // CONTROLLERS
-  private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
-  private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICK_LEFT);
-  private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JOYSTICK_RIGHT);
+          m_intakeSubsystem,
+          m_LedSubsystem);
 
   // BUTTONS
   private final JoystickButton m_buttonA =
@@ -110,12 +112,6 @@ public class RobotContainer {
   private final IntakeReverseCommand m_IntakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem);
 
-  // if the right joystick trigger/button is pressed, both joysticks are pushed past
-  // the deadzone given in the variable constants, and the endgane pneumatics are not
-  // already extended, extend them.
-  private final EndGameDefaultCommand m_endGameDefaultCommand =
-      new EndGameDefaultCommand(m_endGame, m_rightJoystick, m_leftJoystick);
-
   // toggles scoring pneumatics to extended position
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
@@ -124,8 +120,8 @@ public class RobotContainer {
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
 
-  private final LEDDefaultCommand m_LedDefaultCommand =
-      new LEDDefaultCommand(m_LedSubsystem, 0, m_scoringSubsystem);
+  private final LEDCommand m_LedDefaultCommand =
+      new LEDCommand(m_LedSubsystem, LEDColor.ORANGE, m_scoringSubsystem);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
@@ -137,9 +133,7 @@ public class RobotContainer {
     m_driveTrainSubsystem.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
-    m_endGame.setDefaultCommand(m_endGameDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
-    m_LedSubsystem.setDefaultCommand(m_LedDefaultCommand);
 
     // Buttons
     m_buttonA.whileTrue(m_scoringOpenCommand);
@@ -153,8 +147,8 @@ public class RobotContainer {
     m_leftTrigger.whileTrue(m_intakeCommand);
 
     // LED Buttons
-    m_buttonStart.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 1, m_scoringSubsystem));
-    m_buttonBack.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 2, m_scoringSubsystem));
+    m_buttonStart.onTrue(new LEDCommand(m_LedSubsystem, LEDColor.PURPLE, m_scoringSubsystem));
+    m_buttonBack.onTrue(new LEDCommand(m_LedSubsystem, LEDColor.YELLOW, m_scoringSubsystem));
   }
 
   public Command getAutonomousCommand() {
