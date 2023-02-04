@@ -24,7 +24,8 @@ public final class Constants {
   }
 
   public static class MotorConstants {
-    public static final int INTAKEMOTOR1 = 11; // 21; // intake motors have '2' in front of actual id
+    public static final int INTAKEMOTOR1 =
+        11; // 21; // intake motors have '2' in front of actual id
 
     public static final int MOTOR_RIGHT1 = 15; // 11;
     public static final int MOTOR_RIGHT2 = 16; // 12;

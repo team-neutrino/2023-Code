@@ -47,19 +47,19 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Sets the solenoid to the 'out' position */
   public void setIntakeDown() {
     m_upDownSolenoid.set(true);
-   // System.out.println("intake down");
+    // System.out.println("intake down");
   }
 
   /** Sets the solenoid to the 'in' position. */
   public void setIntakeUp() {
     m_upDownSolenoid.set(false);
-   // System.out.println("intake up");
+    // System.out.println("intake up");
   }
 
   /** Runs the wheels motor at a fixed speed. */
   public void runIntake() {
     m_wheelsMotor.set(.2); // NEED TO MAKE CONSTANT FOR MOTOR SPEED
-    //System.out.println("run intake");
+    // System.out.println("run intake");
   }
 
   /** Runs the wheels motor in reverse. */
@@ -94,13 +94,13 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Pushes the intake out a little */
   public void unsqueeze() {
     m_squeezeSolenoid.set(false);
-   // System.out.println("unsqueeze");
+    // System.out.println("unsqueeze");
   }
 
   /** Puts the intake back to its narrow form */
   public void squeeze() {
     m_squeezeSolenoid.set(true);
-    //System.out.println("squeeze");
+    // System.out.println("squeeze");
   }
 
   /**
