@@ -8,17 +8,17 @@ public class AutoBalanceCommand extends CommandBase {
 
   private final DriveTrainSubsystem m_drivetrain;
 
-  double ish = 0.4;
-  double desiredPos = 0;
-  double error;
-  double voltage;
-
-  double integral = 0;
-
-  double derivative = 0;
-  double previousError = 0;
+  final double ish = 0.4;
   final double dt = .02;
 
+  double desiredPos = 0;
+  double error;
+  double previousError = 0;
+  
+  double voltage;
+  double integral = 0;
+  double derivative = 0;
+  
   public AutoBalanceCommand(DriveTrainSubsystem p_drivetrain) {
     m_drivetrain = p_drivetrain;
     addRequirements(m_drivetrain);
