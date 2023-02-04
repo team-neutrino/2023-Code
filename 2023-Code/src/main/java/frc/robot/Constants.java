@@ -24,14 +24,14 @@ public final class Constants {
   }
 
   public static class MotorConstants {
-    public static final int INTAKEMOTOR1 = 21; // intake motors have '2' in front of actual id
+    public static final int INTAKEMOTOR1 = 11; //21; // intake motors have '2' in front of actual id
 
-    public static final int MOTOR_RIGHT1 = 11;
-    public static final int MOTOR_RIGHT2 = 12;
+    public static final int MOTOR_RIGHT1 = 21; //11;
+    public static final int MOTOR_RIGHT2 = 31; //12;
     public static final int MOTOR_LEFT1 = 13;
     public static final int MOTOR_LEFT2 = 14;
 
-    public static final int ARM_MOTOR1 = 31;
+    public static final int ARM_MOTOR1 = 12; //31;
     public static final int GRABBER_MOTOR1 = 41;
     public static final int GRABBER_MOTOR2 = 42;
   }
