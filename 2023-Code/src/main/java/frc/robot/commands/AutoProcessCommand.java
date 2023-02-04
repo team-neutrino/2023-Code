@@ -30,14 +30,16 @@ public class AutoProcessCommand extends CommandBase {
 
   @Override
   public void execute() {
+    // IF GAMEPIECE SENSED BY INTAKE YET NOT BY GRABBER
     if (m_intakeSubsystem.isGamePiece()
-        && m_scoringSubsystem.getBeamBreak()) { // IF INTAKE BEAMBREAK BROKEN
+        && m_scoringSubsystem.getBeamBreak()) {
       m_intakeSubsystem.squeeze();
       m_intakeSubsystem.stopIntake();
       m_scoringSubsystem.openScoring(); // OPEN GRABBER BEFORE ARM GOES DOWN
       m_armSubsystem.setReference(Constants.ArmConstants.ARM_DOWN);
     }
-    // IF GRABBER BEAMBREAK BROKEN (WILL HAPPEN WHEN ARM DOWN AND PIECE EXISTS)
+
+    // IF GAMEPIECE SENSED BY GRABBER (WILL HAPPEN WHEN ARM DOWN AND PIECE EXISTS)
     if (!m_scoringSubsystem.getBeamBreak()) {
       m_intakeSubsystem.unsqueeze();
       m_scoringSubsystem.closeScoring();
