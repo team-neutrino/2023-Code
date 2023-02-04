@@ -38,7 +38,7 @@ public class LEDSubsystem extends SubsystemBase {
   public void setToPurple() {
     setToColor(210, 25, 210);
   }
-  
+
   public void setToYellow() {
     setToColor(255, 100, 0);
   }
@@ -54,30 +54,26 @@ public class LEDSubsystem extends SubsystemBase {
 
     if (m_LEDBuffer.getLED(1).equals(orange)) {
       return LEDColor.ORANGE;
-    } 
-    else if (m_LEDBuffer.getLED(1).equals(purple)) {
+    } else if (m_LEDBuffer.getLED(1).equals(purple)) {
       return LEDColor.PURPLE;
-    } 
-    else if (m_LEDBuffer.getLED(1).equals(yellow)) {
+    } else if (m_LEDBuffer.getLED(1).equals(yellow)) {
       return LEDColor.YELLOW;
-    } 
-    else {
+    } else {
       return LEDColor.INDETERMINATE;
     }
   }
 
   private void sarahStrobe() {
     double timeConst = Math.PI;
-    int r = (int)Math.round(126*Math.cos(timeConst*timer.get())+126);
-    int g = (int)Math.round(126*Math.cos(timeConst/2*timer.get())+126);
-    int b = (int)Math.round(64*Math.sin(2*timeConst*timer.get())+64);
-    for(int i = 0; i < m_LEDBuffer.getLength(); ++i)
-      setToColor(r, g, b);
+    int r = (int) Math.round(126 * Math.cos(timeConst * timer.get()) + 126);
+    int g = (int) Math.round(126 * Math.cos(timeConst / 2 * timer.get()) + 126);
+    int b = (int) Math.round(64 * Math.sin(2 * timeConst * timer.get()) + 64);
+    for (int i = 0; i < m_LEDBuffer.getLength(); ++i) setToColor(r, g, b);
   }
 
   @Override
   public void periodic() {
-    //This method will be called once per scheduler run
+    // This method will be called once per scheduler run
     m_addressableLED.setData(m_LEDBuffer);
     sarahStrobe();
   }
