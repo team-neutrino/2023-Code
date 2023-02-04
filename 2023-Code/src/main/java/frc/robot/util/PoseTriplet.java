@@ -4,7 +4,6 @@
 
 package frc.robot.util;
 
-/** Add your docs here. */
 public class PoseTriplet {
   private final double m_coord1;
   private final double m_coord2;
