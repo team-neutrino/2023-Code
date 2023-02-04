@@ -24,14 +24,12 @@ public class ScoringSubsystem extends SubsystemBase {
     solenoid.toggle();
   }
 
-  public void setScoringClose() {
-    solenoid.set(true);
-    System.out.println("scoring close");
+  public void retractSolenoid() {
+    solenoid.set(false);
   }
 
-  public void setScoringOpen() {
-    solenoid.set(false);
-    System.out.println("scoring open");
+  public void extendSolenoid() {
+    solenoid.set(true);
   }
 
   public boolean getSolenoidValue() {

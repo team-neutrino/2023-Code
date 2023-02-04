@@ -31,9 +31,7 @@ public final class Constants {
     public static final int MOTOR_LEFT1 = 13;
     public static final int MOTOR_LEFT2 = 14;
 
-    public static final int ARM_MOTOR1 = 12; //31;
-    public static final int GRABBER_MOTOR1 = 41;
-    public static final int GRABBER_MOTOR2 = 42;
+    public static final int ARM_MOTOR1 = 31;
   }
 
   public static class ArmConstants {
