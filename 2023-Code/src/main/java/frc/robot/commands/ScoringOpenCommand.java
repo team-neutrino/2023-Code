@@ -18,15 +18,16 @@ public class ScoringOpenCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    m_scoringSubsystem.setScoringOpen();
+    
   }
 
   @Override
-  public void execute() {}
+  public void execute() {
+    m_scoringSubsystem.extendSolenoid();
+  }
 
   @Override
   public void end(boolean interrupted) {
-    m_scoringSubsystem.setScoringClose();
   }
 
   @Override

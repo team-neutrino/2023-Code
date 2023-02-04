@@ -16,7 +16,7 @@ public class LEDDefaultCommand extends CommandBase {
     m_LedSubsystem = p_LEDSubsystem;
     m_option = p_option;
     m_ScoringSubsystem = p_scoringSubsystem;
-    addRequirements(m_LedSubsystem, m_ScoringSubsystem);
+    addRequirements(m_LedSubsystem);
   }
 
   @Override
