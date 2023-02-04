@@ -33,6 +33,7 @@ import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
+import frc.robot.util.LEDColor;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
@@ -120,7 +121,7 @@ public class RobotContainer {
       new ScoringOpenCommand(m_scoringSubsystem);
 
   private final LEDCommand m_LedDefaultCommand =
-      new LEDCommand(m_LedSubsystem, 0, m_scoringSubsystem);
+      new LEDCommand(m_LedSubsystem, LEDColor.ORANGE, m_scoringSubsystem);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
@@ -146,8 +147,8 @@ public class RobotContainer {
     m_leftTrigger.whileTrue(m_intakeCommand);
 
     // LED Buttons
-    m_buttonStart.onTrue(new LEDCommand(m_LedSubsystem, 1, m_scoringSubsystem));
-    m_buttonBack.onTrue(new LEDCommand(m_LedSubsystem, 2, m_scoringSubsystem));
+    m_buttonStart.onTrue(new LEDCommand(m_LedSubsystem, LEDColor.PURPLE, m_scoringSubsystem));
+    m_buttonBack.onTrue(new LEDCommand(m_LedSubsystem, LEDColor.YELLOW, m_scoringSubsystem));
   }
 
   public Command getAutonomousCommand() {

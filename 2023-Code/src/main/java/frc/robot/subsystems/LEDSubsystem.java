@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.util.LEDColor;
 
 public class LEDSubsystem extends SubsystemBase {
 
@@ -44,22 +45,22 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
-  public String getColor() {
+  public LEDColor getColor() {
     Color orange = new Color(255, 15, 0);
     Color purple = new Color(162, 25, 255);
     Color yellow = new Color(255, 100, 0);
 
     if (m_LedBuffer.getLED(1).equals(orange)) {
-      return "Orange";
+      return LEDColor.ORANGE;
     } 
     else if (m_LedBuffer.getLED(1).equals(purple)) {
-      return "Purple";
+      return LEDColor.PURPLE;
     } 
     else if (m_LedBuffer.getLED(1).equals(yellow)) {
-      return "Yellow";
+      return LEDColor.YELLOW;
     } 
     else {
-      return "Cannot determine color";
+      return LEDColor.INDETERMINATE;
     }
   }
 
