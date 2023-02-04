@@ -79,7 +79,6 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println(getVoltage());
     // System.out.println("ENCODER: " + getAbsolutePosition());
   }
 }
