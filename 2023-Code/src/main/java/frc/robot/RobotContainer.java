@@ -134,7 +134,6 @@ public class RobotContainer {
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
-    //m_LedSubsystem.setDefaultCommand(m_LedDefaultCommand);
 
     // Buttons
     m_buttonA.whileTrue(m_scoringOpenCommand);
@@ -147,8 +146,8 @@ public class RobotContainer {
     m_leftTrigger.whileTrue(m_intakeCommand);
 
     // LED Buttons
-    //m_buttonStart.onTrue(new LEDCommand(m_LedSubsystem, LEDColor.PURPLE, m_scoringSubsystem));
-    //m_buttonBack.onTrue(new LEDCommand(m_LedSubsystem, LEDColor.YELLOW, m_scoringSubsystem));
+    m_buttonStart.onTrue(new LEDCommand(m_LedSubsystem, LEDColor.PURPLE, m_scoringSubsystem));
+    m_buttonBack.onTrue(new LEDCommand(m_LedSubsystem, LEDColor.YELLOW, m_scoringSubsystem));
   }
 
   public Command getAutonomousCommand() {

@@ -14,24 +14,24 @@ import frc.robot.util.LEDColor;
 public class LEDSubsystem extends SubsystemBase {
 
   public AddressableLED m_addressableLED;
-  public AddressableLEDBuffer m_LedBuffer;
+  public AddressableLEDBuffer m_LEDBuffer;
   private Timer timer = new Timer();
 
   /** Creates a new LEDSubsystem. */
   public LEDSubsystem() {
     m_addressableLED = new AddressableLED(0);
-    m_LedBuffer = new AddressableLEDBuffer(8);
+    m_LEDBuffer = new AddressableLEDBuffer(8);
 
-    m_addressableLED.setLength(m_LedBuffer.getLength());
-    m_addressableLED.setData(m_LedBuffer);
+    m_addressableLED.setLength(m_LEDBuffer.getLength());
+    m_addressableLED.setData(m_LEDBuffer);
     m_addressableLED.start();
-    //setToOrange();
+    setToOrange();
     timer.start();
   }
 
   private void setToColor(int r, int g, int b) {
-    for (int i = 0; i < m_LedBuffer.getLength(); i++) {
-      m_LedBuffer.setRGB(i, r, g, b);
+    for (int i = 0; i < m_LEDBuffer.getLength(); i++) {
+      m_LEDBuffer.setRGB(i, r, g, b);
     }
   }
 
@@ -52,13 +52,13 @@ public class LEDSubsystem extends SubsystemBase {
     Color purple = new Color(162, 25, 255);
     Color yellow = new Color(255, 100, 0);
 
-    if (m_LedBuffer.getLED(1).equals(orange)) {
+    if (m_LEDBuffer.getLED(1).equals(orange)) {
       return LEDColor.ORANGE;
     } 
-    else if (m_LedBuffer.getLED(1).equals(purple)) {
+    else if (m_LEDBuffer.getLED(1).equals(purple)) {
       return LEDColor.PURPLE;
     } 
-    else if (m_LedBuffer.getLED(1).equals(yellow)) {
+    else if (m_LEDBuffer.getLED(1).equals(yellow)) {
       return LEDColor.YELLOW;
     } 
     else {
@@ -71,14 +71,14 @@ public class LEDSubsystem extends SubsystemBase {
     int r = (int)Math.round(126*Math.cos(timeConst*timer.get())+126);
     int g = (int)Math.round(126*Math.cos(timeConst/2*timer.get())+126);
     int b = (int)Math.round(64*Math.sin(2*timeConst*timer.get())+64);
-    for(int i = 0; i < m_LedBuffer.getLength(); ++i)
+    for(int i = 0; i < m_LEDBuffer.getLength(); ++i)
       setToColor(r, g, b);
   }
 
   @Override
   public void periodic() {
     //This method will be called once per scheduler run
-    m_addressableLED.setData(m_LedBuffer);
+    m_addressableLED.setData(m_LEDBuffer);
     sarahStrobe();
   }
 }
