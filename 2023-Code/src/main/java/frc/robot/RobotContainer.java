@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.PIDConstants;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmToAngleCommand;
@@ -35,11 +37,14 @@ import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.LEDColor;
+import frc.robot.util.ViennaPIDController;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
+  private final ViennaPIDController m_pidController =
+      new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // CONTROLLERS
@@ -139,11 +144,18 @@ public class RobotContainer {
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
 
     // Buttons
-    m_buttonA.whileTrue(m_scoringOpenCommand);
-    m_buttonB.whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_buttonY.whileTrue(new ArmToAngleCommand(m_armSubsystem, 90));
-    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, 1));
-    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -1));
+
+    // Put forward
+    m_buttonB.whileTrue(
+        new ArmToAngleCommand(m_armSubsystem, m_pidController, ArmConstants.FORWARD_DOWN));
+    m_buttonY.whileTrue(
+        new ArmToAngleCommand(m_armSubsystem, m_pidController, ArmConstants.FORWARD_MID));
+    m_buttonX.whileTrue(
+        new ArmToAngleCommand(m_armSubsystem, m_pidController, ArmConstants.BACK_MID));
+    m_buttonA.whileTrue(
+        new ArmToAngleCommand(m_armSubsystem, m_pidController, ArmConstants.BACK_DOWN));
+    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
+    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
     m_rightArrow.onTrue(m_AutoBalanceCommand);
     m_leftBumper.whileTrue(m_IntakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);

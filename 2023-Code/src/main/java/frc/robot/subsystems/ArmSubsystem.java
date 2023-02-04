@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -18,6 +19,7 @@ public class ArmSubsystem extends SubsystemBase {
   private CANSparkMax m_armMotor =
       new CANSparkMax(Constants.MotorConstants.ARM_MOTOR1, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_armMotor.getEncoder();
+  private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(4);
   private SparkMaxPIDController m_pidController;
 
   /** Creates a new ArmSubsystem. */
@@ -25,6 +27,7 @@ public class ArmSubsystem extends SubsystemBase {
     m_armMotor.restoreFactoryDefaults();
     setSoftLimits();
 
+    m_externalEncoder.setPositionOffset(.43);
     m_pidController = m_armMotor.getPIDController();
     m_encoder.setPositionConversionFactor(Constants.ArmConstants.ROTATION_TO_INCHES);
     m_pidController.setFeedbackDevice(m_encoder);
@@ -35,6 +38,10 @@ public class ArmSubsystem extends SubsystemBase {
     m_pidController.setFF(Constants.PIDConstants.ARM_FF);
     m_pidController.setOutputRange(
         Constants.PIDConstants.ARM_MINIMUM, Constants.PIDConstants.ARM_MAXIMUM);
+  }
+
+  public double getAbsolutePosition() {
+    return m_externalEncoder.getAbsolutePosition() * 100;
   }
 
   private void setSoftLimits() {
@@ -52,6 +59,10 @@ public class ArmSubsystem extends SubsystemBase {
     m_armMotor.setVoltage(voltage);
   }
 
+  public void set(double voltage) {
+    m_armMotor.set(voltage);
+  }
+
   public void setReference(double rotations) {
     m_pidController.setReference(rotations, ControlType.kPosition);
   }
@@ -67,5 +78,8 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    System.out.println(getVoltage());
+    // System.out.println("ENCODER: " + getAbsolutePosition());
+  }
 }

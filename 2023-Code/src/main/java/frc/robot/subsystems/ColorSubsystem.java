@@ -37,7 +37,7 @@ public class ColorSubsystem extends SubsystemBase {
     Color detectedColor = getColor();
     m_isYellow = isYellow(detectedColor);
     m_isPurple = isPurple(detectedColor);
-    System.out.println(getPiece());
+    // System.out.println(getPiece());
   }
 
   public boolean getIsYellow() {
