@@ -49,7 +49,7 @@ public class LEDSubsystem extends SubsystemBase {
 
   public LEDColor getColor() {
     Color orange = new Color(255, 15, 0);
-    Color purple = new Color(162, 25, 255);
+    Color purple = new Color(210, 25, 210);
     Color yellow = new Color(255, 100, 0);
 
     if (m_LEDBuffer.getLED(1).equals(orange)) {
