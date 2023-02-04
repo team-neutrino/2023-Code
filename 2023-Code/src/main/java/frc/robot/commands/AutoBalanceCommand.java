@@ -8,6 +8,7 @@ public class AutoBalanceCommand extends CommandBase {
 
   private final DriveTrainSubsystem m_drivetrain;
 
+  double ish = 0.05;
   double desiredPos = 0;
   double error;
   double voltage;
@@ -29,6 +30,9 @@ public class AutoBalanceCommand extends CommandBase {
   @Override
   public void execute() {
     error = desiredPos - m_drivetrain.getPitch();
+    if(error <= ish && error >= -ish){
+      error = 0;
+    }
     previousError = error;
     voltage =
         error * Constants.PIDConstants.BALANCE_P
