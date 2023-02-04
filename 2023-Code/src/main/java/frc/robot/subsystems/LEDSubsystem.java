@@ -15,10 +15,6 @@ public class LEDSubsystem extends SubsystemBase {
   public AddressableLEDBuffer m_LedBuffer;
   private boolean m_beamBreak;
 
-  public void start() {}
-
-  public void stop() {}
-
   /** Creates a new LEDSubsystem. */
   public LEDSubsystem() {
     m_addressableLED = new AddressableLED(0);
@@ -27,7 +23,7 @@ public class LEDSubsystem extends SubsystemBase {
     m_addressableLED.setLength(m_LedBuffer.getLength());
     m_addressableLED.setData(m_LedBuffer);
     m_addressableLED.start();
-    m_LedBuffer.setRGB(0, 256, 0, 0);
+    setToOrange();
   }
 
   public void setToPurple() {
@@ -55,11 +51,14 @@ public class LEDSubsystem extends SubsystemBase {
 
     if (m_LedBuffer.getLED(1).equals(orange)) {
       return "Orange";
-    } else if (m_LedBuffer.getLED(1).equals(purple)) {
+    } 
+    else if (m_LedBuffer.getLED(1).equals(purple)) {
       return "Purple";
-    } else if (m_LedBuffer.getLED(1).equals(yellow)) {
+    } 
+    else if (m_LedBuffer.getLED(1).equals(yellow)) {
       return "Yellow";
-    } else {
+    } 
+    else {
       return "Cannot determine color";
     }
   }

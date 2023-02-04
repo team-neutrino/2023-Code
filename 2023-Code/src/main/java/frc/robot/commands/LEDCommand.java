@@ -4,14 +4,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 
-public class LEDDefaultCommand extends CommandBase {
+public class LEDCommand extends CommandBase {
 
   LEDSubsystem m_LedSubsystem;
   ScoringSubsystem m_ScoringSubsystem;
   private int m_option;
-  private boolean m_beamBreak;
+  private boolean m_hasBroken = false;
 
-  public LEDDefaultCommand(
+  public LEDCommand(
       LEDSubsystem p_LEDSubsystem, int p_option, ScoringSubsystem p_scoringSubsystem) {
     m_LedSubsystem = p_LEDSubsystem;
     m_option = p_option;
@@ -20,13 +20,24 @@ public class LEDDefaultCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    if (m_option == 1) {
+      m_LedSubsystem.setToPurple();
+    }
+    if (m_option == 2) {
+    m_LedSubsystem.setToYellow();
+    }
+  }
 
   @Override
   public void execute() {
-    if (m_option == 1 && m_ScoringSubsystem.getBeamBreak()) m_LedSubsystem.setToYellow();
-    else if (m_option == 2 && m_ScoringSubsystem.getBeamBreak()) m_LedSubsystem.setToPurple();
-    else if (!m_ScoringSubsystem.getBeamBreak()) m_LedSubsystem.setToOrange();
+    if (!m_ScoringSubsystem.getBeamBreak()) { //broken
+      m_hasBroken = true;
+    }
+    if (m_ScoringSubsystem.getBeamBreak() && m_hasBroken) { // beambreak not broken and hasBroken = true
+      m_LedSubsystem.setToOrange();
+      m_hasBroken = false;
+    }
   }
 
   @Override
@@ -34,6 +45,10 @@ public class LEDDefaultCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    if (m_LedSubsystem.getColor().equals("Orange")) {
+      System.out.println("finshed");
+      return true;
+    }
     return false;
   }
 }

@@ -20,7 +20,7 @@ import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeReverseCommand;
-import frc.robot.commands.LEDDefaultCommand;
+import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.ArmSubsystem;
@@ -119,8 +119,8 @@ public class RobotContainer {
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
 
-  private final LEDDefaultCommand m_LedDefaultCommand =
-      new LEDDefaultCommand(m_LedSubsystem, 0, m_scoringSubsystem);
+  private final LEDCommand m_LedDefaultCommand =
+      new LEDCommand(m_LedSubsystem, 0, m_scoringSubsystem);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
@@ -133,7 +133,7 @@ public class RobotContainer {
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
-    m_LedSubsystem.setDefaultCommand(m_LedDefaultCommand);
+    //m_LedSubsystem.setDefaultCommand(m_LedDefaultCommand);
 
     // Buttons
     m_buttonA.whileTrue(m_scoringOpenCommand);
@@ -146,8 +146,8 @@ public class RobotContainer {
     m_leftTrigger.whileTrue(m_intakeCommand);
 
     // LED Buttons
-    m_buttonStart.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 1, m_scoringSubsystem));
-    m_buttonBack.whileTrue(new LEDDefaultCommand(m_LedSubsystem, 2, m_scoringSubsystem));
+    m_buttonStart.onTrue(new LEDCommand(m_LedSubsystem, 1, m_scoringSubsystem));
+    m_buttonBack.onTrue(new LEDCommand(m_LedSubsystem, 2, m_scoringSubsystem));
   }
 
   public Command getAutonomousCommand() {
