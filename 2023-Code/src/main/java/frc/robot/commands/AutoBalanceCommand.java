@@ -8,7 +8,7 @@ public class AutoBalanceCommand extends CommandBase {
 
   private final DriveTrainSubsystem m_drivetrain;
 
-  double ish = 0.1;
+  double ish = 0.4;
   double desiredPos = 0;
   double error;
   double voltage;
