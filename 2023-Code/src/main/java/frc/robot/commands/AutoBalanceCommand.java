@@ -29,6 +29,10 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public void execute() {
+    System.out.println("balancing");
+    System.out.println(m_drivetrain.getPitch());
+    System.out.println(error);
+    
     error = desiredPos - m_drivetrain.getPitch();
     if (error <= ish && error >= -ish) {
       error = 0;
