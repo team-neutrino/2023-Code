@@ -17,7 +17,6 @@ import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
-import frc.robot.commands.EndGameDefaultCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeReverseCommand;
@@ -26,7 +25,6 @@ import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.EndGameSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
@@ -50,7 +48,6 @@ public class RobotContainer {
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrainSubsystem =
       new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick);
-  private final EndGameSubsystem m_endGame = new EndGameSubsystem();
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
@@ -114,12 +111,6 @@ public class RobotContainer {
   private final IntakeReverseCommand m_IntakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem);
 
-  // if the right joystick trigger/button is pressed, both joysticks are pushed past
-  // the deadzone given in the variable constants, and the endgane pneumatics are not
-  // already extended, extend them.
-  private final EndGameDefaultCommand m_endGameDefaultCommand =
-      new EndGameDefaultCommand(m_endGame, m_rightJoystick, m_leftJoystick);
-
   // toggles scoring pneumatics to extended position
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
@@ -142,7 +133,6 @@ public class RobotContainer {
     m_driveTrainSubsystem.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
-    m_endGame.setDefaultCommand(m_endGameDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
     m_LedSubsystem.setDefaultCommand(m_LedDefaultCommand);
 

@@ -35,7 +35,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   // private LimelightSubsystem m_limelight;
   private ScoringSubsystem m_scoring;
-  // private EndGameSubsystem m_endGame;
   private DriverStationInfo m_driverStationInfo;
   private LEDSubsystem m_LED;
   private ArmSubsystem m_arm;
@@ -78,7 +77,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[7].setDouble(m_driveTrain.getL2Vel());
     m_driveTrainVariables[8].setDouble(m_driveTrain.getPitch());
 
-    m_scoringVariables[2].setBoolean(m_scoring.getSolenoidValue());
+    m_scoringVariables[0].setBoolean(m_scoring.getSolenoidValue());
 
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
