@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
-
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,15 +20,16 @@ public class ColorSubsystem extends SubsystemBase {
   private boolean m_isYellow;
   private boolean m_isPurple;
 
-
-  // use sensor to get correct RGB values
-  private final Color C_Yellow = new Color(220, 167, 0);
-  private final Color C_Purple = new Color(164, 148, 246);
-
+  private final Color C_Yellow = new Color(87, 146, 21);
+  private final Color C_Purple = new Color(55, 102, 96);
+  private final Color C_Purple2 = new Color(56, 115, 83);
+  private final Color C_Default = new Color(66, 125, 63);
 
   public ColorSubsystem() {
     m_colorMatcher.addColorMatch(C_Yellow);
     m_colorMatcher.addColorMatch(C_Purple);
+    m_colorMatcher.addColorMatch(C_Purple2);
+    m_colorMatcher.addColorMatch(C_Default);
   }
 
   @Override
@@ -37,6 +37,7 @@ public class ColorSubsystem extends SubsystemBase {
     Color detectedColor = getColor();
     m_isYellow = isYellow(detectedColor);
     m_isPurple = isPurple(detectedColor);
+    System.out.println(getPiece());
   }
 
   public boolean getIsYellow() {
@@ -54,34 +55,25 @@ public class ColorSubsystem extends SubsystemBase {
   public String getPiece() {
     if (m_isYellow) {
       return "Cone";
-    }
-    else if (m_isPurple) {
+    } else if (m_isPurple) {
       return "Cube";
-    }
-    else {
+    } else {
       return "No piece";
     }
   }
 
- 
   public boolean isYellow(Color detectedColor) {
     ColorMatchResult matchResult = m_colorMatcher.matchClosestColor(detectedColor);
-    boolean isYellow = false;
-    if (C_Yellow.equals(matchResult.color)) {
-    isYellow = true;
-    return isYellow;
-    }
-    return false;
+    return C_Yellow.equals(matchResult.color);
   }
-
 
   public boolean isPurple(Color detectedColor) {
     ColorMatchResult matchResult = m_colorMatcher.matchClosestColor(detectedColor);
-    boolean isPurple = false;
-    if (C_Purple.equals(matchResult.color)) {
-    isPurple = true;
-    return isPurple;
-    }
-    return false;
+    return C_Purple.equals(matchResult.color) || C_Purple2.equals(matchResult.color);
+  }
+
+  public boolean isDefault(Color detectedColor) {
+    ColorMatchResult matchResult = m_colorMatcher.matchClosestColor(detectedColor);
+    return C_Default.equals(matchResult.color);
   }
 }
