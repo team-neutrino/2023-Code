@@ -30,7 +30,7 @@ public class AutoBalanceCommand extends CommandBase {
   @Override
   public void execute() {
     error = desiredPos - m_drivetrain.getPitch();
-    if(error <= ish && error >= -ish){
+    if (error <= ish && error >= -ish) {
       error = 0;
     }
     previousError = error;
