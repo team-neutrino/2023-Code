@@ -252,14 +252,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public boolean turnMotorRight(double motorset, double p_rmotorPosition, double p_lmotorPosition) {
     motorset = motorset * 20 / Math.PI;
-    double rmotorPosition = getR1Pos();
-    double lmotorPosition = getL1Pos();
+    double rmotorPosition = getR1Pos() / 0.04987278;
+    double lmotorPosition = getL1Pos() / 0.04987278;
     boolean stop = false;
 
-    if (getR1Pos() > p_rmotorPosition - motorset
+    if (rmotorPosition > p_rmotorPosition - motorset
         && lmotorPosition < p_lmotorPosition + motorset) {
-          System.out.println(p_rmotorPosition - motorset);
-          System.out.println(rmotorPosition);
+      System.out.println("setpoint " + (p_rmotorPosition - motorset));
+      System.out.println("passed in one shouldn't be changing " + p_rmotorPosition);
+      System.out.println("current position " + rmotorPosition);
       m_motorGroupRight.set(-0.05);
       m_motorGroupLeft.set(0.05);
     } else {
@@ -280,11 +281,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public boolean turnMotorLeft(double motorset, double p_rmotorPosition, double p_lmotorPosition) {
     motorset = motorset * 20 / Math.PI;
-    double rmotorPosition = getR1Pos();
-    double lmotorPosition = getL1Pos();
+    double rmotorPosition = getR1Pos() / 0.04987278;
+    double lmotorPosition = getL1Pos() / 0.04987278;
     boolean stop = false;
 
-    if (rmotorPosition < p_rmotorPosition + motorset && lmotorPosition > p_lmotorPosition - motorset) {
+    if (rmotorPosition < p_rmotorPosition + motorset
+        && lmotorPosition > p_lmotorPosition - motorset) {
       m_motorGroupRight.set(0.05);
       m_motorGroupLeft.set(-0.05);
     } else {
@@ -322,8 +324,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void periodic() {
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
-    //cycle++;
-    //printPosition();
-    //System.out.println(getPitch());
+    // cycle++;
+    // printPosition();
+    // System.out.println(getR1Pos() / 0.04987278);
+    // System.out.println(m_encoderRight1.getPositionConversionFactor());
   }
 }
