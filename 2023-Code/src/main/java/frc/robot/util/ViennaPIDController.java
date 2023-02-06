@@ -1,4 +1,5 @@
 package frc.robot.util;
+import frc.robot.Constants.PIDConstants;
 
 public class ViennaPIDController {
 
@@ -6,11 +7,8 @@ public class ViennaPIDController {
   private double m_I;
   private double m_D;
 
-  private double error;
   private double integral;
-  private double derivative;
   private double previousError = 0;
-  private double dt = 20;
 
   public ViennaPIDController() {}
 
@@ -23,6 +21,7 @@ public class ViennaPIDController {
   public ViennaPIDController(double p_P, double p_I) {
     m_P = p_P;
     m_I = p_I;
+    m_D = 0;
   }
 
   public ViennaPIDController(double p_P, double p_I, double p_D) {
@@ -56,13 +55,13 @@ public class ViennaPIDController {
   }
 
   public double run(double realPos, double desiredPos) {
-    error = desiredPos - realPos;
+    double error = desiredPos - realPos;
 
     /*Integral calculation */
-    integral += error * dt;
+    integral += error * PIDConstants.dt;
 
     /*Derivative calculation */
-    derivative = (error - previousError) / dt;
+    double derivative = (error - previousError) / PIDConstants.dt;
     previousError = error;
 
     return m_P * error + m_I * integral + m_D * derivative;

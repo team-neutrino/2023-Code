@@ -44,7 +44,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
-  private final ViennaPIDController m_pidController =
+  private final ViennaPIDController m_armPidController =
       new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -146,13 +146,13 @@ public class RobotContainer {
 
     // Put forward
     m_buttonB.whileTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_pidController, ArmConstants.FORWARD_DOWN));
+        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
     m_buttonY.whileTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_pidController, ArmConstants.FORWARD_MID));
+        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
     m_buttonX.whileTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_pidController, ArmConstants.BACK_MID));
+        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_MID));
     m_buttonA.whileTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_pidController, ArmConstants.BACK_DOWN));
+        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
     m_rightArrow.onTrue(m_AutoBalanceCommand);

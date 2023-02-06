@@ -19,7 +19,7 @@ public class ArmSubsystem extends SubsystemBase {
   private CANSparkMax m_armMotor =
       new CANSparkMax(Constants.MotorConstants.ARM_MOTOR1, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_armMotor.getEncoder();
-  private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(4);
+  private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(Constants.DigitalConstants.ARM_ENCODER);
   private SparkMaxPIDController m_pidController;
 
   /** Creates a new ArmSubsystem. */
@@ -27,11 +27,10 @@ public class ArmSubsystem extends SubsystemBase {
     m_armMotor.restoreFactoryDefaults();
     setSoftLimits();
 
-    m_externalEncoder.setPositionOffset(.43);
     m_pidController = m_armMotor.getPIDController();
     m_encoder.setPositionConversionFactor(Constants.ArmConstants.ROTATION_TO_INCHES);
+    
     m_pidController.setFeedbackDevice(m_encoder);
-
     m_pidController.setP(Constants.PIDConstants.ARM_P);
     m_pidController.setI(Constants.PIDConstants.ARM_I);
     m_pidController.setD(Constants.PIDConstants.ARM_D);
