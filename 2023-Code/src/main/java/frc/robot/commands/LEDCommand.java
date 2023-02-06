@@ -47,7 +47,6 @@ public class LEDCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     if (m_LedSubsystem.getColor().equals(LEDColor.ORANGE)) {
-      System.out.println("finshed");
       return true;
     }
     return false;
