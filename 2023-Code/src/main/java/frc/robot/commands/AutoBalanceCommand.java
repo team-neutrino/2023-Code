@@ -8,16 +8,16 @@ public class AutoBalanceCommand extends CommandBase {
 
   private final DriveTrainSubsystem m_drivetrain;
 
-  double ish = 0.05;
+  final double ish = 0.4;
+  final double dt = .02;
+
   double desiredPos = 0;
   double error;
-  double voltage;
-
-  double integral = 0;
-
-  double derivative = 0;
   double previousError = 0;
-  final double dt = .02;
+
+  double voltage;
+  double integral = 0;
+  double derivative = 0;
 
   public AutoBalanceCommand(DriveTrainSubsystem p_drivetrain) {
     m_drivetrain = p_drivetrain;
@@ -29,11 +29,14 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public void execute() {
-    error = desiredPos - m_drivetrain.getPitch();
     previousError = error;
+    error = desiredPos - m_drivetrain.getPitch();
+    if (error <= ish && error >= -ish) {
+      error = 0;
+    }
     voltage =
         error * Constants.PIDConstants.BALANCE_P
-            + Constants.PIDConstants.BALANCE_I * (integral += error) * dt
+            + Constants.PIDConstants.BALANCE_I * (integral += (error * dt))
             + Constants.PIDConstants.BALANCE_D * (error - previousError) / dt;
     m_drivetrain.setVoltage(voltage, voltage);
   }

@@ -29,10 +29,7 @@ public class ArmAdjustCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // I hope this returns true if the updownsolenoid is retracted (so the intake is down)
-    if (m_intakeSubsystem.getUpDownSolenoidValue()) {
-      m_armSubsystem.setVoltage(m_voltage);
-    }
+    m_armSubsystem.set(m_voltage);
   }
 
   // Called once the command ends or is interrupted.
