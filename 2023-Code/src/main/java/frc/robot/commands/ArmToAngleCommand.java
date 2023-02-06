@@ -6,19 +6,27 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmToAngleCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ViennaPIDController m_pidController;
+  private IntakeSubsystem m_intakeSubsystem;
+
   private double m_targetAngle;
   private double voltage;
 
   /** Creates a new ArmToAngleCommand. */
   public ArmToAngleCommand(
-      ArmSubsystem p_armSubsystem, ViennaPIDController p_pidController, double p_targetAngle) {
+      ArmSubsystem p_armSubsystem,
+      IntakeSubsystem p_intakeSubsystem,
+      ViennaPIDController p_pidController,
+      double p_targetAngle) {
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
+    m_intakeSubsystem = p_intakeSubsystem;
+
     m_targetAngle = p_targetAngle;
     addRequirements(m_armSubsystem);
   }
@@ -28,8 +36,10 @@ public class ArmToAngleCommand extends CommandBase {
 
   @Override
   public void execute() {
-    voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), m_targetAngle);
-    m_armSubsystem.set(voltage);
+    if (m_intakeSubsystem.getUpDownSolenoidValue()) {
+      voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), m_targetAngle);
+      m_armSubsystem.set(voltage);
+    }
   }
 
   @Override
