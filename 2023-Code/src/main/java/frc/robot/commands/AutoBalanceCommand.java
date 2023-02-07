@@ -33,12 +33,12 @@ public class AutoBalanceCommand extends CommandBase {
     if(error <= ish && error >= -ish){
       error = 0;
     }
-    previousError = error;
     voltage =
         error * Constants.PIDConstants.BALANCE_P
             + Constants.PIDConstants.BALANCE_I * (integral += error) * dt
             + Constants.PIDConstants.BALANCE_D * (error - previousError) / dt;
     m_drivetrain.setVoltage(voltage, voltage);
+    previousError = error;
   }
 
   @Override
