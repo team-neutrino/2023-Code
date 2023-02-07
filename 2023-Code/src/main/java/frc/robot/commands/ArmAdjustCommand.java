@@ -29,9 +29,7 @@ public class ArmAdjustCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_intakeSubsystem.getUpDownSolenoidValue()) {
       m_armSubsystem.set(m_voltage);
-    }
   }
 
   // Called once the command ends or is interrupted.

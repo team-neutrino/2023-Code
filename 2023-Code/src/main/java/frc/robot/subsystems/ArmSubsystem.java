@@ -77,6 +77,16 @@ public class ArmSubsystem extends SubsystemBase {
     return m_encoder.getPosition();
   }
 
+  public boolean atPosition(double targetPosition) {
+    if (Math.abs(getAbsolutePosition() - targetPosition) < Constants.ArmConstants.ARM_DEADZONE) {
+      return true;
+    }
+    return false;
+  }
+
   @Override
-  public void periodic() {}
+  public void periodic() {
+    // System.out.println(getAbsolutePosition());
+    
+  }
 }

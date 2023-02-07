@@ -37,6 +37,7 @@ import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
+import frc.robot.util.IntakeManager;
 import frc.robot.util.LEDColor;
 import frc.robot.util.ViennaPIDController;
 
@@ -63,6 +64,8 @@ public class RobotContainer {
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
   private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
   private final ColorSubsystem m_colorsubsystem = new ColorSubsystem();
+
+  private final IntakeManager m_intakeManager = new IntakeManager(m_intakeSubsystem, m_armSubsystem);
   private final ShuffleboardSubsystem m_shuffleboardSubsystem =
       new ShuffleboardSubsystem(
           m_driverStationInfo,
@@ -146,13 +149,17 @@ public class RobotContainer {
 
     // Put forward
     m_buttonB.whileTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
+        new ArmToAngleCommand(
+            m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
     m_buttonY.whileTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
+        new ArmToAngleCommand(
+            m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
     m_buttonX.whileTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_MID));
+        new ArmToAngleCommand(
+            m_armSubsystem, m_armPidController, ArmConstants.BACK_MID));
     m_buttonA.whileTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
+        new ArmToAngleCommand(
+            m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, .2));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, -.2));
     m_rightArrow.onTrue(m_AutoBalanceCommand);

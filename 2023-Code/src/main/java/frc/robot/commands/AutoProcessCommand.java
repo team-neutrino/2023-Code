@@ -35,14 +35,14 @@ public class AutoProcessCommand extends CommandBase {
       m_intakeSubsystem.squeeze();
       m_intakeSubsystem.stopIntake();
       m_scoringSubsystem.openScoring(); // OPEN GRABBER BEFORE ARM GOES DOWN
-      m_armSubsystem.setReference(Constants.ArmConstants.ARM_DOWN);
+      m_armSubsystem.setReference(Constants.ArmConstants.FORWARD_DOWN);
     }
 
     // IF GAMEPIECE SENSED BY GRABBER (WILL HAPPEN WHEN ARM DOWN AND PIECE EXISTS)
     if (!m_scoringSubsystem.getBeamBreak()) {
       m_intakeSubsystem.unsqueeze();
       m_scoringSubsystem.closeScoring();
-      m_armSubsystem.setReference(Constants.ArmConstants.ARM_UP);
+      m_armSubsystem.setReference(Constants.ArmConstants.FORWARD_MID);
     }
   }
 

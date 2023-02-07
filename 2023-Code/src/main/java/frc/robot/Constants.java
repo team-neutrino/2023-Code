@@ -26,15 +26,15 @@ public final class Constants {
   public static class MotorConstants {
     // DRIVETRAIN
     public static final int MOTOR_RIGHT1 = 11;
-    public static final int MOTOR_RIGHT2 = 12;
+    public static final int MOTOR_RIGHT2 = 1;
     public static final int MOTOR_LEFT1 = 13;
     public static final int MOTOR_LEFT2 = 14;
 
     // INTAKE
     public static final int INTAKEMOTOR1 = 21;
 
-    // ARM
-    public static final int ARM_MOTOR1 = 31; // replace
+    // ARM was 31
+    public static final int ARM_MOTOR1 = 12;
   }
 
   public static class ArmConstants {
@@ -43,6 +43,7 @@ public final class Constants {
     public static final double FORWARD_MID = 80;
     public static final double BACK_MID = 31;
     public static final double BACK_DOWN = 17;
+    public static final double ARM_DEADZONE = 1;
 
     public static final double M_PI = Math.PI;
     public static final double WHEEL_SIZE = 1;
@@ -50,8 +51,6 @@ public final class Constants {
     public static final double ROTATION_TO_INCHES = M_PI * (WHEEL_SIZE / REDUCTION);
     public static final float MIN_SOFT_LIM = -100;
     public static final float MAX_SOFT_LIM = 100;
-    public static final int ARM_DOWN = 0;
-    public static final int ARM_UP = 90;
   }
 
   public static class PIDConstants {
