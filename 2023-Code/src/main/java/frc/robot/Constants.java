@@ -38,6 +38,12 @@ public final class Constants {
   }
 
   public static class ArmConstants {
+    public static final double UP = 56;
+    public static final double FORWARD_DOWN = 90;
+    public static final double FORWARD_MID = 80;
+    public static final double BACK_MID = 31;
+    public static final double BACK_DOWN = 17;
+
     public static final double M_PI = Math.PI;
     public static final double WHEEL_SIZE = 1;
     public static final double REDUCTION = 1;
@@ -49,12 +55,15 @@ public final class Constants {
   }
 
   public static class PIDConstants {
-    public static final double ARM_P = 0.2;
+    public static final double dt = 20;
+
+    public static final double ARM_P = 0.07;
     public static final int ARM_I = 0;
     public static final int ARM_D = 0;
     public static final int ARM_FF = 0;
     public static final int ARM_MINIMUM = -1;
     public static final int ARM_MAXIMUM = 1;
+
     public static final double BALANCE_P = 0.2;
     public static final double BALANCE_I = 0;
     public static final double BALANCE_D = 0;
@@ -73,6 +82,7 @@ public final class Constants {
   public static class DigitalConstants {
     public static final int INDEX_BEAMBREAK = 0;
     public static final int GRABBER_BEAMBREAK = 1;
+    public static final int ARM_ENCODER = 4;
   }
 
   public static class DriverConstants {
