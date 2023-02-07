@@ -29,10 +29,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
   /** Solenoid for the intake, controls the in-out motion */
   private Solenoid m_upDownSolenoid =
-      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.INTAKE1);
+      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.UP_DOWN_SOLENOID);
 
   private Solenoid m_squeezeSolenoid =
-      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.INTAKE2);
+      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.IN_OUT_SOLENOID);
 
   /** Beam break to detect if a game piece is present in the intake (to squeeeeze) */
   private DigitalInput m_beamBreak = new DigitalInput(Constants.DigitalConstants.INDEX_BEAMBREAK);
@@ -74,7 +74,7 @@ public class IntakeSubsystem extends SubsystemBase {
    *
    * @return True if there is an object blocking the beam, false otherwise.
    */
-  private boolean getBeamBreak() {
+  public boolean getBeamBreak() {
     return m_beamBreak.get();
   }
 

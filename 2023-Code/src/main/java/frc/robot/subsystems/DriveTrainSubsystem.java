@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -38,57 +39,39 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoderRight2;
   private RelativeEncoder m_encoderLeft1;
   private RelativeEncoder m_encoderLeft2;
-
+  private Joystick m_leftJoystick;
+  private Joystick m_rightJoystick;
   MotorControllerGroup m_motorGroupRight = new MotorControllerGroup(m_motorRight1, m_motorRight2);
   MotorControllerGroup m_motorGroupLeft = new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
 
   /** Creates a new Drivetrain. */
-  public DriveTrainSubsystem() {
-    m_motorLeft1.restoreFactoryDefaults();
-    m_motorLeft2.restoreFactoryDefaults();
-    m_motorRight1.restoreFactoryDefaults();
-    m_motorRight2.restoreFactoryDefaults();
+  public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick) {
 
-    m_motorLeft1.setIdleMode(IdleMode.kBrake);
-    m_motorLeft2.setIdleMode(IdleMode.kBrake);
-    m_motorRight1.setIdleMode(IdleMode.kBrake);
-    m_motorRight2.setIdleMode(IdleMode.kBrake);
+    m_leftJoystick = p_leftJoystick;
+    m_rightJoystick = p_rightJoystick;
 
-    m_motorLeft1.setInverted(true);
-    m_motorLeft2.setInverted(true);
-    m_motorRight1.setInverted(false);
-    m_motorRight2.setInverted(false);
-
-    m_motorLeft1.burnFlash();
-    m_motorLeft2.burnFlash();
-    m_motorRight1.burnFlash();
-    m_motorRight2.burnFlash();
-
-    m_encoderLeft1 = m_motorLeft1.getEncoder();
-    m_encoderLeft2 = m_motorLeft2.getEncoder();
-    m_encoderRight1 = m_motorRight1.getEncoder();
-    m_encoderRight2 = m_motorRight2.getEncoder();
-
-    m_encoderLeft1.setPositionConversionFactor(
-        Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
-    m_encoderLeft2.setPositionConversionFactor(
-        Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
-    m_encoderRight1.setPositionConversionFactor(
-        Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
-    m_encoderRight2.setPositionConversionFactor(
-        Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
-
-    m_encoderLeft1.setVelocityConversionFactor(
-        Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
-    m_encoderLeft2.setVelocityConversionFactor(
-        Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
-    m_encoderRight1.setVelocityConversionFactor(
-        Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
-    m_encoderRight2.setVelocityConversionFactor(
-        Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
+    m_encoderLeft1 = initializeMotor(m_motorLeft1, true);
+    m_encoderLeft2 = initializeMotor(m_motorLeft2, true);
+    m_encoderRight1 = initializeMotor(m_motorRight1, false);
+    m_encoderRight2 = initializeMotor(m_motorRight2, false);
 
     m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
     resetOdometry(m_diffDriveOdometry.getPoseMeters());
+    setMotors(0.3, 0);
+  }
+
+  private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
+    RelativeEncoder p_encoder;
+
+    p_motor.restoreFactoryDefaults();
+    p_motor.setIdleMode(IdleMode.kBrake);
+    p_motor.setInverted(p_inversion);
+    p_motor.burnFlash();
+
+    p_encoder = p_motor.getEncoder();
+    p_encoder.setPositionConversionFactor(Constants.DriverConstants.ENCODER_POSITION_CONVERSION);
+    p_encoder.setVelocityConversionFactor(Constants.DriverConstants.ENCODER_VELOCITY_CONVERSION);
+    return p_encoder;
   }
 
   public void resetEncoders() {
@@ -166,8 +149,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void setMotors(double leftMotorInput, double rightMotorInput) {
+    boolean turbo = m_leftJoystick.getTrigger() && m_rightJoystick.getTrigger();
+
     double leftMotorSpeed = linearAccel(deadzone(leftMotorInput));
     double rightMotorSpeed = linearAccel(deadzone(rightMotorInput));
+
+    if (turbo) {
+      leftMotorSpeed = turboAccel(deadzone(leftMotorInput));
+      rightMotorSpeed = turboAccel(deadzone(rightMotorInput));
+    }
     m_motorGroupLeft.set(leftMotorSpeed);
     m_motorGroupRight.set(rightMotorSpeed);
   }
@@ -188,13 +178,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return newSpeed;
   }
 
-  public static double slowAccel(double joystickY) {
+  public static double turboAccel(double joystickY) {
     double MAXSPEED = 0.7;
     double newSpeed = (2 * MAXSPEED * joystickY) / (1 + Math.abs(joystickY));
     return newSpeed;
   }
 
-  public static double turboAccel(double joystickY) {
+  public static double slowAccel(double joystickY) {
     double newSpeed = Math.pow(joystickY, 3) * 1.6 + (0.17 * joystickY);
     return newSpeed;
   }
