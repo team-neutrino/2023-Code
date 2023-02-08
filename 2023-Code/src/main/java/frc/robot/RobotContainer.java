@@ -122,10 +122,10 @@ public class RobotContainer {
       new ScoringDefaultCommand(m_scoringSubsystem);
 
   // toggle scoring pneumatics to retracted position
-  private final ScoringCloseCommand m_scoringOpenCommand =
+  private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
 
-  private final LEDCommand m_LedDefaultCommand =
+  private final LEDCommand m_ledDefaultCommand =
       new LEDCommand(m_LedSubsystem, LEDColor.ORANGE, m_scoringSubsystem);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
