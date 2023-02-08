@@ -108,7 +108,7 @@ public class RobotContainer {
   private final AutoProcessCommand m_autoProcessCommand =
       new AutoProcessCommand(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
   // turn both intake motors off and set the entire thing up
-  private final IntakeDefaultCommand m_IntakeDefaultCommand =
+  private final IntakeDefaultCommand m_intakeDefaultCommand =
       new IntakeDefaultCommand(m_intakeSubsystem);
 
   // turn both intake motors on and set the entire thing down
@@ -137,7 +137,7 @@ public class RobotContainer {
   private void configureBindings() {
     m_driveTrainSubsystem.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
-    m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
+    m_intakeSubsystem.setDefaultCommand(m_intakeDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
 
     // Buttons
