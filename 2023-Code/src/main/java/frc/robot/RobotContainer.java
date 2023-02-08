@@ -59,7 +59,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
-  private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
+  private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
   private final ColorSubsystem m_colorsubsystem = new ColorSubsystem();
   private final ShuffleboardSubsystem m_shuffleboardSubsystem =
       new ShuffleboardSubsystem(
@@ -70,7 +70,7 @@ public class RobotContainer {
           m_armSubsystem,
           m_intakeSubsystem,
           m_colorsubsystem,
-          m_LedSubsystem);
+          m_ledSubsystem);
 
   // BUTTONS
   private final JoystickButton m_buttonA =
@@ -91,7 +91,7 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
 
   // COMMANDS
-  private final AutoBalanceCommand m_AutoBalanceCommand =
+  private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
@@ -114,7 +114,7 @@ public class RobotContainer {
   // turn both intake motors on and set the entire thing down
   private final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
 
-  private final IntakeReverseCommand m_IntakeReverseCommand =
+  private final IntakeReverseCommand m_intakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem);
 
   // toggles scoring pneumatics to extended position
@@ -126,7 +126,7 @@ public class RobotContainer {
       new ScoringCloseCommand(m_scoringSubsystem);
 
   private final LEDCommand m_ledDefaultCommand =
-      new LEDCommand(m_LedSubsystem, LEDColor.ORANGE, m_scoringSubsystem);
+      new LEDCommand(m_ledSubsystem, LEDColor.ORANGE, m_scoringSubsystem);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
@@ -153,13 +153,13 @@ public class RobotContainer {
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
-    m_rightArrow.onTrue(m_AutoBalanceCommand);
-    m_leftBumper.whileTrue(m_IntakeReverseCommand);
+    m_rightArrow.onTrue(m_autoBalanceCommand);
+    m_leftBumper.whileTrue(m_intakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
 
     // LED Buttons
-    m_buttonStart.onTrue(new LEDCommand(m_LedSubsystem, LEDColor.PURPLE, m_scoringSubsystem));
-    m_buttonBack.onTrue(new LEDCommand(m_LedSubsystem, LEDColor.YELLOW, m_scoringSubsystem));
+    m_buttonStart.onTrue(new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem));
+    m_buttonBack.onTrue(new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem));
   }
 
   public Command getAutonomousCommand() {
