@@ -16,7 +16,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int JOYSTICK_LEFT = 0;
     public static final int JOYSTICK_RIGHT = 1;
-    public static final int XBOX = 4;
+    public static final int XBOX = 2;
   }
 
   public static class PDPConstants {
@@ -34,7 +34,7 @@ public final class Constants {
     public static final int INTAKEMOTOR1 = 21;
 
     // ARM
-    public static final int ARM_MOTOR1 = 31; // replace
+    public static final int ARM_MOTOR1 = 31;
   }
 
   public static class ArmConstants {
