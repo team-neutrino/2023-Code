@@ -32,7 +32,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
   private DriveTrainSubsystem m_driveTrain;
-  private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   // private LimelightSubsystem m_limelight;
   private ScoringSubsystem m_scoring;
   private DriverStationInfo m_driverStationInfo;
