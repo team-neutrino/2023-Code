@@ -8,19 +8,17 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.util.AutonomousUtil;
+import frc.robot.util.PoseProcessor;
 import frc.robot.util.PoseTriplet;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ForwardBackwardCommand extends SequentialCommandGroup {
-  public ForwardBackwardCommand(DriveTrainSubsystem p_driveTrainSubsystem) {
-    ArrayList<PoseTriplet> forwardBackArray =
-        new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(25, 0, 0)));
+public class TestAuton extends SequentialCommandGroup {
 
-    RamseteCommand forwardBackCommand =
-        AutonomousUtil.generateRamseteFromPoses(forwardBackArray, p_driveTrainSubsystem);
+  public TestAuton(DriveTrainSubsystem p_driveTrainSubsystem) {
+    RamseteCommand testCommand =
+        AutonomousUtil.generateRamseteFromPoseFile("testFile.txt", p_driveTrainSubsystem);
 
-    addCommands(forwardBackCommand);
+    addCommands(testCommand);
   }
 }

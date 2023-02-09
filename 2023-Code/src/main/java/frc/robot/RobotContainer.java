@@ -134,9 +134,6 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
-    new PoseProcessor("util/textFile.txt");
-    System.out.println("Test Test Test Test Test Test Test Test Test Test Test Test ");
-
     configureBindings();
   }
 

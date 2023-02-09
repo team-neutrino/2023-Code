@@ -81,4 +81,8 @@ public final class Constants {
     public static final double ENCODER_POSITION_CONVERSION = GEAR_RATIO * WHEEL_CIRCUMFERENCE;
     public static final double ENCODER_VELOCITY_CONVERSION = GEAR_RATIO * WHEEL_CIRCUMFERENCE / 60;
   }
+
+  public static class UtilConstants {
+    public static final String UNIVERSAL_DIRECTORY = "\\src\\main\\java\\frc\\robot\\util\\trajectoryInput\\";
+  }
 }
