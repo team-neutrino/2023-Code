@@ -77,45 +77,60 @@ public class RobotContainer {
   // BUTTONS
   private final JoystickButton m_buttonA =
       new JoystickButton(m_driverController, XboxController.Button.kA.value);
+
   private final JoystickButton m_buttonB =
       new JoystickButton(m_driverController, XboxController.Button.kB.value);
+      
   private final JoystickButton m_buttonX =
       new JoystickButton(m_driverController, XboxController.Button.kX.value);
+
   private final JoystickButton m_buttonY =
       new JoystickButton(m_driverController, XboxController.Button.kY.value);
 
-  // BUTTON BABES
   private final JoystickButton m_leftBumper =
       new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
+
   private final JoystickButton m_rightBumper =
       new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
+
   private final JoystickButton m_buttonStart =
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
+
+  private final JoystickButton m_buttonBack =
+      new JoystickButton(m_driverController, XboxController.Button.kBack.value);
+
+  private final POVButton m_upArrow = new POVButton(m_driverController, 0);
+
+  private final POVButton m_downArrow = new POVButton(m_driverController, 180);
+
+  private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
+
+  private final Trigger m_leftTrigger =
+      new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
+
+  private final Trigger m_rightTrigger =
+      new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
 
   // COMMANDS
   private final AutoBalanceCommand m_AutoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
-  private final JoystickButton m_buttonBack =
-      new JoystickButton(m_driverController, XboxController.Button.kBack.value);
-  private final POVButton m_upArrow = new POVButton(m_driverController, 0);
-  private final POVButton m_downArrow = new POVButton(m_driverController, 180);
-  private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
-  private final Trigger m_leftTrigger =
-      new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
-  private final Trigger m_rightTrigger =
-      new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
+
   private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
+
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrainSubsystem, m_leftJoystick, m_rightJoystick);
+
   private final AutoProcessCommand m_autoProcessCommand =
       new AutoProcessCommand(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
-  // turn both intake motors off and set the entire thing up
+
+  // turn intake motor off and put intake up
   private final IntakeDefaultCommand m_IntakeDefaultCommand =
       new IntakeDefaultCommand(m_intakeSubsystem);
 
-  // turn both intake motors on and set the entire thing down
+  // turn on motor and set intake down
   private final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
 
+  // turn intake motor reverse on and set intake down
   private final IntakeReverseCommand m_IntakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem);
 
@@ -129,6 +144,7 @@ public class RobotContainer {
 
   private final LEDCommand m_LedDefaultCommand =
       new LEDCommand(m_LedSubsystem, LEDColor.ORANGE, m_scoringSubsystem);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     new PneumaticsSubsystem();
@@ -137,26 +153,33 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
+    //setting default commands
     m_driveTrainSubsystem.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
 
-    // Buttons
-
     // Put forward
     m_buttonB.whileTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
+
     m_buttonY.whileTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
+
     m_buttonX.whileTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_MID));
+
     m_buttonA.whileTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
+        
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
+
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
+
     m_rightArrow.onTrue(m_AutoBalanceCommand);
+
     m_leftBumper.whileTrue(m_IntakeReverseCommand);
+
     m_leftTrigger.whileTrue(m_intakeCommand);
 
     // LED Buttons
