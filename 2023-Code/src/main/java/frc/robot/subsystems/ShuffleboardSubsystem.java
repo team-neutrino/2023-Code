@@ -35,12 +35,12 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   // private LimelightSubsystem m_limelight;
   private ScoringSubsystem m_scoring;
-  // private EndGameSubsystem m_endGame;
   private DriverStationInfo m_driverStationInfo;
   private LEDSubsystem m_LED;
   private ArmSubsystem m_arm;
   private HttpCamera LLFeed;
   private IntakeSubsystem m_intake;
+  private ColorSubsystem m_color;
 
   public ShuffleboardSubsystem(
       DriverStationInfo p_driverStationInfo,
@@ -49,6 +49,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       LimelightSubsystem p_limelight,
       ArmSubsystem p_arm,
       IntakeSubsystem p_intake,
+      ColorSubsystem p_color,
       LEDSubsystem p_LED) {
 
     m_driveTrain = p_driveTrain;
@@ -56,6 +57,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_scoring = p_scoring;
     m_arm = p_arm;
     m_intake = p_intake;
+    m_color = p_color;
     m_LED = p_LED;
     m_driverStationInfo = p_driverStationInfo;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
@@ -78,9 +80,12 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[7].setDouble(m_driveTrain.getL2Vel());
     m_driveTrainVariables[8].setDouble(m_driveTrain.getPitch());
 
-    //m_scoringVariables[2].setBoolean(m_scoring.getSolenoidValue());
+    m_scoringVariables[0].setBoolean(m_scoring.getSolenoidValue());
+
+    m_LEDVariables[0].setString(m_LED.getColor().toString());
 
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
+    m_driverStationInfoVariables[1].setString(m_color.getPiece());
 
     m_armVariables[0].setDouble(m_arm.getPosition());
   }
@@ -161,6 +166,13 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     m_driverStationInfoVariables[0] =
         m_drivestationTab.add("Match Time", 0).withPosition(6, 0).withSize(3, 1).getEntry();
+
+    m_driverStationInfoVariables[1] =
+        m_drivestationTab
+            .add("Game Piece", "No Piece")
+            .withPosition(7, 0)
+            .withSize(2, 2)
+            .getEntry();
 
     m_armVariables[0] =
         m_drivestationTab.add("Arm Position", 0).withPosition(0, 0).withSize(1, 1).getEntry();
