@@ -259,7 +259,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     if (rmotorPosition > p_rmotorPosition - motorset
         && lmotorPosition < p_lmotorPosition + motorset) {
       System.out.println("setpoint " + (p_rmotorPosition - motorset));
-      System.out.println("passed in one shouldn't be changing " + p_rmotorPosition);
+      System.out.println("initial position " + p_rmotorPosition);
       System.out.println("current position r" + rmotorPosition);
       m_motorGroupRight.set(-0.05);
       m_motorGroupLeft.set(0.05);
@@ -292,7 +292,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     if (rmotorPosition < p_rmotorPosition + motorset
         && lmotorPosition > p_lmotorPosition - motorset) {
           System.out.println("setpoint " + (p_rmotorPosition - motorset));
-      System.out.println("passed in one shouldn't be changing " + p_rmotorPosition);
+      System.out.println("initial position " + p_rmotorPosition);
       System.out.println("current position r" + rmotorPosition);
       m_motorGroupRight.set(0.05);
       m_motorGroupLeft.set(-0.05);
