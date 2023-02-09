@@ -146,18 +146,18 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
     } else if (actionCounter == 4) {
 
       if (firstRun == 0) {
-        rmotorPosition = m_drivetrain.getR1Pos() / 0.04987278;
-        lmotorPosition = m_drivetrain.getL1Pos() / 0.04987278;
         turnLeft = theta >= 0;
       }
 
+      rmotorPosition = m_drivetrain.getR1Pos() / 0.04987278;
+      lmotorPosition = m_drivetrain.getL1Pos() / 0.04987278;
       boolean stop = false;
       //boolean txTurnLeft = m_limelight.getTx() <=  0;
 
       if (turnLeft) {
 
         if (m_limelight.getTv() == false || ID != newID) {
-          stop = m_drivetrain.turnMotor(-0.1, rmotorPosition, lmotorPosition);
+          stop = m_drivetrain.turnMotor(-0.05, rmotorPosition, lmotorPosition);
           newID = m_limelight.getID();
           System.out.println("tv is --- " + m_limelight.getTv());
           System.out.println("compared ID " + ID);
@@ -180,7 +180,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
       else {
 
         if (m_limelight.getTv() == false || ID != newID) {
-          stop = m_drivetrain.turnMotor(0.1, rmotorPosition, lmotorPosition);
+          stop = m_drivetrain.turnMotor(0.05, rmotorPosition, lmotorPosition);
           newID = m_limelight.getID();
           System.out.println("tv is --- " + m_limelight.getTv());
           System.out.println("compared ID " + ID);
