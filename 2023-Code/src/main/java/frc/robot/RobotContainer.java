@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.io.IOException;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,6 +40,7 @@ import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.PoseProcessor;
+import frc.robot.util.SavePoseCommand;
 import frc.robot.util.LEDColor;
 import frc.robot.util.ViennaPIDController;
 
@@ -168,6 +171,13 @@ public class RobotContainer {
     // return m_shuffleboardSubsystem
     //     .getAutoSelected()
     //     .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+    PoseProcessor.poseTripletsFromFile("testFile.txt");
+    // try {    
+    //     return new SavePoseCommand(m_driveTrainSubsystem, "testFile.txt");
+    // } catch (IOException e) {
+    //     e.printStackTrace();
+    //     return null;
+    // }
     return null;
   }
 }
