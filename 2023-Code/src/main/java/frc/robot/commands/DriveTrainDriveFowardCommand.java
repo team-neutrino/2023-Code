@@ -80,12 +80,30 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
       boolean stop = false;
       //TURNS THETA
       if (theta > 0) {
-        if (theta >= 0.95){
-        stop = m_drivetrain.turnMotor(theta - 0.3, rmotorPosition, lmotorPosition);
+        if (theta >= 1.11){
+        stop = m_drivetrain.turnMotor(theta - 0.25, rmotorPosition, lmotorPosition);
+        }
+        else if (theta >= 0.9){
+          stop = m_drivetrain.turnMotor(theta - 0.5, rmotorPosition, lmotorPosition);
+        }
+        else if (theta >= 0.7){
+          stop = m_drivetrain.turnMotor(theta - 0.6, rmotorPosition, lmotorPosition);
+        }
+        else {
+          stop = m_drivetrain.turnMotor(theta - 0.25, rmotorPosition, lmotorPosition);
         }
       } else {
-        if (theta <= -0.95){
-        stop = m_drivetrain.turnMotor(theta + 0.3, rmotorPosition, lmotorPosition);
+        if (theta <= -1.11){
+        stop = m_drivetrain.turnMotor(theta + 0.25, rmotorPosition, lmotorPosition);
+        }
+        else if (theta <= -0.9){
+          stop = m_drivetrain.turnMotor(theta + 0.5, rmotorPosition, lmotorPosition);
+        }
+        else if (theta <= -0.7){
+          stop = m_drivetrain.turnMotor(theta + 0.6, rmotorPosition, lmotorPosition);
+        }
+        else {
+          stop = m_drivetrain.turnMotor(theta + 0.25, rmotorPosition, lmotorPosition);
         }
       }
 
