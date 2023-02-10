@@ -29,7 +29,6 @@ import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
@@ -37,7 +36,6 @@ import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
-import frc.robot.util.IntakeManager;
 import frc.robot.util.LEDColor;
 import frc.robot.util.ViennaPIDController;
 
@@ -57,7 +55,6 @@ public class RobotContainer {
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrainSubsystem =
       new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick);
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
@@ -65,7 +62,6 @@ public class RobotContainer {
   private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
   private final ColorSubsystem m_colorsubsystem = new ColorSubsystem();
 
-  private final IntakeManager m_intakeManager = new IntakeManager(m_intakeSubsystem, m_armSubsystem);
   private final ShuffleboardSubsystem m_shuffleboardSubsystem =
       new ShuffleboardSubsystem(
           m_driverStationInfo,
@@ -88,8 +84,9 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kY.value);
 
   // BUTTON BABES
-  private final JoystickButton m_leftBumper =
-      new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
+  //If confused about leftbumper assignment ask Nathan
+  private final Trigger m_leftBumper =
+      new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value).and(() -> (m_armSubsystem.getCurrentCommand() == null));
   private final JoystickButton m_rightBumper =
       new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
   private final JoystickButton m_buttonStart =
@@ -103,8 +100,10 @@ public class RobotContainer {
   private final POVButton m_upArrow = new POVButton(m_driverController, 0);
   private final POVButton m_downArrow = new POVButton(m_driverController, 180);
   private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
+
+  //If confused about lefttrigger assignment ask Nathan
   private final Trigger m_leftTrigger =
-      new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
+      (new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5)).and(() -> (m_armSubsystem.getCurrentCommand() == null));
   private final Trigger m_rightTrigger =
       new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
   private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
@@ -147,7 +146,7 @@ public class RobotContainer {
 
     // Buttons
 
-    // Put forward
+    // Put the arm to one of three specified target angles
     m_buttonB.whileTrue(
         new ArmToAngleCommand(
             m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
@@ -160,6 +159,7 @@ public class RobotContainer {
     m_buttonA.whileTrue(
         new ArmToAngleCommand(
             m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
+    //used for small adjustments of the arm
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, .2));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, -.2));
     m_rightArrow.onTrue(m_AutoBalanceCommand);

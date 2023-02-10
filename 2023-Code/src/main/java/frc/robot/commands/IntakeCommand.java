@@ -12,11 +12,11 @@ public class IntakeCommand extends CommandBase {
   IntakeSubsystem m_intakeSubsystem;
 
   /** Creates a new IntakeCommand. */
-  public IntakeCommand(IntakeSubsystem subsystem) {
-    m_intakeSubsystem = subsystem;
+  public IntakeCommand(IntakeSubsystem p_intakeSubsystem) {
+    m_intakeSubsystem = p_intakeSubsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(m_intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
