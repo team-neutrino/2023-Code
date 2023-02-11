@@ -32,7 +32,6 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
-import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
@@ -129,9 +128,8 @@ public class RobotContainer {
       new LEDCommand(m_ledSubsystem, LEDColor.ORANGE, m_scoringSubsystem);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    new PneumaticsSubsystem();
-
     configureBindings();
+
   }
 
   private void configureBindings() {

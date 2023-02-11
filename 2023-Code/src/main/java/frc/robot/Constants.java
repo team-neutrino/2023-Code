@@ -85,11 +85,16 @@ public final class Constants {
     public static final int ARM_ENCODER = 4;
   }
 
+  public static class PWMConstants {
+    public static final int LED_PORT = 0;
+  }
+
   public static class DriverConstants {
     public static final double GEAR_RATIO = 1.0 / 8.0;
     public static final double WHEEL_DIAMETER = 0.127;
     public static final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
     public static final double ENCODER_POSITION_CONVERSION = GEAR_RATIO * WHEEL_CIRCUMFERENCE;
     public static final double ENCODER_VELOCITY_CONVERSION = GEAR_RATIO * WHEEL_CIRCUMFERENCE / 60;
+    public static final double MAXSPEED = 0.7;
   }
 }
