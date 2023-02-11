@@ -85,7 +85,5 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-
-  }
+  public void periodic() {}
 }
