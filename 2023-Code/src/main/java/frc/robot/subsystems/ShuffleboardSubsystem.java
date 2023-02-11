@@ -97,60 +97,28 @@ public class ShuffleboardSubsystem extends SubsystemBase {
         m_drivestationTab.add("LED Color", "Off").withPosition(8, 1).withSize(2, 1).getEntry();
 
     m_driveTrainVariables[0] =
-        m_drivestationTab
-            .add("RMotor 1 Pos", 0)
-            .withPosition(0, 0)
-            .withSize(1, 1)
-            .getEntry();
+        m_drivestationTab.add("RMotor 1 Pos", 0).withPosition(0, 0).withSize(1, 1).getEntry();
 
     m_driveTrainVariables[1] =
-        m_drivestationTab
-            .add("RMotor 2 Pos", 0)
-            .withPosition(1, 0)
-            .withSize(1, 1)
-            .getEntry();
+        m_drivestationTab.add("RMotor 2 Pos", 0).withPosition(1, 0).withSize(1, 1).getEntry();
 
     m_driveTrainVariables[2] =
-        m_drivestationTab
-            .add("LMotor 1 Pos", 0)
-            .withPosition(0, 1)
-            .withSize(1, 1)
-            .getEntry();
+        m_drivestationTab.add("LMotor 1 Pos", 0).withPosition(0, 1).withSize(1, 1).getEntry();
 
     m_driveTrainVariables[3] =
-        m_drivestationTab
-            .add("LMotor 2 Pos", 0)
-            .withPosition(1, 1)
-            .withSize(1, 1)
-            .getEntry();
+        m_drivestationTab.add("LMotor 2 Pos", 0).withPosition(1, 1).withSize(1, 1).getEntry();
 
     m_driveTrainVariables[4] =
-        m_drivestationTab
-            .add("RMotor 1 Vel", 0)
-            .withPosition(0, 2)
-            .withSize(1, 1)
-            .getEntry();
+        m_drivestationTab.add("RMotor 1 Vel", 0).withPosition(0, 2).withSize(1, 1).getEntry();
 
     m_driveTrainVariables[5] =
-        m_drivestationTab
-            .add("RMotor 2 Vel", 0)
-            .withPosition(1, 2)
-            .withSize(1, 1)
-            .getEntry();
+        m_drivestationTab.add("RMotor 2 Vel", 0).withPosition(1, 2).withSize(1, 1).getEntry();
 
     m_driveTrainVariables[6] =
-        m_drivestationTab
-            .add("LMotor 1 Vel", 0)
-            .withPosition(0, 3)
-            .withSize(1, 1)
-            .getEntry();
+        m_drivestationTab.add("LMotor 1 Vel", 0).withPosition(0, 3).withSize(1, 1).getEntry();
 
     m_driveTrainVariables[7] =
-        m_drivestationTab
-            .add("LMotor 2 Vel", 0)
-            .withPosition(1, 3)
-            .withSize(1, 1)
-            .getEntry();
+        m_drivestationTab.add("LMotor 2 Vel", 0).withPosition(1, 3).withSize(1, 1).getEntry();
 
     m_driveTrainVariables[8] =
         m_drivestationTab.add("NavX Pitch", 0).withPosition(2, 2).withSize(1, 1).getEntry();
