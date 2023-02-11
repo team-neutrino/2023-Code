@@ -34,8 +34,7 @@ public final class Constants {
     //CHANGE TO 14
     public static final int MOTOR_LEFT2 = 21;
 
-    // ARM
-    public static final int ARM_MOTOR1 = 31; // replace
+    public static final int ARM_MOTOR1 = 31;
   }
 
   public static class ArmConstants {
@@ -44,6 +43,12 @@ public final class Constants {
     public static final double FORWARD_MID = 80;
     public static final double BACK_MID = 31;
     public static final double BACK_DOWN = 17;
+    public static final double ARM_DEADZONE = 1;
+
+    // INTAKE_RUNNABLE IS AN ARBITRARY NUMBER, TODO FIND ACTUAL VALUE
+    // This value represents the angles where the intake CANNOT be run because
+    // it would run into the arm if it were to go up or come down
+    public static final double INTAKE_RUNNABLE = 1000000;
 
     public static final double M_PI = Math.PI;
     public static final double WHEEL_SIZE = 1;
@@ -51,8 +56,6 @@ public final class Constants {
     public static final double ROTATION_TO_INCHES = M_PI * (WHEEL_SIZE / REDUCTION);
     public static final float MIN_SOFT_LIM = -100;
     public static final float MAX_SOFT_LIM = 100;
-    public static final int ARM_DOWN = 0;
-    public static final int ARM_UP = 90;
   }
 
   public static class PIDConstants {

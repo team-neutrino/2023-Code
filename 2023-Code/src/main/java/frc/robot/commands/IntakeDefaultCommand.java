@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.util.IntakeManager;
 
 /**
  * This default command serves the sole purpose of ensuring that when the button is NOT pressed, the
@@ -15,9 +16,12 @@ public class IntakeDefaultCommand extends CommandBase {
   /** An object of the intake subsystem. */
   IntakeSubsystem m_intakeSubsystem;
 
+  IntakeManager m_intakeManager;
+
   /** Constructor, creates a new IntakeDefaultCommand. */
-  public IntakeDefaultCommand(IntakeSubsystem subsystem) {
+  public IntakeDefaultCommand(IntakeSubsystem subsystem, IntakeManager p_inIntakeManager) {
     m_intakeSubsystem = subsystem;
+    m_intakeManager = p_inIntakeManager;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -34,10 +38,12 @@ public class IntakeDefaultCommand extends CommandBase {
    */
   @Override
   public void execute() {
-    m_intakeSubsystem.stopIntake();
-    // in case we're holding a game piece, we want to keep a hold of it
-    m_intakeSubsystem.squeeze();
-    m_intakeSubsystem.setIntakeUp();
+    if (m_intakeManager.managerApproved()) {
+      m_intakeSubsystem.stopIntake();
+      // in case we're holding a game piece, we want to keep a hold of it
+      m_intakeSubsystem.squeeze();
+      m_intakeManager.setIntakeUpWithArmCheck();
+    }
   }
 
   // Called once the command ends or is interrupted.
