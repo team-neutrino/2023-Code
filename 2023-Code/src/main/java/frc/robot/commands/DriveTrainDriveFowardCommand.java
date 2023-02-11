@@ -28,6 +28,10 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   double tx;
   boolean endCommand = false;
   boolean txSeen = false;
+  double tx1;
+  double tx2;
+  double turnAngle1;
+  double turnAngle2;
 
   public DriveTrainDriveFowardCommand(
       DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight) {
@@ -74,37 +78,24 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
       if (firstRun == 0) {
         rmotorPosition = m_drivetrain.getR1Pos();
         lmotorPosition = m_drivetrain.getL1Pos();
+        tx1 = Math.PI / 180 * m_limelight.getTx();
+        tx2 = Math.PI / 180 * m_limelight.getTx();
+        turnAngle1 = theta + tx1;
+        turnAngle2 = theta + tx2;
+        System.out.println("tx1 " + tx1 + " tx2 " + tx2);
+        System.out.println("theta " + (turnAngle1 * 180 / Math.PI));
         // System.out.println("step one getting motor positions");
       }
 
       boolean stop = false;
       //TURNS THETA
       if (theta > 0) {
-        if (theta >= 1.11){
-        stop = m_drivetrain.turnMotor(theta - 0.25, rmotorPosition, lmotorPosition);
-        }
-        else if (theta >= 0.9){
-          stop = m_drivetrain.turnMotor(theta - 0.5, rmotorPosition, lmotorPosition);
-        }
-        else if (theta >= 0.7){
-          stop = m_drivetrain.turnMotor(theta - 0.6, rmotorPosition, lmotorPosition);
-        }
-        else {
-          stop = m_drivetrain.turnMotor(theta - 0.25, rmotorPosition, lmotorPosition);
-        }
+
+        stop = m_drivetrain.turnMotor(turnAngle1 - 0.3, rmotorPosition, lmotorPosition);
+
       } else {
-        if (theta <= -1.11){
-        stop = m_drivetrain.turnMotor(theta + 0.25, rmotorPosition, lmotorPosition);
-        }
-        else if (theta <= -0.9){
-          stop = m_drivetrain.turnMotor(theta + 0.5, rmotorPosition, lmotorPosition);
-        }
-        else if (theta <= -0.7){
-          stop = m_drivetrain.turnMotor(theta + 0.6, rmotorPosition, lmotorPosition);
-        }
-        else {
-          stop = m_drivetrain.turnMotor(theta + 0.25, rmotorPosition, lmotorPosition);
-        }
+
+       stop = m_drivetrain.turnMotor(turnAngle2 + 0.3, rmotorPosition, lmotorPosition);
       }
 
       firstRun++;
@@ -151,6 +142,8 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
       boolean stop = false;
 
+      if (firstRun >= 15){
+
       if (turnLeft) {
         stop = m_drivetrain.turnMotor(-Math.PI / 4, rmotorPosition, lmotorPosition);
         System.out.println("step 3 tv " + m_limelight.getTv());
@@ -164,6 +157,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
           txSeen = true;
         }
       }
+    }
 
       firstRun++;
       if (stop) {
@@ -329,11 +323,16 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
         lmotorPosition = m_drivetrain.getL1Pos();
         array = m_limelight.parseJson();
         setPoint = array[1] + 1;
+        System.out.println("distance " + array[1]);
+        System.out.println("setpoint " + setPoint);
       }
 
       boolean stop = false;
 
+      if (firstRun >= 15){
+
       stop = m_drivetrain.setMotorPosition(setPoint * -1, rmotorPosition, lmotorPosition);
+      }
 
       firstRun++;
       if (stop) {
@@ -355,19 +354,25 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
           tx = 0;
         }
 
-        if (tx > 0){
+        if (tx > 0 && tx < 1.5){
           tx -= 1.5;
         }
-        else {
+        else if (tx < 0 && tx > -1.5){
           tx += 1.5;
         }
         System.out.println("tx for 9 is" + tx);
       }
 
+      if (tx > 0){
+        tx = tx * Math.PI / 180;
+      }
+      else {
+        tx = tx * Math.PI / 180;
+      }
+
       if (firstRun >= 45) {
         stop =
-            m_drivetrain.turnMotor(
-                tx * Math.PI / 180, rmotorPosition, lmotorPosition);
+            m_drivetrain.turnMotor(tx, rmotorPosition, lmotorPosition);
                 //System.out.println("tx for 9 is " + tx);
                 System.out.println("stop is " + stop);
       }
