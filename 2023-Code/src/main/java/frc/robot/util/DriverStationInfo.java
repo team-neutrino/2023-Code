@@ -1,7 +1,5 @@
 package frc.robot.util;
 
-import com.fasterxml.jackson.databind.ser.std.StaticListSerializerBase;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
