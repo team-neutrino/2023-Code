@@ -102,7 +102,7 @@ public class IntakeSubsystem extends SubsystemBase {
    *
    * @return whether or not the solenoid is in the out position.
    */
-  public boolean getUpDownSolenoidValue() {
+  public boolean isIntakeDown() {
     return m_upDownSolenoid.get();
   }
 
