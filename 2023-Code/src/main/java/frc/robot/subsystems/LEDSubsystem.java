@@ -47,10 +47,20 @@ public class LEDSubsystem extends SubsystemBase {
     setToColor(255, 15, 0);
   }
 
+  public void setToRed() {
+    setToColor(255, 0, 0);
+  }
+
+  public void setToBlue() {
+    setToColor(0, 0, 255);
+  }
+
   public LEDColor getColor() {
     Color orange = new Color(255, 15, 0);
     Color purple = new Color(210, 25, 210);
     Color yellow = new Color(255, 100, 0);
+    Color red = new Color(255, 0, 0);
+    Color blue = new Color(0, 0, 255);
 
     if (m_LEDBuffer.getLED(1).equals(orange)) {
       return LEDColor.ORANGE;
@@ -58,6 +68,10 @@ public class LEDSubsystem extends SubsystemBase {
       return LEDColor.PURPLE;
     } else if (m_LEDBuffer.getLED(1).equals(yellow)) {
       return LEDColor.YELLOW;
+    } else if (m_LEDBuffer.getLED(1).equals(red)) {
+      return LEDColor.RED;
+    } else if (m_LEDBuffer.getLED(1).equals(blue)) {
+      return LEDColor.BLUE;
     } else {
       return LEDColor.INDETERMINATE;
     }
