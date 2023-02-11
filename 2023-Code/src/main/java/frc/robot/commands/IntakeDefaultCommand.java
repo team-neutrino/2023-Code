@@ -41,7 +41,7 @@ public class IntakeDefaultCommand extends CommandBase {
     if (m_intakeManager.managerApproved()) {
       m_intakeSubsystem.stopIntake();
       // in case we're holding a game piece, we want to keep a hold of it
-      m_intakeSubsystem.squeeze();
+      m_intakeSubsystem.unsqueeze();
       m_intakeManager.setIntakeUpWithArmCheck();
     }
   }

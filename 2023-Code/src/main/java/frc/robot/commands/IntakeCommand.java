@@ -32,9 +32,8 @@ public class IntakeCommand extends CommandBase {
     if (m_armChecker.managerApproved()) {
       m_intakeSubsystem.runIntake();
       m_armChecker.setIntakeDownWithArmCheck();
-      m_intakeSubsystem.unsqueeze();
-      if (m_intakeSubsystem.isGamePiece()) {
-        m_intakeSubsystem.squeeze();
+      m_intakeSubsystem.squeeze(); //see intakeSubsystem for an explanation on why we squeeze when intaking
+      if(m_intakeSubsystem.isGamePiece()) {
         m_intakeSubsystem.stopIntake();
       }
     }

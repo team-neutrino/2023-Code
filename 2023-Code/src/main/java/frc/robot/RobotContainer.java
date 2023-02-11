@@ -96,25 +96,31 @@ public class RobotContainer {
   private final JoystickButton m_buttonStart =
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
 
+  private final Trigger m_leftTrigger =
+      new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
+
+  private final Trigger m_rightTrigger =
+      new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
+
+  private final JoystickButton m_buttonBack =
+      new JoystickButton(m_driverController, XboxController.Button.kBack.value);
+
+  private final POVButton m_upArrow = new POVButton(m_driverController, 0);
+
+  private final POVButton m_downArrow = new POVButton(m_driverController, 180);
+
+  private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
+
   // COMMANDS
   private final AutoBalanceCommand m_AutoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
-  private final JoystickButton m_buttonBack =
-      new JoystickButton(m_driverController, XboxController.Button.kBack.value);
-  private final POVButton m_upArrow = new POVButton(m_driverController, 0);
-  private final POVButton m_downArrow = new POVButton(m_driverController, 180);
-  private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
 
-  // If confused about lefttrigger assignment ask Nathan
-  private final Trigger m_leftTrigger =
-      (new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5));
-  private final Trigger m_rightTrigger =
-      new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
   private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
 
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrainSubsystem, m_leftJoystick, m_rightJoystick);
 
+  //potential replacement for intake, incorporates the picking up of the game piece
   private final AutoProcessCommand m_autoProcessCommand =
       new AutoProcessCommand(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
 
@@ -167,9 +173,11 @@ public class RobotContainer {
 
     m_buttonA.whileTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
+
     // used for small adjustments of the arm
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
+
     m_rightArrow.onTrue(m_AutoBalanceCommand);
 
     m_leftBumper.whileTrue(m_IntakeReverseCommand);
