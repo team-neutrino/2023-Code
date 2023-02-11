@@ -9,7 +9,8 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/Shuffleboard/Drivestation Tab123/Autonomous Chooser": "String Chooser"
+      "/Shuffleboard/Drivestation Tab123/Autonomous Chooser": "String Chooser",
+      "/SmartDashboard/TestCommand": "Command"
     }
   },
   "NetworkTables": {

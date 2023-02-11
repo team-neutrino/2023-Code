@@ -171,13 +171,13 @@ public class RobotContainer {
     // return m_shuffleboardSubsystem
     //     .getAutoSelected()
     //     .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
-    PoseProcessor.poseTripletsFromFile("testFile.txt");
-    // try {    
-    //     return new SavePoseCommand(m_driveTrainSubsystem, "testFile.txt");
-    // } catch (IOException e) {
-    //     e.printStackTrace();
-    //     return null;
-    // }
-    return null;
+    //PoseProcessor.poseTripletsFromFile("testFile.txt");
+    try {    
+        return new SavePoseCommand(m_driveTrainSubsystem, "outputFile.txt");
+    } catch (IOException e) {
+        e.printStackTrace();
+        return null;
+    }
+    //return null;
   }
 }

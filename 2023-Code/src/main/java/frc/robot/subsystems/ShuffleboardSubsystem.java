@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.io.IOException;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
@@ -13,10 +15,12 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.util.DriverStationInfo;
+import frc.robot.util.SavePoseCommand;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
@@ -31,7 +35,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
   private SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
-  private DriveTrainSubsystem m_driveTrain;
+  private DriveTrainSubsystem m_driveTrainSubsystem;
   private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   // private LimelightSubsystem m_limelight;
   private ScoringSubsystem m_scoring;
@@ -44,7 +48,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
   public ShuffleboardSubsystem(
       DriverStationInfo p_driverStationInfo,
-      DriveTrainSubsystem p_driveTrain,
+      DriveTrainSubsystem p_driveTrainSubsystem,
       ScoringSubsystem p_scoring,
       LimelightSubsystem p_limelight,
       ArmSubsystem p_arm,
@@ -52,7 +56,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       ColorSubsystem p_color,
       LEDSubsystem p_LED) {
 
-    m_driveTrain = p_driveTrain;
+    m_driveTrainSubsystem = p_driveTrainSubsystem;
     // m_limelight = p_limelight;
     m_scoring = p_scoring;
     m_arm = p_arm;
@@ -64,21 +68,22 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     setUpSelector();
     driveStationTab();
+    setCommandButtons(); // This is SmartDashboard. Find way to make it not.
   }
 
   public ShuffleboardSubsystem() {}
 
   @Override
   public void periodic() {
-    m_driveTrainVariables[0].setDouble(m_driveTrain.getR1Pos());
-    m_driveTrainVariables[1].setDouble(m_driveTrain.getR2Pos());
-    m_driveTrainVariables[2].setDouble(m_driveTrain.getL1Pos());
-    m_driveTrainVariables[3].setDouble(m_driveTrain.getL2Pos());
-    m_driveTrainVariables[4].setDouble(m_driveTrain.getR1Vel());
-    m_driveTrainVariables[5].setDouble(m_driveTrain.getR2Vel());
-    m_driveTrainVariables[6].setDouble(m_driveTrain.getL1Vel());
-    m_driveTrainVariables[7].setDouble(m_driveTrain.getL2Vel());
-    m_driveTrainVariables[8].setDouble(m_driveTrain.getPitch());
+    m_driveTrainVariables[0].setDouble(m_driveTrainSubsystem.getR1Pos());
+    m_driveTrainVariables[1].setDouble(m_driveTrainSubsystem.getR2Pos());
+    m_driveTrainVariables[2].setDouble(m_driveTrainSubsystem.getL1Pos());
+    m_driveTrainVariables[3].setDouble(m_driveTrainSubsystem.getL2Pos());
+    m_driveTrainVariables[4].setDouble(m_driveTrainSubsystem.getR1Vel());
+    m_driveTrainVariables[5].setDouble(m_driveTrainSubsystem.getR2Vel());
+    m_driveTrainVariables[6].setDouble(m_driveTrainSubsystem.getL1Vel());
+    m_driveTrainVariables[7].setDouble(m_driveTrainSubsystem.getL2Vel());
+    m_driveTrainVariables[8].setDouble(m_driveTrainSubsystem.getPitch());
 
     m_scoringVariables[0].setBoolean(m_scoring.getSolenoidValue());
 
@@ -216,4 +221,16 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   public Command getAuto() {
     return m_autonSelector.getSelected();
   }
+
+  private void setCommandButtons() {
+    String filename = SmartDashboard.getString("trajectoryInput filename", "testInput.txt");
+    try {
+        SmartDashboard.putData("Save Pose", new SavePoseCommand(m_driveTrainSubsystem, filename));
+    } catch (IOException e) {
+        System.out.println("File write error");
+        e.printStackTrace();
+    }
+  }
+
+  
 }

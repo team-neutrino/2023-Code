@@ -22,25 +22,20 @@ public class PoseProcessor {
     ArrayList<PoseTriplet> poseArray = new ArrayList<PoseTriplet>();
     try {
       File poseFile = new File(absoluteAppend(p_filename));
-      File outputFile = new File(absoluteAppend("testOutput.txt"));
       Scanner scanner = new Scanner(poseFile);
-      try {
-        BufferedWriter bf = new BufferedWriter(new FileWriter(outputFile, true));
-        bf.write("test\n");
-        bf.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
       while (scanner.hasNextLine()) {
         String fullLine = scanner.nextLine();
         String[] parsedLine = fullLine.split(",");
         Double[] coordList = new Double[3];
-        for (int i = 0; i < 3; ++i) coordList[i] = Double.valueOf(parsedLine[i]);
+        for (int i = 0; i < 3; ++i) {
+          coordList[i] = Double.valueOf(parsedLine[i]);
+        }
         PoseTriplet poseTriplet = new PoseTriplet(coordList[0], coordList[1], coordList[2]);
         poseArray.add(poseTriplet);
       }
+      scanner.close();
     } catch (FileNotFoundException e) {
-      System.out.println("Error from PoseProcessor.java");
+      System.out.println("Scanner reading error");
       e.printStackTrace();
     }
     return poseArray;
