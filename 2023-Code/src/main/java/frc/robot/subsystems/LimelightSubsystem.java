@@ -136,6 +136,6 @@ public class LimelightSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     cycle++;
-    printCamTran();
+    //printCamTran();
   }
 }

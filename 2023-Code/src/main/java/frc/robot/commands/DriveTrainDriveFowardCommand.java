@@ -23,7 +23,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   int newID = -10;
   boolean turnLeft = false;
   double limelightAdjust;
-  double setPoint;
+  double setDistance;
   boolean save = false;
   double tx;
   boolean endCommand = false;
@@ -111,16 +111,17 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
       if (firstRun == 0) {
         rmotorPosition = m_drivetrain.getR1Pos();
         lmotorPosition = m_drivetrain.getL1Pos();
+        System.out.println("side distance " + array[0]);
       }
 
       boolean stop = false;
       //drives forward the good distance perpendicular
       if (array[0] > 0) {
         //System.out.println("array0 " + array[0]);
-        stop = m_drivetrain.setMotorPosition(array[0], rmotorPosition, lmotorPosition);
+        stop = m_drivetrain.setMotorPosition(array[0] + 0.2, rmotorPosition, lmotorPosition);
       } else {
         //System.out.println("array0 " + array[0]);
-        stop = m_drivetrain.setMotorPosition(array[0] * -1, rmotorPosition, lmotorPosition);
+        stop = m_drivetrain.setMotorPosition(array[0] * -1 + 0.2, rmotorPosition, lmotorPosition);
       }
 
       firstRun++;
@@ -322,9 +323,9 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
         rmotorPosition = m_drivetrain.getR1Pos();
         lmotorPosition = m_drivetrain.getL1Pos();
         array = m_limelight.parseJson();
-        setPoint = 0.5 - m_limelight.getDistance() + m_limelight.getDistance();
+        setDistance = Math.abs(m_limelight.getDistance()) - 0.78;
         System.out.println("distance " + m_limelight.getDistance());
-        System.out.println("setpoint " + setPoint);
+        System.out.println("setpoint " + setDistance);
       }
       //setpoint logic needs some more work
       //theres some messed up stuff with the distances so do some measurements
@@ -332,14 +333,14 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
       if (firstRun >= 15){
 
-      stop = m_drivetrain.setMotorPosition(setPoint, rmotorPosition, lmotorPosition);
+      stop = m_drivetrain.setMotorPosition(setDistance, rmotorPosition, lmotorPosition);
       }
 
-      stop = true;
       firstRun++;
       if (stop) {
         actionCounter++;
         firstRun = 0;
+        System.out.println("ended step 8");
       }
     } else if (actionCounter == 9) {
 
@@ -352,23 +353,17 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
       if (firstRun == 45){
         tx = m_limelight.getTx();
-        if (tx <= 0.5 && tx >= -0.5){
-          tx = 0;
-        }
 
-        if (tx > 0 && tx < 1.5){
-          //tx -= 1.5;
+        System.out.println("pre tx is " + tx);
+        
+        if (tx > 0 && tx > 1.5){
+          tx -= 1.5;
         }
-        else if (tx < 0 && tx > -1.5){
-          //tx += 1.5;
+        else if (tx < 0 && tx < -1.5){
+          tx += 1.5;
         }
-        System.out.println("tx for 9 is" + tx);
-      }
+        System.out.println("tx for 9 is " + tx);
 
-      if (tx > 0){
-        tx = tx * Math.PI / 180;
-      }
-      else {
         tx = tx * Math.PI / 180;
       }
 
