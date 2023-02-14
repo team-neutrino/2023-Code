@@ -130,8 +130,8 @@ public class RobotContainer {
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
 
-  private final LEDCommand m_ledDefaultCommand =
-      new LEDCommand(m_ledSubsystem, LEDColor.ORANGE, m_scoringSubsystem);
+  private final LEDCommand m_LedDefaultCommand =
+      new LEDCommand(m_ledSubsystem, LEDColor.ORANGE, m_scoringSubsystem, m_driverStationInfo);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureBindings();
@@ -162,8 +162,10 @@ public class RobotContainer {
     m_leftTrigger.whileTrue(m_intakeCommand);
 
     // LED Buttons
-    m_buttonStart.onTrue(new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem));
-    m_buttonBack.onTrue(new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem));
+    m_buttonStart.onTrue(
+        new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
+    m_buttonBack.onTrue(
+        new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
   }
 
   public Command getAutonomousCommand() {
