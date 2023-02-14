@@ -37,6 +37,7 @@ import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.LEDColor;
+import frc.robot.subsystems.PneumaticSubsystem;
 import frc.robot.util.ViennaPIDController;
 
 public class RobotContainer {
@@ -54,6 +55,7 @@ public class RobotContainer {
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
   private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
+  private final PneumaticSubsystem m_PneumaticSubsystem = new PneumaticSubsystem();
   private final ColorSubsystem m_colorsubsystem = new ColorSubsystem();
 
   // UTIL
