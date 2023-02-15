@@ -34,7 +34,8 @@ public class AutoProcessCommand extends CommandBase {
     if (m_intakeSubsystem.isGamePiece() && !m_scoringSubsystem.isGamePiece()) {
       m_intakeSubsystem.stopIntake();
       m_scoringSubsystem.openScoring(); // OPEN GRABBER BEFORE ARM GOES DOWN
-      m_armSubsystem.setReference(Constants.ArmConstants.FORWARD_DOWN); //set arm down to pick up game piece
+      m_armSubsystem.setReference(
+          Constants.ArmConstants.FORWARD_DOWN); // set arm down to pick up game piece.
     }
 
     // IF GAMEPIECE SENSED BY GRABBER (WILL HAPPEN WHEN ARM DOWN AND PIECE EXISTS)

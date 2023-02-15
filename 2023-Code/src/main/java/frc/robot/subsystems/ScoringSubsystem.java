@@ -40,8 +40,7 @@ public class ScoringSubsystem extends SubsystemBase {
     return m_beamBreak.get();
   }
 
-  public boolean isGamePiece()
-  {
+  public boolean isGamePiece() {
     return !getBeamBreak();
   }
 
