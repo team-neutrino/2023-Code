@@ -63,6 +63,10 @@ public class LimelightSubsystem extends SubsystemBase {
     return new double[] {0,0,0};
   }
 
+  public void setPipeline(int input){
+    limelight.getEntry("pipeline").setNumber(input);
+  }
+
   public double getDistance() {
     double[] camTran = getCamTran();
     // System.out.println(camTran[0]);

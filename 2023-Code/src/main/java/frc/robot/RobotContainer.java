@@ -79,6 +79,7 @@ public class RobotContainer {
   // BUTTONS
   private final JoystickButton m_test =
       new JoystickButton(m_leftJoystick, ButtonType.kTrigger.value);
+  //private final JoystickButton m_testButton = new JoystickButton(m_rightJoystick, 1);
   private final JoystickButton m_buttonA =
       new JoystickButton(m_driverController, XboxController.Button.kA.value);
   private final JoystickButton m_buttonB =

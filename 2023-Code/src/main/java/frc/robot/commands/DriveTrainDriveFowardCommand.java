@@ -32,12 +32,16 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   double tx2;
   double turnAngle1;
   double turnAngle2;
+  int programNumber;
+  double offSet;
+  double tagDistance;
 
   public DriveTrainDriveFowardCommand(
-      DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight) {
+      DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight, int programNumber) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drivetrain = p_drivetrain;
     m_limelight = p_limelight;
+    this.programNumber = programNumber;
     addRequirements(m_drivetrain, m_limelight);
   }
 
@@ -47,6 +51,28 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
     System.out.println("starting command \nsave between command runs = " + save);
     // System.out.println("lmotorposition " + lmotorPosition);
     // System.out.println("rmotorposition " + rmotorPosition);
+    if (programNumber == 0){
+      offSet = 0;
+      tagDistance = 0.78;
+    }
+    else if (programNumber == 1){
+      offSet = 0.43;
+      tagDistance = 0.78;
+      m_limelight.setPipeline(1);
+    }
+    else if (programNumber == 2){
+      offSet = -0.43;
+      tagDistance = 0.78;
+      m_limelight.setPipeline(2);
+    }
+    else if (programNumber == 3){
+      offSet = 0.77;
+      m_limelight.setPipeline(3);
+    }
+    else if (programNumber == 4){
+      offSet = -0.77;
+      m_limelight.setPipeline(4);
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -63,6 +89,8 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
           if (array[2] <= 0) {
             array[0] = array[0] * -1;
           }
+          array[0] = array[0] + offSet;
+
           double slope = array[1] / array[0];
           theta = Math.atan(slope);
           actionCounter++;
