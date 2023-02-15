@@ -25,13 +25,13 @@ public final class Constants {
 
   public static class MotorConstants {
     // intake motors have '2' in front of actual id
-    //CHANGE TO 21
-    public static final int INTAKEMOTOR1 = 21; 
+    // CHANGE TO 21
+    public static final int INTAKEMOTOR1 = 21;
 
     public static final int MOTOR_RIGHT1 = 11;
     public static final int MOTOR_RIGHT2 = 12;
     public static final int MOTOR_LEFT1 = 13;
-    //CHANGE TO 14
+    // CHANGE TO 14
     public static final int MOTOR_LEFT2 = 21;
 
     // ARM

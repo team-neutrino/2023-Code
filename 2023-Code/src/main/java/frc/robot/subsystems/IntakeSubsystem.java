@@ -107,7 +107,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   /**
-   * Returns the state of the SQEEZE solenoid
+   * Returns the state of the SQUEEZE solenoid
    *
    * @return Whether or not the solenoid is in the out position.
    */

@@ -33,7 +33,7 @@ public class IntakeReverseCommand extends CommandBase {
     if (m_intakeManager.managerApproved()) {
       m_intakeSubsystem.runIntakeReverse();
       m_intakeManager.setIntakeDownWithArmCheck();
-      m_intakeSubsystem.unsqueeze();
+      m_intakeSubsystem.squeeze();
     }
   }
 

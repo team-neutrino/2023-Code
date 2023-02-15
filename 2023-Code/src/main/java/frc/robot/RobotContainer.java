@@ -23,6 +23,7 @@ import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeReverseCommand;
+import frc.robot.commands.IntakeUnsqeezeCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
@@ -81,7 +82,7 @@ public class RobotContainer {
 
   private final JoystickButton m_buttonB =
       new JoystickButton(m_driverController, XboxController.Button.kB.value);
-      
+
   private final JoystickButton m_buttonX =
       new JoystickButton(m_driverController, XboxController.Button.kX.value);
 
@@ -112,6 +113,8 @@ public class RobotContainer {
 
   private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
 
+  private final POVButton m_leftArrow = new POVButton(m_driverController, 270);
+
   // COMMANDS
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
@@ -121,7 +124,7 @@ public class RobotContainer {
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrainSubsystem, m_leftJoystick, m_rightJoystick);
 
-  //potential replacement for intake, incorporates the picking up of the game piece
+  // potential replacement for intake, incorporates the picking up of the game piece
   private final AutoProcessCommand m_autoProcessCommand =
       new AutoProcessCommand(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
 
@@ -136,6 +139,9 @@ public class RobotContainer {
   // turn intake motor reverse on and set intake down
   private final IntakeReverseCommand m_IntakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem, m_IntakeManager);
+
+  private final IntakeUnsqeezeCommand m_unsqueezeCommand =
+      new IntakeUnsqeezeCommand(m_intakeSubsystem);
 
   // toggles scoring pneumatics to extended position
   private final ScoringDefaultCommand m_scoringDefaultCommand =
@@ -153,7 +159,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    //setting default commands
+    // setting default commands
     m_driveTrainSubsystem.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
@@ -173,10 +179,11 @@ public class RobotContainer {
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
 
     // used for small adjustments of the arm
-    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, .2));
-    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, -.2));
+    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
+    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
     m_rightArrow.onTrue(m_autoBalanceCommand);
     m_leftBumper.whileTrue(m_IntakeReverseCommand);
+    m_leftArrow.whileTrue(m_unsqueezeCommand);
 
     m_leftTrigger.whileTrue(m_intakeCommand);
 
