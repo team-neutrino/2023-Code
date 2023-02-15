@@ -36,8 +36,13 @@ public class ScoringSubsystem extends SubsystemBase {
     return solenoid.get();
   }
 
-  public boolean getBeamBreak() {
+  private boolean getBeamBreak() {
     return m_beamBreak.get();
+  }
+
+  public boolean isGamePiece()
+  {
+    return !getBeamBreak();
   }
 
   @Override
