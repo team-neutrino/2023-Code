@@ -4,28 +4,24 @@
 
 package frc.robot.util;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SavePoseCommand extends InstantCommand {
-  private DriveTrainSubsystem m_driveTrainSubsystem; 
+  private DriveTrainSubsystem m_driveTrainSubsystem;
   private String m_filename;
   // private BufferedWriter writer;
 
-  public SavePoseCommand(DriveTrainSubsystem p_driveTrainSubsystem, String p_filename) throws IOException {
+  public SavePoseCommand(DriveTrainSubsystem p_driveTrainSubsystem, String p_filename)
+      throws IOException {
     m_driveTrainSubsystem = p_driveTrainSubsystem;
     m_filename = p_filename;
   }

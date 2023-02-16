@@ -64,7 +64,5 @@ public class AutonomousUtil {
     RamseteCommand generatedRamseteCommand =
         generateRamseteCommand(generatedTrajectory, p_driveTrainSubsystem);
     return generatedRamseteCommand;
-}
-
-
+  }
 }

@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.io.IOException;
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
@@ -21,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.SavePoseCommand;
+import java.io.IOException;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
@@ -225,12 +224,10 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private void setCommandButtons() {
     String filename = SmartDashboard.getString("trajectoryInput filename", "testInput.txt");
     try {
-        SmartDashboard.putData("Save Pose", new SavePoseCommand(m_driveTrainSubsystem, filename));
+      SmartDashboard.putData("Save Pose", new SavePoseCommand(m_driveTrainSubsystem, filename));
     } catch (IOException e) {
-        System.out.println("File write error");
-        e.printStackTrace();
+      System.out.println("File write error");
+      e.printStackTrace();
     }
   }
-
-  
 }

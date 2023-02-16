@@ -97,6 +97,7 @@ public final class Constants {
   }
 
   public static class UtilConstants {
-    public static final String UNIVERSAL_DIRECTORY = "\\src\\main\\java\\frc\\robot\\util\\trajectoryInput\\";
+    public static final String UNIVERSAL_DIRECTORY =
+        "\\src\\main\\java\\frc\\robot\\util\\trajectoryInput\\";
   }
 }

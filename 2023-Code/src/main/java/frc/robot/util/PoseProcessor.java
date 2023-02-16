@@ -1,19 +1,16 @@
 package frc.robot.util;
 
-import java.io.BufferedWriter;
+import frc.robot.Constants;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import frc.robot.Constants;
 
 public class PoseProcessor {
 
   public static String absoluteAppend(String p_filename) {
-    String ret = System.getProperty("user.dir") + Constants.UtilConstants.UNIVERSAL_DIRECTORY + p_filename;
+    String ret =
+        System.getProperty("user.dir") + Constants.UtilConstants.UNIVERSAL_DIRECTORY + p_filename;
     return ret;
   }
 
