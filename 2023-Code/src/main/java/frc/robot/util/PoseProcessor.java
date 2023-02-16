@@ -9,9 +9,7 @@ import java.util.Scanner;
 public class PoseProcessor {
 
   public static String absoluteAppend(String p_filename) {
-    String ret =
-        System.getProperty("user.dir") + Constants.UtilConstants.UNIVERSAL_DIRECTORY + p_filename;
-    return ret;
+    return System.getProperty("user.dir") + Constants.UtilConstants.UNIVERSAL_DIRECTORY + p_filename;
   }
 
   public static ArrayList<PoseTriplet> poseTripletsFromFile(String p_filename) {
