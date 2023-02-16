@@ -32,7 +32,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
-import frc.robot.subsystems.PneumaticsSubsystem;
+import frc.robot.subsystems.PneumaticSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
@@ -54,7 +54,8 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
-  private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
+  private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
+  private final PneumaticSubsystem m_PneumaticSubsystem = new PneumaticSubsystem();
   private final ColorSubsystem m_colorsubsystem = new ColorSubsystem();
 
   // UTIL
@@ -72,7 +73,7 @@ public class RobotContainer {
           m_armSubsystem,
           m_intakeSubsystem,
           m_colorsubsystem,
-          m_LedSubsystem);
+          m_ledSubsystem);
 
   // BUTTONS
   private final JoystickButton m_buttonA =
@@ -94,7 +95,7 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kStart.value);
 
   // COMMANDS
-  private final AutoBalanceCommand m_AutoBalanceCommand =
+  private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
@@ -128,14 +129,13 @@ public class RobotContainer {
       new ScoringDefaultCommand(m_scoringSubsystem);
 
   // toggle scoring pneumatics to retracted position
-  private final ScoringCloseCommand m_scoringOpenCommand =
+  private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
 
   private final LEDCommand m_LedDefaultCommand =
-      new LEDCommand(m_LedSubsystem, LEDColor.ORANGE, m_scoringSubsystem);
+      new LEDCommand(m_ledSubsystem, LEDColor.ORANGE, m_scoringSubsystem, m_driverStationInfo);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    new PneumaticsSubsystem();
     configureBindings();
   }
 
@@ -159,13 +159,15 @@ public class RobotContainer {
     // used for small adjustments of the arm
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, .2));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, -.2));
-    m_rightArrow.onTrue(m_AutoBalanceCommand);
+    m_rightArrow.onTrue(m_autoBalanceCommand);
     m_leftBumper.whileTrue(m_IntakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
 
     // LED Buttons
-    m_buttonStart.onTrue(new LEDCommand(m_LedSubsystem, LEDColor.PURPLE, m_scoringSubsystem));
-    m_buttonBack.onTrue(new LEDCommand(m_LedSubsystem, LEDColor.YELLOW, m_scoringSubsystem));
+    m_buttonStart.onTrue(
+        new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
+    m_buttonBack.onTrue(
+        new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
   }
 
   public Command getAutonomousCommand() {

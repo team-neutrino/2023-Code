@@ -16,7 +16,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int JOYSTICK_LEFT = 0;
     public static final int JOYSTICK_RIGHT = 1;
-    public static final int XBOX = 4;
+    public static final int XBOX = 2;
   }
 
   public static class PDPConstants {
@@ -33,6 +33,7 @@ public final class Constants {
     // INTAKE
     public static final int INTAKEMOTOR1 = 21;
 
+    // ARM
     public static final int ARM_MOTOR1 = 31;
   }
 
@@ -85,7 +86,11 @@ public final class Constants {
   public static class DigitalConstants {
     public static final int INDEX_BEAMBREAK = 0;
     public static final int GRABBER_BEAMBREAK = 1;
-    public static final int ARM_ENCODER = 4;
+    public static final int ARM_ENCODER = 9;
+  }
+
+  public static class PWMConstants {
+    public static final int LED_PORT = 0;
   }
 
   public static class DriverConstants {
@@ -94,6 +99,7 @@ public final class Constants {
     public static final double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
     public static final double ENCODER_POSITION_CONVERSION = GEAR_RATIO * WHEEL_CIRCUMFERENCE;
     public static final double ENCODER_VELOCITY_CONVERSION = GEAR_RATIO * WHEEL_CIRCUMFERENCE / 60;
+    public static final double MAXSPEED = 0.7;
   }
 
   public static class UtilConstants {

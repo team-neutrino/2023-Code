@@ -163,30 +163,24 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public double deadzone(double joystickY) {
-    joystickY = Math.abs(joystickY);
-    if (joystickY <= Constants.VariableConstants.DEADZONE) {
+    double absJoystickY = Math.abs(joystickY);
+    if (absJoystickY <= Constants.VariableConstants.DEADZONE) {
       return 0.0;
-    } else if (joystickY >= 1.0) {
-      return 1.0;
     } else {
       return joystickY;
     }
   }
 
   public static double linearAccel(double joystickY) {
-    double newSpeed = joystickY;
-    return newSpeed;
+    return joystickY;
   }
 
   public static double turboAccel(double joystickY) {
-    double MAXSPEED = 0.7;
-    double newSpeed = (2 * MAXSPEED * joystickY) / (1 + Math.abs(joystickY));
-    return newSpeed;
+    return (2 * Constants.DriverConstants.MAXSPEED * joystickY) / (1 + Math.abs(joystickY));
   }
 
   public static double slowAccel(double joystickY) {
-    double newSpeed = Math.pow(joystickY, 3) * 1.6 + (0.17 * joystickY);
-    return newSpeed;
+    return Math.pow(joystickY, 3) * 1.6 + (0.17 * joystickY);
   }
 
   @Override
