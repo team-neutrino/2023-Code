@@ -4,13 +4,9 @@
 
 package frc.robot;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -40,8 +36,6 @@ import frc.robot.subsystems.PneumaticsSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
-import frc.robot.util.PoseProcessor;
-import frc.robot.util.SavePoseCommand;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.LEDColor;
 import frc.robot.util.ViennaPIDController;

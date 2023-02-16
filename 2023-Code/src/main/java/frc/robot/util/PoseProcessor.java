@@ -14,7 +14,6 @@ public class PoseProcessor {
 
   public static String absoluteAppend(String p_filename) {
     String ret = System.getProperty("user.dir") + Constants.UtilConstants.UNIVERSAL_DIRECTORY + p_filename;
-    //System.out.println(ret); 
     return ret;
   }
 
