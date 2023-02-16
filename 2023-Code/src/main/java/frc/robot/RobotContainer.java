@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,6 +29,7 @@ import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
+import frc.robot.commands.autonomous.TestAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -173,16 +175,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    // return m_shuffleboardSubsystem
-    //     .getAutoSelected()
-    //     .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
-    //PoseProcessor.poseTripletsFromFile("testFile.txt");
-    try {    
-        return new SavePoseCommand(m_driveTrainSubsystem, "outputFile.txt");
-    } catch (IOException e) {
-        e.printStackTrace();
-        return null;
-    }
-    //return null;
+    return new TestAuton(m_driveTrainSubsystem);
   }
 }
