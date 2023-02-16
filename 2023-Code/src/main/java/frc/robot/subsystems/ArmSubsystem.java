@@ -39,7 +39,6 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public double getAbsolutePosition() {
-    System.out.println("arm position " + m_externalEncoder.getAbsolutePosition() * 100);
     return m_externalEncoder.getAbsolutePosition() * 100;
   }
 
