@@ -163,8 +163,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public double deadzone(double joystickY) {
-    joystickY = Math.abs(joystickY);
-    if (joystickY <= Constants.VariableConstants.DEADZONE) {
+    double absJoystickY = Math.abs(joystickY);
+    if (absJoystickY <= Constants.VariableConstants.DEADZONE) {
       return 0.0;
     } else {
       return joystickY;
