@@ -8,10 +8,6 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.util.AutonomousUtil;
-import frc.robot.util.PoseProcessor;
-import frc.robot.util.PoseTriplet;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TestAuton extends SequentialCommandGroup {
 
