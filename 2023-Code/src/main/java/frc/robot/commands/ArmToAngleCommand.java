@@ -7,7 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.util.ViennaPIDController;
-import pabeles.concurrency.IntOperatorTask.Min;
 
 public class ArmToAngleCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
@@ -30,10 +29,9 @@ public class ArmToAngleCommand extends CommandBase {
   @Override
   public void execute() {
     voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), m_targetAngle);
-    if (voltage > 0.1){
+    if (voltage > 0.1) {
       voltage = 0.1;
-    }
-    else if (voltage < -0.1){
+    } else if (voltage < -0.1) {
       voltage = -0.1;
     }
     m_armSubsystem.set(voltage);
