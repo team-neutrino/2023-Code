@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -26,7 +25,6 @@ public class ArmSubsystem extends SubsystemBase {
   /** Creates a new ArmSubsystem. */
   public ArmSubsystem() {
     m_armMotor.restoreFactoryDefaults();
-    setSoftLimits();
 
     m_pidController = m_armMotor.getPIDController();
     m_encoder.setPositionConversionFactor(Constants.ArmConstants.ROTATION_TO_INCHES);
@@ -42,13 +40,6 @@ public class ArmSubsystem extends SubsystemBase {
 
   public double getAbsolutePosition() {
     return m_externalEncoder.getAbsolutePosition() * 100;
-  }
-
-  private void setSoftLimits() {
-    m_armMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
-    m_armMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
-    m_armMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.ArmConstants.MAX_SOFT_LIM);
-    m_armMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.ArmConstants.MIN_SOFT_LIM);
   }
 
   public void turnOff() {
