@@ -148,13 +148,13 @@ public class RobotContainer {
     // Buttons
 
     // Put the arm to one of three specified target angles
-    m_buttonB.whileTrue(
+    m_buttonB.onTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
-    m_buttonY.whileTrue(
+    m_buttonY.onTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
-    m_buttonX.whileTrue(
+    m_buttonX.onTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_MID));
-    m_buttonA.whileTrue(
+    m_buttonA.onTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
     // used for small adjustments of the arm
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, .2));
