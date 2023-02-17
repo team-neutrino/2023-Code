@@ -15,11 +15,11 @@ public class IntakeReverseCommand extends CommandBase {
   private IntakeManager m_intakeManager;
 
   /** Creates a new IntakeReverseCommand. */
-  public IntakeReverseCommand(IntakeSubsystem subsystem, IntakeManager p_intakeManager) {
-    m_intakeSubsystem = subsystem;
+  public IntakeReverseCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
+    m_intakeSubsystem = p_intakeSubsystem;
     m_intakeManager = p_intakeManager;
 
-    addRequirements(subsystem);
+    addRequirements(p_intakeSubsystem);
   }
 
   @Override

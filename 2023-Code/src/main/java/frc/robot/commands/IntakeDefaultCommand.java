@@ -18,11 +18,11 @@ public class IntakeDefaultCommand extends CommandBase {
   IntakeManager m_intakeManager;
 
   /** Constructor, creates a new IntakeDefaultCommand. */
-  public IntakeDefaultCommand(IntakeSubsystem subsystem, IntakeManager p_inIntakeManager) {
-    m_intakeSubsystem = subsystem;
+  public IntakeDefaultCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_inIntakeManager) {
+    m_intakeSubsystem = p_intakeSubsystem;
     m_intakeManager = p_inIntakeManager;
 
-    addRequirements(subsystem);
+    addRequirements(m_intakeSubsystem);
   }
 
   @Override

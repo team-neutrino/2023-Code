@@ -83,7 +83,7 @@ public class IntakeSubsystem extends SubsystemBase {
    *
    * @return True if a game piece is present.
    */
-  public boolean isGamePiece() {
+  public boolean detectedGamePiece() {
     return !getBeamBreak();
   }
 
