@@ -157,8 +157,8 @@ public class RobotContainer {
     m_buttonA.whileTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
     // used for small adjustments of the arm
-    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, .2));
-    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, -.2));
+    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
+    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
     m_rightArrow.onTrue(m_autoBalanceCommand);
     m_leftBumper.whileTrue(m_IntakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
