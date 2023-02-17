@@ -12,6 +12,7 @@ import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -20,22 +21,14 @@ public class ArmSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoder = m_armMotor.getEncoder();
   private DutyCycleEncoder m_externalEncoder =
       new DutyCycleEncoder(Constants.DigitalConstants.ARM_ENCODER);
-  private SparkMaxPIDController m_pidController;
+  private SparkMaxPIDController m_pidController = m_armMotor.getPIDController();
+  private boolean softLimitOn = false;
 
   /** Creates a new ArmSubsystem. */
   public ArmSubsystem() {
+    setSoftLimits(true);
     m_armMotor.restoreFactoryDefaults();
-
-    m_pidController = m_armMotor.getPIDController();
     m_encoder.setPositionConversionFactor(Constants.ArmConstants.ROTATION_TO_INCHES);
-
-    m_pidController.setFeedbackDevice(m_encoder);
-    m_pidController.setP(Constants.PIDConstants.ARM_P);
-    m_pidController.setI(Constants.PIDConstants.ARM_I);
-    m_pidController.setD(Constants.PIDConstants.ARM_D);
-    m_pidController.setFF(Constants.PIDConstants.ARM_FF);
-    m_pidController.setOutputRange(
-        Constants.PIDConstants.ARM_MINIMUM, Constants.PIDConstants.ARM_MAXIMUM);
   }
 
   public double getAbsolutePosition() {
@@ -52,6 +45,20 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void set(double voltage) {
     m_armMotor.set(voltage);
+  }
+
+  public void setSoftLimits(boolean set) {
+    softLimitOn = set;
+  }
+
+  public void smartSet(double desiredVoltage) {
+    if (softLimitOn) {
+      if ((getAbsolutePosition() >= ArmConstants.ARM_MAXIMUM && desiredVoltage < 0)
+          || (getAbsolutePosition() <= ArmConstants.ARM_MINIMUM && desiredVoltage > 0)) {
+        set(0.0);
+      }
+    }
+    set(desiredVoltage);
   }
 
   public void setReference(double rotations) {

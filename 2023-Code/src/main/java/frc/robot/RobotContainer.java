@@ -36,8 +36,8 @@ import frc.robot.subsystems.PneumaticSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
+import frc.robot.util.EnumConstants.LEDColor;
 import frc.robot.util.IntakeManager;
-import frc.robot.util.LEDColor;
 import frc.robot.util.ViennaPIDController;
 
 public class RobotContainer {

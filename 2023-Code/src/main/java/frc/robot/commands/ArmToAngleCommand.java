@@ -34,7 +34,7 @@ public class ArmToAngleCommand extends CommandBase {
     } else if (voltage < -0.1) {
       voltage = -0.1;
     }
-    m_armSubsystem.set(voltage);
+    m_armSubsystem.smartSet(voltage);
   }
 
   @Override

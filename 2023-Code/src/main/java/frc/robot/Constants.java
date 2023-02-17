@@ -45,6 +45,10 @@ public final class Constants {
     public static final double BACK_DOWN = 17;
     public static final double ARM_DEADZONE = 1;
 
+    // MUST TEST AND CHECK THESE SOFT LIMTIS
+    public static final int ARM_MAXIMUM = 95;
+    public static final int ARM_MINIMUM = 14;
+
     // INTAKE_RUNNABLE IS AN ARBITRARY NUMBER, TODO FIND ACTUAL VALUE
     // This value represents the angles where the intake CANNOT be run because
     // it would run into the arm if it were to go up or come down
@@ -65,8 +69,6 @@ public final class Constants {
     public static final int ARM_I = 0;
     public static final int ARM_D = 0;
     public static final int ARM_FF = 0;
-    public static final int ARM_MINIMUM = -1;
-    public static final int ARM_MAXIMUM = 1;
 
     public static final double BALANCE_P = 0.2;
     public static final double BALANCE_I = 0;
