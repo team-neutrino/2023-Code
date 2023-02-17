@@ -15,7 +15,6 @@ import frc.robot.util.IntakeManager;
 public class IntakeDefaultCommand extends CommandBase {
   /** An object of the intake subsystem. */
   IntakeSubsystem m_intakeSubsystem;
-
   IntakeManager m_intakeManager;
 
   /** Constructor, creates a new IntakeDefaultCommand. */
@@ -23,15 +22,12 @@ public class IntakeDefaultCommand extends CommandBase {
     m_intakeSubsystem = subsystem;
     m_intakeManager = p_inIntakeManager;
 
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   /**
    * This command's purpose is to ensure that the intake is up and not running when the button isn't
    * pressed.
@@ -46,11 +42,9 @@ public class IntakeDefaultCommand extends CommandBase {
     }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

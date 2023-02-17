@@ -8,29 +8,29 @@ import frc.robot.util.LEDColor;
 
 public class LEDCommand extends CommandBase {
 
-  private LEDSubsystem m_LedSubsystem;
+  private LEDSubsystem m_ledSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
   private LEDColor m_colorMode;
   private boolean m_hasBroken = false;
 
   public LEDCommand(
-      LEDSubsystem p_LEDSubsystem,
+      LEDSubsystem p_ledSubsystem,
       LEDColor p_colorMode,
       ScoringSubsystem p_scoringSubsystem,
       DriverStationInfo p_DriverStationInfo) {
-    m_LedSubsystem = p_LEDSubsystem;
+    m_ledSubsystem = p_ledSubsystem;
     m_colorMode = p_colorMode;
     m_scoringSubsystem = p_scoringSubsystem;
-    addRequirements(m_LedSubsystem);
+    addRequirements(m_ledSubsystem);
   }
 
   @Override
   public void initialize() {
     if (m_colorMode == LEDColor.PURPLE) {
-      m_LedSubsystem.setToPurple();
+      m_ledSubsystem.setToPurple();
     }
     if (m_colorMode == LEDColor.YELLOW) {
-      m_LedSubsystem.setToYellow();
+      m_ledSubsystem.setToYellow();
     }
   }
 
@@ -40,7 +40,7 @@ public class LEDCommand extends CommandBase {
       m_hasBroken = true;
     }
     if (m_scoringSubsystem.getBeamBreak() && m_hasBroken) {
-      m_LedSubsystem.setToOrange();
+      m_ledSubsystem.setToOrange();
       m_hasBroken = false;
     }
   }
@@ -50,7 +50,7 @@ public class LEDCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if (m_LedSubsystem.getColor().equals(LEDColor.ORANGE)) {
+    if (m_ledSubsystem.getColor().equals(LEDColor.ORANGE)) {
       return true;
     }
     return false;
