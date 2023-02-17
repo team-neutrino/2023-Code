@@ -36,10 +36,10 @@ public class LEDCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (!m_scoringSubsystem.getBeamBreak()) {
+    if (m_scoringSubsystem.gamePieceDetected()) {
       m_hasBroken = true;
     }
-    if (m_scoringSubsystem.getBeamBreak() && m_hasBroken) {
+    if (!m_scoringSubsystem.gamePieceDetected() && m_hasBroken) {
       m_LedSubsystem.setToOrange();
       m_hasBroken = false;
     }

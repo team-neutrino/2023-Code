@@ -10,14 +10,12 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class ArmAdjustCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
-  private IntakeSubsystem m_intakeSubsystem;
 
   private double m_voltage;
   /** Creates a new ArmIterateAngleCommand. */
   public ArmAdjustCommand(
       ArmSubsystem p_armSubsystem, IntakeSubsystem p_intakeSubsystem, double p_voltage) {
     m_armSubsystem = p_armSubsystem;
-    m_intakeSubsystem = p_intakeSubsystem;
     m_voltage = p_voltage;
     addRequirements(m_armSubsystem);
   }
