@@ -71,6 +71,11 @@ public final class Constants {
     public static final double BALANCE_P = 0.2;
     public static final double BALANCE_I = 0;
     public static final double BALANCE_D = 0;
+
+    public static final double MIN_OUTPUT = -1;
+    public static final double MAX_OUTPUT = 1;
+
+    public static final int IZONE_DISABLE_KEY = 3928;
   }
 
   public static class PneumaticsConstants {
