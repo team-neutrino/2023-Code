@@ -4,5 +4,7 @@ public enum LEDColor {
   ORANGE,
   PURPLE,
   YELLOW,
+  RED,
+  BLUE,
   INDETERMINATE
 }

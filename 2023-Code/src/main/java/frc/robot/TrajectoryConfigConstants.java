@@ -8,7 +8,6 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
 public class TrajectoryConfigConstants {
 
   // COPIED FROM ATLAS
-
   public static final double KV_VOLT_SECONDS_PER_METER = 2.4661;
   public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.5174;
   public static final double K_TRACK_WIDTH_METERS = 0.668;

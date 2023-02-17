@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.util.DriverStationInfo;
 import frc.robot.util.LEDColor;
 
 public class LEDCommand extends CommandBase {
@@ -13,11 +14,14 @@ public class LEDCommand extends CommandBase {
   private boolean m_hasBroken = false;
 
   public LEDCommand(
-      LEDSubsystem p_LEDSubsystem, LEDColor p_colorMode, ScoringSubsystem p_scoringSubsystem) {
+      LEDSubsystem p_LEDSubsystem,
+      LEDColor p_colorMode,
+      ScoringSubsystem p_scoringSubsystem,
+      DriverStationInfo p_DriverStationInfo) {
     m_LedSubsystem = p_LEDSubsystem;
     m_colorMode = p_colorMode;
     m_scoringSubsystem = p_scoringSubsystem;
-    addRequirements(m_LedSubsystem, m_scoringSubsystem);
+    addRequirements(m_LedSubsystem);
   }
 
   @Override
@@ -47,7 +51,6 @@ public class LEDCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     if (m_LedSubsystem.getColor().equals(LEDColor.ORANGE)) {
-      System.out.println("finshed");
       return true;
     }
     return false;

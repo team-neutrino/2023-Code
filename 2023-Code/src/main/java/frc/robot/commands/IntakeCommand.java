@@ -6,17 +6,20 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.util.IntakeManager;
 
 public class IntakeCommand extends CommandBase {
 
   IntakeSubsystem m_intakeSubsystem;
+  IntakeManager m_armChecker;
 
   /** Creates a new IntakeCommand. */
-  public IntakeCommand(IntakeSubsystem subsystem) {
-    m_intakeSubsystem = subsystem;
+  public IntakeCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_armChecker) {
+    m_intakeSubsystem = p_intakeSubsystem;
+    m_armChecker = p_armChecker;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(m_intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -26,12 +29,14 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intakeSubsystem.runIntake();
-    m_intakeSubsystem.setIntakeDown();
-    m_intakeSubsystem.unsqueeze();
-    if (m_intakeSubsystem.isGamePiece()) {
-      m_intakeSubsystem.squeeze();
-      m_intakeSubsystem.stopIntake();
+    if (m_armChecker.managerApproved()) {
+      m_intakeSubsystem.runIntake();
+      m_armChecker.setIntakeDownWithArmCheck();
+      m_intakeSubsystem.unsqueeze();
+      if (m_intakeSubsystem.isGamePiece()) {
+        m_intakeSubsystem.squeeze();
+        m_intakeSubsystem.stopIntake();
+      }
     }
   }
 

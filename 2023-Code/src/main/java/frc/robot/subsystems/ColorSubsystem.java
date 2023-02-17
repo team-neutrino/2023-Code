@@ -22,13 +22,13 @@ public class ColorSubsystem extends SubsystemBase {
 
   private final Color C_Yellow = new Color(87, 146, 21);
   private final Color C_Purple = new Color(55, 102, 96);
-  private final Color C_Purple2 = new Color(56, 115, 83);
+  private final Color C_LogoPurple = new Color(56, 115, 83);
   private final Color C_Default = new Color(66, 125, 63);
 
   public ColorSubsystem() {
     m_colorMatcher.addColorMatch(C_Yellow);
     m_colorMatcher.addColorMatch(C_Purple);
-    m_colorMatcher.addColorMatch(C_Purple2);
+    m_colorMatcher.addColorMatch(C_LogoPurple);
     m_colorMatcher.addColorMatch(C_Default);
   }
 
@@ -37,7 +37,6 @@ public class ColorSubsystem extends SubsystemBase {
     Color detectedColor = getColor();
     m_isYellow = isYellow(detectedColor);
     m_isPurple = isPurple(detectedColor);
-    System.out.println(getPiece());
   }
 
   public boolean getIsYellow() {
@@ -69,7 +68,7 @@ public class ColorSubsystem extends SubsystemBase {
 
   public boolean isPurple(Color detectedColor) {
     ColorMatchResult matchResult = m_colorMatcher.matchClosestColor(detectedColor);
-    return C_Purple.equals(matchResult.color) || C_Purple2.equals(matchResult.color);
+    return C_Purple.equals(matchResult.color) || C_LogoPurple.equals(matchResult.color);
   }
 
   public boolean isDefault(Color detectedColor) {
