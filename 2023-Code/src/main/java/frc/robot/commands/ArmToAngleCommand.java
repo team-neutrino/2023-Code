@@ -14,7 +14,6 @@ public class ArmToAngleCommand extends CommandBase {
   private double m_targetAngle;
   private double voltage;
 
-  /** Creates a new ArmToAngleCommand. */
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem, ViennaPIDController p_pidController, double p_targetAngle) {
     m_armSubsystem = p_armSubsystem;

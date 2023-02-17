@@ -11,7 +11,6 @@ public class ArmAdjustCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private double voltage;
   
-  /** Creates a new ArmIterateAngleCommand. */
   public ArmAdjustCommand(
       ArmSubsystem p_armSubsystem, double p_voltage) {
     m_armSubsystem = p_armSubsystem;

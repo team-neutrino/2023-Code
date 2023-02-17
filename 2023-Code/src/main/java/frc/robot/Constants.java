@@ -79,8 +79,9 @@ public final class Constants {
     public static final int GRABBER = 2;
   }
 
-  public static class VariableConstants {
-    public static final double DEADZONE = 0.1;
+  public static class DrivetrainConstants {
+    public static final double JOYSTICK_DEADZONE = 0.1;
+    public static final double AUTO_BALANCE_DEADZONE = 0.4;
   }
 
   public static class DigitalConstants {

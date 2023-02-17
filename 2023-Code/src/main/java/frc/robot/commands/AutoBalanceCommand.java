@@ -2,21 +2,19 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.PIDConstants;
+import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class AutoBalanceCommand extends CommandBase {
 
   private final DriveTrainSubsystem m_drivetrain;
 
-  final double ish = 0.4;
+  private double desiredPos = 0;
+  private double error;
+  private double previousError = 0;
 
-  double desiredPos = 0;
-  double error;
-  double previousError = 0;
-
-  double voltage;
-  double integral = 0;
-  double derivative = 0;
+  private double voltage;
+  private double integral = 0;
 
   public AutoBalanceCommand(DriveTrainSubsystem p_drivetrain) {
     m_drivetrain = p_drivetrain;
@@ -30,7 +28,7 @@ public class AutoBalanceCommand extends CommandBase {
   public void execute() {
     previousError = error;
     error = desiredPos - m_drivetrain.getPitch();
-    if (error <= ish && error >= -ish) {
+    if (error <= DrivetrainConstants.AUTO_BALANCE_DEADZONE && error >= -DrivetrainConstants.AUTO_BALANCE_DEADZONE) {
       error = 0;
     }
     voltage =

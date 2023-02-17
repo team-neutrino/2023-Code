@@ -10,7 +10,6 @@ import frc.robot.subsystems.ArmSubsystem;
 public class ArmDefaultCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
 
-  /** Creates a new ArmDefaultCommand. */
   public ArmDefaultCommand(ArmSubsystem p_armSubsystem) {
     m_armSubsystem = p_armSubsystem;
     addRequirements(m_armSubsystem);
