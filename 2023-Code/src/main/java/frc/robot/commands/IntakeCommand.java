@@ -13,7 +13,6 @@ public class IntakeCommand extends CommandBase {
   IntakeSubsystem m_intakeSubsystem;
   IntakeManager m_intakeManager;
 
-  /** Creates a new IntakeCommand. */
   public IntakeCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_intakeSubsystem;
     m_intakeManager = p_intakeManager;

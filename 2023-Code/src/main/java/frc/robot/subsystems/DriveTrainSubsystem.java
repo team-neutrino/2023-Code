@@ -17,10 +17,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.MotorConstants;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.DrivetrainConstants;
-
+import frc.robot.Constants.MotorConstants;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
@@ -29,19 +28,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
 
   // MOTORS
-  private CANSparkMax m_motorRight1 =
-      new CANSparkMax(MotorConstants.MOTOR_RIGHT1, MotorType.kBrushless);
-  private CANSparkMax m_motorRight2 =
-      new CANSparkMax(MotorConstants.MOTOR_RIGHT2, MotorType.kBrushless);
   private CANSparkMax m_motorLeft1 =
       new CANSparkMax(MotorConstants.MOTOR_LEFT1, MotorType.kBrushless);
   private CANSparkMax m_motorLeft2 =
       new CANSparkMax(MotorConstants.MOTOR_LEFT2, MotorType.kBrushless);
+  private CANSparkMax m_motorRight1 =
+      new CANSparkMax(MotorConstants.MOTOR_RIGHT1, MotorType.kBrushless);
+  private CANSparkMax m_motorRight2 =
+      new CANSparkMax(MotorConstants.MOTOR_RIGHT2, MotorType.kBrushless);
 
-  private RelativeEncoder m_encoderRight1;
-  private RelativeEncoder m_encoderRight2;
   private RelativeEncoder m_encoderLeft1;
   private RelativeEncoder m_encoderLeft2;
+  private RelativeEncoder m_encoderRight1;
+  private RelativeEncoder m_encoderRight2;
   private Joystick m_leftJoystick;
   private Joystick m_rightJoystick;
   MotorControllerGroup m_motorGroupRight = new MotorControllerGroup(m_motorRight1, m_motorRight2);

@@ -10,9 +10,8 @@ import frc.robot.subsystems.ArmSubsystem;
 public class ArmAdjustCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private double voltage;
-  
-  public ArmAdjustCommand(
-      ArmSubsystem p_armSubsystem, double p_voltage) {
+
+  public ArmAdjustCommand(ArmSubsystem p_armSubsystem, double p_voltage) {
     m_armSubsystem = p_armSubsystem;
     voltage = p_voltage;
     addRequirements(m_armSubsystem);

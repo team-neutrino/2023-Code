@@ -8,7 +8,6 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
-/** Add your docs here. */
 public class IntakeManager {
   private ArmSubsystem m_armSubsystem;
   private IntakeSubsystem m_intakeSubystem;
