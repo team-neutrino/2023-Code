@@ -31,7 +31,7 @@ public class AutoBalanceCommand extends CommandBase {
   public void execute() {
     previousError = error;
     error = desiredPos - m_drivetrain.getPitch();
-    if (error <= ish && error >= -ish) {
+    if (Math.abs(error) <= ish) {
       error = 0;
     }
     voltage =

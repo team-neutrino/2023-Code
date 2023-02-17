@@ -102,4 +102,9 @@ public final class Constants {
     public static final double ENCODER_VELOCITY_CONVERSION = GEAR_RATIO * WHEEL_CIRCUMFERENCE / 60;
     public static final double MAXSPEED = 0.7;
   }
+
+  public static class UtilConstants {
+    public static final String UNIVERSAL_DIRECTORY =
+        "\\src\\main\\java\\frc\\robot\\util\\trajectoryInput\\";
+  }
 }

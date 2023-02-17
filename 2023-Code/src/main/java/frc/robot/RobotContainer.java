@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -27,6 +26,7 @@ import frc.robot.commands.IntakeUnsqeezeCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
+import frc.robot.commands.autonomous.TestAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -195,8 +195,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return m_shuffleboardSubsystem
-        .getAutoSelected()
-        .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+    return new TestAuton(m_driveTrainSubsystem);
   }
 }
