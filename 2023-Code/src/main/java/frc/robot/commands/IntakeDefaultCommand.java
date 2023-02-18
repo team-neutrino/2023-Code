@@ -42,9 +42,13 @@ public class IntakeDefaultCommand extends CommandBase {
       m_intakeManager.setIntakeUpWithArmCheck();
     }
     else {
-      if(!m_intakeSubsystem.detectedGamePiece()) {
-        m_intakeSubsystem.unsqueeze();
-      }
+      //TODO TEST THE COMMENTED OUT CODE BELOW THEN MERGE W/ MAIN:
+
+      // if(!m_intakeSubsystem.detectedGamePiece()) {
+      //   m_intakeSubsystem.unsqueeze();
+      // }
+      
+      m_intakeSubsystem.unsqueeze();
     }
   }
 
