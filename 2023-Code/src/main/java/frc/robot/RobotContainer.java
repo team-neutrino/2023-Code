@@ -124,7 +124,8 @@ public class RobotContainer {
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
-  private final IntakeUnsqueezeCommand m_intakeUnsqueezeCommand = new IntakeUnsqueezeCommand(m_intakeSubsystem);
+  private final IntakeUnsqueezeCommand m_intakeUnsqueezeCommand =
+      new IntakeUnsqueezeCommand(m_intakeSubsystem);
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
   private final LEDCommand m_LedDefaultCommand =
@@ -160,7 +161,7 @@ public class RobotContainer {
 
     m_leftBumper.whileTrue(m_intakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
-    
+
     m_rightBumper.whileTrue(new ScoringCloseCommand(m_scoringSubsystem));
 
     // LED Buttons
