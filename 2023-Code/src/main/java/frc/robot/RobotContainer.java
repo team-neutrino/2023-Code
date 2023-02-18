@@ -162,7 +162,6 @@ public class RobotContainer {
     m_leftBumper.whileTrue(m_intakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
 
-
     m_rightBumper.whileTrue(new ScoringCloseCommand(m_scoringSubsystem));
 
     // LED Buttons
