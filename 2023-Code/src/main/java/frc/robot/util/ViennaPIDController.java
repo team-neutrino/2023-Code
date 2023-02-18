@@ -73,7 +73,8 @@ public class ViennaPIDController {
   }
 
   private double bounder(double unbounded) {
-    return Math.min(Math.max(unbounded, Constants.PIDConstants.MIN_OUTPUT), Constants.PIDConstants.MAX_OUTPUT);
+    return Math.min(
+        Math.max(unbounded, Constants.PIDConstants.MIN_OUTPUT), Constants.PIDConstants.MAX_OUTPUT);
   }
 
   public double run(double realPos, double desiredPos) {
