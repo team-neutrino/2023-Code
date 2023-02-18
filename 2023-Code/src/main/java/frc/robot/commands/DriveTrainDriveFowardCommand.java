@@ -79,7 +79,6 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   @Override
   public void execute() {
 
-    //DO THE MATH
     if (actionCounter == 0) {
 
       if (m_limelight.getTv()) {
@@ -100,9 +99,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
           System.out.println("step 0 ended");
         }
       }
-    //STEP ONE
     } else if (actionCounter == 1) {
-      //DO THE MATH AGAIN
       if (firstRun == 0) {
         rmotorPosition = m_drivetrain.getR1Pos();
         lmotorPosition = m_drivetrain.getL1Pos();
@@ -116,7 +113,6 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
       }
 
       boolean stop = false;
-      //TURNS THETA
       if (theta > 0) {
 
         stop = m_drivetrain.turnMotor(turnAngle1 - 0.3, rmotorPosition, lmotorPosition);
@@ -133,7 +129,6 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
         System.out.println("ended step 1");
       }
 
-    //the same as step one?!?!?!??!?!
     } else if (actionCounter == 2) {
       // System.out.println("first run for 2 is " + firstRun);
       if (firstRun == 0) {
@@ -143,7 +138,6 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
       }
 
       boolean stop = false;
-      //drives forward the good distance perpendicular
       if (array[0] > 0) {
         //System.out.println("array0 " + array[0]);
         stop = m_drivetrain.setMotorPosition(array[0] + 0.2, rmotorPosition, lmotorPosition);
