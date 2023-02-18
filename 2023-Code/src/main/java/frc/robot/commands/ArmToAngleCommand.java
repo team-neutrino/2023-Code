@@ -28,11 +28,11 @@ public class ArmToAngleCommand extends CommandBase {
   @Override
   public void execute() {
     voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), m_targetAngle);
-    if (voltage > 0.1) {
-      voltage = 0.1;
-    } else if (voltage < -0.1) {
-      voltage = -0.1;
-    }
+    // if (voltage > 0.1) {
+    //   voltage = 0.1;
+    // } else if (voltage < -0.1) {
+    //   voltage = -0.1;
+    // }
     m_armSubsystem.set(voltage);
   }
 

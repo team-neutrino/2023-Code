@@ -11,7 +11,6 @@ public class ViennaPIDController {
   private double m_f;
 
   private double m_iState;
-  private double m_iZone;
 
   private double previousError = 0;
 
@@ -73,19 +72,6 @@ public class ViennaPIDController {
     m_d = p_d;
   }
 
-  public void setIZone(double p_iZone) {
-    m_iZone = p_iZone;
-  }
-
-  private double updateI(double error, double currentState) {
-    if(Math.abs(error) <= m_iZone || m_iZone == Constants.PIDConstants.IZONE_DISABLE_KEY) {
-      currentState += error * PIDConstants.dt;
-    } else {
-      currentState = 0;
-    }
-    return currentState;
-  }
-
   private double bounder(double unbounded) {
     return Math.min(Math.max(unbounded, Constants.PIDConstants.MIN_OUTPUT), Constants.PIDConstants.MAX_OUTPUT);
   }
@@ -94,7 +80,7 @@ public class ViennaPIDController {
     double error = desiredPos - realPos;
 
     /*Integral calculation */
-    m_iState = updateI(error, m_iState);
+    m_iState += error * PIDConstants.dt;
 
     /*Derivative calculation */
     double derivative = (error - previousError) / PIDConstants.dt;
@@ -104,6 +90,7 @@ public class ViennaPIDController {
 
     double output = m_p * error + m_i * m_iState + m_d * derivative + ff;
 
+    System.out.println(output);
     return bounder(output);
   }
 }
