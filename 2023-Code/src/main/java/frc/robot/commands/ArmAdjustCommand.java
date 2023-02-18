@@ -9,11 +9,11 @@ import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmAdjustCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
-  private double voltage;
+  private double m_voltage;
 
   public ArmAdjustCommand(ArmSubsystem p_armSubsystem, double p_voltage) {
     m_armSubsystem = p_armSubsystem;
-    voltage = p_voltage;
+    m_voltage = p_voltage;
     addRequirements(m_armSubsystem);
   }
 
@@ -22,7 +22,7 @@ public class ArmAdjustCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_armSubsystem.set(voltage);
+    m_armSubsystem.set(m_voltage);
   }
 
   @Override
