@@ -34,7 +34,7 @@ public class ArmSubsystem extends SubsystemBase {
     m_pidController.setI(PIDConstants.ARM_I);
     m_pidController.setD(PIDConstants.ARM_D);
     m_pidController.setFF(PIDConstants.ARM_FF);
-    m_pidController.setOutputRange(PIDConstants.ARM_MINIMUM, PIDConstants.ARM_MAXIMUM);
+    m_pidController.setOutputRange(PIDConstants.ARM_BACKMOST, PIDConstants.ARM_FRONTMOST);
   }
 
   public double getAbsolutePosition() {
