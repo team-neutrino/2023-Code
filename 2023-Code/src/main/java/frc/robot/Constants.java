@@ -57,14 +57,21 @@ public final class Constants {
   public static class PIDConstants {
     public static final double dt = 20;
 
-    public static final double ARM_P = 0.07;
+    public static final double ARM_P = 0.04;
     public static final int ARM_I = 0;
     public static final int ARM_D = 0;
     public static final int ARM_FF = 0;
+    public static final int ARM_BACKMOST = -1;
+    public static final int ARM_FRONTMOST = 1;
 
-    public static final double BALANCE_P = 0.2;
+    public static final double BALANCE_P = 0.08;
     public static final double BALANCE_I = 0;
     public static final double BALANCE_D = 0;
+
+    public static final double MIN_OUTPUT = -.3;
+    public static final double MAX_OUTPUT = .3;
+    
+    public static final int IZONE_DISABLE_KEY = 3928;
   }
 
   public static class PneumaticsConstants {
