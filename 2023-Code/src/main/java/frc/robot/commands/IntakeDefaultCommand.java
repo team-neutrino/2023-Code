@@ -41,6 +41,11 @@ public class IntakeDefaultCommand extends CommandBase {
       m_intakeSubsystem.squeeze();
       m_intakeManager.setIntakeUpWithArmCheck();
     }
+    else {
+      if(!m_intakeSubsystem.detectedGamePiece()) {
+        m_intakeSubsystem.unsqueeze();
+      }
+    }
   }
 
   @Override

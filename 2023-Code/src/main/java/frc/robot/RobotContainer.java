@@ -160,8 +160,7 @@ public class RobotContainer {
     m_leftArrow.whileTrue(m_intakeUnsqueezeCommand);
 
     m_leftBumper.whileTrue(m_intakeReverseCommand);
-    // m_leftTrigger.whileTrue(m_intakeCommand);
-    m_leftTrigger.whileTrue(m_autoProcessCommand);
+    m_leftTrigger.whileTrue(m_intakeCommand);
 
 
     m_rightBumper.whileTrue(new ScoringCloseCommand(m_scoringSubsystem));
