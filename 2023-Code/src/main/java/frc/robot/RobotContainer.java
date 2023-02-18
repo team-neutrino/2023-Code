@@ -22,6 +22,7 @@ import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeReverseCommand;
+import frc.robot.commands.IntakeUnsqueezeCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
@@ -123,6 +124,7 @@ public class RobotContainer {
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
+  private final IntakeUnsqueezeCommand m_intakeUnsqueezeCommand = new IntakeUnsqueezeCommand(m_intakeSubsystem);
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
   private final LEDCommand m_LedDefaultCommand =
@@ -154,10 +156,11 @@ public class RobotContainer {
     // used for small adjustments of the arm
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
+    m_leftArrow.whileTrue(m_intakeUnsqueezeCommand);
 
     m_leftBumper.whileTrue(m_intakeReverseCommand);
-
     m_leftTrigger.whileTrue(m_intakeCommand);
+    
     m_rightBumper.whileTrue(new ScoringCloseCommand(m_scoringSubsystem));
 
     // LED Buttons
