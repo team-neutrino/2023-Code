@@ -8,7 +8,6 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
-/** Add your docs here. */
 public class IntakeManager {
   private ArmSubsystem m_armSubsystem;
   private IntakeSubsystem m_intakeSubystem;
@@ -25,7 +24,7 @@ public class IntakeManager {
    * @return If it is OK to run intake-dependant commands.
    */
   public boolean managerApproved() {
-    return !m_armSubsystem.atPosition(Constants.ArmConstants.INTAKE_RUNNABLE);
+    return m_armSubsystem.getAbsolutePosition() <= Constants.ArmConstants.INTAKE_RUNNABLE;
   }
 
   /**

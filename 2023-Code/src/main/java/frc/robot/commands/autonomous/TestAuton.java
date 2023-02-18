@@ -10,10 +10,12 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.util.AutonomousUtil;
 
 public class TestAuton extends SequentialCommandGroup {
+  DriveTrainSubsystem m_drivetrainSubsystem;
 
-  public TestAuton(DriveTrainSubsystem p_driveTrainSubsystem) {
+  public TestAuton(DriveTrainSubsystem p_drivetrainSubsystem) {
+    m_drivetrainSubsystem = p_drivetrainSubsystem;
     RamseteCommand testCommand =
-        AutonomousUtil.generateRamseteFromPoseFile("testFile.txt", p_driveTrainSubsystem);
+        AutonomousUtil.generateRamseteFromPoseFile("testFile.txt", p_drivetrainSubsystem);
 
     addCommands(testCommand);
   }

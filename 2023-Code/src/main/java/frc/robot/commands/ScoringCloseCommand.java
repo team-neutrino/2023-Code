@@ -10,7 +10,6 @@ import frc.robot.subsystems.ScoringSubsystem;
 public class ScoringCloseCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
 
-  /** Creates a new ScoringCommand. */
   public ScoringCloseCommand(ScoringSubsystem p_scoringSubsystem) {
     m_scoringSubsystem = p_scoringSubsystem;
     addRequirements(m_scoringSubsystem);

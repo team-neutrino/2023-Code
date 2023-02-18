@@ -14,20 +14,16 @@ public class IntakeReverseCommand extends CommandBase {
   private IntakeSubsystem m_intakeSubsystem;
   private IntakeManager m_intakeManager;
 
-  /** Creates a new IntakeReverseCommand. */
-  public IntakeReverseCommand(IntakeSubsystem subsystem, IntakeManager p_intakeManager) {
-    m_intakeSubsystem = subsystem;
+  public IntakeReverseCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
+    m_intakeSubsystem = p_intakeSubsystem;
     m_intakeManager = p_intakeManager;
 
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(p_intakeSubsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (m_intakeManager.managerApproved()) {
@@ -37,11 +33,9 @@ public class IntakeReverseCommand extends CommandBase {
     }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

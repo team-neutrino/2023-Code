@@ -11,40 +11,36 @@ import frc.robot.util.IntakeManager;
 public class IntakeCommand extends CommandBase {
 
   IntakeSubsystem m_intakeSubsystem;
-  IntakeManager m_armChecker;
+  IntakeManager m_intakeManager;
 
-  /** Creates a new IntakeCommand. */
-  public IntakeCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_armChecker) {
+  public IntakeCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_intakeSubsystem;
-    m_armChecker = p_armChecker;
+    m_intakeManager = p_intakeManager;
 
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_intakeSubsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_armChecker.managerApproved()) {
-      m_intakeSubsystem.runIntake();
-      m_armChecker.setIntakeDownWithArmCheck();
-      m_intakeSubsystem.unsqueeze();
-      if (m_intakeSubsystem.isGamePiece()) {
+    if (m_intakeManager.managerApproved()) {
+      if (!m_intakeSubsystem.detectedGamePiece()) {
+        m_intakeSubsystem.runIntake();
+        m_intakeManager.setIntakeDownWithArmCheck();
+        m_intakeSubsystem.unsqueeze();
+      } else {
+
         m_intakeSubsystem.squeeze();
         m_intakeSubsystem.stopIntake();
       }
     }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

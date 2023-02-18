@@ -7,18 +7,18 @@ import frc.robot.util.DriverStationInfo;
 
 public class LEDPotentialDefaultCommand extends CommandBase {
 
-  private LEDSubsystem m_LedSubsystem;
-  private DriverStationInfo m_DriverStationInfo;
+  private LEDSubsystem m_ledSubsystem;
+  private DriverStationInfo m_driverStationInfo;
 
   public LEDPotentialDefaultCommand() {}
 
   @Override
   public void initialize() {
-    if (m_DriverStationInfo.getAlliance().equals(Alliance.Red)) {
-      m_LedSubsystem.setToRed();
+    if (m_driverStationInfo.getAlliance().equals(Alliance.Red)) {
+      m_ledSubsystem.setToRed();
     }
-    if (m_DriverStationInfo.getAlliance().equals(Alliance.Blue)) {
-      m_LedSubsystem.setToBlue();
+    if (m_driverStationInfo.getAlliance().equals(Alliance.Blue)) {
+      m_ledSubsystem.setToBlue();
     }
   }
 

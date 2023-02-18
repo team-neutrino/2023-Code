@@ -4,14 +4,6 @@
 
 package frc.robot;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
- */
 public final class Constants {
   public static class OperatorConstants {
     public static final int JOYSTICK_LEFT = 0;
@@ -31,10 +23,10 @@ public final class Constants {
     public static final int MOTOR_LEFT2 = 14;
 
     // INTAKE
-    public static final int INTAKEMOTOR1 = 21;
+    public static final int INTAKEMOTOR = 21;
 
     // ARM
-    public static final int ARM_MOTOR1 = 31;
+    public static final int ARM_MOTOR = 31;
   }
 
   public static class ArmConstants {
@@ -52,7 +44,7 @@ public final class Constants {
     // INTAKE_RUNNABLE IS AN ARBITRARY NUMBER, TODO FIND ACTUAL VALUE
     // This value represents the angles where the intake CANNOT be run because
     // it would run into the arm if it were to go up or come down
-    public static final double INTAKE_RUNNABLE = 1000000;
+    public static final double INTAKE_RUNNABLE = FORWARD_MID;
 
     public static final double M_PI = Math.PI;
     public static final double WHEEL_SIZE = 1;
@@ -81,8 +73,9 @@ public final class Constants {
     public static final int GRABBER = 2;
   }
 
-  public static class VariableConstants {
-    public static final double DEADZONE = 0.1;
+  public static class DrivetrainConstants {
+    public static final double JOYSTICK_DEADZONE = 0.1;
+    public static final double AUTO_BALANCE_DEADZONE = 0.4;
   }
 
   public static class DigitalConstants {
