@@ -21,15 +21,15 @@ public class TrajectoryConfigConstants {
   public static final double KP_DRIVE_VEL = 3.4239;
   public static final double KS_VOLTS = 0.19143;
 
-  private static final DifferentialDriveVoltageConstraint m_autoVoltageConstraint =
+  private static final DifferentialDriveVoltageConstraint K_AUTO_VOLTAGE_CONSTRAINT =
       new DifferentialDriveVoltageConstraint(
           new SimpleMotorFeedforward(
               KS_VOLTS, KV_VOLT_SECONDS_PER_METER, KA_VOLT_SECONDS_SQUARED_PER_METER),
           K_DRIVE_KINEMATICS,
           10);
 
-  public static final TrajectoryConfig m_ForwardConfig =
+  public static final TrajectoryConfig K_FORWARD_CONFIG =
       new TrajectoryConfig(10, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
           .setKinematics(K_DRIVE_KINEMATICS)
-          .addConstraint(m_autoVoltageConstraint);
+          .addConstraint(K_AUTO_VOLTAGE_CONSTRAINT);
 }
