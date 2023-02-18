@@ -117,7 +117,7 @@ public class RobotContainer {
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
   private final AutoProcessCommand m_autoProcessCommand =
-      new AutoProcessCommand(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
+      new AutoProcessCommand(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_armPidController);
 
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
