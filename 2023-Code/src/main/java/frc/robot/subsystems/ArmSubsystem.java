@@ -11,31 +11,30 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.DigitalConstants;
+import frc.robot.Constants.MotorConstants;
+import frc.robot.Constants.PIDConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
-  private CANSparkMax m_armMotor =
-      new CANSparkMax(Constants.MotorConstants.ARM_MOTOR1, MotorType.kBrushless);
+  private CANSparkMax m_armMotor = new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_armMotor.getEncoder();
-  private DutyCycleEncoder m_externalEncoder =
-      new DutyCycleEncoder(Constants.DigitalConstants.ARM_ENCODER);
+  private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
   private SparkMaxPIDController m_pidController;
 
-  /** Creates a new ArmSubsystem. */
   public ArmSubsystem() {
     m_armMotor.restoreFactoryDefaults();
 
     m_pidController = m_armMotor.getPIDController();
-    m_encoder.setPositionConversionFactor(Constants.ArmConstants.ROTATION_TO_INCHES);
+    m_encoder.setPositionConversionFactor(ArmConstants.ROTATION_TO_INCHES);
 
     m_pidController.setFeedbackDevice(m_encoder);
-    m_pidController.setP(Constants.PIDConstants.ARM_P);
-    m_pidController.setI(Constants.PIDConstants.ARM_I);
-    m_pidController.setD(Constants.PIDConstants.ARM_D);
-    m_pidController.setFF(Constants.PIDConstants.ARM_FF);
-    m_pidController.setOutputRange(
-        Constants.PIDConstants.ARM_MINIMUM, Constants.PIDConstants.ARM_MAXIMUM);
+    m_pidController.setP(PIDConstants.ARM_P);
+    m_pidController.setI(PIDConstants.ARM_I);
+    m_pidController.setD(PIDConstants.ARM_D);
+    m_pidController.setFF(PIDConstants.ARM_FF);
+    m_pidController.setOutputRange(PIDConstants.ARM_MINIMUM, PIDConstants.ARM_MAXIMUM);
   }
 
   public double getAbsolutePosition() {
@@ -69,7 +68,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public boolean atPosition(double targetPosition) {
-    if (Math.abs(getAbsolutePosition() - targetPosition) < Constants.ArmConstants.ARM_DEADZONE) {
+    if (Math.abs(getAbsolutePosition() - targetPosition) < ArmConstants.ARM_DEADZONE) {
       return true;
     }
     return false;

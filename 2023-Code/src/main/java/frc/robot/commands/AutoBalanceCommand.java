@@ -1,23 +1,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.Constants.PIDConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class AutoBalanceCommand extends CommandBase {
 
   private final DriveTrainSubsystem m_drivetrain;
 
-  final double ish = 0.4;
-  final double dt = .02;
+  private double desiredPos = 0;
+  private double error;
+  private double previousError = 0;
 
-  double desiredPos = 0;
-  double error;
-  double previousError = 0;
-
-  double voltage;
-  double integral = 0;
-  double derivative = 0;
+  private double voltage;
+  private double integral = 0;
 
   public AutoBalanceCommand(DriveTrainSubsystem p_drivetrain) {
     m_drivetrain = p_drivetrain;
@@ -31,13 +28,13 @@ public class AutoBalanceCommand extends CommandBase {
   public void execute() {
     previousError = error;
     error = desiredPos - m_drivetrain.getPitch();
-    if (error <= ish && error >= -ish) {
+    if (Math.abs(error) <= DrivetrainConstants.AUTO_BALANCE_DEADZONE) {
       error = 0;
     }
     voltage =
-        error * Constants.PIDConstants.BALANCE_P
-            + Constants.PIDConstants.BALANCE_I * (integral += (error * dt))
-            + Constants.PIDConstants.BALANCE_D * (error - previousError) / dt;
+        error * PIDConstants.BALANCE_P
+            + PIDConstants.BALANCE_I * (integral += (error * PIDConstants.dt))
+            + PIDConstants.BALANCE_D * (error - previousError) / PIDConstants.dt;
     m_drivetrain.setVoltage(voltage, voltage);
     previousError = error;
   }
