@@ -26,7 +26,6 @@ import frc.robot.commands.IntakeUnsqeezeCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
-import frc.robot.commands.autonomous.TestAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -193,7 +192,7 @@ public class RobotContainer {
     m_buttonBack.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
   }
-
+  
   public Command getAutonomousCommand() {
     return new TestAuton(m_driveTrainSubsystem);
   }
