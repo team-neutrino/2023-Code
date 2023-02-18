@@ -26,6 +26,7 @@ import frc.robot.commands.IntakeUnsqeezeCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
+import frc.robot.commands.autonomous.TestAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -180,11 +181,12 @@ public class RobotContainer {
     // used for small adjustments of the arm
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
+    
     m_rightArrow.onTrue(m_autoBalanceCommand);
-    m_leftBumper.whileTrue(m_IntakeReverseCommand);
-    m_leftArrow.whileTrue(m_unsqueezeCommand);
 
     m_leftTrigger.whileTrue(m_intakeCommand);
+    m_leftBumper.whileTrue(m_IntakeReverseCommand);
+    m_leftArrow.whileTrue(m_unsqueezeCommand);
 
     // LED Buttons
     m_buttonStart.onTrue(
@@ -192,7 +194,7 @@ public class RobotContainer {
     m_buttonBack.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
   }
-  
+
   public Command getAutonomousCommand() {
     return new TestAuton(m_driveTrainSubsystem);
   }
