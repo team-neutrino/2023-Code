@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -28,8 +29,7 @@ public class AutoBalanceCommand extends CommandBase {
   public void execute() {
     previousError = error;
     error = desiredPos - m_drivetrain.getPitch();
-    if (error <= DrivetrainConstants.AUTO_BALANCE_DEADZONE
-        && error >= -DrivetrainConstants.AUTO_BALANCE_DEADZONE) {
+    if (Math.abs(error) <= DrivetrainConstants.AUTO_BALANCE_DEADZONE) {
       error = 0;
     }
     voltage =
