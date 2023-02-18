@@ -4,14 +4,13 @@
 
 package frc.robot.commands.autonomous.manualGeneration;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.PoseTriplet;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -26,11 +25,12 @@ public class TestAutonGeneratedTrajectory extends SequentialCommandGroup {
   public TestAutonGeneratedTrajectory(DriveTrainSubsystem p_drivetrainSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
 
-    forwardBackArray = new ArrayList<PoseTriplet>(
-    Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(25, 0, 0))
-    );
+    forwardBackArray =
+        new ArrayList<PoseTriplet>(
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(25, 0, 0)));
 
-    forwardBackCommand = AutonomousUtil.generateRamseteFromPoses(forwardBackArray, m_drivetrainSubsystem);
+    forwardBackCommand =
+        AutonomousUtil.generateRamseteFromPoses(forwardBackArray, m_drivetrainSubsystem);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
