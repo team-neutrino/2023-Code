@@ -46,7 +46,6 @@ public final class Constants {
     public static final double BACK_DOWN = 17;
     public static final double ARM_DEADZONE = 1;
 
-    // INTAKE_RUNNABLE IS AN ARBITRARY NUMBER, TODO FIND ACTUAL VALUE
     // This value represents the angles where the intake CANNOT be run because
     // it would run into the arm if it were to go up or come down
     public static final double INTAKE_RUNNABLE = FORWARD_MID;
