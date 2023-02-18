@@ -42,7 +42,7 @@ public class IntakeDefaultCommand extends CommandBase {
       m_intakeSubsystem.stopIntake();
       // in case we're holding a game piece, we want to keep a hold of it
       m_intakeSubsystem.unsqueeze();
-      //setting intake up WITH arm check is intentional redudancy
+      // setting intake up WITH arm check is intentional redudancy
       m_intakeManager.setIntakeUpWithArmCheck();
     }
   }
