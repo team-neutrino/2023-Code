@@ -57,8 +57,8 @@ public final class Constants {
     public static final int ARM_I = 0;
     public static final int ARM_D = 0;
     public static final int ARM_FF = 0;
-    public static final int ARM_MINIMUM = -1;
-    public static final int ARM_MAXIMUM = 1;
+    public static final int ARM_BACK_MOST = -1;
+    public static final int ARM_FRONT_MOST = 1;
     public static final double MIN_OUTPUT = -.3;
     public static final double MAX_OUTPUT = .3;
 
