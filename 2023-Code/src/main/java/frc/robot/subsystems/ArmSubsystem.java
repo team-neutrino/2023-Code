@@ -19,8 +19,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   private CANSparkMax m_armMotor = new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_armMotor.getEncoder();
-  private DutyCycleEncoder m_externalEncoder =
-      new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
+  private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
   private SparkMaxPIDController m_pidController = m_armMotor.getPIDController();
   private boolean softLimitOn = false;
 
@@ -81,5 +80,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    System.out.println("Arm position right now: " + getAbsolutePosition());
+  }
 }
