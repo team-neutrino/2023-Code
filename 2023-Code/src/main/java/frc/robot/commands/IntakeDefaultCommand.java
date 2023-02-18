@@ -19,19 +19,16 @@ public class IntakeDefaultCommand extends CommandBase {
   IntakeManager m_intakeManager;
 
   /** Constructor, creates a new IntakeDefaultCommand. */
-  public IntakeDefaultCommand(IntakeSubsystem subsystem, IntakeManager p_inIntakeManager) {
-    m_intakeSubsystem = subsystem;
+  public IntakeDefaultCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_inIntakeManager) {
+    m_intakeSubsystem = p_intakeSubsystem;
     m_intakeManager = p_inIntakeManager;
 
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(m_intakeSubsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   /**
    * This command's purpose is to ensure that the intake is up and not running when the button isn't
    * pressed.
@@ -46,11 +43,9 @@ public class IntakeDefaultCommand extends CommandBase {
     }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

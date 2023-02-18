@@ -41,11 +41,40 @@ import frc.robot.util.LEDColor;
 import frc.robot.util.ViennaPIDController;
 
 public class RobotContainer {
-  // Replace with CommandPS4Controller or CommandJoystick if needed
   // CONTROLLERS
   private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
   private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICK_LEFT);
   private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JOYSTICK_RIGHT);
+
+  // XBOX BUTTON BABES
+  private final JoystickButton m_buttonA =
+      new JoystickButton(m_driverController, XboxController.Button.kA.value);
+  private final JoystickButton m_buttonB =
+      new JoystickButton(m_driverController, XboxController.Button.kB.value);
+  private final JoystickButton m_buttonX =
+      new JoystickButton(m_driverController, XboxController.Button.kX.value);
+  private final JoystickButton m_buttonY =
+      new JoystickButton(m_driverController, XboxController.Button.kY.value);
+
+  private final Trigger m_leftBumper =
+      new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton m_rightBumper =
+      new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
+
+  private final Trigger m_leftTrigger =
+      new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
+  private final Trigger m_rightTrigger =
+      new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
+
+  private final JoystickButton m_buttonStart =
+      new JoystickButton(m_driverController, XboxController.Button.kStart.value);
+  private final JoystickButton m_buttonBack =
+      new JoystickButton(m_driverController, XboxController.Button.kBack.value);
+
+  private final POVButton m_upArrow = new POVButton(m_driverController, 0);
+  private final POVButton m_downArrow = new POVButton(m_driverController, 180);
+  private final POVButton m_leftArrow = new POVButton(m_driverController, 270);
+  private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
 
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrainSubsystem =
@@ -56,14 +85,15 @@ public class RobotContainer {
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
   private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
   private final PneumaticSubsystem m_PneumaticSubsystem = new PneumaticSubsystem();
-  private final ColorSubsystem m_colorsubsystem = new ColorSubsystem();
+  private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
 
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
   private final ViennaPIDController m_armPidController =
       new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
-  private IntakeManager m_IntakeManager = new IntakeManager(m_armSubsystem, m_intakeSubsystem);
+  private IntakeManager m_intakeManager = new IntakeManager(m_armSubsystem, m_intakeSubsystem);
 
+  // SHUFFLEBOARD
   private final ShuffleboardSubsystem m_shuffleboardSubsystem =
       new ShuffleboardSubsystem(
           m_driverStationInfo,
@@ -72,68 +102,32 @@ public class RobotContainer {
           m_limelightSubsystem,
           m_armSubsystem,
           m_intakeSubsystem,
-          m_colorsubsystem,
+          m_colorSubsystem,
           m_ledSubsystem);
 
-  // BUTTONS
-  private final JoystickButton m_buttonA =
-      new JoystickButton(m_driverController, XboxController.Button.kA.value);
-  private final JoystickButton m_buttonB =
-      new JoystickButton(m_driverController, XboxController.Button.kB.value);
-  private final JoystickButton m_buttonX =
-      new JoystickButton(m_driverController, XboxController.Button.kX.value);
-  private final JoystickButton m_buttonY =
-      new JoystickButton(m_driverController, XboxController.Button.kY.value);
-
-  // BUTTON BABES
-  // If confused about leftbumper assignment ask Nathan
-  private final Trigger m_leftBumper =
-      new JoystickButton(m_driverController, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton m_rightBumper =
-      new JoystickButton(m_driverController, XboxController.Button.kRightBumper.value);
-  private final JoystickButton m_buttonStart =
-      new JoystickButton(m_driverController, XboxController.Button.kStart.value);
-
   // COMMANDS
-  private final AutoBalanceCommand m_autoBalanceCommand =
-      new AutoBalanceCommand(m_driveTrainSubsystem);
-  private final JoystickButton m_buttonBack =
-      new JoystickButton(m_driverController, XboxController.Button.kBack.value);
-  private final POVButton m_upArrow = new POVButton(m_driverController, 0);
-  private final POVButton m_downArrow = new POVButton(m_driverController, 180);
-  private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
-
-  // If confused about lefttrigger assignment ask Nathan
-  private final Trigger m_leftTrigger =
-      (new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5));
-  private final Trigger m_rightTrigger =
-      new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
   private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrainSubsystem, m_leftJoystick, m_rightJoystick);
-  private final AutoProcessCommand m_autoProcessCommand =
-      new AutoProcessCommand(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
-  // turn both intake motors off and set the entire thing up
-  private final IntakeDefaultCommand m_IntakeDefaultCommand =
-      new IntakeDefaultCommand(m_intakeSubsystem, m_IntakeManager);
-
-  // turn both intake motors on and set the entire thing down
-  private final IntakeCommand m_intakeCommand =
-      new IntakeCommand(m_intakeSubsystem, m_IntakeManager);
-
-  private final IntakeReverseCommand m_IntakeReverseCommand =
-      new IntakeReverseCommand(m_intakeSubsystem, m_IntakeManager);
-
-  // toggles scoring pneumatics to extended position
+  private final IntakeDefaultCommand m_intakeDefaultCommand =
+      new IntakeDefaultCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
 
-  // toggle scoring pneumatics to retracted position
+  private final AutoBalanceCommand m_autoBalanceCommand =
+      new AutoBalanceCommand(m_driveTrainSubsystem);
+  private final AutoProcessCommand m_autoProcessCommand =
+      new AutoProcessCommand(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
+
+  private final IntakeCommand m_intakeCommand =
+      new IntakeCommand(m_intakeSubsystem, m_intakeManager);
+  private final IntakeReverseCommand m_intakeReverseCommand =
+      new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
-
   private final LEDCommand m_LedDefaultCommand =
       new LEDCommand(m_ledSubsystem, LEDColor.ORANGE, m_scoringSubsystem, m_driverStationInfo);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureBindings();
@@ -142,10 +136,10 @@ public class RobotContainer {
   private void configureBindings() {
     m_driveTrainSubsystem.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
-    m_intakeSubsystem.setDefaultCommand(m_IntakeDefaultCommand);
+    m_intakeSubsystem.setDefaultCommand(m_intakeDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
 
-    // Buttons
+    // BUTTONS
 
     // Put the arm to one of three specified target angles
     m_buttonB.whileTrue(
@@ -156,12 +150,15 @@ public class RobotContainer {
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_MID));
     m_buttonA.whileTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
+
     // used for small adjustments of the arm
-    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, .2));
-    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, m_intakeSubsystem, -.2));
-    m_rightArrow.onTrue(m_autoBalanceCommand);
-    m_leftBumper.whileTrue(m_IntakeReverseCommand);
+    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
+    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
+
+    m_leftBumper.whileTrue(m_intakeReverseCommand);
+
     m_leftTrigger.whileTrue(m_intakeCommand);
+    m_rightBumper.whileTrue(new ScoringCloseCommand(m_scoringSubsystem));
 
     // LED Buttons
     m_buttonStart.onTrue(
