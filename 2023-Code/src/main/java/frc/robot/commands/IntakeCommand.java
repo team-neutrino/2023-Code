@@ -26,10 +26,12 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void execute() {
     if (m_intakeManager.managerApproved()) {
-      m_intakeSubsystem.runIntake();
-      m_intakeManager.setIntakeDownWithArmCheck();
-      m_intakeSubsystem.unsqueeze();
-      if (m_intakeSubsystem.detectedGamePiece()) {
+      if (!m_intakeSubsystem.detectedGamePiece()) {
+        m_intakeSubsystem.runIntake();
+        m_intakeManager.setIntakeDownWithArmCheck();
+        m_intakeSubsystem.unsqueeze();
+      } else {
+
         m_intakeSubsystem.squeeze();
         m_intakeSubsystem.stopIntake();
       }
