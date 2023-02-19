@@ -15,6 +15,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
+import frc.robot.commands.ArmFeederCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.AutoProcessCommand;
@@ -113,6 +114,7 @@ public class RobotContainer {
       new IntakeDefaultCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
+  private final ArmFeederCommand m_ArmFeederCommand = new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem, m_armPidController);
 
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
@@ -157,6 +159,8 @@ public class RobotContainer {
     m_leftBumper.whileTrue(m_intakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
     m_rightBumper.whileTrue(new ScoringCloseCommand(m_scoringSubsystem));
+    m_rightTrigger.whileTrue(m_ArmFeederCommand);
+
 
     // LED Buttons
     m_buttonStart.onTrue(
