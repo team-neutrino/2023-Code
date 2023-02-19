@@ -22,7 +22,7 @@ public class ArmAdjustCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_armSubsystem.set(m_voltage);
+    m_armSubsystem.smartSet(m_voltage);
   }
 
   @Override

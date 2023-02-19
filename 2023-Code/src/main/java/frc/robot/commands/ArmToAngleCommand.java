@@ -28,7 +28,7 @@ public class ArmToAngleCommand extends CommandBase {
   @Override
   public void execute() {
     voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), m_targetAngle);
-    m_armSubsystem.set(voltage);
+    m_armSubsystem.smartSet(voltage);
   }
 
   @Override

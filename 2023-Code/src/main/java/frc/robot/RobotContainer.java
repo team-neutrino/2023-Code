@@ -36,8 +36,8 @@ import frc.robot.subsystems.PneumaticSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
+import frc.robot.util.EnumConstants.LEDColor;
 import frc.robot.util.IntakeManager;
-import frc.robot.util.LEDColor;
 import frc.robot.util.ViennaPIDController;
 
 public class RobotContainer {
@@ -154,7 +154,6 @@ public class RobotContainer {
     // used for small adjustments of the arm
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
-    m_rightArrow.onTrue(m_autoBalanceCommand);
     m_leftBumper.whileTrue(m_intakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeCommand);
     m_rightBumper.whileTrue(new ScoringCloseCommand(m_scoringSubsystem));
