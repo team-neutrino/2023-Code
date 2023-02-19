@@ -34,12 +34,11 @@ public final class Constants {
     public static final double FORWARD_DOWN = 90;
     public static final double FORWARD_MID = 80;
     public static final double BACK_MID = 31;
-    public static final double BACK_DOWN = 17;
+    public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
 
-    // MUST TEST AND CHECK THESE SOFT LIMTIS
-    public static final int ARM_MAXIMUM = 95;
-    public static final int ARM_MINIMUM = 14;
+    public static final int ARM_BACKMOST = 17;
+    public static final int ARM_FRONTMOST = 91;
 
     // INTAKE_RUNNABLE IS AN ARBITRARY NUMBER, TODO FIND ACTUAL VALUE
     // This value represents the angles where the intake CANNOT be run because
@@ -61,8 +60,6 @@ public final class Constants {
     public static final int ARM_I = 0;
     public static final int ARM_D = 0;
     public static final int ARM_FF = 0;
-    public static final int ARM_BACKMOST = -1;
-    public static final int ARM_FRONTMOST = 1;
 
     public static final double BALANCE_P = 0.08;
     public static final double BALANCE_I = 0;
@@ -70,8 +67,6 @@ public final class Constants {
 
     public static final double MIN_OUTPUT = -.3;
     public static final double MAX_OUTPUT = .3;
-    
-    public static final int IZONE_DISABLE_KEY = 3928;
   }
 
   public static class PneumaticsConstants {

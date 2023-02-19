@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
+import frc.robot.Constants.PIDConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -21,10 +22,8 @@ public class ArmSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoder = m_armMotor.getEncoder();
   private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
   private SparkMaxPIDController m_pidController = m_armMotor.getPIDController();
-  private boolean softLimitOn = false;
 
   public ArmSubsystem() {
-    setSoftLimits(true);
     m_armMotor.restoreFactoryDefaults();
   }
 
@@ -44,18 +43,14 @@ public class ArmSubsystem extends SubsystemBase {
     m_armMotor.set(voltage);
   }
 
-  public void setSoftLimits(boolean set) {
-    softLimitOn = set;
-  }
-
   public void smartSet(double desiredVoltage) {
-    if (softLimitOn) {
-      if ((getAbsolutePosition() >= ArmConstants.ARM_MAXIMUM && desiredVoltage < 0)
-          || (getAbsolutePosition() <= ArmConstants.ARM_MINIMUM && desiredVoltage > 0)) {
-        set(0.0);
-      }
+    if ((getAbsolutePosition() >= ArmConstants.ARM_FRONTMOST && desiredVoltage > 0)
+    || (getAbsolutePosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
+      set(0.0);
     }
-    set(desiredVoltage);
+    else {
+      set(desiredVoltage);
+    }
   }
 
   public void setReference(double rotations) {
@@ -78,6 +73,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
     return false;
   }
+
 
   @Override
   public void periodic() {
