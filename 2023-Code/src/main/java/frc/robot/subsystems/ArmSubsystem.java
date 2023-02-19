@@ -77,6 +77,5 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println("Arm position right now: " + getAbsolutePosition());
   }
 }
