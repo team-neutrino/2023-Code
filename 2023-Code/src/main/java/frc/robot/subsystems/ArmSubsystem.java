@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
-import frc.robot.Constants.PIDConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -45,10 +44,9 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void smartSet(double desiredVoltage) {
     if ((getAbsolutePosition() >= ArmConstants.ARM_FRONTMOST && desiredVoltage > 0)
-    || (getAbsolutePosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
+        || (getAbsolutePosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
       set(0.0);
-    }
-    else {
+    } else {
       set(desiredVoltage);
     }
   }
@@ -74,8 +72,6 @@ public class ArmSubsystem extends SubsystemBase {
     return false;
   }
 
-
   @Override
-  public void periodic() {
-  }
+  public void periodic() {}
 }
