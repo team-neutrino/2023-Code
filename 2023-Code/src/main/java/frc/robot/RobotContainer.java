@@ -25,7 +25,7 @@ import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
-import frc.robot.commands.autonomous.TestAuton;
+import frc.robot.commands.autonomous.ArmBackCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -166,6 +166,8 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new TestAuton(m_driveTrainSubsystem);
+    return new ArmBackCommand(
+        m_armSubsystem, m_driveTrainSubsystem, m_armPidController, m_scoringSubsystem);
+    // return new TestAuton(m_driveTrainSubsystem);
   }
 }
