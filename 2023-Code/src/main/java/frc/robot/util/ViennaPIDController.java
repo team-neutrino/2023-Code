@@ -1,70 +1,97 @@
 package frc.robot.util;
 
+import frc.robot.Constants;
 import frc.robot.Constants.PIDConstants;
 
 public class ViennaPIDController {
 
-  private double m_P;
-  private double m_I;
-  private double m_D;
+  private double m_p;
+  private double m_i;
+  private double m_d;
+  private double m_f;
 
-  private double integral;
+  private double m_iState;
+
   private double previousError = 0;
 
   public ViennaPIDController() {}
 
-  public ViennaPIDController(double p_P) {
-    m_P = p_P;
-    m_I = 0;
-    m_D = 0;
+  public ViennaPIDController(double p_p) {
+    m_p = p_p;
+    m_i = 0;
+    m_d = 0;
+    m_f = 0;
   }
 
-  public ViennaPIDController(double p_P, double p_I) {
-    m_P = p_P;
-    m_I = p_I;
-    m_D = 0;
+  public ViennaPIDController(double p_p, double p_i) {
+    m_p = p_p;
+    m_i = p_i;
+    m_d = 0;
+    m_f = 0;
   }
 
-  public ViennaPIDController(double p_P, double p_I, double p_D) {
-    m_P = p_P;
-    m_I = p_I;
-    m_D = p_D;
+  public ViennaPIDController(double p_p, double p_i, double p_d) {
+    m_p = p_p;
+    m_i = p_i;
+    m_d = p_d;
+    m_f = 0;
+  }
+
+  public ViennaPIDController(double p_p, double p_i, double p_d, double p_f) {
+    m_p = p_p;
+    m_i = p_i;
+    m_d = p_d;
+    m_f = p_f;
   }
 
   public double getP() {
-    return m_P;
+    return m_p;
   }
 
   public double getI() {
-    return m_I;
+    return m_i;
   }
 
   public double getD() {
-    return m_D;
+    return m_d;
   }
 
-  public void setP(double p_P) {
-    m_P = p_P;
+  public double getF() {
+    return m_f;
   }
 
-  public void setI(double p_I) {
-    m_I = p_I;
+  public void setP(double p_p) {
+    m_p = p_p;
   }
 
-  public void setD(double p_D) {
-    m_D = p_D;
+  public void setI(double p_i) {
+    m_i = p_i;
+  }
+
+  public void setD(double p_d) {
+    m_d = p_d;
+  }
+
+  private double bounder(double unbounded) {
+    return Math.min(
+        Math.max(unbounded, Constants.PIDConstants.MIN_OUTPUT), Constants.PIDConstants.MAX_OUTPUT);
   }
 
   public double run(double realPos, double desiredPos) {
     double error = desiredPos - realPos;
 
     /*Integral calculation */
-    integral += error * PIDConstants.dt;
+    m_iState += error * PIDConstants.dt;
 
     /*Derivative calculation */
     double derivative = (error - previousError) / PIDConstants.dt;
     previousError = error;
 
-    return m_P * error + m_I * integral + m_D * derivative;
+    double ff = desiredPos * m_f;
+
+    double output = m_p * error + m_i * m_iState + m_d * derivative + ff;
+
+    System.out.println(output);
+    return bounder(output);
   }
 }

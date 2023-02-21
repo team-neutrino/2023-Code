@@ -6,40 +6,41 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.util.IntakeManager;
 
 public class IntakeCommand extends CommandBase {
 
   IntakeSubsystem m_intakeSubsystem;
+  IntakeManager m_intakeManager;
 
-  /** Creates a new IntakeCommand. */
-  public IntakeCommand(IntakeSubsystem subsystem) {
-    m_intakeSubsystem = subsystem;
+  public IntakeCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
+    m_intakeSubsystem = p_intakeSubsystem;
+    m_intakeManager = p_intakeManager;
 
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(m_intakeSubsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intakeSubsystem.runIntake();
-    m_intakeSubsystem.setIntakeDown();
-    m_intakeSubsystem.unsqueeze();
-    if (m_intakeSubsystem.isGamePiece()) {
-      m_intakeSubsystem.squeeze();
-      m_intakeSubsystem.stopIntake();
+    if (m_intakeManager.managerApproved()) {
+      if (!m_intakeSubsystem.detectedGamePiece()) {
+        m_intakeSubsystem.runIntake();
+        m_intakeManager.setIntakeDownWithArmCheck();
+        m_intakeSubsystem.unsqueeze();
+      } else {
+
+        m_intakeSubsystem.squeeze();
+        m_intakeSubsystem.stopIntake();
+      }
     }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

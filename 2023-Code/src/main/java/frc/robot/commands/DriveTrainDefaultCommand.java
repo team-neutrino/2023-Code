@@ -9,18 +9,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class DriveTrainDefaultCommand extends CommandBase {
-  DriveTrainSubsystem m_driveTrainSubsystem;
+  DriveTrainSubsystem m_drivetrainSubsystem;
   Joystick m_leftJoystick;
   Joystick m_rightJoystick;
 
   /** Creates a new DriveCommand. */
   public DriveTrainDefaultCommand(
-      DriveTrainSubsystem subsystem, Joystick p_leftJoystick, Joystick p_rightJoystick) {
+      DriveTrainSubsystem p_drivetrainSubsystem,
+      Joystick p_leftJoystick,
+      Joystick p_rightJoystick) {
 
-    m_driveTrainSubsystem = subsystem;
+    m_drivetrainSubsystem = p_drivetrainSubsystem;
     m_leftJoystick = p_leftJoystick;
     m_rightJoystick = p_rightJoystick;
-    addRequirements(subsystem);
+    addRequirements(m_drivetrainSubsystem);
   }
 
   @Override
@@ -28,9 +30,7 @@ public class DriveTrainDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_driveTrainSubsystem.setMotors(m_rightJoystick.getY() * -1, m_leftJoystick.getY() * -1);
-    // System.out.println("right joystick" + m_rightJoystick.getY() + " left joystick " +
-    // m_leftJoystick.getY());
+    m_drivetrainSubsystem.setMotors(m_leftJoystick.getY() * -1, m_rightJoystick.getY() * -1);
   }
 
   @Override
