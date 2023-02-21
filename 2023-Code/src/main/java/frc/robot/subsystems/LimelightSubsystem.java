@@ -78,7 +78,7 @@ public class LimelightSubsystem extends SubsystemBase {
   
   public double findArmAngle() {
     double[] camTran = getCamTran();
-    double angle = Math.acos(camTran[1]/0.95);
+    double angle = Math.acos(camTran[1]/0.8128);
     return angle;
   }
 
