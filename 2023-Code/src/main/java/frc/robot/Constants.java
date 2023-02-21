@@ -40,17 +40,13 @@ public final class Constants {
     public static final int ARM_BACKMOST = 17;
     public static final int ARM_FRONTMOST = 91;
 
+    public static final double ENCODER_TO_DEGREES = 74/275;
+
+
     // INTAKE_RUNNABLE IS AN ARBITRARY NUMBER, TODO FIND ACTUAL VALUE
     // This value represents the angles where the intake CANNOT be run because
     // it would run into the arm if it were to go up or come down
     public static final double INTAKE_RUNNABLE = FORWARD_MID;
-
-    public static final double M_PI = Math.PI;
-    public static final double WHEEL_SIZE = 1;
-    public static final double REDUCTION = 1;
-    public static final double ROTATION_TO_INCHES = M_PI * (WHEEL_SIZE / REDUCTION);
-    public static final float MIN_SOFT_LIM = -100;
-    public static final float MAX_SOFT_LIM = 100;
   }
 
   public static class PIDConstants {
