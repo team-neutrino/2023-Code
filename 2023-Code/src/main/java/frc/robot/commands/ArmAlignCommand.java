@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.util.ViennaPIDController;
@@ -30,7 +31,7 @@ public class ArmAlignCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_targetAngle = m_limelightSubsystem.findArmAngle();
+    m_targetAngle = Math.toDegrees(m_limelightSubsystem.findArmAngle()) * Constants.ArmConstants.ENCODER_TO_DEGREES;
     voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), m_targetAngle);
     m_armSubsystem.set(voltage);
   }
