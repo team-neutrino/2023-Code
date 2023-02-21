@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.lang.Math;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -73,6 +74,12 @@ public class LimelightSubsystem extends SubsystemBase {
     // System.out.println(camTran[1]);
     // System.out.println(camTran[2]);
     return camTran[2] * LIMELIGHT_TO_METER_CONVERSION;
+  }
+  
+  public double findArmAngle() {
+    double[] camTran = getCamTran();
+    double angle = Math.acos(camTran[1]/0.95);
+    return angle;
   }
 
   public double getYaw() {
