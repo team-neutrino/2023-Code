@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -18,8 +17,11 @@ public class IntakeHybridModeCommand extends CommandBase {
   ScoringSubsystem m_scoringSubsystem;
   IntakeManager m_intakeManager;
 
-  
-  public IntakeHybridModeCommand(IntakeSubsystem p_intakeSubsystem , ArmSubsystem p_armSubsystem , ScoringSubsystem p_scoringSubsystem, IntakeManager p_intakeManager) {
+  public IntakeHybridModeCommand(
+      IntakeSubsystem p_intakeSubsystem,
+      ArmSubsystem p_armSubsystem,
+      ScoringSubsystem p_scoringSubsystem,
+      IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_intakeSubsystem;
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
@@ -28,18 +30,18 @@ public class IntakeHybridModeCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-    if (m_intakeSubsystem.detectedGamePiece()) {
-      m_intakeSubsystem.stopIntake();
-      m_intakeSubsystem.squeeze();
-      m_intakeManager.setIntakeUpWithArmCheck();
-      m_armSubsystem.setReference(Constants.ArmConstants.FORWARD_DOWN);
-  }
-}
+  public void initialize() {}
 
   @Override
   public void execute() {
-    
+    m_intakeSubsystem.unsqueeze();
+    m_intakeSubsystem.setIntakeDown();
+    m_intakeSubsystem.runIntake();
+
+    if (m_intakeSubsystem.detectedGamePiece()) {
+      m_intakeSubsystem.stopIntake();
+      m_intakeSubsystem.squeeze();
+    }
   }
 
   @Override

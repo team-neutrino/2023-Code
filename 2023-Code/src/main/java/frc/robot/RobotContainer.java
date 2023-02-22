@@ -21,6 +21,8 @@ import frc.robot.commands.AutoProcessCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
+import frc.robot.commands.IntakeGatherModeCommand;
+import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
@@ -123,6 +125,12 @@ public class RobotContainer {
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
+  private final IntakeGatherModeCommand m_intakeGatherModeCommand =
+      new IntakeGatherModeCommand(
+          m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
+  private final IntakeHybridModeCommand m_intakeHybridModeCommand =
+      new IntakeHybridModeCommand(
+          m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
   private final LEDCommand m_LedDefaultCommand =
@@ -155,7 +163,7 @@ public class RobotContainer {
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
     m_leftBumper.whileTrue(m_intakeReverseCommand);
-    m_leftTrigger.whileTrue(m_intakeCommand);
+    m_leftTrigger.whileTrue(m_intakeHybridModeCommand);
     m_rightBumper.whileTrue(new ScoringCloseCommand(m_scoringSubsystem));
 
     // LED Buttons

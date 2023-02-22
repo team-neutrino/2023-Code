@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -18,8 +17,11 @@ public class IntakeGatherModeCommand extends CommandBase {
   ScoringSubsystem m_scoringSubsystem;
   IntakeManager m_intakeManager;
 
-  
-  public IntakeGatherModeCommand(IntakeSubsystem p_intakeSubsystem , ArmSubsystem p_armSubsystem , ScoringSubsystem p_scoringSubsystem, IntakeManager p_intakeManager) {
+  public IntakeGatherModeCommand(
+      IntakeSubsystem p_intakeSubsystem,
+      ArmSubsystem p_armSubsystem,
+      ScoringSubsystem p_scoringSubsystem,
+      IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_intakeSubsystem;
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
@@ -28,23 +30,23 @@ public class IntakeGatherModeCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-        m_intakeSubsystem.unsqueeze();
-        m_intakeSubsystem.setIntakeDown();
-        m_intakeSubsystem.runIntake();
-  }
+  public void initialize() {}
 
-@Override
-public void execute() {
-  if (m_intakeSubsystem.detectedGamePiece()) {
-    m_intakeSubsystem.stopIntake();
-    m_scoringSubsystem.openScoring();
-    m_armSubsystem.setReference(Constants.ArmConstants.FORWARD_DOWN);
+  @Override
+  public void execute() {
+
+    m_intakeSubsystem.unsqueeze();
+    m_intakeSubsystem.setIntakeDown();
+    m_intakeSubsystem.runIntake();
+
+    if (m_intakeSubsystem.detectedGamePiece()) {
+      m_intakeSubsystem.stopIntake();
+      m_scoringSubsystem.closeScoring();
+    }
   }
-  if (Math.abs(Constants.ArmConstants.FORWARD_DOWN - m_armSubsystem.getPosition()) <= Constants.ArmConstants.ARM_DEADZONE) {
-    m_scoringSubsystem.closeScoring();
-  }
-}
+  // if else (Math.abs(Constants.ArmConstants.FORWARD_DOWN - m_armSubsystem.getPosition()) <=
+  // Constants.ArmConstants.ARM_DEADZONE) {
+  // m_scoringSubsystem.closeScoring();
 
   @Override
   public void end(boolean interrupted) {}
@@ -53,4 +55,4 @@ public void execute() {
   public boolean isFinished() {
     return false;
   }
-
+}
