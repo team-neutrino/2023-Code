@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -41,12 +42,13 @@ public class IntakeGatherModeCommand extends CommandBase {
 
     if (m_intakeSubsystem.detectedGamePiece()) {
       m_intakeSubsystem.stopIntake();
+      //should arm be set down here?
       m_scoringSubsystem.closeScoring();
     }
-  }
-  // if else (Math.abs(Constants.ArmConstants.FORWARD_DOWN - m_armSubsystem.getPosition()) <=
-  // Constants.ArmConstants.ARM_DEADZONE) {
-  // m_scoringSubsystem.closeScoring();
+    else if (Math.abs(Constants.ArmConstants.FORWARD_DOWN - m_armSubsystem.getPosition()) <= Constants.ArmConstants.ARM_DEADZONE) {
+      m_scoringSubsystem.closeScoring();
+    }
+   }
 
   @Override
   public void end(boolean interrupted) {}
