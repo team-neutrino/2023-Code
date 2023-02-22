@@ -21,6 +21,9 @@ public class ScoringDefaultCommand extends CommandBase {
   @Override
   public void execute() {
     m_scoringSubsystem.openScoring();
+    if(m_scoringSubsystem.detectedGamePiece()) {
+      m_scoringSubsystem.closeScoring();
+    }
   }
 
   @Override
