@@ -35,7 +35,6 @@ public class IntakeGatherModeCommand extends CommandBase {
 
   @Override
   public void execute() {
-
     m_intakeSubsystem.unsqueeze();
     m_intakeSubsystem.setIntakeDown();
     m_intakeSubsystem.runIntake();
