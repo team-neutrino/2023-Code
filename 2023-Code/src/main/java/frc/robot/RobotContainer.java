@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -127,6 +128,8 @@ public class RobotContainer {
       new ScoringCloseCommand(m_scoringSubsystem);
   private final LEDCommand m_LedDefaultCommand =
       new LEDCommand(m_ledSubsystem, LEDColor.ORANGE, m_scoringSubsystem, m_driverStationInfo);
+  private final Command m_returnArmPositionCommand = 
+      new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -145,11 +148,23 @@ public class RobotContainer {
     m_buttonB.toggleOnTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
     m_buttonY.toggleOnTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
+        Commands.startEnd(
+            () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_DOWN)),
+            () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID)),
+            m_armSubsystem
+        ));
     m_buttonX.toggleOnTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_MID));
+        Commands.startEnd(
+            () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.BACK_MID)),
+            () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID)),
+            m_armSubsystem
+        ));
     m_buttonA.toggleOnTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
+        Commands.startEnd(
+            () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.BACK_DOWN)),
+            () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID)),
+            m_armSubsystem
+        ));
 
     // used for small adjustments of the arm
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
