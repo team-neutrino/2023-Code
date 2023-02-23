@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -24,6 +25,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   public ArmSubsystem() {
     m_armMotor.restoreFactoryDefaults();
+    m_armMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public double getAbsolutePosition() {

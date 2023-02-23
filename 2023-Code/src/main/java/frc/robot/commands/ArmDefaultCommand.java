@@ -5,14 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.util.ViennaPIDController;
 
 public class ArmDefaultCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
+  private ViennaPIDController m_pidController;
 
-  public ArmDefaultCommand(ArmSubsystem p_armSubsystem) {
+  public ArmDefaultCommand(ArmSubsystem p_armSubsystem, ViennaPIDController p_pidController) {
     m_armSubsystem = p_armSubsystem;
+    m_pidController = p_pidController;
     addRequirements(m_armSubsystem);
   }
 
@@ -21,7 +24,8 @@ public class ArmDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_armSubsystem.setReference(Constants.ArmConstants.FORWARD_MID);
+    m_armSubsystem.smartSet(
+        m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
   }
 
   @Override

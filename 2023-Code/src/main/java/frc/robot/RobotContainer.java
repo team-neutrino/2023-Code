@@ -108,7 +108,8 @@ public class RobotContainer {
           m_ledSubsystem);
 
   // COMMANDS
-  private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
+  private final ArmDefaultCommand m_armDefaultCommand =
+      new ArmDefaultCommand(m_armSubsystem, m_armPidController);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrainSubsystem, m_leftJoystick, m_rightJoystick);
   private final IntakeDefaultCommand m_intakeDefaultCommand =
@@ -150,13 +151,13 @@ public class RobotContainer {
     // BUTTONS
 
     // Put the arm to one of three specified target angles
-    m_buttonB.whileTrue(
+    m_buttonB.toggleOnTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
-    m_buttonY.whileTrue(
+    m_buttonY.toggleOnTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
-    m_buttonX.whileTrue(
+    m_buttonX.toggleOnTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_MID));
-    m_buttonA.whileTrue(
+    m_buttonA.toggleOnTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
 
     // used for small adjustments of the arm
