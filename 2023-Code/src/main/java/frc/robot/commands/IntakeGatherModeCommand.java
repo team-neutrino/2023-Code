@@ -48,7 +48,9 @@ public class IntakeGatherModeCommand extends CommandBase {
     if (m_intakeSubsystem.detectedGamePiece()) {
       System.out.println("execute of IntakeGatherModeCommand");
       m_intakeSubsystem.stopIntake();
-      m_armSubsystem.smartSet(m_pidController.run(m_armSubsystem.getAbsolutePosition(), Constants.ArmConstants.ARM_FRONTMOST));
+      m_armSubsystem.smartSet(
+          m_pidController.run(
+              m_armSubsystem.getAbsolutePosition(), Constants.ArmConstants.ARM_FRONTMOST));
       counter++;
 
       if (m_armSubsystem.getAbsolutePosition() > ArmConstants.FORWARD_DOWN && counter > 20) {
@@ -56,12 +58,10 @@ public class IntakeGatherModeCommand extends CommandBase {
         counter = 0;
       }
     }
-   }
+  }
 
   @Override
-  public void end(boolean interrupted) {
-    
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {
