@@ -21,7 +21,7 @@ public class ArmDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_armSubsystem.smartSet(Constants.ArmConstants.FORWARD_MID);
+    //m_armSubsystem.smartSet(Constants.ArmConstants.FORWARD_MID);
   }
 
   @Override
