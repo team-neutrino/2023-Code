@@ -27,6 +27,7 @@ import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
+import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.commands.autonomous.TestAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ColorSubsystem;
@@ -165,7 +166,7 @@ public class RobotContainer {
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.5));
     m_leftBumper.whileTrue(m_intakeReverseCommand);
     m_leftTrigger.whileTrue(m_intakeGatherModeCommand);
-    m_rightBumper.whileTrue(new ScoringCloseCommand(m_scoringSubsystem));
+    m_rightBumper.whileTrue(new ScoringOpenCommand(m_scoringSubsystem));
 
     // LED Buttons
     m_buttonStart.onTrue(
