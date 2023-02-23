@@ -10,7 +10,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.IntakeManager;
 
-/** An example command that uses an example subsystem. */
+/** Command will intake the game piece without transfering it to the arm */
 public class IntakeHybridModeCommand extends CommandBase {
   IntakeSubsystem m_intakeSubsystem;
   ArmSubsystem m_armSubsystem;

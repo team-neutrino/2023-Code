@@ -11,7 +11,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.IntakeManager;
 
-/** An example command that uses an example subsystem. */
+/** This command will transfer game piece from intake to arm */
 public class IntakeGatherModeCommand extends CommandBase {
   IntakeSubsystem m_intakeSubsystem;
   ArmSubsystem m_armSubsystem;
