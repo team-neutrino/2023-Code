@@ -50,7 +50,7 @@ public class IntakeGatherModeCommand extends CommandBase {
       m_armSubsystem.smartSet(
           m_pidController.run(
               m_armSubsystem.getAbsolutePosition(), Constants.ArmConstants.ARM_FRONTMOST));
-      counter++;
+      counter++; //scuffed debouncer/timer to ensure getting a good grip on the game piece
 
       if (m_armSubsystem.getAbsolutePosition() > ArmConstants.FORWARD_DOWN && counter > 20) {
         m_scoringSubsystem.closeScoring();
