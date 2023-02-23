@@ -13,7 +13,7 @@ import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.ViennaPIDController;
 
-/** An example command that uses an example subsystem. */
+/** This command will transfer game piece from intake to arm */
 public class IntakeGatherModeCommand extends CommandBase {
   private IntakeSubsystem m_intakeSubsystem;
   private ArmSubsystem m_armSubsystem;
