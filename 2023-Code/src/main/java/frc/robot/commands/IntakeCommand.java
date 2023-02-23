@@ -31,7 +31,6 @@ public class IntakeCommand extends CommandBase {
         m_intakeManager.setIntakeDownWithArmCheck();
         m_intakeSubsystem.unsqueeze();
       } else {
-
         m_intakeSubsystem.squeeze();
         m_intakeSubsystem.stopIntake();
       }

@@ -15,11 +15,12 @@ import frc.robot.util.ViennaPIDController;
 
 /** An example command that uses an example subsystem. */
 public class IntakeGatherModeCommand extends CommandBase {
-  IntakeSubsystem m_intakeSubsystem;
-  ArmSubsystem m_armSubsystem;
-  ScoringSubsystem m_scoringSubsystem;
-  IntakeManager m_intakeManager;
-  ViennaPIDController m_pidController;
+  private IntakeSubsystem m_intakeSubsystem;
+  private ArmSubsystem m_armSubsystem;
+  private ScoringSubsystem m_scoringSubsystem;
+  private IntakeManager m_intakeManager;
+  private ViennaPIDController m_pidController;
+  private int counter = 0;
 
   public IntakeGatherModeCommand(
       IntakeSubsystem p_intakeSubsystem,
@@ -47,18 +48,20 @@ public class IntakeGatherModeCommand extends CommandBase {
     if (m_intakeSubsystem.detectedGamePiece()) {
       System.out.println("execute of IntakeGatherModeCommand");
       m_intakeSubsystem.stopIntake();
-      //m_armSubsystem.setReference(Constants.ArmConstants.FORWARD_DOWN);
       m_armSubsystem.smartSet(m_pidController.run(m_armSubsystem.getAbsolutePosition(), Constants.ArmConstants.ARM_FRONTMOST));
+      counter++;
 
-      //Math.abs(Constants.ArmConstants.FORWARD_DOWN - m_armSubsystem.getPosition()) <= Constants.ArmConstants.ARM_DEADZONE
-      if (m_armSubsystem.getAbsolutePosition() > ArmConstants.FORWARD_DOWN) {
+      if (m_armSubsystem.getAbsolutePosition() > ArmConstants.FORWARD_DOWN && counter > 20) {
         m_scoringSubsystem.closeScoring();
+        counter = 0;
       }
     }
    }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    
+  }
 
   @Override
   public boolean isFinished() {
