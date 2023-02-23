@@ -43,6 +43,7 @@ public class IntakeSubsystem extends SubsystemBase {
     m_wheelsMotor.restoreFactoryDefaults();
     // encoders initialized in constructor to make sure motors are initialized first
     m_wheelsEncoder = m_wheelsMotor.getEncoder();
+    m_wheelsMotor.setSmartCurrentLimit(30, 40);
   }
 
   /** Sets the solenoid to the 'out' position */
