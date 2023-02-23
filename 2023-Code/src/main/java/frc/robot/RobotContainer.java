@@ -17,14 +17,16 @@ import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
-import frc.robot.commands.AutoProcessCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
+import frc.robot.commands.IntakeGatherModeCommand;
+import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
+import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.commands.autonomous.TestAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ColorSubsystem;
@@ -117,13 +119,21 @@ public class RobotContainer {
 
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
-  private final AutoProcessCommand m_autoProcessCommand =
-      new AutoProcessCommand(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
 
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
+  private final IntakeGatherModeCommand m_intakeGatherModeCommand =
+      new IntakeGatherModeCommand(
+          m_intakeSubsystem,
+          m_armSubsystem,
+          m_scoringSubsystem,
+          m_intakeManager,
+          m_armPidController);
+  private final IntakeHybridModeCommand m_intakeHybridModeCommand =
+      new IntakeHybridModeCommand(
+          m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
   private final LEDCommand m_LedDefaultCommand =
@@ -153,11 +163,11 @@ public class RobotContainer {
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
 
     // used for small adjustments of the arm
-    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
-    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
+    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .5));
+    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.5));
     m_leftBumper.whileTrue(m_intakeReverseCommand);
-    m_leftTrigger.whileTrue(m_intakeCommand);
-    m_rightBumper.whileTrue(new ScoringCloseCommand(m_scoringSubsystem));
+    m_leftTrigger.whileTrue(m_intakeGatherModeCommand);
+    m_rightBumper.whileTrue(new ScoringOpenCommand(m_scoringSubsystem));
 
     // LED Buttons
     m_buttonStart.onTrue(

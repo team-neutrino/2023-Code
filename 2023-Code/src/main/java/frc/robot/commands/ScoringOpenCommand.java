@@ -7,10 +7,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ScoringSubsystem;
 
-public class ScoringDefaultCommand extends CommandBase {
+public class ScoringOpenCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
 
-  public ScoringDefaultCommand(ScoringSubsystem p_scoringSubsystem) {
+  public ScoringOpenCommand(ScoringSubsystem p_scoringSubsystem) {
     m_scoringSubsystem = p_scoringSubsystem;
     addRequirements(m_scoringSubsystem);
   }
@@ -20,7 +20,7 @@ public class ScoringDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_scoringSubsystem.closeScoring();
+    m_scoringSubsystem.openScoring();
   }
 
   @Override
