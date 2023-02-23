@@ -127,7 +127,7 @@ public class RobotContainer {
       new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeGatherModeCommand m_intakeGatherModeCommand =
       new IntakeGatherModeCommand(
-          m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
+          m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager, m_armPidController);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
       new IntakeHybridModeCommand(
           m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
@@ -160,10 +160,10 @@ public class RobotContainer {
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
 
     // used for small adjustments of the arm
-    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
-    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
+    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .5));
+    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.5));
     m_leftBumper.whileTrue(m_intakeReverseCommand);
-    m_leftTrigger.whileTrue(m_intakeHybridModeCommand);
+    m_leftTrigger.whileTrue(m_intakeGatherModeCommand);
     m_rightBumper.whileTrue(new ScoringCloseCommand(m_scoringSubsystem));
 
     // LED Buttons
