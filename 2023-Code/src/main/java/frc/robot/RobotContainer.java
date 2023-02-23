@@ -143,46 +143,37 @@ public class RobotContainer {
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
 
     // BUTTONS
-
-    // m_buttonB.onTrue(
-    //     new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
-    // m_buttonY.onTrue(
-    //     new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
-    // m_buttonX.onTrue(
-    //     new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_MID));
-    // m_buttonA.onTrue(
-    //     new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN))
-
-    // m_buttonB.whileTrue(
-    //     new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
-    // m_buttonY.whileTrue(
-    //     new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
-    // m_buttonX.whileTrue(
-    //     new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_MID));
-    // m_buttonA.whileTrue(
-    //     new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN))
-
-    // Put the arm to one of three specified target angles
     m_buttonB.toggleOnTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
     m_buttonY.toggleOnTrue(
-        Commands.startEnd(
-            () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_DOWN)),
-            () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID)),
-            m_armSubsystem
-        ));
+        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
     m_buttonX.toggleOnTrue(
-        Commands.startEnd(
-            () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.BACK_MID)),
-            () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID)),
-            m_armSubsystem
-        ));
+        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_MID));
     m_buttonA.toggleOnTrue(
-        Commands.startEnd(
-            () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.BACK_DOWN)),
-            () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID)),
-            m_armSubsystem
-        ));
+        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
+
+
+    // Put the arm to one of three specified target angles
+    // m_buttonB.toggleOnTrue(
+    //     new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
+    // m_buttonY.toggleOnTrue(
+    //     Commands.startEnd(
+    //         () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_DOWN)),
+    //         () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID)),
+    //         m_armSubsystem
+    //     ));
+    // m_buttonX.toggleOnTrue(
+    //     Commands.startEnd(
+    //         () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.BACK_MID)),
+    //         () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID)),
+    //         m_armSubsystem
+    //     ));
+    // m_buttonA.toggleOnTrue(
+    //     Commands.startEnd(
+    //         () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.BACK_DOWN)),
+    //         () -> m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID)),
+    //         m_armSubsystem
+    //     ));
 
     // used for small adjustments of the arm
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
