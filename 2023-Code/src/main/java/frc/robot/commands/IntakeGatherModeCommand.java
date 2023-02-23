@@ -46,7 +46,6 @@ public class IntakeGatherModeCommand extends CommandBase {
     m_intakeSubsystem.runIntake();
 
     if (m_intakeSubsystem.detectedGamePiece()) {
-      System.out.println("execute of IntakeGatherModeCommand");
       m_intakeSubsystem.stopIntake();
       m_armSubsystem.smartSet(
           m_pidController.run(
