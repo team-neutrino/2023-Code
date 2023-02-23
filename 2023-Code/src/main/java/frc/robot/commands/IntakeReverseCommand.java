@@ -26,6 +26,7 @@ public class IntakeReverseCommand extends CommandBase {
 
   @Override
   public void execute() {
+    // add a delay so intake goes down and then outtakes
     if (m_intakeManager.managerApproved()) {
       m_intakeSubsystem.runIntakeReverse();
       m_intakeManager.setIntakeDownWithArmCheck();

@@ -20,7 +20,7 @@ public class ScoringDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_scoringSubsystem.openScoring();
+    m_scoringSubsystem.closeScoring();
   }
 
   @Override
