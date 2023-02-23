@@ -43,6 +43,7 @@ public class IntakeSubsystem extends SubsystemBase {
     m_wheelsMotor.restoreFactoryDefaults();
     // encoders initialized in constructor to make sure motors are initialized first
     m_wheelsEncoder = m_wheelsMotor.getEncoder();
+    m_wheelsMotor.setSmartCurrentLimit(30, 35);
   }
 
   /** Sets the solenoid to the 'out' position */
@@ -57,12 +58,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
   /** Runs the wheels motor at a fixed speed. */
   public void runIntake() {
-    m_wheelsMotor.set(.2); // NEED TO MAKE CONSTANT FOR MOTOR SPEED
+    m_wheelsMotor.set(.5); // NEED TO MAKE CONSTANT FOR MOTOR SPEED
   }
 
   /** Runs the wheels motor in reverse. */
   public void runIntakeReverse() {
-    m_wheelsMotor.set(-.2);
+    m_wheelsMotor.set(-.5);
   }
 
   /** Stops the motors. */
