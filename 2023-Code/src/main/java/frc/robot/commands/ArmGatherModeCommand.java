@@ -39,7 +39,7 @@ public class ArmGatherModeCommand extends CommandBase {
     m_armSubsystem.smartSet(
         m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.ARM_FRONTMOST));
 
-    if (m_armSubsystem.getAbsolutePosition() >= ArmConstants.GATHER_POSITION) {
+    if (m_armSubsystem.getAbsolutePosition() >= ArmConstants.GATHER_MODE_POSITION) {
       if (m_intakeSubsystem.isIntakeDown()) {
         m_intakeSubsystem.unsqueeze();
       }

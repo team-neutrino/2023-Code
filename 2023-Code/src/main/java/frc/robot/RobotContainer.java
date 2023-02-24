@@ -119,7 +119,8 @@ public class RobotContainer {
       new IntakeDefaultCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
-  private final ArmFeederCommand m_ArmFeederCommand = new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem, m_armPidController);
+  private final ArmFeederCommand m_ArmFeederCommand =
+      new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem, m_armPidController);
 
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);

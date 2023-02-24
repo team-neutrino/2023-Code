@@ -14,6 +14,7 @@ public class ArmFeederCommand extends CommandBase {
   ArmSubsystem m_armSubsystem;
   ScoringSubsystem m_scoringSubsystem;
   ViennaPIDController m_pidController;
+  boolean beamBreakBroken;
   double voltage;
 
   /** Creates a new ArmFeederIntakeCommand. */
@@ -24,6 +25,7 @@ public class ArmFeederCommand extends CommandBase {
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
     m_pidController = p_pidController;
+    beamBreakBroken = false;
   }
 
   @Override
@@ -31,11 +33,17 @@ public class ArmFeederCommand extends CommandBase {
 
   @Override
   public void execute() {
-    voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.BACK_MID);
-    m_armSubsystem.smartSet(voltage);
+    m_armSubsystem.smartSet(
+        m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FEEDER_POSITION));
 
     if (m_scoringSubsystem.detectedGamePiece()) {
+      beamBreakBroken = true;
+    }
+
+    if (beamBreakBroken) {
       m_scoringSubsystem.closeScoring();
+    } else {
+      m_scoringSubsystem.openScoring();
     }
   }
 
