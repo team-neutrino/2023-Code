@@ -17,34 +17,29 @@ public class ArmGatherModeCommand extends CommandBase {
   private IntakeSubsystem m_intakeSubsystem;
   private ViennaPIDController m_pidController;
 
-  /** Creates a new ArmGatherModeCommand. */
   public ArmGatherModeCommand(
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
       ViennaPIDController p_pidController) {
-    // Use addRequirements() here to declare subsystem dependencies.
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
     m_intakeSubsystem = p_intakeSubsystem;
     m_pidController = p_pidController;
 
-    addRequirements(m_armSubsystem);
+    addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
     m_intakeSubsystem.setIntakeDown();
     m_armSubsystem.smartSet(
         m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.ARM_FRONTMOST));
 
-    if (m_armSubsystem.getAbsolutePosition() >= ArmConstants.GATHER_MODE) {
+    if (m_armSubsystem.getAbsolutePosition() >= ArmConstants.GATHER_POSITION) {
       if (m_intakeSubsystem.isIntakeDown()) {
         m_intakeSubsystem.unsqueeze();
       }
@@ -54,11 +49,9 @@ public class ArmGatherModeCommand extends CommandBase {
     }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

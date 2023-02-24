@@ -17,19 +17,16 @@ public class IntakeGatherModeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
   private IntakeManager m_intakeManager;
-  private ViennaPIDController m_pidController;
 
   public IntakeGatherModeCommand(
       IntakeSubsystem p_intakeSubsystem,
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
-      IntakeManager p_intakeManager,
-      ViennaPIDController p_pidController) {
+      IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_intakeSubsystem;
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
     m_intakeManager = p_intakeManager;
-    m_pidController = p_pidController;
     addRequirements(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
   }
 

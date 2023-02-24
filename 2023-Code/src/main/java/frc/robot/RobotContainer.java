@@ -131,8 +131,7 @@ public class RobotContainer {
           m_intakeSubsystem,
           m_armSubsystem,
           m_scoringSubsystem,
-          m_intakeManager,
-          m_armPidController);
+          m_intakeManager);
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(
           m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
@@ -141,7 +140,7 @@ public class RobotContainer {
           m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
-  private final ScoringOpenCommand m_sccoringOpenCommand =
+  private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem);
   private final LEDCommand m_LedDefaultCommand =
       new LEDCommand(m_ledSubsystem, LEDColor.ORANGE, m_scoringSubsystem, m_driverStationInfo);
@@ -175,9 +174,9 @@ public class RobotContainer {
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
-    m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
+    m_leftBumper.whileTrue(m_scoringOpenCommand);
 
-    m_leftBumper.whileTrue(m_sccoringOpenCommand);
+    m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
     m_rightBumper.whileTrue(m_intakeReverseCommand);
 
     // this doesn't work the way it should
