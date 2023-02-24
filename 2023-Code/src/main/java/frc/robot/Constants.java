@@ -41,7 +41,6 @@ public final class Constants {
     public static final double ARM_FRONTMOST = 91;
     public static final double GATHER_MODE = 90;
 
-
     // INTAKE_RUNNABLE IS AN ARBITRARY NUMBER, TODO FIND ACTUAL VALUE
     // This value represents the angles where the intake CANNOT be run because
     // it would run into the arm if it were to go up or come down

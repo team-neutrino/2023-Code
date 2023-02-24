@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -134,7 +133,9 @@ public class RobotContainer {
           m_scoringSubsystem,
           m_intakeManager,
           m_armPidController);
-private final ArmGatherModeCommand m_armGatherModeCommand = new ArmGatherModeCommand(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
+  private final ArmGatherModeCommand m_armGatherModeCommand =
+      new ArmGatherModeCommand(
+          m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
       new IntakeHybridModeCommand(
           m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
@@ -172,19 +173,19 @@ private final ArmGatherModeCommand m_armGatherModeCommand = new ArmGatherModeCom
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
 
-    m_leftTrigger.whileTrue(new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
+    m_leftTrigger.whileTrue(
+        new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
     m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
 
     m_leftBumper.whileTrue(m_sccoringOpenCommand);
     m_rightBumper.whileTrue(m_intakeReverseCommand);
 
-    //this doesn't work the way it should
+    // this doesn't work the way it should
     // m_buttonStart.whileTrue(new InstantCommand(m_intakeSubsystem::unsqueeze, m_intakeSubsystem));
 
     // LED Buttons
     m_buttonStart.onTrue(
-        new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem,
-    m_driverStationInfo));
+        new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
     m_buttonBack.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
   }

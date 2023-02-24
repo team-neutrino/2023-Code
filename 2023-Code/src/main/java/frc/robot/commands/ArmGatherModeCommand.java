@@ -20,7 +20,8 @@ public class ArmGatherModeCommand extends CommandBase {
   /** Creates a new ArmGatherModeCommand. */
   public ArmGatherModeCommand(
       ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem, IntakeSubsystem p_intakeSubsystem,
+      ScoringSubsystem p_scoringSubsystem,
+      IntakeSubsystem p_intakeSubsystem,
       ViennaPIDController p_pidController) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_armSubsystem = p_armSubsystem;
@@ -43,10 +44,8 @@ public class ArmGatherModeCommand extends CommandBase {
     m_armSubsystem.smartSet(
         m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.ARM_FRONTMOST));
 
-
-    
     if (m_armSubsystem.getAbsolutePosition() >= ArmConstants.GATHER_MODE) {
-      if(m_intakeSubsystem.isIntakeDown()){
+      if (m_intakeSubsystem.isIntakeDown()) {
         m_intakeSubsystem.unsqueeze();
       }
       m_scoringSubsystem.closeScoring();

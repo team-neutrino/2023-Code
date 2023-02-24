@@ -34,15 +34,14 @@ public class IntakeGatherModeCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
     if (m_intakeManager.managerApproved()) {
       m_intakeSubsystem.setIntakeDown();
 
-      if(!m_intakeSubsystem.detectedGamePiece() && m_intakeSubsystem.isIntakeDown()) {
+      if (!m_intakeSubsystem.detectedGamePiece() && m_intakeSubsystem.isIntakeDown()) {
         m_intakeSubsystem.unsqueeze();
         m_intakeSubsystem.runIntake();
       }
