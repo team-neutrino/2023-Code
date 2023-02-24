@@ -4,30 +4,31 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.util.ViennaPIDController;
 
-public class PlayerStationCommand extends CommandBase {
+public class ArmGatherModeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
   private IntakeSubsystem m_intakeSubsystem;
-  private Timer timer = new Timer();
+  private ViennaPIDController m_pidController;
 
-  /** Creates a new PlayerStationCommand. */
-  public PlayerStationCommand(
+  /** Creates a new ArmGatherModeCommand. */
+  public ArmGatherModeCommand(
       ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem) {
-    m_scoringSubsystem = p_scoringSubsystem;
-    m_armSubsystem = p_armSubsystem;
-    m_intakeSubsystem = p_intakeSubsystem;
-
+      ScoringSubsystem p_scoringSubsystem, IntakeSubsystem p_intakeSubsystem,
+      ViennaPIDController p_pidController) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(p_armSubsystem, m_scoringSubsystem, p_intakeSubsystem);
+    m_armSubsystem = p_armSubsystem;
+    m_scoringSubsystem = p_scoringSubsystem;
+    m_intakeSubsystem = p_intakeSubsystem;
+    m_pidController = p_pidController;
+
+    addRequirements(m_armSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -37,16 +38,20 @@ public class PlayerStationCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_armSubsystem.setReference(Constants.ArmConstants.BACK_MID);
-    timer.start();
 
-    if (m_scoringSubsystem.detectedGamePiece()) {
+    m_intakeSubsystem.setIntakeDown();
+    m_armSubsystem.smartSet(
+        m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.ARM_FRONTMOST));
+
+
+    
+    if (m_armSubsystem.getAbsolutePosition() >= ArmConstants.GATHER_MODE) {
+      if(m_intakeSubsystem.isIntakeDown()){
+        m_intakeSubsystem.unsqueeze();
+      }
       m_scoringSubsystem.closeScoring();
-      m_armSubsystem.setReference(Constants.ArmConstants.FORWARD_MID);
-    }
-
-    if (timer.get() >= 1) {
-      m_intakeSubsystem.unsqueeze();
+    } else {
+      m_scoringSubsystem.openScoring();
     }
   }
 

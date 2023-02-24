@@ -37,13 +37,15 @@ public final class Constants {
     public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
 
-    public static final int ARM_BACKMOST = 17;
-    public static final int ARM_FRONTMOST = 91;
+    public static final double ARM_BACKMOST = 17;
+    public static final double ARM_FRONTMOST = 91;
+    public static final double GATHER_MODE = 90;
+
 
     // INTAKE_RUNNABLE IS AN ARBITRARY NUMBER, TODO FIND ACTUAL VALUE
     // This value represents the angles where the intake CANNOT be run because
     // it would run into the arm if it were to go up or come down
-    public static final double INTAKE_RUNNABLE = FORWARD_MID;
+    public static final double INTAKE_RUNNABLE = 83;
 
     public static final double M_PI = Math.PI;
     public static final double WHEEL_SIZE = 1;
@@ -81,7 +83,8 @@ public final class Constants {
   }
 
   public static class DigitalConstants {
-    public static final int INDEX_BEAMBREAK = 0;
+    public static final int INTAKE_BEAMBREAK = 0;
+    public static final int INTAKE_DOWN_BEAMBREAK = 2;
     public static final int GRABBER_BEAMBREAK = 1;
     public static final int ARM_ENCODER = 9;
   }
