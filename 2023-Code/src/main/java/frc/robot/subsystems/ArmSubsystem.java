@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -14,27 +15,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
-import frc.robot.Constants.PIDConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
   private CANSparkMax m_armMotor = new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_armMotor.getEncoder();
   private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
-  private SparkMaxPIDController m_pidController;
+  private SparkMaxPIDController m_pidController = m_armMotor.getPIDController();
 
   public ArmSubsystem() {
     m_armMotor.restoreFactoryDefaults();
-
-    m_pidController = m_armMotor.getPIDController();
-    m_encoder.setPositionConversionFactor(ArmConstants.ROTATION_TO_INCHES);
-
-    m_pidController.setFeedbackDevice(m_encoder);
-    m_pidController.setP(PIDConstants.ARM_P);
-    m_pidController.setI(PIDConstants.ARM_I);
-    m_pidController.setD(PIDConstants.ARM_D);
-    m_pidController.setFF(PIDConstants.ARM_FF);
-    m_pidController.setOutputRange(PIDConstants.ARM_MINIMUM, PIDConstants.ARM_MAXIMUM);
+    m_armMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public double getAbsolutePosition() {
@@ -51,6 +42,15 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void set(double voltage) {
     m_armMotor.set(voltage);
+  }
+
+  public void smartSet(double desiredVoltage) {
+    if ((getAbsolutePosition() >= ArmConstants.ARM_FRONTMOST && desiredVoltage > 0)
+        || (getAbsolutePosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
+      set(0.0);
+    } else {
+      set(desiredVoltage);
+    }
   }
 
   public void setReference(double rotations) {
