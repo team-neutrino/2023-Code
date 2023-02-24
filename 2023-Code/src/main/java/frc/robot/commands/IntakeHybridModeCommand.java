@@ -34,9 +34,11 @@ public class IntakeHybridModeCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_intakeSubsystem.unsqueeze();
-    m_intakeSubsystem.setIntakeDown();
-    m_intakeSubsystem.runIntake();
+    if (m_intakeManager.managerApproved()) {
+      m_intakeSubsystem.unsqueeze();
+      m_intakeSubsystem.setIntakeDown();
+      m_intakeSubsystem.runIntake();
+    }
 
     if (m_intakeSubsystem.detectedGamePiece()) {
       m_intakeSubsystem.stopIntake();
