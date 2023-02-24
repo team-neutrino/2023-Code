@@ -26,7 +26,9 @@ public class ArmAdjustCommand extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_armSubsystem.turnOff();
+  }
 
   @Override
   public boolean isFinished() {
