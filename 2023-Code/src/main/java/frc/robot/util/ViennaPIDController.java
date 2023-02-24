@@ -91,7 +91,6 @@ public class ViennaPIDController {
 
     double output = m_p * error + m_i * m_iState + m_d * derivative + ff;
 
-    System.out.println(output);
     return bounder(output);
   }
 }

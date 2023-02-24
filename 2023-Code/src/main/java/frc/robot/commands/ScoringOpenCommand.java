@@ -5,18 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ScoringSubsystem;
 
-/** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+public class ScoringOpenCommand extends CommandBase {
+  private ScoringSubsystem m_scoringSubsystem;
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public ExampleCommand() {
+  /** Creates a new ScoringOpenCommand. */
+  public ScoringOpenCommand(ScoringSubsystem p_scoringSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_scoringSubsystem = p_scoringSubsystem;
+    addRequirements(p_scoringSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +23,9 @@ public class ExampleCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_scoringSubsystem.openScoring();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
