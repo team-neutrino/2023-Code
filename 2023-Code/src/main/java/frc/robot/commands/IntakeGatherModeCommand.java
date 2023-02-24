@@ -9,7 +9,6 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.IntakeManager;
-import frc.robot.util.ViennaPIDController;
 
 /** This command will transfer game piece from intake to arm */
 public class IntakeGatherModeCommand extends CommandBase {
