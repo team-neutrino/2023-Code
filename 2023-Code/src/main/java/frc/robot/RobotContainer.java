@@ -127,6 +127,8 @@ public class RobotContainer {
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
+  private final IntakeUnsqueezeCommand m_intakeUnsqueezeCommand =
+      new IntakeUnsqueezeCommand(m_intakeSubsystem);
   private final IntakeGatherModeCommand m_intakeGatherModeCommand =
       new IntakeGatherModeCommand(
           m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
