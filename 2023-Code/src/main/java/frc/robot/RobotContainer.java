@@ -171,7 +171,7 @@ public class RobotContainer {
     // used for small adjustments of the arm
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
-    m_leftArrow.whileTrue(m_intakeUnsqueezeCommand);
+    m_buttonStart.whileTrue(m_intakeUnsqueezeCommand);
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
