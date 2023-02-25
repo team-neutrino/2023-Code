@@ -28,8 +28,13 @@ public class TrajectoryConfigConstants {
           K_DRIVE_KINEMATICS,
           10);
 
-  public static final TrajectoryConfig m_ForwardConfig =
+  public static final TrajectoryConfig m_MaxSpeedForward =
       new TrajectoryConfig(K_MAX_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+          .setKinematics(K_DRIVE_KINEMATICS)
+          .addConstraint(m_autoVoltageConstraint);
+
+  public static final TrajectoryConfig m_HalfSpeedForward =
+      new TrajectoryConfig(K_HALF_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
           .setKinematics(K_DRIVE_KINEMATICS)
           .addConstraint(m_autoVoltageConstraint);
 }
