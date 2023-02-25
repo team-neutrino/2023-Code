@@ -40,7 +40,7 @@ public class IntakeHybridModeCommand extends CommandBase {
       m_intakeSubsystem.runIntake();
     }
 
-    //TODO move this logic into isFinished because it's duplicate code from intakeDefaultCommand
+    // TODO move this logic into isFinished because it's duplicate code from intakeDefaultCommand
     if (m_intakeSubsystem.detectedGamePiece()) {
       m_intakeSubsystem.stopIntake();
       m_intakeSubsystem.squeeze();

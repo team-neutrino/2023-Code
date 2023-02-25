@@ -160,7 +160,6 @@ public class RobotContainer {
 
     // Put the arm to one of three specified target angles
     m_buttonB.toggleOnTrue(
-
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
     m_buttonY.toggleOnTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
@@ -178,12 +177,13 @@ public class RobotContainer {
     m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
     m_rightBumper.whileTrue(m_intakeReverseCommand);
     m_buttonStart.whileTrue(m_intakeUnsqueezeCommand);
-        
+
     m_leftBumper.whileTrue(m_scoringOpenCommand);
 
     // LED Buttons
     // m_rightArrow.onTrue(
-    //     new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
+    //     new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem,
+    // m_driverStationInfo));
     m_leftArrow.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
   }

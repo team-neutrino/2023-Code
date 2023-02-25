@@ -38,8 +38,8 @@ public class IntakeDefaultCommand extends CommandBase {
     if (m_intakeManager.managerApproved()) {
       m_intakeManager.setIntakeUpWithArmCheck();
 
-      //code for squeezing & unsqueezing is controlled by arm position due to problem with
-      //intake squeezing ball right after arm gets ahold of it and partly pulling it out.
+      // code for squeezing & unsqueezing is controlled by arm position due to problem with
+      // intake squeezing ball right after arm gets ahold of it and partly pulling it out.
       if (!m_intakeSubsystem.detectedGamePiece()) {
         m_intakeSubsystem.unsqueeze();
       } else {
@@ -47,7 +47,7 @@ public class IntakeDefaultCommand extends CommandBase {
         m_intakeSubsystem.squeeze();
       }
     }
-    
+
     m_intakeSubsystem.stopIntake();
   }
 
