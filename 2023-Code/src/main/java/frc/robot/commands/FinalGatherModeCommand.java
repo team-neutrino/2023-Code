@@ -11,48 +11,36 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.ViennaPIDController;
 
-public class ArmGatherModeCommand extends CommandBase {
+public class FinalGatherModeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
-  private ScoringSubsystem m_scoringSubsystem;
   private IntakeSubsystem m_intakeSubsystem;
+  private ScoringSubsystem m_scoringSubsystem;
   private ViennaPIDController m_pidController;
 
-  public ArmGatherModeCommand(
-      ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem,
-      ViennaPIDController p_pidController) {
+  /** Creates a new FinalGatherModeCommand. */
+  public FinalGatherModeCommand(ArmSubsystem p_armSubsystem, IntakeSubsystem p_intakeSubsystem, ScoringSubsystem p_scoringSubsystem, ViennaPIDController p_pidController) {
     m_armSubsystem = p_armSubsystem;
-    m_scoringSubsystem = p_scoringSubsystem;
     m_intakeSubsystem = p_intakeSubsystem;
+    m_scoringSubsystem = p_scoringSubsystem;
     m_pidController = p_pidController;
-
-    addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
   }
 
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intakeSubsystem.setIntakeDown();
     m_armSubsystem.smartSet(
-        m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.ARM_FRONTMOST));
-
-    if (m_armSubsystem.getAbsolutePosition() >= ArmConstants.GATHER_POSITION) {
-      if (m_intakeSubsystem.isIntakeDown()) {
-        m_intakeSubsystem.unsqueeze();
-        m_scoringSubsystem.closeScoring();
-      }
-    } else {
-      m_scoringSubsystem.openScoring();
+      m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
     }
-  }
 
+  // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-}
+  public void end(boolean interrupted) {}
 
+  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

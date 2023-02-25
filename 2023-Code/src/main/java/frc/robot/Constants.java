@@ -38,7 +38,7 @@ public final class Constants {
     public static final double ARM_DEADZONE = 1;
 
     public static final double ARM_BACKMOST = 17;
-    public static final double ARM_FRONTMOST = 91;
+    public static final double ARM_FRONTMOST = 91.5;
 
     public static final double GATHER_POSITION = 90;
     public static final double INTAKE_RUNNABLE = 83;
