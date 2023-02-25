@@ -32,6 +32,7 @@ import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.autonomous.manualGeneration.TestAutonGeneratedTrajectory;
 import frc.robot.commands.autonomous.progressiveGeneration.TestAuton;
+import frc.robot.commands.autonomous.traditionalGeneration.ScoreThenDriveForwardAuton;
 import frc.robot.commands.autonomous.traditionalGeneration.TestAutonExplicitlyGenerated;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.ArmSubsystem;
@@ -194,6 +195,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return new TestAutonGeneratedTrajectory(m_driveTrainSubsystem).andThen(
         new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+    //return new ScoreThenDriveForwardAuton(m_driveTrainSubsystem, m_armSubsystem, m_armPidController, m_scoringSubsystem).andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
     // return new TestAuton(m_driveTrainSubsystem).andThen(
     //     new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0))
     // );
