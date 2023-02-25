@@ -21,7 +21,7 @@ public class TrajectoryConfigConstants {
   public static final double KP_DRIVE_VEL = .44295;
   public static final double KS_VOLTS = 0.13804;
 
-  private static final DifferentialDriveVoltageConstraint m_autoVoltageConstraint =
+  private static final DifferentialDriveVoltageConstraint K_AUTO_VOLTAGE_CONSTRAINT =
       new DifferentialDriveVoltageConstraint(
           new SimpleMotorFeedforward(
               KS_VOLTS, KV_VOLT_SECONDS_PER_METER, KA_VOLT_SECONDS_SQUARED_PER_METER),
@@ -31,10 +31,10 @@ public class TrajectoryConfigConstants {
   public static final TrajectoryConfig m_MaxSpeedForward =
       new TrajectoryConfig(K_MAX_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
           .setKinematics(K_DRIVE_KINEMATICS)
-          .addConstraint(m_autoVoltageConstraint);
+          .addConstraint(K_AUTO_VOLTAGE_CONSTRAINT);
 
   public static final TrajectoryConfig m_HalfSpeedForward =
       new TrajectoryConfig(K_HALF_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
           .setKinematics(K_DRIVE_KINEMATICS)
-          .addConstraint(m_autoVoltageConstraint);
+          .addConstraint(K_AUTO_VOLTAGE_CONSTRAINT);
 }
