@@ -36,7 +36,10 @@ public class IntakeSubsystem extends SubsystemBase {
       new Solenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.IN_OUT_SOLENOID);
 
   /** Beam break to detect if a game piece is present in the intake (to squeeeeze) */
-  private DigitalInput m_beamBreak = new DigitalInput(DigitalConstants.INDEX_BEAMBREAK);
+  private DigitalInput m_beamBreak = new DigitalInput(DigitalConstants.INTAKE_BEAMBREAK);
+
+  private DigitalInput m_intakeDownSensor =
+      new DigitalInput(DigitalConstants.INTAKE_DOWN_BEAMBREAK);
 
   /** Creates a new IntakeSubsystem and initializes the motor controllers. */
   public IntakeSubsystem() {
@@ -80,6 +83,10 @@ public class IntakeSubsystem extends SubsystemBase {
     return m_beamBreak.get();
   }
 
+  public boolean isIntakeDown() {
+    return m_intakeDownSensor.get();
+  }
+
   /**
    * Returns whether or not a game piece is in the intake.
    *
@@ -104,7 +111,7 @@ public class IntakeSubsystem extends SubsystemBase {
    *
    * @return whether or not the solenoid is in the out position.
    */
-  public boolean isIntakeDown() {
+  public boolean isIntakeSolenoidDown() {
     return m_upDownSolenoid.get();
   }
 

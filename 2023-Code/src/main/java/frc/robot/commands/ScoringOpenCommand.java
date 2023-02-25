@@ -10,22 +10,28 @@ import frc.robot.subsystems.ScoringSubsystem;
 public class ScoringOpenCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
 
+  /** Creates a new ScoringOpenCommand. */
   public ScoringOpenCommand(ScoringSubsystem p_scoringSubsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
     m_scoringSubsystem = p_scoringSubsystem;
-    addRequirements(m_scoringSubsystem);
+    addRequirements(p_scoringSubsystem);
   }
 
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     m_scoringSubsystem.openScoring();
   }
 
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
+  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

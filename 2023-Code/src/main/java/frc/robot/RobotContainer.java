@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -15,6 +16,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
+import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
@@ -23,6 +25,7 @@ import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeGatherModeCommand;
 import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
+import frc.robot.commands.IntakeSqueezeCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
@@ -124,18 +127,21 @@ public class RobotContainer {
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
+  private final IntakeSqueezeCommand m_intakeUnsqueezeCommand =
+      new IntakeSqueezeCommand(m_intakeSubsystem);
   private final IntakeGatherModeCommand m_intakeGatherModeCommand =
       new IntakeGatherModeCommand(
-          m_intakeSubsystem,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeManager,
-          m_armPidController);
+          m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
+  private final ArmGatherModeCommand m_armGatherModeCommand =
+      new ArmGatherModeCommand(
+          m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
       new IntakeHybridModeCommand(
           m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
+  private final ScoringOpenCommand m_scoringOpenCommand =
+      new ScoringOpenCommand(m_scoringSubsystem);
   private final LEDCommand m_LedDefaultCommand =
       new LEDCommand(m_ledSubsystem, LEDColor.ORANGE, m_scoringSubsystem, m_driverStationInfo);
 
@@ -163,16 +169,22 @@ public class RobotContainer {
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
 
     // used for small adjustments of the arm
-    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .5));
-    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.5));
-    m_leftBumper.whileTrue(m_intakeReverseCommand);
-    m_leftTrigger.whileTrue(m_intakeGatherModeCommand);
-    m_rightBumper.whileTrue(new ScoringOpenCommand(m_scoringSubsystem));
+    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
+    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
+
+    m_leftTrigger.whileTrue(
+        new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
+    m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
+    m_rightBumper.whileTrue(m_intakeReverseCommand);
+    m_buttonStart.whileTrue(m_intakeUnsqueezeCommand);
+
+    m_leftBumper.whileTrue(m_scoringOpenCommand);
 
     // LED Buttons
-    m_buttonStart.onTrue(
-        new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
-    m_buttonBack.onTrue(
+    // m_rightArrow.onTrue(
+    //     new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem,
+    // m_driverStationInfo));
+    m_leftArrow.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
   }
 
