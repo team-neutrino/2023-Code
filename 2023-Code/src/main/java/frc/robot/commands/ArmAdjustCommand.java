@@ -12,12 +12,17 @@ import frc.robot.util.ViennaPIDController;
 public class ArmAdjustCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private XboxController m_driverController;
-  double voltage;
+  private ViennaPIDController m_pidController;
+  private double targetAngle;
 
-  public ArmAdjustCommand(ArmSubsystem p_armSubsystem, XboxController p_driverController) {
+  public ArmAdjustCommand(
+      ArmSubsystem p_armSubsystem,
+      XboxController p_driverController,
+      ViennaPIDController p_pidController) {
+    m_pidController = p_pidController;
     m_armSubsystem = p_armSubsystem;
     m_driverController = p_driverController;
-    voltage = 0;
+    targetAngle = m_armSubsystem.getAbsolutePosition();
 
     addRequirements(m_armSubsystem);
   }
@@ -27,14 +32,19 @@ public class ArmAdjustCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if(m_driverController.getRightY() < -0.1) {
+    System.out.println("joystick value: " + m_driverController.getRightY());
+    double voltage = 0;
+
+    if (m_driverController.getRightY() < -0.3) {
+      System.out.println("negative voltage");
       voltage = -.2;
-    }
-    else if(m_driverController.getRightY() > 0.1) {
+    } else if (m_driverController.getRightY() > 0.3) {
+      System.out.println("positive voltage");
       voltage = .2;
-    }
-    else {
-      voltage = 0;
+    } else {
+      System.out.println("no voltage");
+      int position = (int) m_armSubsystem.getAbsolutePosition();
+      voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), position);
     }
     m_armSubsystem.smartSet(voltage);
   }
