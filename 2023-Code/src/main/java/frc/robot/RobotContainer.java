@@ -132,13 +132,13 @@ public class RobotContainer {
       new IntakeSqueezeCommand(m_intakeSubsystem);
   private final IntakeGatherModeCommand m_intakeGatherModeCommand =
       new IntakeGatherModeCommand(
-          m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
+          m_intakeSubsystem, m_intakeManager);
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(
           m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
       new IntakeHybridModeCommand(
-          m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
+          m_intakeSubsystem, m_intakeManager);
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
   private final ScoringOpenCommand m_scoringOpenCommand =
