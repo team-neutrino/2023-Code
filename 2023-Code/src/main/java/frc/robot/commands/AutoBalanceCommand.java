@@ -27,7 +27,6 @@ public class AutoBalanceCommand extends CommandBase {
   @Override
   public void execute() {
     error = desiredPos - m_drivetrain.getPitch();
-    previousError = error;
     if (Math.abs(error) <= DrivetrainConstants.AUTO_BALANCE_DEADZONE) {
       error = 0;
     }
