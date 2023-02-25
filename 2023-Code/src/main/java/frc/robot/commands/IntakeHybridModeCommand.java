@@ -13,9 +13,7 @@ public class IntakeHybridModeCommand extends CommandBase {
   IntakeSubsystem m_intakeSubsystem;
   IntakeManager m_intakeManager;
 
-  public IntakeHybridModeCommand(
-      IntakeSubsystem p_intakeSubsystem,
-      IntakeManager p_intakeManager) {
+  public IntakeHybridModeCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_intakeSubsystem;
     m_intakeManager = p_intakeManager;
     addRequirements(m_intakeSubsystem);

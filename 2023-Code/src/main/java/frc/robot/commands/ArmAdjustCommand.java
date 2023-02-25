@@ -4,40 +4,53 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmAdjustCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
-  private double m_voltage;
+  private XboxController m_driverController;
   private ViennaPIDController m_pidController;
+  private double targetAngle;
 
-  public ArmAdjustCommand(ArmSubsystem p_armSubsystem, double p_voltage) {
+  public ArmAdjustCommand(
+      ArmSubsystem p_armSubsystem,
+      XboxController p_driverController,
+      ViennaPIDController p_pidController) {
+    m_pidController = p_pidController;
     m_armSubsystem = p_armSubsystem;
-    m_voltage = p_voltage;
+    m_driverController = p_driverController;
+    targetAngle = m_armSubsystem.getAbsolutePosition();
+
     addRequirements(m_armSubsystem);
   }
 
   @Override
-  public void initialize() {
-    m_armSubsystem.setUsingArmAdjustCommand(true);
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
-    m_armSubsystem.smartSet(m_voltage);
+    System.out.println("joystick value: " + m_driverController.getRightY());
+    double voltage = 0;
+
+    if (m_driverController.getRightY() < -0.3) {
+      System.out.println("negative voltage");
+      voltage = -.2;
+    } else if (m_driverController.getRightY() > 0.3) {
+      System.out.println("positive voltage");
+      voltage = .2;
+    } else {
+      System.out.println("no voltage");
+      int position = (int) m_armSubsystem.getAbsolutePosition();
+      voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), position);
+    }
+    m_armSubsystem.smartSet(voltage);
   }
 
   @Override
-  public void end(boolean interrupted) {
-    //potential code to prevent gravity pulling arm down
-    //after armAdjust is run and before another command
-
-    // double position = m_armSubsystem.getAbsolutePosition();
-    // double voltage = m_pidController.run(position, position);
-    // m_armSubsystem.smartSet(voltage);
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {

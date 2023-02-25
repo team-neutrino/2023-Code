@@ -13,9 +13,7 @@ public class IntakeGatherModeCommand extends CommandBase {
   private IntakeSubsystem m_intakeSubsystem;
   private IntakeManager m_intakeManager;
 
-  public IntakeGatherModeCommand(
-      IntakeSubsystem p_intakeSubsystem,
-      IntakeManager p_intakeManager) {
+  public IntakeGatherModeCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_intakeSubsystem;
     m_intakeManager = p_intakeManager;
     addRequirements(m_intakeSubsystem);

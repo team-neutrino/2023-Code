@@ -48,7 +48,6 @@ public class IntakeDefaultCommand extends CommandBase {
         // in case we're holding a game piece, we want to keep a hold of it
         m_intakeSubsystem.squeeze();
       }
-
     }
   }
 
