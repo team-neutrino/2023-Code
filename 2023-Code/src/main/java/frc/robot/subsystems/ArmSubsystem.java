@@ -47,14 +47,12 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void smartSet(double desiredVoltage) {
-    if(!usingAdjustCommand) {
       if ((getAbsolutePosition() >= ArmConstants.ARM_FRONTMOST && desiredVoltage > 0)
       || (getAbsolutePosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
         set(0.0);
       }   
       else {
         set(desiredVoltage);
-      }
     }
   }
 
@@ -82,6 +80,11 @@ public class ArmSubsystem extends SubsystemBase {
   public void setUsingArmAdjustCommand(boolean using)
   {
     usingAdjustCommand = using;
+  }
+
+  public boolean getUsingArmAdjustCommand()
+  {
+    return usingAdjustCommand;
   }
 
   @Override

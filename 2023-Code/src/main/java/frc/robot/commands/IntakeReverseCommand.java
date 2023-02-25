@@ -22,7 +22,7 @@ public class IntakeReverseCommand extends CommandBase {
     m_intakeManager = p_intakeManager;
 
     // change and adjust this time to determine how long to intake squeezes & runs before unsquezing
-    squeeze_time = .5;
+    squeeze_time = 1;
     timer = new Timer();
 
     addRequirements(p_intakeSubsystem);
