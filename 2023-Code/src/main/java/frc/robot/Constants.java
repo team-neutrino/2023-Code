@@ -68,7 +68,7 @@ public final class Constants {
 
   public static class DrivetrainConstants {
     public static final double JOYSTICK_DEADZONE = 0.1;
-    public static final double AUTO_BALANCE_DEADZONE = 1;
+    public static final double AUTO_BALANCE_DEADZONE = .8;
   }
 
   public static class DigitalConstants {
