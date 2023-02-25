@@ -25,7 +25,7 @@ import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeGatherModeCommand;
 import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
-import frc.robot.commands.IntakeUnsqueezeCommand;
+import frc.robot.commands.IntakeSqueezeCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
@@ -127,8 +127,8 @@ public class RobotContainer {
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
-  private final IntakeUnsqueezeCommand m_intakeUnsqueezeCommand =
-      new IntakeUnsqueezeCommand(m_intakeSubsystem);
+  private final IntakeSqueezeCommand m_intakeUnsqueezeCommand =
+      new IntakeSqueezeCommand(m_intakeSubsystem);
   private final IntakeGatherModeCommand m_intakeGatherModeCommand =
       new IntakeGatherModeCommand(
           m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
@@ -160,6 +160,7 @@ public class RobotContainer {
 
     // Put the arm to one of three specified target angles
     m_buttonB.toggleOnTrue(
+
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
     m_buttonY.toggleOnTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
@@ -171,22 +172,19 @@ public class RobotContainer {
     // used for small adjustments of the arm
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
     m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
-    m_buttonStart.whileTrue(m_intakeUnsqueezeCommand);
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
-    m_leftBumper.whileTrue(m_scoringOpenCommand);
-
     m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
     m_rightBumper.whileTrue(m_intakeReverseCommand);
-
-    // this doesn't work the way it should
-    // m_buttonStart.whileTrue(new InstantCommand(m_intakeSubsystem::unsqueeze, m_intakeSubsystem));
+    m_buttonStart.whileTrue(m_intakeUnsqueezeCommand);
+        
+    m_leftBumper.whileTrue(m_scoringOpenCommand);
 
     // LED Buttons
-    m_buttonStart.onTrue(
-        new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
-    m_buttonBack.onTrue(
+    // m_rightArrow.onTrue(
+    //     new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
+    m_leftArrow.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
   }
 

@@ -46,7 +46,7 @@ public class IntakeGatherModeCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    m_intakeSubsystem.stopIntake();
+    m_intakeSubsystem.stopIntake(); //TODO remove potentially, does the same thing as IntakeDefaultCommand
   }
 
   @Override
