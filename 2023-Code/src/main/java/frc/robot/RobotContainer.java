@@ -25,6 +25,7 @@ import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeGatherModeCommand;
 import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
+import frc.robot.commands.IntakeSqueezeCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
@@ -126,6 +127,8 @@ public class RobotContainer {
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
+  private final IntakeSqueezeCommand m_intakeUnsqueezeCommand =
+      new IntakeSqueezeCommand(m_intakeSubsystem);
   private final IntakeGatherModeCommand m_intakeGatherModeCommand =
       new IntakeGatherModeCommand(
           m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
@@ -171,18 +174,17 @@ public class RobotContainer {
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
-    m_leftBumper.whileTrue(m_scoringOpenCommand);
-
     m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
     m_rightBumper.whileTrue(m_intakeReverseCommand);
+    m_buttonStart.whileTrue(m_intakeUnsqueezeCommand);
 
-    // this doesn't work the way it should
-    // m_buttonStart.whileTrue(new InstantCommand(m_intakeSubsystem::unsqueeze, m_intakeSubsystem));
+    m_leftBumper.whileTrue(m_scoringOpenCommand);
 
     // LED Buttons
-    m_buttonStart.onTrue(
-        new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
-    m_buttonBack.onTrue(
+    // m_rightArrow.onTrue(
+    //     new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem,
+    // m_driverStationInfo));
+    m_leftArrow.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
   }
 
