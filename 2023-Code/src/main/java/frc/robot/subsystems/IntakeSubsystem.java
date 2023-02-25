@@ -11,15 +11,16 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.DigitalConstants;
+import frc.robot.Constants.MotorConstants;
+import frc.robot.Constants.PneumaticsConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
   /** Motor for the wheels of the intake system */
   private CANSparkMax m_wheelsMotor =
       new CANSparkMax(
-          Constants.MotorConstants.INTAKEMOTOR1,
-          MotorType.kBrushless); // motor type subject to change;
+          MotorConstants.INTAKEMOTOR, MotorType.kBrushless); // motor type subject to change;
 
   /** Encoder for the wheels on the intake */
   private RelativeEncoder m_wheelsEncoder;
@@ -29,19 +30,23 @@ public class IntakeSubsystem extends SubsystemBase {
 
   /** Solenoid for the intake, controls the in-out motion */
   private Solenoid m_upDownSolenoid =
-      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.UP_DOWN_SOLENOID);
+      new Solenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.UP_DOWN_SOLENOID);
 
   private Solenoid m_squeezeSolenoid =
-      new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.IN_OUT_SOLENOID);
+      new Solenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.IN_OUT_SOLENOID);
 
   /** Beam break to detect if a game piece is present in the intake (to squeeeeze) */
-  private DigitalInput m_beamBreak = new DigitalInput(Constants.DigitalConstants.INDEX_BEAMBREAK);
+  private DigitalInput m_beamBreak = new DigitalInput(DigitalConstants.INTAKE_BEAMBREAK);
+
+  private DigitalInput m_intakeDownSensor =
+      new DigitalInput(DigitalConstants.INTAKE_DOWN_BEAMBREAK);
 
   /** Creates a new IntakeSubsystem and initializes the motor controllers. */
   public IntakeSubsystem() {
     m_wheelsMotor.restoreFactoryDefaults();
     // encoders initialized in constructor to make sure motors are initialized first
     m_wheelsEncoder = m_wheelsMotor.getEncoder();
+    m_wheelsMotor.setSmartCurrentLimit(30, 35);
   }
 
   /** Sets the solenoid to the 'out' position */
@@ -56,12 +61,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
   /** Runs the wheels motor at a fixed speed. */
   public void runIntake() {
-    m_wheelsMotor.set(.2); // NEED TO MAKE CONSTANT FOR MOTOR SPEED
+    m_wheelsMotor.set(.5); // NEED TO MAKE CONSTANT FOR MOTOR SPEED
   }
 
   /** Runs the wheels motor in reverse. */
   public void runIntakeReverse() {
-    m_wheelsMotor.set(-.2);
+    m_wheelsMotor.set(-.5);
   }
 
   /** Stops the motors. */
@@ -78,12 +83,16 @@ public class IntakeSubsystem extends SubsystemBase {
     return m_beamBreak.get();
   }
 
+  public boolean isIntakeDown() {
+    return m_intakeDownSensor.get();
+  }
+
   /**
    * Returns whether or not a game piece is in the intake.
    *
    * @return True if a game piece is present.
    */
-  public boolean isGamePiece() {
+  public boolean detectedGamePiece() {
     return !getBeamBreak();
   }
 
@@ -102,7 +111,7 @@ public class IntakeSubsystem extends SubsystemBase {
    *
    * @return whether or not the solenoid is in the out position.
    */
-  public boolean isIntakeDown() {
+  public boolean isIntakeSolenoidDown() {
     return m_upDownSolenoid.get();
   }
 
@@ -130,7 +139,5 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+  public void periodic() {}
 }

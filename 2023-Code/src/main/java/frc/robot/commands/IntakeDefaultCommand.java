@@ -19,19 +19,16 @@ public class IntakeDefaultCommand extends CommandBase {
   IntakeManager m_intakeManager;
 
   /** Constructor, creates a new IntakeDefaultCommand. */
-  public IntakeDefaultCommand(IntakeSubsystem subsystem, IntakeManager p_inIntakeManager) {
-    m_intakeSubsystem = subsystem;
+  public IntakeDefaultCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_inIntakeManager) {
+    m_intakeSubsystem = p_intakeSubsystem;
     m_intakeManager = p_inIntakeManager;
 
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(m_intakeSubsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   /**
    * This command's purpose is to ensure that the intake is up and not running when the button isn't
    * pressed.
@@ -39,18 +36,24 @@ public class IntakeDefaultCommand extends CommandBase {
   @Override
   public void execute() {
     if (m_intakeManager.managerApproved()) {
-      m_intakeSubsystem.stopIntake();
-      // in case we're holding a game piece, we want to keep a hold of it
-      m_intakeSubsystem.squeeze();
       m_intakeManager.setIntakeUpWithArmCheck();
+
+      // code for squeezing & unsqueezing is controlled by arm position due to problem with
+      // intake squeezing ball right after arm gets ahold of it and partly pulling it out.
+      if (!m_intakeSubsystem.detectedGamePiece()) {
+        m_intakeSubsystem.unsqueeze();
+      } else {
+        // in case we're holding a game piece, we want to keep a hold of it
+        m_intakeSubsystem.squeeze();
+      }
     }
+
+    m_intakeSubsystem.stopIntake();
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

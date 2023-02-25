@@ -5,32 +5,32 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.util.ViennaPIDController;
 
 public class ArmDefaultCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
+  private ViennaPIDController m_pidController;
 
-  /** Creates a new ArmDefaultCommand. */
-  public ArmDefaultCommand(ArmSubsystem p_armSubsystem) {
+  public ArmDefaultCommand(ArmSubsystem p_armSubsystem, ViennaPIDController p_pidController) {
     m_armSubsystem = p_armSubsystem;
+    m_pidController = p_pidController;
     addRequirements(m_armSubsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_armSubsystem.turnOff();
+    m_armSubsystem.smartSet(
+        m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
