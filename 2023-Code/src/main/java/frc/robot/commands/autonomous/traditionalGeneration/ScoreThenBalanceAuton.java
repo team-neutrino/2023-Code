@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.TrajectoryConfigConstants;
 import frc.robot.commands.ArmToAngleCommand;
+import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -44,7 +45,7 @@ public class ScoreThenBalanceAuton extends SequentialCommandGroup {
     m_pidController = p_pidController;
     m_scoringSubsystem = p_scoringSubsystem;
 
-    Trajectory driveForwardTrajectory =
+    Trajectory driveToPlatform =
         TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
@@ -53,7 +54,7 @@ public class ScoreThenBalanceAuton extends SequentialCommandGroup {
 
     m_driveForwardRamsete =
         new RamseteCommand(
-            driveForwardTrajectory,
+            driveToPlatform,
             m_drivetrainSubsystem::getPose2d,
             new RamseteController(
                 TrajectoryConfigConstants.K_RAMSETE_BETA, TrajectoryConfigConstants.K_RAMSETE_ZETA),
@@ -73,6 +74,8 @@ public class ScoreThenBalanceAuton extends SequentialCommandGroup {
     // new ScoringOpenCommand(m_scoringSubsystem), m_driveForwardRamsete);
     addCommands(
         new ArmToAngleCommand(m_armSubsystem, m_pidController, ArmConstants.BACK_MID),
-        new ScoringOpenCommand(m_scoringSubsystem));
+        new ScoringOpenCommand(m_scoringSubsystem),
+        m_driveForwardRamsete,
+        new AutoBalanceCommand(m_drivetrainSubsystem));
   }
 }

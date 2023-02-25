@@ -44,16 +44,16 @@ public class ScoreThenDriveForwardAuton extends SequentialCommandGroup {
     m_pidController = p_pidController;
     m_scoringSubsystem = p_scoringSubsystem;
 
-    Trajectory driveForwardTrajectory =
-        TrajectoryGenerator.generateTrajectory(
-            List.of(
-                new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-                new Pose2d(5, 0, Rotation2d.fromDegrees(0))),
-            TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
+    // Trajectory driveForwardTrajectory =
+    //     TrajectoryGenerator.generateTrajectory(
+    //         List.of(
+    //             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+    //             new Pose2d(5, 0, Rotation2d.fromDegrees(0))),
+    //         TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
     m_driveForwardRamsete =
         new RamseteCommand(
-            driveForwardTrajectory,
+            Trajectories.forwardTrajectory,
             m_drivetrainSubsystem::getPose2d,
             new RamseteController(
                 TrajectoryConfigConstants.K_RAMSETE_BETA, TrajectoryConfigConstants.K_RAMSETE_ZETA),
@@ -74,5 +74,9 @@ public class ScoreThenDriveForwardAuton extends SequentialCommandGroup {
     addCommands(
         new ArmToAngleCommand(m_armSubsystem, m_pidController, ArmConstants.BACK_MID),
         new ScoringOpenCommand(m_scoringSubsystem));
+    // addCommands(
+    //     new ArmToAngleCommand(m_armSubsystem, m_pidController, ArmConstants.BACK_MID),
+    //     new ScoringOpenCommand(m_scoringSubsystem),
+    //     m_driveForwardRamsete);
   }
 }
