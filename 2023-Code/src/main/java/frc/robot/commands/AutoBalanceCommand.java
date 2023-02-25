@@ -26,8 +26,8 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public void execute() {
-    previousError = error;
     error = desiredPos - m_drivetrain.getPitch();
+    previousError = error;
     if (Math.abs(error) <= DrivetrainConstants.AUTO_BALANCE_DEADZONE) {
       error = 0;
     }
@@ -44,6 +44,9 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    // if (Math.abs(error) <= DrivetrainConstants.AUTO_BALANCE_DEADZONE) {
+    //   return true;
+    // }
     return false;
   }
 }
