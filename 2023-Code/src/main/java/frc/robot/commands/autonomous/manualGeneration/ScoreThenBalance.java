@@ -42,6 +42,6 @@ public class ScoreThenBalance extends SequentialCommandGroup {
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID), new ScoringOpenCommand(p_scoringSubsystem, 2), forwardBackCommand, new AutoBalanceCommand(m_drivetrainSubsystem));
+    addCommands(new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true), new ScoringOpenCommand(p_scoringSubsystem, 2), forwardBackCommand, new AutoBalanceCommand(m_drivetrainSubsystem));
   }
 }

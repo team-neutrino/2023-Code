@@ -134,6 +134,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return m_navX.getPitch();
   }
 
+  public double getRoll() {
+    return m_navX.getRoll();
+  }
+
   private Rotation2d getYawAsRotation() {
     return Rotation2d.fromDegrees(getYaw());
   }

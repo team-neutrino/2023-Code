@@ -26,7 +26,7 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public void execute() {
-    error = desiredPos - m_drivetrain.getPitch();
+    error = desiredPos - m_drivetrain.getRoll();
     if (Math.abs(error) <= DrivetrainConstants.AUTO_BALANCE_DEADZONE) {
       error = 0;
     }
@@ -34,7 +34,7 @@ public class AutoBalanceCommand extends CommandBase {
         error * PIDConstants.BALANCE_P
             + PIDConstants.BALANCE_I * (integral += (error * PIDConstants.dt))
             + PIDConstants.BALANCE_D * (error - previousError) / PIDConstants.dt;
-    m_drivetrain.setVoltage(voltage, voltage);
+    m_drivetrain.setVoltage(-voltage, -voltage);
     previousError = error;
   }
 
