@@ -69,7 +69,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     p_motor.restoreFactoryDefaults();
     p_motor.setIdleMode(IdleMode.kBrake);
     p_motor.setInverted(p_inversion);
-    p_motor.burnFlash();
+    // p_motor.burnFlash();
 
     p_encoder = p_motor.getEncoder();
     p_encoder.setPositionConversionFactor(DriverConstants.ENCODER_POSITION_CONVERSION);
@@ -190,6 +190,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void periodic() {
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
-    //System.out.println("x coord: " + getPose2d().getX() + " y coord: " + getPose2d().getY() + " rotation: " + getPose2d().getRotation());
+    System.out.println("x coord: " + getPose2d().getX() + " y coord: " + getPose2d().getY() + " rotation: " + getPose2d().getRotation());
   }
 }

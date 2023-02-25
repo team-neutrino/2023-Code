@@ -13,15 +13,13 @@ public class TrajectoryConfigConstants {
   public static final double K_TRACK_WIDTH_METERS = 0.635;
   public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
       new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
-  public static final double K_MAX_SPEED_METERS_PER_SECOND = 3;
-  public static final double K_HALF_SPEED_METERS_PER_SECOND = 1.5;
-  public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 2;
+  public static final double K_MAX_SPEED_METERS_PER_SECOND = 1.5;
+  public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 1;
   public static final double K_RAMSETE_BETA = 2;
   public static final double K_RAMSETE_ZETA = 0.7;
   public static final double KP_DRIVE_VEL = .44295;
   public static final double KS_VOLTS = 0.13804;
-  public static final double K_MAX_VOLTAGE =
-      10; // < 12V due to voltage dip after startup current draw, according to docs
+  public static final double K_MAX_VOLTAGE = 10; // < 12V due to voltage dip after startup current draw, according to docs
 
   private static final DifferentialDriveVoltageConstraint K_AUTO_VOLTAGE_CONSTRAINT =
       new DifferentialDriveVoltageConstraint(
@@ -33,12 +31,6 @@ public class TrajectoryConfigConstants {
   public static final TrajectoryConfig K_MAX_SPEED_FORWARD_CONFIG =
       new TrajectoryConfig(
               K_MAX_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
-          .setKinematics(K_DRIVE_KINEMATICS)
-          .addConstraint(K_AUTO_VOLTAGE_CONSTRAINT);
-
-  public static final TrajectoryConfig K_HALF_SPEED_FORWARD_CONFIG =
-      new TrajectoryConfig(
-              K_HALF_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
           .setKinematics(K_DRIVE_KINEMATICS)
           .addConstraint(K_AUTO_VOLTAGE_CONSTRAINT);
 }

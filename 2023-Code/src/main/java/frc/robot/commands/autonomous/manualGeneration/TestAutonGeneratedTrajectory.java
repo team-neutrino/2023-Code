@@ -6,9 +6,16 @@ package frc.robot.commands.autonomous.manualGeneration;
 
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.commands.ArmToAngleCommand;
+import frc.robot.commands.ScoringOpenCommand;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.PoseTriplet;
+import frc.robot.util.ViennaPIDController;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -22,18 +29,18 @@ public class TestAutonGeneratedTrajectory extends SequentialCommandGroup {
   private RamseteCommand forwardBackCommand;
 
   /** Creates a new TestAutonGeneratedTrajectory. */
-  public TestAutonGeneratedTrajectory(DriveTrainSubsystem p_drivetrainSubsystem) {
+  public TestAutonGeneratedTrajectory(DriveTrainSubsystem p_drivetrainSubsystem, ViennaPIDController p_pidController, ArmSubsystem p_armSubsystem, ScoringSubsystem p_scoringSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(25, 0, 0)));
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(3, 0, 0)));
 
     forwardBackCommand =
         AutonomousUtil.generateRamseteFromPoses(forwardBackArray, m_drivetrainSubsystem);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(forwardBackCommand);
+    addCommands(new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID), new ScoringOpenCommand(p_scoringSubsystem), forwardBackCommand);
   }
 }

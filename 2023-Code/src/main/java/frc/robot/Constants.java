@@ -33,7 +33,7 @@ public final class Constants {
     public static final double UP = 56;
     public static final double FORWARD_DOWN = 90;
     public static final double FORWARD_MID = 80;
-    public static final double BACK_MID = 31;
+    public static final double BACK_MID = 36.4;
     public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
 
@@ -79,7 +79,7 @@ public final class Constants {
   }
 
   public static class PWMConstants {
-    public static final int LED_PORT = 0;
+    public static final int LED_PORT = 8;
   }
 
   public static class DriverConstants {
