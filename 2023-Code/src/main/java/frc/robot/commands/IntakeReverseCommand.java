@@ -10,7 +10,7 @@ import frc.robot.util.IntakeManager;
 
 public class IntakeReverseCommand extends CommandBase {
 
-  // An object of the intake subsystem
+  // An object of the intake subsystem.
   private IntakeSubsystem m_intakeSubsystem;
   private IntakeManager m_intakeManager;
 
