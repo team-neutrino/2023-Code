@@ -52,7 +52,7 @@ public final class Constants {
     public static final int ARM_D = 0;
     public static final int ARM_FF = 0;
 
-    public static final double BALANCE_P = 0.08;
+    public static final double BALANCE_P = 0.2;
     public static final double BALANCE_I = 0;
     public static final double BALANCE_D = 0;
 
