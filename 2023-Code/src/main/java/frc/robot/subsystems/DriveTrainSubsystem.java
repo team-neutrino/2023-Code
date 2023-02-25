@@ -43,8 +43,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoderRight2;
   private Joystick m_leftJoystick;
   private Joystick m_rightJoystick;
-  private MotorControllerGroup m_motorGroupRight = new MotorControllerGroup(m_motorRight1, m_motorRight2);
-  private MotorControllerGroup m_motorGroupLeft = new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
+  private MotorControllerGroup m_motorGroupRight =
+      new MotorControllerGroup(m_motorRight1, m_motorRight2);
+  private MotorControllerGroup m_motorGroupLeft =
+      new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
 
   /** Creates a new Drivetrain. */
   public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick) {

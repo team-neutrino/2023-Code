@@ -30,11 +30,8 @@ import frc.robot.commands.IntakeSqueezeCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
-import frc.robot.commands.autonomous.manualGeneration.TestAutonGeneratedTrajectory;
-import frc.robot.commands.autonomous.progressiveGeneration.TestAuton;
-import frc.robot.commands.autonomous.traditionalGeneration.ScoreThenDriveForwardAuton;
-import frc.robot.commands.autonomous.traditionalGeneration.TestAutonExplicitlyGenerated;
 import frc.robot.commands.ScoringOpenCommand;
+import frc.robot.commands.autonomous.manualGeneration.TestAutonGeneratedTrajectory;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -131,7 +128,7 @@ public class RobotContainer {
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
-  private final IntakeSqueezeCommand m_intakeUnsqueezeCommand =
+  private final IntakeSqueezeCommand m_intakeSqueezeCommand =
       new IntakeSqueezeCommand(m_intakeSubsystem);
   private final IntakeGatherModeCommand m_intakeGatherModeCommand =
       new IntakeGatherModeCommand(
@@ -178,24 +175,26 @@ public class RobotContainer {
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
-    m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
-    m_rightBumper.whileTrue(m_intakeReverseCommand);
-    m_buttonStart.whileTrue(m_intakeUnsqueezeCommand);
-
     m_leftBumper.whileTrue(m_scoringOpenCommand);
 
+    m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
+    m_rightBumper.whileTrue(m_intakeReverseCommand);
+
+    m_buttonStart.whileTrue(m_intakeSqueezeCommand);
+
     // LED Buttons
-    // m_rightArrow.onTrue(
-    //     new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem,
-    // m_driverStationInfo));
+    m_rightArrow.onTrue(
+        new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
     m_leftArrow.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
   }
 
   public Command getAutonomousCommand() {
-    return new TestAutonGeneratedTrajectory(m_driveTrainSubsystem).andThen(
-        new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
-    //return new ScoreThenDriveForwardAuton(m_driveTrainSubsystem, m_armSubsystem, m_armPidController, m_scoringSubsystem).andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+    return new TestAutonGeneratedTrajectory(m_driveTrainSubsystem)
+        .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+    // return new ScoreThenDriveForwardAuton(m_driveTrainSubsystem, m_armSubsystem,
+    // m_armPidController, m_scoringSubsystem).andThen(new InstantCommand(() ->
+    // m_driveTrainSubsystem.setVoltage(0, 0)));
     // return new TestAuton(m_driveTrainSubsystem).andThen(
     //     new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0))
     // );

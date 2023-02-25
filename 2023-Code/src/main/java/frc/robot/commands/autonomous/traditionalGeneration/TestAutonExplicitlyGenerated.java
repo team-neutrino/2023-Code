@@ -4,8 +4,6 @@
 
 package frc.robot.commands.autonomous.traditionalGeneration;
 
-import java.util.List;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -17,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.TrajectoryConfigConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import java.util.List;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -32,28 +31,28 @@ public class TestAutonExplicitlyGenerated extends SequentialCommandGroup {
   public TestAutonExplicitlyGenerated(DriveTrainSubsystem p_drivetrainSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
 
-    testTrajectory = TrajectoryGenerator.generateTrajectory(
-      List.of(
-        new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-        new Pose2d(25, 0, Rotation2d.fromDegrees(0))
-      ),
-      TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG
-    );
+    testTrajectory =
+        TrajectoryGenerator.generateTrajectory(
+            List.of(
+                new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+                new Pose2d(25, 0, Rotation2d.fromDegrees(0))),
+            TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
-    testRamseteCommand = new RamseteCommand(
-      testTrajectory,
-      m_drivetrainSubsystem::getPose2d,
-      new RamseteController(
-          TrajectoryConfigConstants.K_RAMSETE_BETA, TrajectoryConfigConstants.K_RAMSETE_ZETA),
-      new SimpleMotorFeedforward(
-          TrajectoryConfigConstants.KS_VOLTS,
-          TrajectoryConfigConstants.KV_VOLT_SECONDS_PER_METER),
-      TrajectoryConfigConstants.K_DRIVE_KINEMATICS,
-      m_drivetrainSubsystem::getDriveWheelSpeeds,
-      new PIDController(TrajectoryConfigConstants.KP_DRIVE_VEL, 0, 0),
-      new PIDController(TrajectoryConfigConstants.KP_DRIVE_VEL, 0, 0),
-      m_drivetrainSubsystem::setVoltage,
-      m_drivetrainSubsystem);
+    testRamseteCommand =
+        new RamseteCommand(
+            testTrajectory,
+            m_drivetrainSubsystem::getPose2d,
+            new RamseteController(
+                TrajectoryConfigConstants.K_RAMSETE_BETA, TrajectoryConfigConstants.K_RAMSETE_ZETA),
+            new SimpleMotorFeedforward(
+                TrajectoryConfigConstants.KS_VOLTS,
+                TrajectoryConfigConstants.KV_VOLT_SECONDS_PER_METER),
+            TrajectoryConfigConstants.K_DRIVE_KINEMATICS,
+            m_drivetrainSubsystem::getDriveWheelSpeeds,
+            new PIDController(TrajectoryConfigConstants.KP_DRIVE_VEL, 0, 0),
+            new PIDController(TrajectoryConfigConstants.KP_DRIVE_VEL, 0, 0),
+            m_drivetrainSubsystem::setVoltage,
+            m_drivetrainSubsystem);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
