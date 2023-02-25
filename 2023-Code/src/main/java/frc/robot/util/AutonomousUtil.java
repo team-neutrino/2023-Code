@@ -46,7 +46,7 @@ public class AutonomousUtil {
               Rotation2d.fromDegrees(triplet.getAngle())));
     }
     return TrajectoryGenerator.generateTrajectory(
-        poseArray, TrajectoryConfigConstants.m_MaxSpeedForward);
+        poseArray, TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
   }
 
   public static RamseteCommand generateRamseteFromPoses(

@@ -19,6 +19,6 @@ public class ExplicitTrajectory {
             new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
             new Pose2d(25, 0, Rotation2d.fromDegrees(0))
         ),
-        TrajectoryConfigConstants.K_FORWARD_CONFIG
+        TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG
     );
 }
