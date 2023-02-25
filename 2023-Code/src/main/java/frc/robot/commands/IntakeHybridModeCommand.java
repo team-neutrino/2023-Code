@@ -5,28 +5,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.IntakeManager;
 
 /** Command will intake the game piece without transfering it to the arm */
 public class IntakeHybridModeCommand extends CommandBase {
   IntakeSubsystem m_intakeSubsystem;
-  ArmSubsystem m_armSubsystem;
-  ScoringSubsystem m_scoringSubsystem;
   IntakeManager m_intakeManager;
 
   public IntakeHybridModeCommand(
       IntakeSubsystem p_intakeSubsystem,
-      ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem,
       IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_intakeSubsystem;
-    m_armSubsystem = p_armSubsystem;
-    m_scoringSubsystem = p_scoringSubsystem;
     m_intakeManager = p_intakeManager;
-    addRequirements(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
+    addRequirements(m_intakeSubsystem);
   }
 
   @Override

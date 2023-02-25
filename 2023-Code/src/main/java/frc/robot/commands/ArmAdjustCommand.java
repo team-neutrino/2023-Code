@@ -18,7 +18,9 @@ public class ArmAdjustCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_armSubsystem.setUsingArmAdjustCommand(true);
+  }
 
   @Override
   public void execute() {
