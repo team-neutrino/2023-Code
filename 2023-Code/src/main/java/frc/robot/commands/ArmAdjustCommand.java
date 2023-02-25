@@ -12,10 +12,12 @@ import frc.robot.util.ViennaPIDController;
 public class ArmAdjustCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private XboxController m_driverController;
+  double voltage;
 
   public ArmAdjustCommand(ArmSubsystem p_armSubsystem, XboxController p_driverController) {
     m_armSubsystem = p_armSubsystem;
     m_driverController = p_driverController;
+    voltage = 0;
 
     addRequirements(m_armSubsystem);
   }
@@ -25,18 +27,20 @@ public class ArmAdjustCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_armSubsystem.smartSet(m_driverController.getRightY() / 5.0);
+    if(m_driverController.getRightY() < -0.1) {
+      voltage = -.2;
+    }
+    else if(m_driverController.getRightY() > 0.1) {
+      voltage = .2;
+    }
+    else {
+      voltage = 0;
+    }
+    m_armSubsystem.smartSet(voltage);
   }
 
   @Override
-  public void end(boolean interrupted) {
-    //potential code to prevent gravity pulling arm down
-    //after armAdjust is run and before another command
-
-    // double position = m_armSubsystem.getAbsolutePosition();
-    // double voltage = m_pidController.run(position, position);
-    // m_armSubsystem.smartSet(voltage);
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {
