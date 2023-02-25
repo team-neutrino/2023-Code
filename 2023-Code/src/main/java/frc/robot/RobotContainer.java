@@ -125,6 +125,7 @@ public class RobotContainer {
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
 
+private final ArmFeederCommand m_armFeederCommand = new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem, m_armPidController);
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
@@ -179,14 +180,16 @@ public class RobotContainer {
     m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
     m_rightBumper.whileTrue(m_intakeReverseCommand);
 
+    m_buttonBack.whileTrue(m_ArmFeederCommand);
+
     // this doesn't work the way it should
     // m_buttonStart.whileTrue(new InstantCommand(m_intakeSubsystem::unsqueeze, m_intakeSubsystem));
 
     // LED Buttons
-    m_buttonStart.onTrue(
-        new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
-    m_buttonBack.onTrue(
-        new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
+    // m_buttonStart.onTrue(
+    //     new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
+    // m_buttonBack.onTrue(
+    //     new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
   }
 
   public Command getAutonomousCommand() {

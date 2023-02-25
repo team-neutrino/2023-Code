@@ -29,18 +29,22 @@ public class ArmFeederCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_scoringSubsystem.openScoring();
+  }
 
   @Override
   public void execute() {
     m_armSubsystem.smartSet(
         m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FEEDER_POSITION));
 
-    if (m_scoringSubsystem.detectedGamePiece()) {
-      beamBreakBroken = true;
-    }
+    // if (m_scoringSubsystem.detectedGamePiece()) {
+    //   beamBreakBroken = true;
+    // }
 
-    if (beamBreakBroken) {
+    System.out.println(m_scoringSubsystem.detectedGamePiece());
+
+    if (m_scoringSubsystem.detectedGamePiece()) {
       m_scoringSubsystem.closeScoring();
     } else {
       m_scoringSubsystem.openScoring();

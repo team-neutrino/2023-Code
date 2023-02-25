@@ -44,7 +44,7 @@ public final class Constants {
 
     public static final double GATHER_MODE_POSITION = 90;
     public static final double FEEDER_POSITION =
-        FORWARD_MID + (14.47751 * DEGREES_TO_ENCODER_VALUES);
+        BACK_MID + (14.47751 * DEGREES_TO_ENCODER_VALUES);
     public static final double INTAKE_RUNNABLE = 83;
   }
 
