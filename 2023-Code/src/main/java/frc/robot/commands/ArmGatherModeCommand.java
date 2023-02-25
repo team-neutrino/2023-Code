@@ -31,9 +31,7 @@ public class ArmGatherModeCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-    m_armSubsystem.setUsingArmAdjustCommand(false);
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {

@@ -4,29 +4,28 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmAdjustCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
-  private double m_voltage;
-  private ViennaPIDController m_pidController;
+  private XboxController m_driverController;
 
-  public ArmAdjustCommand(ArmSubsystem p_armSubsystem, double p_voltage) {
+  public ArmAdjustCommand(ArmSubsystem p_armSubsystem, XboxController p_driverController) {
     m_armSubsystem = p_armSubsystem;
-    m_voltage = p_voltage;
+    m_driverController = p_driverController;
+
     addRequirements(m_armSubsystem);
   }
 
   @Override
-  public void initialize() {
-    m_armSubsystem.setUsingArmAdjustCommand(true);
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
-    m_armSubsystem.smartSet(m_voltage);
+    m_armSubsystem.smartSet(m_driverController.getRightY() / 5.0);
   }
 
   @Override

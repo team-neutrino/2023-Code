@@ -24,10 +24,8 @@ public class ArmDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if(!m_armSubsystem.getUsingArmAdjustCommand()) {
-      m_armSubsystem.smartSet(
-        m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
-    }
+    m_armSubsystem.smartSet(
+      m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
   }
 
   @Override

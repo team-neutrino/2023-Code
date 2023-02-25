@@ -18,8 +18,6 @@ import frc.robot.Constants.MotorConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
-  private boolean usingAdjustCommand = false;
-
   private CANSparkMax m_armMotor = new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_armMotor.getEncoder();
   private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
@@ -75,16 +73,6 @@ public class ArmSubsystem extends SubsystemBase {
       return true;
     }
     return false;
-  }
-
-  public void setUsingArmAdjustCommand(boolean using)
-  {
-    usingAdjustCommand = using;
-  }
-
-  public boolean getUsingArmAdjustCommand()
-  {
-    return usingAdjustCommand;
   }
 
   @Override

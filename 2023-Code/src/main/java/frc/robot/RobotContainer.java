@@ -82,6 +82,8 @@ public class RobotContainer {
   private final POVButton m_leftArrow = new POVButton(m_driverController, 270);
   private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
 
+  private final JoystickButton m_rightStickButton = new JoystickButton(m_driverController, XboxController.Button.kRightStick.value);
+
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrainSubsystem =
       new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick);
@@ -170,8 +172,10 @@ public class RobotContainer {
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
 
     // used for small adjustments of the arm
-    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
-    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
+    m_rightStickButton.toggleOnTrue(new ArmAdjustCommand(m_armSubsystem, m_driverController));
+    // m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
+    // m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
+
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
