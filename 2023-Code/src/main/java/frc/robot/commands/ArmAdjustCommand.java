@@ -6,10 +6,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.util.ViennaPIDController;
 
 public class ArmAdjustCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private double m_voltage;
+  private ViennaPIDController m_pidController;
 
   public ArmAdjustCommand(ArmSubsystem p_armSubsystem, double p_voltage) {
     m_armSubsystem = p_armSubsystem;
@@ -28,7 +30,14 @@ public class ArmAdjustCommand extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    //potential code to prevent gravity pulling arm down
+    //after armAdjust is run and before another command
+
+    // double position = m_armSubsystem.getAbsolutePosition();
+    // double voltage = m_pidController.run(position, position);
+    // m_armSubsystem.smartSet(voltage);
+  }
 
   @Override
   public boolean isFinished() {
