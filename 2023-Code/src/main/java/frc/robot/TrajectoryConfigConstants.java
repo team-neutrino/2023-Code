@@ -20,13 +20,14 @@ public class TrajectoryConfigConstants {
   public static final double K_RAMSETE_ZETA = 0.7;
   public static final double KP_DRIVE_VEL = .44295;
   public static final double KS_VOLTS = 0.13804;
+  public static final double K_MAX_VOLTAGE = 10; // < 12V due to voltage dip after startup current draw, according to docs
 
   private static final DifferentialDriveVoltageConstraint K_AUTO_VOLTAGE_CONSTRAINT =
       new DifferentialDriveVoltageConstraint(
           new SimpleMotorFeedforward(
               KS_VOLTS, KV_VOLT_SECONDS_PER_METER, KA_VOLT_SECONDS_SQUARED_PER_METER),
           K_DRIVE_KINEMATICS,
-          10);
+          K_MAX_VOLTAGE);
 
   public static final TrajectoryConfig K_MAX_SPEED_FORWARD_CONFIG =
       new TrajectoryConfig(K_MAX_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
