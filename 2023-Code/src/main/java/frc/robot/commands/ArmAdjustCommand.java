@@ -32,17 +32,13 @@ public class ArmAdjustCommand extends CommandBase {
 
   @Override
   public void execute() {
-    System.out.println("joystick value: " + m_driverController.getRightY());
     double voltage = 0;
 
     if (m_driverController.getRightY() < -0.3) {
-      System.out.println("negative voltage");
       voltage = -.2;
     } else if (m_driverController.getRightY() > 0.3) {
-      System.out.println("positive voltage");
       voltage = .2;
     } else {
-      System.out.println("no voltage");
       int position = (int) m_armSubsystem.getAbsolutePosition();
       voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), position);
     }
