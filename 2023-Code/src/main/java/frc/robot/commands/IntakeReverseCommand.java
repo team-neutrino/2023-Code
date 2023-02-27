@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.util.IntakeManager;
@@ -13,16 +14,24 @@ public class IntakeReverseCommand extends CommandBase {
   // An object of the intake subsystem.
   private IntakeSubsystem m_intakeSubsystem;
   private IntakeManager m_intakeManager;
+  private Timer timer;
+  private double squeeze_time;
 
   public IntakeReverseCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_intakeSubsystem;
     m_intakeManager = p_intakeManager;
 
+    // change and adjust this time to determine how long to intake squeezes & runs before unsquezing
+    squeeze_time = 1;
+    timer = new Timer();
+
     addRequirements(p_intakeSubsystem);
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.start();
+  }
 
   @Override
   public void execute() {
@@ -31,13 +40,18 @@ public class IntakeReverseCommand extends CommandBase {
     }
 
     if (m_intakeSubsystem.isIntakeDown()) {
-      m_intakeSubsystem.unsqueeze();
+      if (timer.get() > squeeze_time) {
+        m_intakeSubsystem.unsqueeze();
+      }
       m_intakeSubsystem.runIntakeReverse();
     }
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    timer.stop();
+    timer.reset();
+  }
 
   @Override
   public boolean isFinished() {

@@ -61,12 +61,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
   /** Runs the wheels motor at a fixed speed. */
   public void runIntake() {
-    m_wheelsMotor.set(.5); // NEED TO MAKE CONSTANT FOR MOTOR SPEED
+    m_wheelsMotor.set(MotorConstants.INTAKE_MOTOR_SPEED);
   }
 
   /** Runs the wheels motor in reverse. */
   public void runIntakeReverse() {
-    m_wheelsMotor.set(-.5);
+    m_wheelsMotor.set(-MotorConstants.INTAKE_MOTOR_SPEED);
   }
 
   /** Stops the motors. */

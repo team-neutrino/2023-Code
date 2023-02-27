@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -30,7 +31,7 @@ import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
-import frc.robot.commands.autonomous.TestAuton;
+import frc.robot.commands.autonomous.manualGeneration.ScoreThenBalance;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -81,6 +82,9 @@ public class RobotContainer {
   private final POVButton m_leftArrow = new POVButton(m_driverController, 270);
   private final POVButton m_rightArrow = new POVButton(m_driverController, 90);
 
+  private final JoystickButton m_rightStickButton =
+      new JoystickButton(m_driverController, XboxController.Button.kRightStick.value);
+
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrainSubsystem =
       new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick);
@@ -127,17 +131,15 @@ public class RobotContainer {
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
-  private final IntakeSqueezeCommand m_intakeUnsqueezeCommand =
+  private final IntakeSqueezeCommand m_intakeSqueezeCommand =
       new IntakeSqueezeCommand(m_intakeSubsystem);
   private final IntakeGatherModeCommand m_intakeGatherModeCommand =
-      new IntakeGatherModeCommand(
-          m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
+      new IntakeGatherModeCommand(m_intakeSubsystem, m_intakeManager);
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(
           m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
-      new IntakeHybridModeCommand(
-          m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeManager);
+      new IntakeHybridModeCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
   private final ScoringOpenCommand m_scoringOpenCommand =
@@ -169,26 +171,31 @@ public class RobotContainer {
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
 
     // used for small adjustments of the arm
-    m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));
-    m_downArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, -.2));
+    m_rightStickButton.toggleOnTrue(
+        new ArmAdjustCommand(m_armSubsystem, m_driverController, m_armPidController));
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
-    m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
-    m_rightBumper.whileTrue(m_intakeReverseCommand);
-    m_buttonStart.whileTrue(m_intakeUnsqueezeCommand);
-
     m_leftBumper.whileTrue(m_scoringOpenCommand);
 
+    m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
+    m_rightBumper.whileTrue(m_intakeReverseCommand);
+
+    m_buttonStart.whileTrue(m_intakeSqueezeCommand);
+
+    // Autobalance
+    m_buttonBack.whileTrue(m_autoBalanceCommand);
+
     // LED Buttons
-    // m_rightArrow.onTrue(
-    //     new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem,
-    // m_driverStationInfo));
+    m_rightArrow.onTrue(
+        new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
     m_leftArrow.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
   }
 
   public Command getAutonomousCommand() {
-    return new TestAuton(m_driveTrainSubsystem);
+    return new ScoreThenBalance(
+            m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem)
+        .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }

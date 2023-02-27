@@ -5,28 +5,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.IntakeManager;
 
 /** This command will transfer game piece from intake to arm */
 public class IntakeGatherModeCommand extends CommandBase {
   private IntakeSubsystem m_intakeSubsystem;
-  private ArmSubsystem m_armSubsystem;
-  private ScoringSubsystem m_scoringSubsystem;
   private IntakeManager m_intakeManager;
 
-  public IntakeGatherModeCommand(
-      IntakeSubsystem p_intakeSubsystem,
-      ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem,
-      IntakeManager p_intakeManager) {
+  public IntakeGatherModeCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_intakeSubsystem;
-    m_armSubsystem = p_armSubsystem;
-    m_scoringSubsystem = p_scoringSubsystem;
     m_intakeManager = p_intakeManager;
-    addRequirements(m_intakeSubsystem, m_armSubsystem, m_scoringSubsystem);
+    addRequirements(m_intakeSubsystem);
   }
 
   @Override

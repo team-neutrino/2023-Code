@@ -24,6 +24,7 @@ public final class Constants {
 
     // INTAKE
     public static final int INTAKEMOTOR = 21;
+    public static final double INTAKE_MOTOR_SPEED = .7;
 
     // ARM
     public static final int ARM_MOTOR = 31;
@@ -33,7 +34,7 @@ public final class Constants {
     public static final double UP = 56;
     public static final double FORWARD_DOWN = 90;
     public static final double FORWARD_MID = 80;
-    public static final double BACK_MID = 31;
+    public static final double BACK_MID = 37.7;
     public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
 
@@ -52,7 +53,7 @@ public final class Constants {
     public static final int ARM_D = 0;
     public static final int ARM_FF = 0;
 
-    public static final double BALANCE_P = 0.08;
+    public static final double BALANCE_P = 0.1;
     public static final double BALANCE_I = 0;
     public static final double BALANCE_D = 0;
 
@@ -68,7 +69,7 @@ public final class Constants {
 
   public static class DrivetrainConstants {
     public static final double JOYSTICK_DEADZONE = 0.1;
-    public static final double AUTO_BALANCE_DEADZONE = 0.4;
+    public static final double AUTO_BALANCE_DEADZONE = .3;
   }
 
   public static class DigitalConstants {
@@ -79,7 +80,7 @@ public final class Constants {
   }
 
   public static class PWMConstants {
-    public static final int LED_PORT = 0;
+    public static final int LED_PORT = 8;
   }
 
   public static class DriverConstants {
