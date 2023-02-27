@@ -43,9 +43,6 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    // if (Math.abs(error) <= DrivetrainConstants.AUTO_BALANCE_DEADZONE) {
-    //   return true;
-    // }
     return false;
   }
 }

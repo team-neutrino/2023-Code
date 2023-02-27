@@ -24,6 +24,7 @@ public final class Constants {
 
     // INTAKE
     public static final int INTAKEMOTOR = 21;
+    public static final double INTAKE_MOTOR_SPEED = .7;
 
     // ARM
     public static final int ARM_MOTOR = 31;

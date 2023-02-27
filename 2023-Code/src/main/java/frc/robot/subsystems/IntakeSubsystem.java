@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
 import frc.robot.Constants.PneumaticsConstants;
@@ -61,12 +62,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
   /** Runs the wheels motor at a fixed speed. */
   public void runIntake() {
-    m_wheelsMotor.set(.7); // NEED TO MAKE CONSTANT FOR MOTOR SPEED
+    m_wheelsMotor.set(MotorConstants.INTAKE_MOTOR_SPEED);
   }
 
   /** Runs the wheels motor in reverse. */
   public void runIntakeReverse() {
-    m_wheelsMotor.set(-.7);
+    m_wheelsMotor.set(-MotorConstants.INTAKE_MOTOR_SPEED);
   }
 
   /** Stops the motors. */

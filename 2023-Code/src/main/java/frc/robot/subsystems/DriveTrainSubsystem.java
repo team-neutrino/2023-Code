@@ -69,7 +69,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     p_motor.restoreFactoryDefaults();
     p_motor.setIdleMode(IdleMode.kBrake);
     p_motor.setInverted(p_inversion);
-    // p_motor.burnFlash();
 
     p_encoder = p_motor.getEncoder();
     p_encoder.setPositionConversionFactor(DriverConstants.ENCODER_POSITION_CONVERSION);
