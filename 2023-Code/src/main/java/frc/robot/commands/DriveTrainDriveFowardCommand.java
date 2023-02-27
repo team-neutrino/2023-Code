@@ -119,7 +119,8 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
 
       } else {
 
-       stop = m_drivetrain.turnMotor(turnAngle2 + 0.3, rmotorPosition, lmotorPosition);
+        stop = m_drivetrain.turnMotor(turnAngle2 + 0.3, rmotorPosition, lmotorPosition);
+        
       }
 
       firstRun++;
