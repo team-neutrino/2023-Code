@@ -194,21 +194,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    // return new TestAutonGeneratedTrajectory(m_driveTrainSubsystem)
-    //     .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
-    // return new ScoreThenDriveForwardAuton(m_driveTrainSubsystem, m_armSubsystem,
-    // m_armPidController, m_scoringSubsystem).andThen(new InstantCommand(() ->
-    // m_driveTrainSubsystem.setVoltage(0, 0)));
-    // return new TestAuton(m_driveTrainSubsystem).andThen(
-    //     new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0))
-    // );
-    // return new TestAutonExplicitlyGenerated(m_driveTrainSubsystem).andThen(
-    //     new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0))
-    // );
-    // return new TestAutonGeneratedTrajectory(m_driveTrainSubsystem, m_armPidController,
-    // m_armSubsystem, m_scoringSubsystem).andThen(
-    //     new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0))
-    // );
     return new ScoreThenBalance(
             m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem)
         .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
