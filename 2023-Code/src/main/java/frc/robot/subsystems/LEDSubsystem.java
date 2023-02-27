@@ -16,7 +16,7 @@ public class LEDSubsystem extends SubsystemBase {
 
   public AddressableLED m_addressableLED;
   public AddressableLEDBuffer m_LEDBuffer;
-  private int m_LEDLength = 10;
+  private int m_LEDLength = 43;
   private Timer timer = new Timer();
 
   /** Creates a new LEDSubsystem. */
