@@ -11,7 +11,7 @@ import frc.robot.subsystems.ScoringSubsystem;
 public class ScoringOpenCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
   private Timer timer;
-  private double m_time = 60*60*24;
+  private double m_time = 60 * 60 * 24;
 
   /** Creates a new ScoringOpenCommand. */
   public ScoringOpenCommand(ScoringSubsystem p_scoringSubsystem) {
@@ -26,7 +26,7 @@ public class ScoringOpenCommand extends CommandBase {
     m_scoringSubsystem = p_scoringSubsystem;
     timer = new Timer();
     m_time = p_time;
-    
+
     addRequirements(p_scoringSubsystem);
   }
 
@@ -52,7 +52,7 @@ public class ScoringOpenCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(timer.get() > m_time){
+    if (timer.get() > m_time) {
       return true;
     }
     return false;

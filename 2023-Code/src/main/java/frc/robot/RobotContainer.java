@@ -32,8 +32,6 @@ import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.commands.autonomous.manualGeneration.ScoreThenBalance;
-import frc.robot.commands.autonomous.manualGeneration.TestAutonGeneratedTrajectory;
-import frc.robot.commands.autonomous.traditionalGeneration.TestAutonExplicitlyGenerated;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -187,7 +185,7 @@ public class RobotContainer {
 
     m_buttonStart.whileTrue(m_intakeSqueezeCommand);
 
-    //Autobalance
+    // Autobalance
     m_buttonBack.whileTrue(m_autoBalanceCommand);
 
     // LED Buttons
@@ -209,11 +207,12 @@ public class RobotContainer {
     // return new TestAutonExplicitlyGenerated(m_driveTrainSubsystem).andThen(
     //     new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0))
     // );
-    // return new TestAutonGeneratedTrajectory(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem).andThen(
+    // return new TestAutonGeneratedTrajectory(m_driveTrainSubsystem, m_armPidController,
+    // m_armSubsystem, m_scoringSubsystem).andThen(
     //     new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0))
     // );
-    return new ScoreThenBalance(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem).andThen(
-        new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0))
-    );
+    return new ScoreThenBalance(
+            m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem)
+        .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }

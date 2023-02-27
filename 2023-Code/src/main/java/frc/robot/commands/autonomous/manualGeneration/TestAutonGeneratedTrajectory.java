@@ -15,7 +15,6 @@ import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,7 +28,11 @@ public class TestAutonGeneratedTrajectory extends SequentialCommandGroup {
   private RamseteCommand forwardBackCommand;
 
   /** Creates a new TestAutonGeneratedTrajectory. */
-  public TestAutonGeneratedTrajectory(DriveTrainSubsystem p_drivetrainSubsystem, ViennaPIDController p_pidController, ArmSubsystem p_armSubsystem, ScoringSubsystem p_scoringSubsystem) {
+  public TestAutonGeneratedTrajectory(
+      DriveTrainSubsystem p_drivetrainSubsystem,
+      ViennaPIDController p_pidController,
+      ArmSubsystem p_armSubsystem,
+      ScoringSubsystem p_scoringSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
 
     forwardBackArray =
@@ -41,6 +44,9 @@ public class TestAutonGeneratedTrajectory extends SequentialCommandGroup {
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true), new ScoringOpenCommand(p_scoringSubsystem, 2), forwardBackCommand);
+    addCommands(
+        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true),
+        new ScoringOpenCommand(p_scoringSubsystem, 2),
+        forwardBackCommand);
   }
 }
