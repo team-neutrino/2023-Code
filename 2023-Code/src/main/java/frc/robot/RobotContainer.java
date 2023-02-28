@@ -33,6 +33,7 @@ import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.commands.autonomous.manualGeneration.ScoreThenBalance;
+import frc.robot.commands.autonomous.manualGeneration.ScoreThenMove;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -200,7 +201,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new ScoreThenBalance(
+    return new ScoreThenMove(
             m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem)
         .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }

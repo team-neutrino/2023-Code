@@ -43,12 +43,11 @@ public class ScoreThenBalance extends SequentialCommandGroup {
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
 
-    moveForwardArray =
-        new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(1.5, 0, 0)));
-
     moveForwardCommand =
-        AutonomousUtil.generateRamseteFromPoses(moveForwardArray, m_drivetrainSubsystem);
+        AutonomousUtil.generateRamseteFromPoses(
+          new ArrayList<PoseTriplet>(
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(1.5, 0, 0))), 
+            m_drivetrainSubsystem);
 
     addCommands(
         new ArmToAngleCommand(m_armSubsystem, m_pidController, ArmConstants.BACK_MID, true),

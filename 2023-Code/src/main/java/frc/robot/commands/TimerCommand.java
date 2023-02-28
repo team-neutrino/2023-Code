@@ -13,6 +13,7 @@ public class TimerCommand extends CommandBase {
 
   /** Creates a new TimerCommand. */
   public TimerCommand(double p_time) {
+    timer = new Timer();
     m_time = p_time;
     // Use addRequirements() here to declare subsystem dependencies.
   }

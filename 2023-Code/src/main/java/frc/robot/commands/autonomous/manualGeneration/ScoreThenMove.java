@@ -22,7 +22,7 @@ import java.util.Arrays;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class SocreThenMove extends SequentialCommandGroup {
+public class ScoreThenMove extends SequentialCommandGroup {
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
   private ViennaPIDController m_pidController;
@@ -31,7 +31,7 @@ public class SocreThenMove extends SequentialCommandGroup {
   private ArrayList<PoseTriplet> forwardBackArray;
   private RamseteCommand forwardBackCommand;
 
-  public SocreThenMove(
+  public ScoreThenMove(
       DriveTrainSubsystem p_drivetrainSubsystem,
       ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
@@ -43,14 +43,14 @@ public class SocreThenMove extends SequentialCommandGroup {
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(3, 0, 0)));
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(3, 0, 180)));
 
     forwardBackCommand =
         AutonomousUtil.generateRamseteFromPoses(forwardBackArray, m_drivetrainSubsystem);
 
     addCommands(
-        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true),
-        new ScoringOpenCommand(p_scoringSubsystem).deadlineWith(new TimerCommand(2)),
+        // new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true),
+        // new ScoringOpenCommand(p_scoringSubsystem, 2),//.deadlineWith(new TimerCommand(2)),
         forwardBackCommand);
   }
 }
