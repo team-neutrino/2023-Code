@@ -44,11 +44,10 @@ public class ArmSubsystem extends SubsystemBase {
     m_armMotor.set(voltage);
   }
 
-  public double limitAmount(double voltage){
-    if (voltage < -0.2){
+  public double limitAmount(double voltage) {
+    if (voltage < -0.2) {
       voltage = -0.2;
-    }
-    else if(voltage > 0.2){
+    } else if (voltage > 0.2) {
       voltage = 0.2;
     }
     return voltage;
