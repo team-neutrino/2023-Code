@@ -44,6 +44,16 @@ public class ArmSubsystem extends SubsystemBase {
     m_armMotor.set(voltage);
   }
 
+  public double limitAmount(double voltage){
+    if (voltage < -0.2){
+      voltage = -0.2;
+    }
+    else if(voltage > 0.2){
+      voltage = 0.2;
+    }
+    return voltage;
+  }
+
   public void smartSet(double desiredVoltage) {
     if ((getAbsolutePosition() >= ArmConstants.ARM_FRONTMOST && desiredVoltage > 0)
         || (getAbsolutePosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
