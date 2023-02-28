@@ -27,7 +27,6 @@ public class DriveTrainLineUpCommand extends CommandBase {
   boolean save = false;
   double tx;
   boolean endCommand = false;
-  boolean txSeen = false;
   double tx1;
   double tx2;
   double turnAngle1;
@@ -53,6 +52,7 @@ public class DriveTrainLineUpCommand extends CommandBase {
     if (programNumber == 0){
       offSet = 0;
       tagDistance = 0.78;
+      m_limelight.setPipeline(0);
     }
     else if (programNumber == 1){
       offSet = 0.43;
@@ -66,10 +66,12 @@ public class DriveTrainLineUpCommand extends CommandBase {
     }
     else if (programNumber == 3){
       offSet = 0.77;
+      tagDistance = 1.2;
       m_limelight.setPipeline(3);
     }
     else if (programNumber == 4){
       offSet = -0.77;
+      tagDistance = 1.2;
       m_limelight.setPipeline(4);
     }
   }
@@ -338,7 +340,7 @@ public class DriveTrainLineUpCommand extends CommandBase {
         rmotorPosition = m_drivetrain.getR1Pos();
         lmotorPosition = m_drivetrain.getL1Pos();
         array = m_limelight.parseJson();
-        setDistance = Math.abs(m_limelight.getDistance()) - 0.78;
+        setDistance = Math.abs(m_limelight.getDistance()) - tagDistance;
         System.out.println("distance " + m_limelight.getDistance());
         System.out.println("setpoint " + setDistance);
       }
