@@ -44,7 +44,7 @@ public final class Constants {
     public static final double GATHER_POSITION = 91;
     public static final double INTAKE_RUNNABLE = 83;
 
-    public static final double ARM_OUTPUT_LIMIT = 0.2;
+    public static final double ARM_OUTPUT_LIMIT = 0.3;
     public static final double SCALE_FACTOR = 10;
     public static final double ARM_INPUT_DEADZONE = 0.2;
   }

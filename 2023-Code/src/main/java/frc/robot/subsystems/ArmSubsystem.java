@@ -37,15 +37,11 @@ public class ArmSubsystem extends SubsystemBase {
     m_armMotor.setVoltage(0);
   }
 
-  public void setVoltage(double voltage) {
-    m_armMotor.setVoltage(voltage);
-  }
-
   public void set(double voltage) {
-    m_armMotor.set(voltage);
+    m_armMotor.set(limitAmount(voltage));
   }
 
-  public double limitAmount(double voltage) {
+  private double limitAmount(double voltage) {
     if (voltage < -Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
       voltage = -Constants.ArmConstants.ARM_OUTPUT_LIMIT;
     } else if (voltage > Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
