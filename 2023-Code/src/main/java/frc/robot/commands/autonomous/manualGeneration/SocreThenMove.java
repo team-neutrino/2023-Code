@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.ScoringOpenCommand;
+import frc.robot.commands.TimerCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -21,19 +22,24 @@ import java.util.Arrays;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TestAutonGeneratedTrajectory extends SequentialCommandGroup {
+public class SocreThenMove extends SequentialCommandGroup {
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
+  private ViennaPIDController m_pidController;
+  private ArmSubsystem m_armSubsystem;
+  private ScoringSubsystem m_scoringSubsystem;
   private ArrayList<PoseTriplet> forwardBackArray;
   private RamseteCommand forwardBackCommand;
 
-  /** Creates a new TestAutonGeneratedTrajectory. */
-  public TestAutonGeneratedTrajectory(
+  public SocreThenMove(
       DriveTrainSubsystem p_drivetrainSubsystem,
       ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
+    m_pidController = p_pidController;
+    m_armSubsystem = p_armSubsystem;
+    m_scoringSubsystem = p_scoringSubsystem;
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(
@@ -42,11 +48,9 @@ public class TestAutonGeneratedTrajectory extends SequentialCommandGroup {
     forwardBackCommand =
         AutonomousUtil.generateRamseteFromPoses(forwardBackArray, m_drivetrainSubsystem);
 
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true),
-        new ScoringOpenCommand(p_scoringSubsystem, 2),
+        new ScoringOpenCommand(p_scoringSubsystem).deadlineWith(new TimerCommand(2)),
         forwardBackCommand);
   }
 }

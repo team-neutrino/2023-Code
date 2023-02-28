@@ -13,8 +13,6 @@ public class IntakeCommand extends CommandBase {
 
   private IntakeSubsystem m_intakeSubsystem;
   private IntakeManager m_intakeManager;
-  private Timer timer;
-  private double m_time = 60 * 60 * 24;
 
   public IntakeCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_intakeSubsystem;
@@ -23,20 +21,8 @@ public class IntakeCommand extends CommandBase {
     addRequirements(m_intakeSubsystem);
   }
 
-  public IntakeCommand(
-      IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager, double p_time) {
-    m_intakeSubsystem = p_intakeSubsystem;
-    m_intakeManager = p_intakeManager;
-    timer = new Timer();
-    m_time = p_time;
-
-    addRequirements(m_intakeSubsystem);
-  }
-
   @Override
-  public void initialize() {
-    timer.start();
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
@@ -53,16 +39,10 @@ public class IntakeCommand extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {
-    timer.stop();
-    timer.reset();
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {
-    if (timer.get() >= m_time) {
-      return true;
-    }
     return false;
   }
 }
