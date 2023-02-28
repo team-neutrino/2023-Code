@@ -17,6 +17,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
+import frc.robot.commands.ArmFeederCommand;
 import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
@@ -100,6 +101,8 @@ public class RobotContainer {
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
   private final ViennaPIDController m_armPidController =
       new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
+  private final ViennaPIDController m_armPidControllerAdjust =
+      new ViennaPIDController(PIDConstants.ARM_P_ADJUST, PIDConstants.ARM_I, PIDConstants.ARM_D);
   private IntakeManager m_intakeManager = new IntakeManager(m_armSubsystem, m_intakeSubsystem);
 
   // SHUFFLEBOARD
@@ -138,6 +141,8 @@ public class RobotContainer {
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(
           m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
+  private final ArmFeederCommand m_armFeederCommand =
+      new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem, m_armPidController);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
       new IntakeHybridModeCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringCloseCommand m_scoringCloseCommand =
@@ -172,7 +177,7 @@ public class RobotContainer {
 
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(
-        new ArmAdjustCommand(m_armSubsystem, m_driverController, m_armPidController));
+        new ArmAdjustCommand(m_armSubsystem, m_driverController, m_armPidControllerAdjust));
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
@@ -182,6 +187,7 @@ public class RobotContainer {
     m_rightBumper.whileTrue(m_intakeReverseCommand);
 
     m_buttonStart.whileTrue(m_intakeSqueezeCommand);
+    m_buttonBack.whileTrue(m_armFeederCommand);
 
     // Autobalance
     m_buttonBack.whileTrue(m_autoBalanceCommand);
