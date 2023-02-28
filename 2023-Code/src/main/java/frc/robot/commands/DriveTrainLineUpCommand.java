@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 
-public class DriveTrainDriveFowardCommand extends CommandBase {
+public class DriveTrainLineUpCommand extends CommandBase {
   /** Creates a new DriveTrainDriveFowardCommand. */
   DriveTrainSubsystem m_drivetrain;
 
@@ -36,8 +36,7 @@ public class DriveTrainDriveFowardCommand extends CommandBase {
   double offSet;
   double tagDistance;
 
-  public DriveTrainDriveFowardCommand(
-      DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight, int programNumber) {
+  public DriveTrainLineUpCommand(DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight, int programNumber) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drivetrain = p_drivetrain;
     m_limelight = p_limelight;

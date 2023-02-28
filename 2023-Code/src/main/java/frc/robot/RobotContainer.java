@@ -78,6 +78,8 @@ public class RobotContainer {
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
 
+  private final JoystickButton m_
+
   private final POVButton m_upArrow = new POVButton(m_driverController, 0);
   private final POVButton m_downArrow = new POVButton(m_driverController, 180);
   private final POVButton m_leftArrow = new POVButton(m_driverController, 270);
@@ -122,8 +124,13 @@ public class RobotContainer {
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
 
-  private final DriveTrainDriveFowardCommand m_DriveTrainDriveFowardCommand =
-      new DriveTrainDriveFowardCommand(m_driveTrainSubsystem, m_limelightSubsystem, 0);
+  private final DriveTrainLineUpCommand m_DriveTrainLineUpCommandDefault =
+      new DriveTrainLineUpCommand(m_driveTrainSubsystem, m_limelightSubsystem, 0);
+  private final DriveTrainLineUpCommand m_DriveTrainLineUpCommandScoreRight = new DriveTrainLineUpCommand(m_driveTrainSubsystem, m_limelightSubsystem, 1);
+  private final DriveTrainLineUpCommand m_DriveTrainLineUpCommandScoreLeft = new DriveTrainLineUpCommand(m_driveTrainSubsystem, m_limelightSubsystem, 2);
+  private final DriveTrainLineUpCommand m_DriveTrainLineUpCommandStationRight = new DriveTrainLineUpCommand(m_driveTrainSubsystem, m_limelightSubsystem, 3);
+  private final DriveTrainLineUpCommand m_DriveTrainLineUpCommandStationLeft = new DriveTrainLineUpCommand(m_driveTrainSubsystem, m_limelightSubsystem, 4);
+
 
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
@@ -164,7 +171,9 @@ public class RobotContainer {
     // BUTTONS
 
     // Put the arm to one of three specified target angles
-    m_rightBumper.toggleOnTrue(m_DriveTrainDriveFowardCommand);
+    m_rightBumper.toggleOnTrue(m_DriveTrainLineUpCommandDefault);
+
+
 
     m_buttonB.toggleOnTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
