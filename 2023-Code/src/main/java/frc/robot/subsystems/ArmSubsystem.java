@@ -26,6 +26,7 @@ public class ArmSubsystem extends SubsystemBase {
   public ArmSubsystem() {
     m_armMotor.restoreFactoryDefaults();
     m_armMotor.setIdleMode(IdleMode.kBrake);
+    m_armMotor.setClosedLoopRampRate(.001);
   }
 
   public double getAbsolutePosition() {
