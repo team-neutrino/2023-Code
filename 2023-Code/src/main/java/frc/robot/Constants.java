@@ -34,7 +34,7 @@ public final class Constants {
     public static final double UP = 56;
     public static final double FORWARD_DOWN = 90;
     public static final double FORWARD_MID = 80;
-    public static final double BACK_MID = 37.7;
+    public static final double BACK_MID = 38.5;
     public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
 

@@ -148,7 +148,7 @@ public class RobotContainer {
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
   private final ScoringOpenCommand m_scoringOpenCommand =
-      new ScoringOpenCommand(m_scoringSubsystem);
+      new ScoringOpenCommand(m_scoringSubsystem, m_intakeSubsystem, m_intakeManager);
   private final LEDCommand m_LedDefaultCommand =
       new LEDCommand(m_ledSubsystem, LEDColor.ORANGE, m_scoringSubsystem, m_driverStationInfo);
 
@@ -181,16 +181,13 @@ public class RobotContainer {
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
-    m_leftBumper.whileTrue(m_scoringOpenCommand);
+    m_leftBumper.whileTrue(m_armFeederCommand);
 
     m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
     m_rightBumper.whileTrue(m_intakeReverseCommand);
 
     m_buttonStart.whileTrue(m_intakeSqueezeCommand);
-    m_buttonBack.whileTrue(m_armFeederCommand);
-
-    // Autobalance
-    m_buttonBack.whileTrue(m_autoBalanceCommand);
+    m_buttonBack.whileTrue(m_scoringOpenCommand);
 
     // LED Buttons
     m_rightArrow.onTrue(

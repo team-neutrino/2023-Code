@@ -17,8 +17,10 @@ public class LEDPotentialDefaultCommand extends CommandBase {
     if (m_driverStationInfo.getAlliance().equals(Alliance.Red)) {
       m_ledSubsystem.setToRed();
     }
-    if (m_driverStationInfo.getAlliance().equals(Alliance.Blue)) {
+    else if (m_driverStationInfo.getAlliance().equals(Alliance.Blue)) {
       m_ledSubsystem.setToBlue();
+    } else {
+      m_ledSubsystem.setToOrange();
     }
   }
 
