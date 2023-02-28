@@ -101,7 +101,7 @@ public class RobotContainer {
   private final ViennaPIDController m_armPidController =
       new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
 private final ViennaPIDController m_armPidController1 =
-      new ViennaPIDController(.02, PIDConstants.ARM_I, PIDConstants.ARM_D);
+      new ViennaPIDController(PIDConstants.ARM_P2, PIDConstants.ARM_I, PIDConstants.ARM_D);
   private IntakeManager m_intakeManager = new IntakeManager(m_armSubsystem, m_intakeSubsystem);
 
   // SHUFFLEBOARD

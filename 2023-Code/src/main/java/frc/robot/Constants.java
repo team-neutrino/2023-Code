@@ -49,6 +49,7 @@ public final class Constants {
     public static final double dt = 20;
 
     public static final double ARM_P = 0.04;
+    public static final double ARM_P2 = 0.02;
     public static final int ARM_I = 0;
     public static final int ARM_D = 0;
     public static final int ARM_FF = 0;
