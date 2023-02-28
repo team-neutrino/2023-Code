@@ -85,7 +85,7 @@ public final class Constants {
   }
 
   public static class PWMConstants {
-    public static final int LED_PORT = 8;
+    public static final int LED_PORT = 0;
   }
 
   public static class DriverConstants {

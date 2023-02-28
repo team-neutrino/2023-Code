@@ -17,6 +17,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
+import frc.robot.commands.ArmFeederCommand;
 import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
@@ -140,6 +141,8 @@ public class RobotContainer {
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(
           m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
+  private final ArmFeederCommand m_armFeederCommand =
+      new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem, m_armPidController);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
       new IntakeHybridModeCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringCloseCommand m_scoringCloseCommand =
@@ -184,6 +187,7 @@ public class RobotContainer {
     m_rightBumper.whileTrue(m_intakeReverseCommand);
 
     m_buttonStart.whileTrue(m_intakeSqueezeCommand);
+    m_buttonBack.whileTrue(m_armFeederCommand);
 
     // Autobalance
     m_buttonBack.whileTrue(m_autoBalanceCommand);
