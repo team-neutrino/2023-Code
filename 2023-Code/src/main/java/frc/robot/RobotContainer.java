@@ -141,8 +141,9 @@ public class RobotContainer {
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(
           m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
-  private final ArmFeederCommand m_armFeederCommand = new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem, m_armPidController);
-          private final IntakeHybridModeCommand m_intakeHybridModeCommand =
+  private final ArmFeederCommand m_armFeederCommand =
+      new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem, m_armPidController);
+  private final IntakeHybridModeCommand m_intakeHybridModeCommand =
       new IntakeHybridModeCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);

@@ -32,7 +32,7 @@ public class ArmFeederCommand extends CommandBase {
   @Override
   public void initialize() {
     m_timer.start();
-   }
+  }
 
   @Override
   public void execute() {
@@ -41,8 +41,7 @@ public class ArmFeederCommand extends CommandBase {
 
     if (m_scoringSubsystem.detectedGamePiece() && m_timer.get() > time) {
       m_scoringSubsystem.closeScoring();
-    } 
-    else {
+    } else {
       m_scoringSubsystem.openScoring();
     }
   }
