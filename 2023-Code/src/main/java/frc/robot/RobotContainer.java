@@ -100,8 +100,8 @@ public class RobotContainer {
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
   private final ViennaPIDController m_armPidController =
       new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
-  private final ViennaPIDController m_armPidController1 =
-      new ViennaPIDController(PIDConstants.ARM_P2, PIDConstants.ARM_I, PIDConstants.ARM_D);
+  private final ViennaPIDController m_armPidControllerAdjust =
+      new ViennaPIDController(PIDConstants.ARM_P_ADJUST, PIDConstants.ARM_I, PIDConstants.ARM_D);
   private IntakeManager m_intakeManager = new IntakeManager(m_armSubsystem, m_intakeSubsystem);
 
   // SHUFFLEBOARD
@@ -174,7 +174,7 @@ public class RobotContainer {
 
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(
-        new ArmAdjustCommand(m_armSubsystem, m_driverController, m_armPidController1));
+        new ArmAdjustCommand(m_armSubsystem, m_driverController, m_armPidControllerAdjust));
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
