@@ -36,11 +36,13 @@ public class ArmAdjustCommand extends CommandBase {
 
     if (m_driverController.getRightY() < -0.3) {
       voltage = -.2;
+      targetAngle = m_armSubsystem.getAbsolutePosition();
     } else if (m_driverController.getRightY() > 0.3) {
       voltage = .2;
+      targetAngle = m_armSubsystem.getAbsolutePosition();
     } else {
       int position = (int) m_armSubsystem.getAbsolutePosition();
-      voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), position);
+      voltage = m_pidController.run(position, targetAngle);
     }
     m_armSubsystem.smartSet(voltage);
   }
