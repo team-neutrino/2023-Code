@@ -17,7 +17,10 @@ public class ScoringOpenCommand extends CommandBase {
   private Timer timer;
   private double m_time = 60 * 60 * 24;
 
-  public ScoringOpenCommand(ScoringSubsystem p_scoringSubsystem, IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
+  public ScoringOpenCommand(
+      ScoringSubsystem p_scoringSubsystem,
+      IntakeSubsystem p_intakeSubsystem,
+      IntakeManager p_intakeManager) {
     m_scoringSubsystem = p_scoringSubsystem;
     m_intakeSubsystem = p_intakeSubsystem;
     m_intakeManager = p_intakeManager;
@@ -42,7 +45,7 @@ public class ScoringOpenCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_intakeManager.managerApproved()){
+    if (m_intakeManager.managerApproved()) {
       m_scoringSubsystem.openScoring();
       m_intakeManager.setIntakeDownWithArmCheck();
     }
