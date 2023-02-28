@@ -36,7 +36,7 @@ public class ArmFeederCommand extends CommandBase {
 
   @Override
   public void execute() {
-    voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.BACK_MID);
+    voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FEEDER);
     m_armSubsystem.set(voltage);
 
     if (m_scoringSubsystem.detectedGamePiece() && m_timer.get() > time) {
