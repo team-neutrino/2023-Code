@@ -21,7 +21,7 @@ import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
-import frc.robot.commands.DriveTrainDriveFowardCommand;
+import frc.robot.commands.DriveTrainLineUpCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeGatherModeCommand;
@@ -78,7 +78,11 @@ public class RobotContainer {
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
 
-  private final JoystickButton m_
+  private final JoystickButton m_rightJoystickTopRight = new JoystickButton(m_rightJoystick, 13);
+  private final JoystickButton m_rightJoystickBottomRight = new JoystickButton(m_rightJoystick, 14);
+  private final JoystickButton m_rightJoystickTopLeft = new JoystickButton(m_rightJoystick, 7);
+  private final JoystickButton m_rightJoystickBottomLeft = new JoystickButton(m_rightJoystick, 8);
+
 
   private final POVButton m_upArrow = new POVButton(m_driverController, 0);
   private final POVButton m_downArrow = new POVButton(m_driverController, 180);
@@ -173,7 +177,10 @@ public class RobotContainer {
     // Put the arm to one of three specified target angles
     m_rightBumper.toggleOnTrue(m_DriveTrainLineUpCommandDefault);
 
-
+    m_rightJoystickTopRight.toggleOnTrue(m_DriveTrainLineUpCommandScoreRight);
+    m_rightJoystickBottomRight.toggleOnTrue(m_DriveTrainLineUpCommandStationRight);
+    m_rightJoystickTopLeft.toggleOnTrue(m_DriveTrainLineUpCommandScoreLeft);
+    m_rightJoystickBottomLeft.toggleOnTrue(m_DriveTrainLineUpCommandStationLeft);
 
     m_buttonB.toggleOnTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));

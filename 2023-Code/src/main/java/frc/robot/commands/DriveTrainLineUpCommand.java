@@ -170,15 +170,9 @@ public class DriveTrainLineUpCommand extends CommandBase {
       if (turnLeft) {
         stop = m_drivetrain.turnMotor(-Math.PI / 4, rmotorPosition, lmotorPosition);
         System.out.println("step 3 tv " + m_limelight.getTv());
-        if (m_limelight.getTv() == true){
-          txSeen = true;
-        }
       } else {
         stop = m_drivetrain.turnMotor(Math.PI / 4, rmotorPosition, lmotorPosition);
         System.out.println("step 3 tv " + m_limelight.getTv());
-        if (m_limelight.getTv() == true){
-          txSeen = true;
-        }
       }
     }
 
@@ -199,7 +193,6 @@ public class DriveTrainLineUpCommand extends CommandBase {
       rmotorPosition = m_drivetrain.getR1Pos();
       lmotorPosition = m_drivetrain.getL1Pos();
       boolean tv = false;
-      boolean stop = false;
 
       newID = m_limelight.getID();
 
@@ -214,7 +207,7 @@ public class DriveTrainLineUpCommand extends CommandBase {
       if (turnLeft) {
 
         if (m_limelight.getTv() == false || ID != newID) {
-          stop = m_drivetrain.turnMotor(-0.05, rmotorPosition, lmotorPosition);
+          m_drivetrain.turnMotor(-0.05, rmotorPosition, lmotorPosition);
           //System.out.println("stop is " + stop);
           //System.out.println("tv is --- " + m_limelight.getTv());
           //System.out.println("compared ID " + ID);
@@ -232,7 +225,7 @@ public class DriveTrainLineUpCommand extends CommandBase {
       else {
 
         if (m_limelight.getTv() == false || ID != newID) {
-          stop = m_drivetrain.turnMotor(0.05, rmotorPosition, lmotorPosition);
+          m_drivetrain.turnMotor(0.05, rmotorPosition, lmotorPosition);
           //System.out.println("tv is --- " + m_limelight.getTv());
           //System.out.println("compared ID " + ID);
           //System.out.println("current id " + newID);
@@ -350,7 +343,9 @@ public class DriveTrainLineUpCommand extends CommandBase {
         System.out.println("setpoint " + setDistance);
       }
       //setpoint logic needs some more work
+      //later edit: I think it's fine but need to confirm
       //theres some messed up stuff with the distances so do some measurements
+      //later edit: distances are still messed up from my memory but I need to test and confirm this as well
       boolean stop = false;
 
       if (firstRun >= 15){
