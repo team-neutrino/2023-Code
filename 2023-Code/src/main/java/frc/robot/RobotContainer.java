@@ -149,9 +149,7 @@ public class RobotContainer {
       new ScoringCloseCommand(m_scoringSubsystem);
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem, m_intakeSubsystem, m_intakeManager);
-  private final LEDCommand m_LedDefaultCommand =
-      new LEDCommand(m_ledSubsystem, LEDColor.ORANGE, m_scoringSubsystem, m_driverStationInfo);
-
+ 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureBindings();
@@ -161,7 +159,6 @@ public class RobotContainer {
     m_driveTrainSubsystem.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_intakeDefaultCommand);
-    m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
 
     // BUTTONS
 
