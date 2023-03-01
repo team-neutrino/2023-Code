@@ -4,13 +4,19 @@
 
 package frc.robot.commands.autonomous.manualGeneration;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
+import frc.robot.commands.MoveForwardCommand;
 import frc.robot.commands.ScoringOpenCommand;
+import frc.robot.commands.autonomous.TimerCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.PoseTriplet;
@@ -21,32 +27,41 @@ import java.util.Arrays;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TestAutonGeneratedTrajectory extends SequentialCommandGroup {
+public class ScoreThenMoveThenAutoGather extends SequentialCommandGroup {
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
-  private ArrayList<PoseTriplet> forwardBackArray;
-  private RamseteCommand forwardBackCommand;
+  private ArrayList<PoseTriplet> toGamePieceArray;
+  private RamseteCommand toGamePieceCommand;
 
   /** Creates a new TestAutonGeneratedTrajectory. */
-  public TestAutonGeneratedTrajectory(
+  public ScoreThenMoveThenAutoGather(
       DriveTrainSubsystem p_drivetrainSubsystem,
       ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem) {
+      ScoringSubsystem p_scoringSubsystem,
+      IntakeSubsystem p_intakeSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
 
-    forwardBackArray =
+    toGamePieceArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(3, 0, 0)));
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4, 0, 0)));
 
-    forwardBackCommand =
-        AutonomousUtil.generateRamseteFromPoses(forwardBackArray, m_drivetrainSubsystem);
+    toGamePieceCommand =
+        AutonomousUtil.generateRamseteFromPoses(toGamePieceArray, m_drivetrainSubsystem);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true),
-        new ScoringOpenCommand(p_scoringSubsystem, 2),
-        forwardBackCommand);
+        new SequentialCommandGroup(
+          new ParallelRaceGroup(
+            new ScoringOpenCommand(p_scoringSubsystem),
+            new TimerCommand(2)),
+          toGamePieceCommand
+        ),
+        new ArmGatherModeCommand(p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem, p_pidController)
+      );
+    
+    
   }
 }
