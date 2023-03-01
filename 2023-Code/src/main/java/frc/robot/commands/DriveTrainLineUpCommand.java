@@ -33,7 +33,8 @@ public class DriveTrainLineUpCommand extends CommandBase {
   double turnAngle2;
   int programNumber;
   double offSet;
-  double tagDistance;
+  double tagDistanceScore = 1;
+  double tagDistanceStation = 1.3;
 
   public DriveTrainLineUpCommand(DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight, int programNumber) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -51,27 +52,22 @@ public class DriveTrainLineUpCommand extends CommandBase {
     // System.out.println("rmotorposition " + rmotorPosition);
     if (programNumber == 0){
       offSet = 0;
-      tagDistance = 0.78;
       m_limelight.setPipeline(0);
     }
     else if (programNumber == 1){
       offSet = 0.43;
-      tagDistance = 0.78;
       m_limelight.setPipeline(1);
     }
     else if (programNumber == 2){
       offSet = -0.43;
-      tagDistance = 0.78;
       m_limelight.setPipeline(2);
     }
     else if (programNumber == 3){
       offSet = 0.77;
-      tagDistance = 1.2;
       m_limelight.setPipeline(3);
     }
     else if (programNumber == 4){
       offSet = -0.77;
-      tagDistance = 1.2;
       m_limelight.setPipeline(4);
     }
   }
@@ -104,10 +100,10 @@ public class DriveTrainLineUpCommand extends CommandBase {
       if (firstRun == 0) {
         rmotorPosition = m_drivetrain.getR1Pos();
         lmotorPosition = m_drivetrain.getL1Pos();
-        tx1 = Math.PI / 180 * m_limelight.getTx();
-        tx2 = Math.PI / 180 * m_limelight.getTx();
-        turnAngle1 = theta + tx1;
-        turnAngle2 = theta + tx2;
+        // tx1 = Math.PI / 180 * m_limelight.getTx();
+        // tx2 = Math.PI / 180 * m_limelight.getTx();
+        // turnAngle1 = theta + tx1;
+        // turnAngle2 = theta + tx2;
         System.out.println("tx1 " + tx1 + " tx2 " + tx2);
         System.out.println("theta " + (turnAngle1 * 180 / Math.PI));
         // System.out.println("step one getting motor positions");
@@ -340,7 +336,13 @@ public class DriveTrainLineUpCommand extends CommandBase {
         rmotorPosition = m_drivetrain.getR1Pos();
         lmotorPosition = m_drivetrain.getL1Pos();
         array = m_limelight.parseJson();
-        setDistance = Math.abs(m_limelight.getDistance()) - tagDistance;
+        if (programNumber == 0 || programNumber == 1 || programNumber == 2){
+          setDistance = Math.abs(m_limelight.getDistance()) - tagDistanceScore;
+        }
+        else {
+          setDistance = Math.abs(m_limelight.getDistance()) - tagDistanceStation;
+        }
+  
         System.out.println("distance " + m_limelight.getDistance());
         System.out.println("setpoint " + setDistance);
       }

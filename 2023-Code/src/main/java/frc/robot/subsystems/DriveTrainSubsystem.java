@@ -199,8 +199,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     if (rmotorPosition < p_rmotorPosition + motorset
         && lmotorPosition < p_lmotorPosition + motorset) {
-      m_motorGroupRight.set(0.4);
-      m_motorGroupLeft.set(0.4);
+      m_motorGroupRight.set(-0.2);
+      m_motorGroupLeft.set(-0.2);
       //System.out.println("Setpoint " + motorset);
       //System.out.println("starting position " + p_rmotorPosition);
       //System.out.println("current position " + rmotorPosition);
@@ -241,8 +241,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
       //System.out.println("setpoint " + (p_rmotorPosition - motorset));
       //System.out.println("initial position " + p_rmotorPosition);
       //System.out.println("current position r" + rmotorPosition);
-      m_motorGroupRight.set(-0.2);
-      m_motorGroupLeft.set(0.2);
+      m_motorGroupRight.set(-0.05);
+      m_motorGroupLeft.set(0.05);
     } else {
       m_motorGroupRight.set(0);
 
@@ -274,8 +274,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
       //System.out.println("setpoint " + (p_rmotorPosition - motorset));
       //System.out.println("initial position " + p_rmotorPosition);
       //System.out.println("current position r " + rmotorPosition);
-      m_motorGroupRight.set(0.2);
-      m_motorGroupLeft.set(-0.2);
+      m_motorGroupRight.set(0.05);
+      m_motorGroupLeft.set(-0.05);
     } else {
       m_motorGroupRight.set(0);
       m_motorGroupLeft.set(0);
