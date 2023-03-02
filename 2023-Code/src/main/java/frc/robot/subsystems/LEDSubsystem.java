@@ -91,6 +91,6 @@ public class LEDSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     m_addressableLED.setData(m_LEDBuffer);
-    sarahStrobe();
+    // sarahStrobe();
   }
 }

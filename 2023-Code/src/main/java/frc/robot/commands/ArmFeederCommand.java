@@ -16,6 +16,7 @@ public class ArmFeederCommand extends CommandBase {
   ScoringSubsystem m_scoringSubsystem;
   ViennaPIDController m_pidController;
   double voltage;
+  double hasGamePiece;
   Timer m_timer;
   double time = 1.5;
 
@@ -31,6 +32,7 @@ public class ArmFeederCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    hasGamePiece = 0;
     m_timer.start();
   }
 
@@ -39,7 +41,16 @@ public class ArmFeederCommand extends CommandBase {
     voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FEEDER);
     m_armSubsystem.set(voltage);
 
-    if (m_scoringSubsystem.detectedGamePiece() && m_timer.get() > time) {
+    if(m_scoringSubsystem.detectedGamePiece()) {
+      hasGamePiece++;
+    } else{
+      hasGamePiece = 0;
+    }
+
+    System.out.println(m_scoringSubsystem.detectedGamePiece());
+    System.out.println(hasGamePiece);
+
+    if (m_scoringSubsystem.detectedGamePiece() && m_timer.get() > time && hasGamePiece > 25) {
       m_scoringSubsystem.closeScoring();
     } else {
       m_scoringSubsystem.openScoring();
@@ -50,6 +61,7 @@ public class ArmFeederCommand extends CommandBase {
   public void end(boolean interrupted) {
     m_timer.stop();
     m_timer.reset();
+    hasGamePiece = 0;
   }
 
   @Override
