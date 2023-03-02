@@ -24,6 +24,8 @@ import frc.robot.Constants.MotorConstants;
 public class DriveTrainSubsystem extends SubsystemBase {
 
   double cycle = 0;
+  double straightMotorSpeed = -0.2;
+  double turnMotorSpeed = 0.05;
   // ODOMETRY
   private DifferentialDriveOdometry m_diffDriveOdometry;
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
@@ -199,8 +201,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     if (rmotorPosition < p_rmotorPosition + motorset
         && lmotorPosition < p_lmotorPosition + motorset) {
-      m_motorGroupRight.set(-0.2);
-      m_motorGroupLeft.set(-0.2);
+      m_motorGroupRight.set(straightMotorSpeed);
+      m_motorGroupLeft.set(straightMotorSpeed);
       //System.out.println("Setpoint " + motorset);
       //System.out.println("starting position " + p_rmotorPosition);
       //System.out.println("current position " + rmotorPosition);
@@ -241,8 +243,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
       //System.out.println("setpoint " + (p_rmotorPosition - motorset));
       //System.out.println("initial position " + p_rmotorPosition);
       //System.out.println("current position r" + rmotorPosition);
-      m_motorGroupRight.set(-0.05);
-      m_motorGroupLeft.set(0.05);
+      m_motorGroupRight.set(-1*turnMotorSpeed);
+      m_motorGroupLeft.set(turnMotorSpeed);
     } else {
       m_motorGroupRight.set(0);
 
@@ -274,8 +276,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
       //System.out.println("setpoint " + (p_rmotorPosition - motorset));
       //System.out.println("initial position " + p_rmotorPosition);
       //System.out.println("current position r " + rmotorPosition);
-      m_motorGroupRight.set(0.05);
-      m_motorGroupLeft.set(-0.05);
+      m_motorGroupRight.set(turnMotorSpeed);
+      m_motorGroupLeft.set(-1*turnMotorSpeed);
     } else {
       m_motorGroupRight.set(0);
       m_motorGroupLeft.set(0);

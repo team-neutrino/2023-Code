@@ -36,6 +36,12 @@ public class DriveTrainLineUpCommand extends CommandBase {
   double tagDistanceScore = 1;
   double tagDistanceStation = 1.3;
 
+  double firstTurnTune = 0.3;
+  double firstStraightTune = 0.2;
+  double secondTurnFlat = Math.PI / 4;
+  double firstTxTune = 2.5;
+
+
   public DriveTrainLineUpCommand(DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight, int programNumber) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drivetrain = p_drivetrain;
@@ -104,7 +110,7 @@ public class DriveTrainLineUpCommand extends CommandBase {
         // tx2 = Math.PI / 180 * m_limelight.getTx();
         // turnAngle1 = theta + tx1;
         // turnAngle2 = theta + tx2;
-        System.out.println("tx1 " + tx1 + " tx2 " + tx2);
+        // System.out.println("tx1 " + tx1 + " tx2 " + tx2);
         System.out.println("theta " + (turnAngle1 * 180 / Math.PI));
         // System.out.println("step one getting motor positions");
       }
@@ -112,11 +118,11 @@ public class DriveTrainLineUpCommand extends CommandBase {
       boolean stop = false;
       if (theta > 0) {
 
-        stop = m_drivetrain.turnMotor(turnAngle1 - 0.3, rmotorPosition, lmotorPosition);
+        stop = m_drivetrain.turnMotor(turnAngle1 - firstTurnTune, rmotorPosition, lmotorPosition);
 
       } else {
 
-        stop = m_drivetrain.turnMotor(turnAngle2 + 0.3, rmotorPosition, lmotorPosition);
+        stop = m_drivetrain.turnMotor(turnAngle2 + firstTurnTune, rmotorPosition, lmotorPosition);
         
       }
 
@@ -138,10 +144,10 @@ public class DriveTrainLineUpCommand extends CommandBase {
       boolean stop = false;
       if (array[0] > 0) {
         //System.out.println("array0 " + array[0]);
-        stop = m_drivetrain.setMotorPosition(array[0] + 0.2, rmotorPosition, lmotorPosition);
+        stop = m_drivetrain.setMotorPosition(array[0] + firstStraightTune, rmotorPosition, lmotorPosition);
       } else {
         //System.out.println("array0 " + array[0]);
-        stop = m_drivetrain.setMotorPosition(array[0] * -1 + 0.2, rmotorPosition, lmotorPosition);
+        stop = m_drivetrain.setMotorPosition(array[0] * -1 + firstStraightTune, rmotorPosition, lmotorPosition);
       }
 
       firstRun++;
@@ -166,10 +172,10 @@ public class DriveTrainLineUpCommand extends CommandBase {
       if (firstRun >= 15){
 
       if (turnLeft) {
-        stop = m_drivetrain.turnMotor(-Math.PI / 4, rmotorPosition, lmotorPosition);
+        stop = m_drivetrain.turnMotor(-secondTurnFlat, rmotorPosition, lmotorPosition);
         System.out.println("step 3 tv " + m_limelight.getTv());
       } else {
-        stop = m_drivetrain.turnMotor(Math.PI / 4, rmotorPosition, lmotorPosition);
+        stop = m_drivetrain.turnMotor(secondTurnFlat, rmotorPosition, lmotorPosition);
         System.out.println("step 3 tv " + m_limelight.getTv());
       }
     }
@@ -282,11 +288,11 @@ public class DriveTrainLineUpCommand extends CommandBase {
       if (firstRun == 45){
         tx = m_limelight.getTx();
         if (tx > 0){
-          tx -= 2.5;
+          tx -= firstTxTune;
           System.out.println("tx for 6 is " + tx);
         }
         else {
-          tx += 2.5;
+          tx += firstTxTune;
           System.out.println("tx for 6 is " + tx);
         }
       }
