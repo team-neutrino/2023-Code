@@ -126,7 +126,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public double getYaw() {
-    return m_navX.getYaw();
+    return m_navX.getYaw() * -1;
   }
 
   public double getPitch() {
@@ -193,5 +193,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void periodic() {
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
+    System.out.println("NAVX YAW: " + getYaw());
   }
 }
