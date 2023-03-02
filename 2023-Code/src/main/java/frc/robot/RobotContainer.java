@@ -34,9 +34,7 @@ import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.commands.autonomous.manualGeneration.ScoreThenBalance;
 import frc.robot.commands.autonomous.manualGeneration.ScoreThenMove;
-import frc.robot.commands.autonomous.manualGeneration.ScoreThenMoveThenAutoGather;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.ColorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
@@ -97,7 +95,7 @@ public class RobotContainer {
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
   private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
   private final PneumaticSubsystem m_PneumaticSubsystem = new PneumaticSubsystem();
-  private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
+  //   private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
 
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
@@ -116,7 +114,6 @@ public class RobotContainer {
           m_limelightSubsystem,
           m_armSubsystem,
           m_intakeSubsystem,
-          m_colorSubsystem,
           m_ledSubsystem);
 
   // COMMANDS
@@ -131,7 +128,8 @@ public class RobotContainer {
 
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
-
+private final ScoreThenMove m_scoreThenMove = new ScoreThenMove(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager);
+private final ScoreThenBalance m_scoreThenBalanece = new ScoreThenBalance(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager);
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
@@ -196,9 +194,9 @@ public class RobotContainer {
         new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
   }
 
+  
   public Command getAutonomousCommand() {
-    return new ScoreThenMove(
-            m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem)
+    return m_scoreThenBalanece
         .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }

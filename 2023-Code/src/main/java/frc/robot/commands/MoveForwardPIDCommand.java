@@ -13,7 +13,8 @@ public class MoveForwardPIDCommand extends CommandBase {
   private ViennaPIDController m_movePIDController;
   private double baseSpeed = 0.3;
   /** Creates a new MoveForwardPIDCommand. */
-  public MoveForwardPIDCommand(DriveTrainSubsystem p_driveTrianSubsystem, ViennaPIDController p_movePIDController) {
+  public MoveForwardPIDCommand(
+      DriveTrainSubsystem p_driveTrianSubsystem, ViennaPIDController p_movePIDController) {
     m_driveTrainSubsystem = p_driveTrianSubsystem;
     m_movePIDController = p_movePIDController;
     // Use addRequirements() here to declare subsystem dependencies.

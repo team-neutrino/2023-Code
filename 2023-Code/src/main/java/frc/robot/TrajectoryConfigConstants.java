@@ -34,4 +34,10 @@ public class TrajectoryConfigConstants {
               K_MAX_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
           .setKinematics(K_DRIVE_KINEMATICS)
           .addConstraint(K_AUTO_VOLTAGE_CONSTRAINT);
+
+  public static final TrajectoryConfig K_MAX_SPEED_BACKWARD_CONFIG =
+      new TrajectoryConfig(
+              -K_MAX_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+          .setKinematics(K_DRIVE_KINEMATICS)
+          .addConstraint(K_AUTO_VOLTAGE_CONSTRAINT);
 }

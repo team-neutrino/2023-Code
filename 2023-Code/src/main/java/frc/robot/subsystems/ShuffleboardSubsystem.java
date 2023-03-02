@@ -43,7 +43,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private ArmSubsystem m_arm;
   private HttpCamera LLFeed;
   private IntakeSubsystem m_intake;
-  private ColorSubsystem m_color;
 
   public ShuffleboardSubsystem(
       DriverStationInfo p_driverStationInfo,
@@ -52,7 +51,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       LimelightSubsystem p_limelight,
       ArmSubsystem p_arm,
       IntakeSubsystem p_intake,
-      ColorSubsystem p_color,
       LEDSubsystem p_LED) {
 
     m_driveTrainSubsystem = p_driveTrainSubsystem;
@@ -60,7 +58,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_scoring = p_scoring;
     m_arm = p_arm;
     m_intake = p_intake;
-    m_color = p_color;
     m_LED = p_LED;
     m_driverStationInfo = p_driverStationInfo;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
@@ -91,7 +88,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_LEDVariables[0].setString(m_LED.getColor().toString());
 
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
-    m_driverStationInfoVariables[1].setString(m_color.getPiece());
 
     m_armVariables[0].setDouble(m_arm.getAbsolutePosition());
   }

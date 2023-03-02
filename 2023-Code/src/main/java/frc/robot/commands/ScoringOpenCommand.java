@@ -15,6 +15,7 @@ public class ScoringOpenCommand extends CommandBase {
   private IntakeSubsystem m_intakeSubsystem;
   private IntakeManager m_intakeManager;
   private Timer timer;
+  private boolean autonomous = false;
   private double m_time = 60 * 60 * 24;
 
   public ScoringOpenCommand(
@@ -28,11 +29,19 @@ public class ScoringOpenCommand extends CommandBase {
     addRequirements(m_scoringSubsystem, m_intakeSubsystem);
   }
 
-  public ScoringOpenCommand(ScoringSubsystem p_scoringSubsystem, double p_time) {
+  public ScoringOpenCommand(
+      ScoringSubsystem p_scoringSubsystem,
+      IntakeSubsystem p_intakeSubsystem,
+      IntakeManager p_intakeManager,
+      double p_time,
+      boolean auto) {
     m_scoringSubsystem = p_scoringSubsystem;
+    m_intakeSubsystem = m_intakeSubsystem;
+    m_intakeManager = p_intakeManager;
+
     timer = new Timer();
     m_time = p_time;
-
+   autonomous = auto;
     addRequirements(p_scoringSubsystem);
   }
 
@@ -47,9 +56,11 @@ public class ScoringOpenCommand extends CommandBase {
   public void execute() {
     if (m_intakeManager.managerApproved()) {
       m_scoringSubsystem.openScoring();
-      m_intakeManager.setIntakeDownWithArmCheck();
+      if(!autonomous) {
+         m_intakeManager.setIntakeDownWithArmCheck();
+       }
+      }
     }
-  }
 
   // Called once the command ends or is interrupted.
   @Override

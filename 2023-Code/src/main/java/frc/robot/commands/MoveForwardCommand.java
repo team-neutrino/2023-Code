@@ -13,7 +13,8 @@ public class MoveForwardCommand extends CommandBase {
   private double m_motorPower;
 
   /** Creates a new MoveForwardCommand. */
-  public MoveForwardCommand(DriveTrainSubsystem p_driveTrainSubsystem, double p_distance, double p_motorPower) {
+  public MoveForwardCommand(
+      DriveTrainSubsystem p_driveTrainSubsystem, double p_distance, double p_motorPower) {
     m_driveTrainSubsystem = p_driveTrainSubsystem;
     m_distance = p_distance;
     m_motorPower = p_motorPower;
