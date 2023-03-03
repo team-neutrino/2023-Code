@@ -11,10 +11,13 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.TrajectoryConfigConstants;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.ScoringOpenCommand;
-import frc.robot.commands.autonomous.TimerCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
@@ -22,10 +25,7 @@ import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
 import java.util.ArrayList;
 import java.util.Arrays;
-import frc.robot.subsystems.LEDSubsystem;
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+
 public class ScoreThenMove extends SequentialCommandGroup {
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
@@ -40,8 +40,7 @@ public class ScoreThenMove extends SequentialCommandGroup {
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
-      LEDSubsystem p_ledSubsystem
-      ) {
+      LEDSubsystem p_ledSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
 
     forwardBackArray =
@@ -57,12 +56,13 @@ public class ScoreThenMove extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+        new ArmToAngleCommand(
+            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new SequentialCommandGroup(
             new ParallelRaceGroup(
-                new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
-
-            forwardBackCommand)));
+                new ScoringOpenCommand(
+                    p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
+                forwardBackCommand)));
 
     // forwardBackCommand
     // new ParallelCommandGroup(

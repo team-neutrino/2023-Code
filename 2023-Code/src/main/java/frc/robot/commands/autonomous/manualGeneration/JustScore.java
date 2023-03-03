@@ -7,34 +7,28 @@ package frc.robot.commands.autonomous.manualGeneration;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.TrajectoryConfigConstants;
 import frc.robot.commands.ArmToAngleCommand;
-import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 import frc.robot.subsystems.ScoringSubsystem;
-import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ScoreMobilityThenBalance extends SequentialCommandGroup {
+public class JustScore extends SequentialCommandGroup {
 
   private ArrayList<PoseTriplet> forwardBackArray;
-  private ArrayList<PoseTriplet> reEnterCommunity;
-  private RamseteCommand reEnterCommunityCommand;
-  private RamseteCommand moveForwardCommand;
+  private RamseteCommand forwardBackCommand;
 
   /** Creates a new TestAutonGeneratedTrajectory. */
-  public ScoreMobilityThenBalance(
+  public JustScore(
       DriveTrainSubsystem p_drivetrainSubsystem,
       ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
@@ -43,34 +37,11 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem) {
 
-    forwardBackArray =
-        new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4, 0, 0)));
-
-    reEnterCommunity =
-        new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(4, 0, 0), new PoseTriplet(2, 0, 0)));
-
-    moveForwardCommand =
-        AutonomousUtil.generateRamseteFromPoses(
-            forwardBackArray,
-            p_drivetrainSubsystem,
-            TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
-
-    reEnterCommunityCommand =
-        AutonomousUtil.generateRamseteFromPoses(
-            reEnterCommunity,
-            p_drivetrainSubsystem,
-            TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG);
-
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmToAngleCommand(
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
-        moveForwardCommand,
-        reEnterCommunityCommand,
-        new AutoBalanceCommand(p_drivetrainSubsystem));
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true));
   }
 }

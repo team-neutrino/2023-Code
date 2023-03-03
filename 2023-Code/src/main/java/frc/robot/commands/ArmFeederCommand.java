@@ -41,9 +41,9 @@ public class ArmFeederCommand extends CommandBase {
     voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FEEDER);
     m_armSubsystem.set(voltage);
 
-    if(m_scoringSubsystem.detectedGamePiece()) {
+    if (m_scoringSubsystem.detectedGamePiece()) {
       hasGamePiece++;
-    } else{
+    } else {
       hasGamePiece = 0;
     }
 
