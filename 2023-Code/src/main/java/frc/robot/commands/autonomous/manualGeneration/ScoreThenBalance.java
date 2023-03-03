@@ -42,7 +42,7 @@ public class ScoreThenBalance extends SequentialCommandGroup {
 
     moveForwardArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4, 0, 0)));
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(2, 0, 0)));
 
     moveForwardCommand =
         AutonomousUtil.generateRamseteFromPoses(

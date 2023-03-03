@@ -132,7 +132,15 @@ public class RobotContainer {
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
 
-private final ScoreMobilityThenBalance m_scoreMobilityThenBalance = new ScoreMobilityThenBalance(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem);
+  private final ScoreMobilityThenBalance m_scoreMobilityThenBalance =
+      new ScoreMobilityThenBalance(
+          m_driveTrainSubsystem,
+          m_armPidController,
+          m_armSubsystem,
+          m_scoringSubsystem,
+          m_intakeSubsystem,
+          m_intakeManager,
+          m_ledSubsystem);
   private final ScoreThenMove m_scoreThenMove =
       new ScoreThenMove(
           m_driveTrainSubsystem,
@@ -260,7 +268,7 @@ private final ScoreMobilityThenBalance m_scoreMobilityThenBalance = new ScoreMob
   }
 
   public Command getAutonomousCommand() {
-    return m_scoreThenBalanece.andThen(
+    return m_scoreThenMove.andThen(
         new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }

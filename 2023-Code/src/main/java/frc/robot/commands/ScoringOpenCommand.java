@@ -56,9 +56,6 @@ public class ScoringOpenCommand extends CommandBase {
   public void execute() {
     if (m_intakeManager.managerApproved()) {
       m_scoringSubsystem.openScoring();
-      if (!autonomous) {
-        m_intakeManager.setIntakeDownWithArmCheck();
-      }
     }
   }
 
