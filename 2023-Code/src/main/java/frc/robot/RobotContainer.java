@@ -268,7 +268,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return m_scoreThenMove.andThen(
+    return m_scoreMobilityThenBalance.andThen(
         new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }

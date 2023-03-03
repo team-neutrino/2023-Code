@@ -11,6 +11,7 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.TrajectoryConfigConstants;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
+import frc.robot.commands.NavXBalance;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.commands.autonomous.TimerCommand;
 import frc.robot.subsystems.ArmSubsystem;
@@ -47,11 +48,11 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(3, 0, 0)));
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(3.8, 0, 0)));
 
     reEnterCommunity =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(3, 0, 0), new PoseTriplet(1.5, 0, 0)));
+            Arrays.asList(new PoseTriplet(3.8, 0, 0), new PoseTriplet(1.5, 0, 0)));
 
     moveForwardCommand =
         AutonomousUtil.generateRamseteFromPoses(
@@ -75,7 +76,7 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
             new TimerCommand(1),
             new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID)),
         moveForwardCommand,
-        reEnterCommunityCommand,
+        new NavXBalance(p_drivetrainSubsystem),
         new AutoBalanceCommand(p_drivetrainSubsystem));
   }
 }
