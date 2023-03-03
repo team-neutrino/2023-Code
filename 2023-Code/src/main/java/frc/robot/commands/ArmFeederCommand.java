@@ -47,8 +47,8 @@ public class ArmFeederCommand extends CommandBase {
       hasGamePiece = 0;
     }
 
-    System.out.println(m_scoringSubsystem.detectedGamePiece());
-    System.out.println(hasGamePiece);
+    // System.out.println(m_scoringSubsystem.detectedGamePiece());
+    // System.out.println(hasGamePiece);
 
     if (m_scoringSubsystem.detectedGamePiece() && m_timer.get() > time && hasGamePiece > 25) {
       m_scoringSubsystem.closeScoring();

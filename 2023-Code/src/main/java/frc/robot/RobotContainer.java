@@ -37,6 +37,7 @@ import frc.robot.commands.autonomous.manualGeneration.ScoreMobilityThenBalance;
 import frc.robot.commands.autonomous.manualGeneration.ScoreThenBalance;
 import frc.robot.commands.autonomous.manualGeneration.ScoreThenMove;
 import frc.robot.commands.autonomous.manualGeneration.ScoreThenMoveThenAutoGather;
+import frc.robot.commands.autonomous.manualGeneration.TestDeadlineWith;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -128,11 +129,20 @@ public class RobotContainer {
       new IntakeDefaultCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
+  private final TestDeadlineWith m_testDeadlineWith = new TestDeadlineWith(m_scoringSubsystem, m_intakeSubsystem, m_intakeManager);
 
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
 
-private final ScoreMobilityThenBalance m_scoreMobilityThenBalance = new ScoreMobilityThenBalance(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem);
+  private final ScoreMobilityThenBalance m_scoreMobilityThenBalance =
+      new ScoreMobilityThenBalance(
+          m_driveTrainSubsystem,
+          m_armPidController,
+          m_armSubsystem,
+          m_scoringSubsystem,
+          m_intakeSubsystem,
+          m_intakeManager,
+          m_ledSubsystem);
   private final ScoreThenMove m_scoreThenMove =
       new ScoreThenMove(
           m_driveTrainSubsystem,
@@ -260,7 +270,7 @@ private final ScoreMobilityThenBalance m_scoreMobilityThenBalance = new ScoreMob
   }
 
   public Command getAutonomousCommand() {
-    return m_scoreThenBalanece.andThen(
-        new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+    return m_testDeadlineWith
+        .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }
