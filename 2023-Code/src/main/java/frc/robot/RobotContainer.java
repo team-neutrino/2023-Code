@@ -268,6 +268,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
+    m_driveTrainSubsystem.resetOdometry();
     return m_scoreMobilityThenBalance.andThen(
         new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
