@@ -56,19 +56,9 @@ public class ScoreThenMove extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(
-            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new SequentialCommandGroup(
-            new ParallelRaceGroup(
-                new ScoringOpenCommand(
-                    p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
-                forwardBackCommand)));
+        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager).withTimeout(2),
 
-    // forwardBackCommand
-    // new ParallelCommandGroup(
-    //   new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true),
-    //   forwardBackCommand
-    // )
-
+        forwardBackCommand);
   }
 }
