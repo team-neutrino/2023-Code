@@ -59,10 +59,12 @@ public class ScoreThenMoveThenAutoGather extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+        new ArmToAngleCommand(
+            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new SequentialCommandGroup(
             new ParallelRaceGroup(
-                new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
+                new ScoringOpenCommand(
+                    p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
                 new TimerCommand(2)),
             toGamePieceCommand),
         new ArmGatherModeCommand(

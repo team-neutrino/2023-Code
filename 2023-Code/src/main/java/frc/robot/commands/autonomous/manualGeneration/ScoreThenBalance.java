@@ -28,11 +28,9 @@ import java.util.Arrays;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ScoreThenBalance extends SequentialCommandGroup {
 
-  private DriveTrainSubsystem m_drivetrainSubsystem;
-  private ArrayList<PoseTriplet> forwardBackArray;
-  private RamseteCommand forwardBackCommand;
+  private ArrayList<PoseTriplet> moveForwardArray;
+  private RamseteCommand moveForwardCommand;
 
-  /** Creates a new TestAutonGeneratedTrajectory. */
   public ScoreThenBalance(
       DriveTrainSubsystem p_drivetrainSubsystem,
       ViennaPIDController p_pidController,
@@ -41,25 +39,22 @@ public class ScoreThenBalance extends SequentialCommandGroup {
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem) {
-    m_drivetrainSubsystem = p_drivetrainSubsystem;
 
-    forwardBackArray =
+    moveForwardArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(2, 0, 0)));
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4, 0, 0)));
 
-    forwardBackCommand =
+    moveForwardCommand =
         AutonomousUtil.generateRamseteFromPoses(
-            forwardBackArray,
-            m_drivetrainSubsystem,
+            moveForwardArray,
+            p_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-
     addCommands(
-        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+        new ArmToAngleCommand(
+            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
-        forwardBackCommand,
-        new AutoBalanceCommand(m_drivetrainSubsystem));
+        moveForwardCommand,
+        new AutoBalanceCommand(p_drivetrainSubsystem));
   }
 }

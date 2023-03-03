@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.util.ViennaPIDController;
 import frc.robot.util.EnumConstants.LEDColor;
+import frc.robot.util.ViennaPIDController;
 
 public class ArmToAngleCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
@@ -49,9 +49,9 @@ public class ArmToAngleCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if(m_buttoncheck) {
+    if (m_buttoncheck) {
 
-      if (m_ledSubsystem.getColor() == LEDColor.PURPLE){
+      if (m_ledSubsystem.getColor() == LEDColor.PURPLE) {
         voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), 35);
         m_armSubsystem.smartSet(voltage);
       }
@@ -59,11 +59,10 @@ public class ArmToAngleCommand extends CommandBase {
         voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), 38.5);
         m_armSubsystem.smartSet(voltage);
       }
+    } else {
+      voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), m_targetAngle);
+      m_armSubsystem.smartSet(voltage);
     }
-    
-   else { voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), m_targetAngle);
-    m_armSubsystem.smartSet(voltage);
-   }
   }
 
   @Override
