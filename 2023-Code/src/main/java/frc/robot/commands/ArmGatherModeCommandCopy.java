@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
@@ -11,14 +12,16 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.ViennaPIDController;
 
-public class ArmGatherModeCommand extends CommandBase {
+public class ArmGatherModeCommandCopy extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
   private IntakeSubsystem m_intakeSubsystem;
   private ViennaPIDController m_pidController;
+  private Timer m_timer = new Timer();
+  private double time = 2;
   private boolean auton;
 
-  public ArmGatherModeCommand(
+  public ArmGatherModeCommandCopy(
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
@@ -33,20 +36,21 @@ public class ArmGatherModeCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_timer.start();
+  }
 
   @Override
   public void execute() {
     m_intakeSubsystem.setIntakeDown();
+    m_intakeSubsystem.runIntake();
     m_armSubsystem.smartSet(
         m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.ARM_FRONTMOST));
 
     if (m_armSubsystem.getAbsolutePosition() >= ArmConstants.GATHER_POSITION) {
       if (m_intakeSubsystem.isIntakeDown()) {
         m_intakeSubsystem.unsqueeze();
-        if(auton && !m_intakeSubsystem.detectedGamePiece()){
-          m_intakeSubsystem.runIntake();
-        }
+        m_intakeSubsystem.runIntake();
       }
       m_scoringSubsystem.closeScoring();
     } else {
@@ -55,10 +59,16 @@ public class ArmGatherModeCommand extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_timer.stop();
+    m_timer.reset();
+  }
 
   @Override
   public boolean isFinished() {
+    if(m_timer.get() > time){
+      return true;
+    }
     return false;
   }
 }

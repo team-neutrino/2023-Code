@@ -60,7 +60,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_encoderRight2 = initializeMotor(m_motorRight2, false);
 
     m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
-    resetOdometry(m_diffDriveOdometry.getPoseMeters());
+    resetOdometry();
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
@@ -83,14 +83,14 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_encoderLeft2.setPosition(0);
   }
 
-  public void resetOdometry(Pose2d pose) {
+  public void resetOdometry() {
     resetEncoders();
     m_navX.reset();
     m_diffDriveOdometry.resetPosition(
         Rotation2d.fromDegrees(getYaw()),
         m_encoderLeft1.getPosition(),
         m_encoderRight1.getPosition(),
-        pose);
+        m_diffDriveOdometry.getPoseMeters());
   }
 
   public double getR1Pos() {
@@ -193,7 +193,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void periodic() {
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
-    // System.out.println(getPose2d());
+    System.out.println(getPose2d());
     // System.out.println("NAVX YAW: " + getYaw());
   }
 }

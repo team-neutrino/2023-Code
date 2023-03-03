@@ -191,7 +191,7 @@ public class RobotContainer {
       new IntakeGatherModeCommand(m_intakeSubsystem, m_intakeManager);
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(
-          m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
+          m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController, false);
   private final ArmFeederCommand m_armFeederCommand =
       new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem, m_armPidController);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
@@ -270,7 +270,8 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return m_testDeadlineWith
+    m_driveTrainSubsystem.resetOdometry();
+    return m_scoreThenMoveThenAutoGather
         .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }
