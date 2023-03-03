@@ -41,7 +41,7 @@ public class ScoringOpenCommand extends CommandBase {
 
     timer = new Timer();
     m_time = p_time;
-   autonomous = auto;
+    autonomous = auto;
     addRequirements(p_scoringSubsystem);
   }
 
@@ -56,11 +56,11 @@ public class ScoringOpenCommand extends CommandBase {
   public void execute() {
     if (m_intakeManager.managerApproved()) {
       m_scoringSubsystem.openScoring();
-      if(!autonomous) {
-         m_intakeManager.setIntakeDownWithArmCheck();
-       }
+      if (!autonomous) {
+        m_intakeManager.setIntakeDownWithArmCheck();
       }
     }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
