@@ -34,6 +34,7 @@ import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.commands.autonomous.manualGeneration.ScoreThenBalance;
 import frc.robot.commands.autonomous.manualGeneration.ScoreThenMove;
+import frc.robot.commands.autonomous.manualGeneration.ScoreThenMoveThenAutoGather;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -130,6 +131,7 @@ public class RobotContainer {
       new AutoBalanceCommand(m_driveTrainSubsystem);
 private final ScoreThenMove m_scoreThenMove = new ScoreThenMove(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem);
 private final ScoreThenBalance m_scoreThenBalanece = new ScoreThenBalance(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem);
+private final ScoreThenMoveThenAutoGather m_scoreThenMoveThenAutoGather = new ScoreThenMoveThenAutoGather(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem);
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
@@ -196,7 +198,7 @@ private final ScoreThenBalance m_scoreThenBalanece = new ScoreThenBalance(m_driv
 
   
   public Command getAutonomousCommand() {
-    return m_scoreThenMove
+    return m_scoreThenMoveThenAutoGather
         .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }
