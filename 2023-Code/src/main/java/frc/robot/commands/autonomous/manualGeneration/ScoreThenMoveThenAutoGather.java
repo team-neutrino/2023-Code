@@ -5,17 +5,13 @@
 package frc.robot.commands.autonomous.manualGeneration;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.TrajectoryConfigConstants;
-import frc.robot.commands.ArmGatherModeCommand;
-import frc.robot.commands.AutonArmGatherCommand;
 import frc.robot.commands.ArmToAngleCommand;
-import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.AutonArmGatherCommand;
 import frc.robot.commands.ScoringOpenCommand;
-import frc.robot.commands.autonomous.TimerCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -53,11 +49,11 @@ public class ScoreThenMoveThenAutoGather extends SequentialCommandGroup {
 
     toGamePieceArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4.26, 0.13, 14.8)));
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4.26, 0.13, 14)));
 
     runThatBack =
         new ArrayList<PoseTriplet>(
-            Arrays.asList( new PoseTriplet(4.26, 0.13, 14.8), new PoseTriplet(-.28, .37, -.87)));
+            Arrays.asList(new PoseTriplet(4.26, 0.13, 14), new PoseTriplet(-.28, .37, -.87)));
 
     toGamePieceCommand =
         AutonomousUtil.generateRamseteFromPoses(
@@ -73,18 +69,34 @@ public class ScoreThenMoveThenAutoGather extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager).withTimeout(2),
-
-        new ParallelCommandGroup(toGamePieceCommand, new AutonArmGatherCommand(p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem, p_pidController, true).withTimeout(7)),
-        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID, true, false, p_ledSubsystem).withTimeout(1),
-
-
+        new ArmToAngleCommand(
+            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager)
+            .withTimeout(2),
+        new ParallelCommandGroup(
+            toGamePieceCommand,
+            new AutonArmGatherCommand(
+                p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem, p_pidController)),
+        new ArmToAngleCommand(
+                p_armSubsystem,
+                p_pidController,
+                ArmConstants.FORWARD_MID,
+                true,
+                false,
+                p_ledSubsystem)
+            .withTimeout(1),
         runThatBackCommand,
-        
-        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem).withTimeout(1),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true), 
-        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID, true, false, p_ledSubsystem).withTimeout(1));
-
+        new ArmToAngleCommand(
+                p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem)
+            .withTimeout(1),
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
+        new ArmToAngleCommand(
+                p_armSubsystem,
+                p_pidController,
+                ArmConstants.FORWARD_MID,
+                true,
+                false,
+                p_ledSubsystem)
+            .withTimeout(1));
   }
 }

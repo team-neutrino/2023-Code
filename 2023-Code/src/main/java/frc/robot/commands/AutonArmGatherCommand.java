@@ -20,18 +20,16 @@ public class AutonArmGatherCommand extends CommandBase {
   private Timer m_timer = new Timer();
   private double time = 2;
   private boolean detected = false;
-  private boolean auton;
 
   public AutonArmGatherCommand(
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
-      ViennaPIDController p_pidController, boolean p_auton) {
+      ViennaPIDController p_pidController) {
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
     m_intakeSubsystem = p_intakeSubsystem;
     m_pidController = p_pidController;
-    auton = p_auton;
 
     addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
   }
@@ -52,17 +50,15 @@ public class AutonArmGatherCommand extends CommandBase {
       if (m_intakeSubsystem.detectedGamePiece()) {
         detected = true;
       }
-    }
-    else {
+    } else {
       m_intakeSubsystem.stopIntake();
 
       m_scoringSubsystem.closeScoring();
 
       m_armSubsystem.smartSet(
           m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
-            }
+    }
     // m_intakeSubsystem.setIntakeDown();
-   
 
     //   if(m_intakeSubsystem.detectedGamePiece()){
     //     detected = true;
@@ -79,13 +75,10 @@ public class AutonArmGatherCommand extends CommandBase {
     //       m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
     //   } else {
     //     m_armSubsystem.smartSet(
-    //       m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.GATHER_POSITION));
+    //       m_pidController.run(m_armSubsystem.getAbsolutePosition(),
+    // ArmConstants.GATHER_POSITION));
     //     m_scoringSubsystem.openScoring();
     //   }
-      
-
-
-    
 
     // if (m_armSubsystem.getAbsolutePosition() >= ArmConstants.GATHER_POSITION) {
     //   if (m_intakeSubsystem.isIntakeDown()) {
@@ -105,7 +98,7 @@ public class AutonArmGatherCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if (detected && Math.abs(m_armSubsystem.getAbsolutePosition() - ArmConstants.FORWARD_MID) < 1){
+    if (detected && Math.abs(m_armSubsystem.getAbsolutePosition() - ArmConstants.FORWARD_MID) < 1) {
       return true;
     }
     return false;

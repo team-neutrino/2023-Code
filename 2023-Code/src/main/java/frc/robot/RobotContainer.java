@@ -52,7 +52,7 @@ import frc.robot.util.IntakeManager;
 import frc.robot.util.ViennaPIDController;
 
 public class RobotContainer {
-    
+
   // CONTROLLERS
   private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
   private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICK_LEFT);
@@ -122,7 +122,7 @@ public class RobotContainer {
           m_ledSubsystem);
 
   // COMMANDS
-  
+
   private final ArmDefaultCommand m_armDefaultCommand =
       new ArmDefaultCommand(m_armSubsystem, m_armPidController);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
@@ -131,7 +131,8 @@ public class RobotContainer {
       new IntakeDefaultCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
-  private final TestDeadlineWith m_testDeadlineWith = new TestDeadlineWith(m_scoringSubsystem, m_intakeSubsystem, m_intakeManager);
+  private final TestDeadlineWith m_testDeadlineWith =
+      new TestDeadlineWith(m_scoringSubsystem, m_intakeSubsystem, m_intakeManager);
 
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
@@ -207,7 +208,6 @@ public class RobotContainer {
   public RobotContainer() {
     configureBindings();
     m_driveTrainSubsystem.resetOdometry();
-
   }
 
   private void configureBindings() {
@@ -275,7 +275,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     m_driveTrainSubsystem.resetOdometry();
-    return m_scoreThenMoveThenAutoGather
-        .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+    return m_scoreThenMoveThenAutoGather.andThen(
+        new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }

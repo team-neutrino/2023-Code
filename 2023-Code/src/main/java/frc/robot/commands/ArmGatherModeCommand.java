@@ -22,7 +22,8 @@ public class ArmGatherModeCommand extends CommandBase {
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
-      ViennaPIDController p_pidController, boolean p_auton) {
+      ViennaPIDController p_pidController,
+      boolean p_auton) {
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
     m_intakeSubsystem = p_intakeSubsystem;
@@ -44,7 +45,7 @@ public class ArmGatherModeCommand extends CommandBase {
     if (m_armSubsystem.getAbsolutePosition() >= ArmConstants.GATHER_POSITION) {
       if (m_intakeSubsystem.isIntakeDown()) {
         m_intakeSubsystem.unsqueeze();
-        if(auton && !m_intakeSubsystem.detectedGamePiece()){
+        if (auton && !m_intakeSubsystem.detectedGamePiece()) {
           m_intakeSubsystem.runIntake();
         }
       }
