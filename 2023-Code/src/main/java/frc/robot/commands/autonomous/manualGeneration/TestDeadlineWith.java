@@ -27,7 +27,7 @@ public class TestDeadlineWith extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new InstantCommand(this::printTest),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager).withTimeout(2),
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager).withTimeout(4),
         new InstantCommand(this::printTest));
   }
 }
