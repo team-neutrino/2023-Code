@@ -12,7 +12,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.ViennaPIDController;
 
-public class ArmGatherModeCommandCopy extends CommandBase {
+public class AutonArmGatherCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
   private IntakeSubsystem m_intakeSubsystem;
@@ -22,7 +22,7 @@ public class ArmGatherModeCommandCopy extends CommandBase {
   private boolean detected = false;
   private boolean auton;
 
-  public ArmGatherModeCommandCopy(
+  public AutonArmGatherCommand(
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
@@ -39,31 +39,49 @@ public class ArmGatherModeCommandCopy extends CommandBase {
   @Override
   public void initialize() {
     m_timer.start();
+    m_intakeSubsystem.setIntakeDown();
   }
 
   @Override
   public void execute() {
-    m_intakeSubsystem.setIntakeDown();
+    if (detected = false) {
+      m_intakeSubsystem.runIntake();
+      m_scoringSubsystem.openScoring();
+      m_armSubsystem.smartSet(
+          m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.GATHER_POSITION));
+      if (m_intakeSubsystem.detectedGamePiece()) {
+        detected = true;
+      }
+    }
+    else {
+      m_intakeSubsystem.stopIntake();
+
+      m_scoringSubsystem.closeScoring();
+
+      m_armSubsystem.smartSet(
+          m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
+            }
+    // m_intakeSubsystem.setIntakeDown();
    
 
-      if(m_intakeSubsystem.detectedGamePiece()){
-        detected = true;
-        m_intakeSubsystem.stopIntake();
-        m_intakeSubsystem.unsqueeze();
-      }
-      else{
-        m_intakeSubsystem.runIntake();
-      }
+    //   if(m_intakeSubsystem.detectedGamePiece()){
+    //     detected = true;
+    //     m_intakeSubsystem.stopIntake();
+    //     m_intakeSubsystem.unsqueeze();
+    //   }
+    //   else{
+    //     m_intakeSubsystem.runIntake();
+    //   }
 
-      if(detected == true){
-        m_scoringSubsystem.closeScoring();
-        m_armSubsystem.smartSet(
-          m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
-      } else {
-        m_armSubsystem.smartSet(
-          m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.GATHER_POSITION));
-        m_scoringSubsystem.openScoring();
-      }
+    //   if(detected == true){
+    //     m_scoringSubsystem.closeScoring();
+    //     m_armSubsystem.smartSet(
+    //       m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
+    //   } else {
+    //     m_armSubsystem.smartSet(
+    //       m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.GATHER_POSITION));
+    //     m_scoringSubsystem.openScoring();
+    //   }
       
 
 
@@ -82,13 +100,14 @@ public class ArmGatherModeCommandCopy extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    m_timer.stop();
-    m_timer.reset();
-    detected = false;
+    m_intakeSubsystem.setIntakeUp();
   }
 
   @Override
   public boolean isFinished() {
+    if (detected && Math.abs(m_armSubsystem.getAbsolutePosition() - ArmConstants.FORWARD_MID) < 1){
+      return true;
+    }
     return false;
   }
 }

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.TrajectoryConfigConstants;
 import frc.robot.commands.ArmGatherModeCommand;
-import frc.robot.commands.ArmGatherModeCommandCopy;
+import frc.robot.commands.AutonArmGatherCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ScoringOpenCommand;
@@ -76,7 +76,7 @@ public class ScoreThenMoveThenAutoGather extends SequentialCommandGroup {
         new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager).withTimeout(2),
 
-        new ParallelCommandGroup(toGamePieceCommand, new ArmGatherModeCommandCopy(p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem, p_pidController, true).withTimeout(7)),
+        new ParallelCommandGroup(toGamePieceCommand, new AutonArmGatherCommand(p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem, p_pidController, true).withTimeout(7)),
         new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID, true, false, p_ledSubsystem).withTimeout(1),
 
 
