@@ -4,6 +4,7 @@
 
 package frc.robot.commands.autonomous.manualGeneration;
 
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
@@ -11,6 +12,7 @@ import frc.robot.TrajectoryConfigConstants;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.ScoringOpenCommand;
+import frc.robot.commands.autonomous.TimerCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -45,30 +47,32 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4, 0, 0)));
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(3, 0, 0)));
 
     reEnterCommunity =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(4, 0, 0), new PoseTriplet(2, 0, 0)));
+            Arrays.asList(new PoseTriplet(3, 0, 0), new PoseTriplet(1.5, 0, 0)));
 
     moveForwardCommand =
         AutonomousUtil.generateRamseteFromPoses(
             forwardBackArray,
             p_drivetrainSubsystem,
-            TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
+            TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG);
 
     reEnterCommunityCommand =
         AutonomousUtil.generateRamseteFromPoses(
             reEnterCommunity,
             p_drivetrainSubsystem,
-            TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG);
+            TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG
+            );
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmToAngleCommand(
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, .75, true),
+        new ParallelRaceGroup(new TimerCommand(1), new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID)),
         moveForwardCommand,
         reEnterCommunityCommand,
         new AutoBalanceCommand(p_drivetrainSubsystem));

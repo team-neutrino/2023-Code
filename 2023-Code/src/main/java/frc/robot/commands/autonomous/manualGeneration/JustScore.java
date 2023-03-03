@@ -6,6 +6,7 @@ package frc.robot.commands.autonomous.manualGeneration;
 
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.TrajectoryConfigConstants;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.ScoringOpenCommand;
@@ -17,15 +18,22 @@ import frc.robot.subsystems.LEDSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class JustScore extends SequentialCommandGroup {
 
+  private ArrayList<PoseTriplet> moveBackArray;
   private ArrayList<PoseTriplet> forwardBackArray;
+
+
+  private RamseteCommand moveBackCommand;
   private RamseteCommand forwardBackCommand;
+
 
   /** Creates a new TestAutonGeneratedTrajectory. */
   public JustScore(
@@ -37,11 +45,34 @@ public class JustScore extends SequentialCommandGroup {
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem) {
 
+          forwardBackArray =
+        new ArrayList<PoseTriplet>(
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(2, 0, 0)));
+
+    forwardBackCommand =
+        AutonomousUtil.generateRamseteFromPoses(
+            forwardBackArray,
+            p_drivetrainSubsystem,
+            TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
+
+        moveBackArray =
+        new ArrayList<PoseTriplet>(
+            Arrays.asList(new PoseTriplet(2, 0, 0), new PoseTriplet(0, 0, 0)));
+
+    moveBackCommand  =
+        AutonomousUtil.generateRamseteFromPoses(
+            moveBackArray,
+            p_drivetrainSubsystem,
+            TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(
-            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true));
+      forwardBackCommand,
+      moveBackCommand
+        // new ArmToAngleCommand(
+        //     p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+        // new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true)
+        
+        );
   }
 }
