@@ -52,6 +52,7 @@ import frc.robot.util.IntakeManager;
 import frc.robot.util.ViennaPIDController;
 
 public class RobotContainer {
+    
   // CONTROLLERS
   private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
   private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICK_LEFT);
@@ -121,6 +122,7 @@ public class RobotContainer {
           m_ledSubsystem);
 
   // COMMANDS
+  
   private final ArmDefaultCommand m_armDefaultCommand =
       new ArmDefaultCommand(m_armSubsystem, m_armPidController);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
@@ -204,6 +206,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureBindings();
+    m_driveTrainSubsystem.resetOdometry();
+
   }
 
   private void configureBindings() {

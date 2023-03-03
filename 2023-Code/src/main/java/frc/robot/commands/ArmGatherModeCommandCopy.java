@@ -19,6 +19,7 @@ public class ArmGatherModeCommandCopy extends CommandBase {
   private ViennaPIDController m_pidController;
   private Timer m_timer = new Timer();
   private double time = 2;
+  private boolean detected = false;
   private boolean auton;
 
   public ArmGatherModeCommandCopy(
@@ -43,32 +44,51 @@ public class ArmGatherModeCommandCopy extends CommandBase {
   @Override
   public void execute() {
     m_intakeSubsystem.setIntakeDown();
-    m_intakeSubsystem.runIntake();
-    m_armSubsystem.smartSet(
-        m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.ARM_FRONTMOST));
+   
 
-    if (m_armSubsystem.getAbsolutePosition() >= ArmConstants.GATHER_POSITION) {
-      if (m_intakeSubsystem.isIntakeDown()) {
+      if(m_intakeSubsystem.detectedGamePiece()){
+        detected = true;
+        m_intakeSubsystem.stopIntake();
         m_intakeSubsystem.unsqueeze();
+      }
+      else{
         m_intakeSubsystem.runIntake();
       }
-      m_scoringSubsystem.closeScoring();
-    } else {
-      m_scoringSubsystem.openScoring();
-    }
+
+      if(detected == true){
+        m_scoringSubsystem.closeScoring();
+        m_armSubsystem.smartSet(
+          m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
+      } else {
+        m_armSubsystem.smartSet(
+          m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.GATHER_POSITION));
+        m_scoringSubsystem.openScoring();
+      }
+      
+
+
+    
+
+    // if (m_armSubsystem.getAbsolutePosition() >= ArmConstants.GATHER_POSITION) {
+    //   if (m_intakeSubsystem.isIntakeDown()) {
+    //     m_intakeSubsystem.unsqueeze();
+    //     m_intakeSubsystem.runIntake();
+    //   }
+    //   m_scoringSubsystem.closeScoring();
+    // } else {
+    //   m_scoringSubsystem.openScoring();
+    // }
   }
 
   @Override
   public void end(boolean interrupted) {
     m_timer.stop();
     m_timer.reset();
+    detected = false;
   }
 
   @Override
   public boolean isFinished() {
-    if(m_timer.get() > time){
-      return true;
-    }
     return false;
   }
 }
