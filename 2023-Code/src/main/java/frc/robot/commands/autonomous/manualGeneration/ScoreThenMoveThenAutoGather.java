@@ -16,6 +16,7 @@ import frc.robot.commands.autonomous.TimerCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
@@ -41,7 +42,8 @@ public class ScoreThenMoveThenAutoGather extends SequentialCommandGroup {
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
-      IntakeManager p_intakeManager) {
+      IntakeManager p_intakeManager,
+      LEDSubsystem p_ledSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
 
     toGamePieceArray =
@@ -57,7 +59,7 @@ public class ScoreThenMoveThenAutoGather extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true),
+        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new SequentialCommandGroup(
             new ParallelRaceGroup(
                 new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),

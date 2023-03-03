@@ -22,7 +22,7 @@ import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import frc.robot.subsystems.LEDSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
@@ -39,7 +39,9 @@ public class ScoreThenMove extends SequentialCommandGroup {
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
-      IntakeManager p_intakeManager) {
+      IntakeManager p_intakeManager,
+      LEDSubsystem p_ledSubsystem
+      ) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
 
     forwardBackArray =
@@ -55,10 +57,11 @@ public class ScoreThenMove extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true),
+        new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new SequentialCommandGroup(
             new ParallelRaceGroup(
                 new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
+
             forwardBackCommand)));
 
     // forwardBackCommand

@@ -7,14 +7,18 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.util.ViennaPIDController;
+import frc.robot.util.EnumConstants.LEDColor;
 
 public class ArmToAngleCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ViennaPIDController m_pidController;
   private double m_targetAngle;
   private double voltage;
+  private LEDSubsystem m_ledSubsystem;
   private boolean m_auton = false;
+  private boolean m_buttoncheck = false;
 
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem, ViennaPIDController p_pidController, double p_targetAngle) {
@@ -28,11 +32,15 @@ public class ArmToAngleCommand extends CommandBase {
       ArmSubsystem p_armSubsystem,
       ViennaPIDController p_pidController,
       double p_targetAngle,
-      boolean p_auton) {
+      boolean p_auton,
+      boolean p_buttoncheck,
+      LEDSubsystem p_ledSubsystem) {
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
+    m_buttoncheck = p_buttoncheck;
+    m_ledSubsystem = p_ledSubsystem;
     addRequirements(m_armSubsystem);
   }
 
@@ -41,8 +49,21 @@ public class ArmToAngleCommand extends CommandBase {
 
   @Override
   public void execute() {
-    voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), m_targetAngle);
+    if(m_buttoncheck) {
+
+      if (m_ledSubsystem.getColor() == LEDColor.PURPLE){
+        voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), 35);
+        m_armSubsystem.smartSet(voltage);
+      }
+      if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
+        voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), 38.5);
+        m_armSubsystem.smartSet(voltage);
+      }
+    }
+    
+   else { voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), m_targetAngle);
     m_armSubsystem.smartSet(voltage);
+   }
   }
 
   @Override

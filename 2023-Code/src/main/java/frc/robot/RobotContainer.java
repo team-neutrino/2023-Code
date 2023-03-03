@@ -128,8 +128,8 @@ public class RobotContainer {
 
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
-private final ScoreThenMove m_scoreThenMove = new ScoreThenMove(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager);
-private final ScoreThenBalance m_scoreThenBalanece = new ScoreThenBalance(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager);
+private final ScoreThenMove m_scoreThenMove = new ScoreThenMove(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem);
+private final ScoreThenBalance m_scoreThenBalanece = new ScoreThenBalance(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem);
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
@@ -165,13 +165,13 @@ private final ScoreThenBalance m_scoreThenBalanece = new ScoreThenBalance(m_driv
 
     // Put the arm to one of three specified target angles
     m_buttonB.toggleOnTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));
+        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID, false, false, m_ledSubsystem));
     m_buttonY.toggleOnTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN));
+        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN, false, false, m_ledSubsystem));
     m_buttonX.toggleOnTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_MID));
+        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_MID, false, true, m_ledSubsystem));
     m_buttonA.toggleOnTrue(
-        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN));
+        new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN, false, false, m_ledSubsystem));
 
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(
@@ -196,7 +196,7 @@ private final ScoreThenBalance m_scoreThenBalanece = new ScoreThenBalance(m_driv
 
   
   public Command getAutonomousCommand() {
-    return m_scoreThenBalanece
+    return m_scoreThenMove
         .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }
