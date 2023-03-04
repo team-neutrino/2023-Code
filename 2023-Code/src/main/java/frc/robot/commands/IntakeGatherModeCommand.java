@@ -12,10 +12,13 @@ import frc.robot.util.IntakeManager;
 public class IntakeGatherModeCommand extends CommandBase {
   private IntakeSubsystem m_intakeSubsystem;
   private IntakeManager m_intakeManager;
+  private boolean auton;
 
-  public IntakeGatherModeCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
+  public IntakeGatherModeCommand(
+      IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager, boolean p_auton) {
     m_intakeSubsystem = p_intakeSubsystem;
     m_intakeManager = p_intakeManager;
+    auton = p_auton;
     addRequirements(m_intakeSubsystem);
   }
 
@@ -24,6 +27,11 @@ public class IntakeGatherModeCommand extends CommandBase {
 
   @Override
   public void execute() {
+
+    if (auton) {
+      m_intakeSubsystem.runIntake();
+    }
+
     if (m_intakeManager.managerApproved()) {
       m_intakeSubsystem.setIntakeDown();
 
@@ -36,8 +44,10 @@ public class IntakeGatherModeCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    m_intakeSubsystem
-        .stopIntake(); // TODO remove potentially, does the same thing as IntakeDefaultCommand
+    if (!auton) {
+      m_intakeSubsystem.stopIntake();
+    }
+    // TODO remove potentially, does the same thing as IntakeDefaultCommand
   }
 
   @Override

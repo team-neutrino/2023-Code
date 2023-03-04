@@ -41,5 +41,7 @@ public class ScoringSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    // System.out.println(detectedGamePiece());
+  }
 }

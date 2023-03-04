@@ -9,7 +9,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class NavXBalance extends CommandBase {
   DriveTrainSubsystem m_DriveTrainSubsystem;
-  //prev 12
+  // prev 12
   double TILTED = -14;
 
   /** Creates a new NavXBalance. */
@@ -26,9 +26,8 @@ public class NavXBalance extends CommandBase {
   @Override
   public void execute() {
     System.out.println("here");
-    //prev
+    // prev
     m_DriveTrainSubsystem.setMotors(-.3, -.3);
-    
   }
 
   // Called once the command ends or is interrupted.
@@ -38,7 +37,7 @@ public class NavXBalance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_DriveTrainSubsystem.getRoll() < TILTED){
+    if (m_DriveTrainSubsystem.getRoll() < TILTED) {
       return true;
     }
     return false;

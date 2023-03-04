@@ -32,7 +32,9 @@ import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
+import frc.robot.commands.autonomous.manualGeneration.BlueScoreThenMoveThenAutoGather;
 import frc.robot.commands.autonomous.manualGeneration.JustScore;
+import frc.robot.commands.autonomous.manualGeneration.RedScoreThenMoveThenAutoGather;
 import frc.robot.commands.autonomous.manualGeneration.ScoreMobilityThenBalance;
 import frc.robot.commands.autonomous.manualGeneration.ScoreThenBalance;
 import frc.robot.commands.autonomous.manualGeneration.ScoreThenMove;
@@ -179,6 +181,25 @@ public class RobotContainer {
           m_intakeManager,
           m_ledSubsystem);
 
+  private final RedScoreThenMoveThenAutoGather m_RedScoreThenMoveThenAutoGather =
+      new RedScoreThenMoveThenAutoGather(
+          m_driveTrainSubsystem,
+          m_armPidController,
+          m_armSubsystem,
+          m_scoringSubsystem,
+          m_intakeSubsystem,
+          m_intakeManager,
+          m_ledSubsystem);
+  private final BlueScoreThenMoveThenAutoGather m_BlueScoreThenMoveThenAutoGather =
+      new BlueScoreThenMoveThenAutoGather(
+          m_driveTrainSubsystem,
+          m_armPidController,
+          m_armSubsystem,
+          m_scoringSubsystem,
+          m_intakeSubsystem,
+          m_intakeManager,
+          m_ledSubsystem);
+
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
@@ -186,7 +207,7 @@ public class RobotContainer {
   private final IntakeSqueezeCommand m_intakeSqueezeCommand =
       new IntakeSqueezeCommand(m_intakeSubsystem);
   private final IntakeGatherModeCommand m_intakeGatherModeCommand =
-      new IntakeGatherModeCommand(m_intakeSubsystem, m_intakeManager);
+      new IntakeGatherModeCommand(m_intakeSubsystem, m_intakeManager, false);
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(
           m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
@@ -270,7 +291,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     m_driveTrainSubsystem.resetOdometry();
 
-    return m_scoreMobilityThenBalance.andThen(
+    return m_BlueScoreThenMoveThenAutoGather.andThen(
         new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }
