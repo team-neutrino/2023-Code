@@ -24,6 +24,7 @@ public final class Constants {
     public static final int MOTOR_LEFT2 = 2;
     // INTAKE
     public static final int INTAKEMOTOR = 21;
+    public static final double INTAKE_MOTOR_SPEED = .7;
 
     // ARM
     public static final int ARM_MOTOR = 31;
@@ -31,9 +32,11 @@ public final class Constants {
 
   public static class ArmConstants {
     public static final double UP = 56;
+    public static final double FEEDER = 37.5;
+
     public static final double FORWARD_DOWN = 90;
     public static final double FORWARD_MID = 80;
-    public static final double BACK_MID = 31;
+    public static final double BACK_MID = 38.5;
     public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
 
@@ -42,17 +45,22 @@ public final class Constants {
 
     public static final double GATHER_POSITION = 91;
     public static final double INTAKE_RUNNABLE = 83;
+
+    public static final double ARM_OUTPUT_LIMIT = 0.2;
+    public static final double SCALE_FACTOR = 10;
+    public static final double ARM_INPUT_DEADZONE = 0.2;
   }
 
   public static class PIDConstants {
     public static final double dt = 20;
 
     public static final double ARM_P = 0.04;
+    public static final double ARM_P_ADJUST = 0.02;
     public static final int ARM_I = 0;
     public static final int ARM_D = 0;
     public static final int ARM_FF = 0;
 
-    public static final double BALANCE_P = 0.08;
+    public static final double BALANCE_P = 0.1;
     public static final double BALANCE_I = 0;
     public static final double BALANCE_D = 0;
 
@@ -67,8 +75,9 @@ public final class Constants {
   }
 
   public static class DrivetrainConstants {
+    //0.1 in main, may be an issue so I'm changing it now
     public static final double JOYSTICK_DEADZONE = 0.0;
-    public static final double AUTO_BALANCE_DEADZONE = 0.4;
+    public static final double AUTO_BALANCE_DEADZONE = .3;
   }
 
   public static class DigitalConstants {

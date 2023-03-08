@@ -46,8 +46,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoderRight2;
   private Joystick m_leftJoystick;
   private Joystick m_rightJoystick;
-  MotorControllerGroup m_motorGroupRight = new MotorControllerGroup(m_motorRight1, m_motorRight2);
-  MotorControllerGroup m_motorGroupLeft = new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
+  private MotorControllerGroup m_motorGroupRight =
+      new MotorControllerGroup(m_motorRight1, m_motorRight2);
+  private MotorControllerGroup m_motorGroupLeft =
+      new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
 
   /** Creates a new Drivetrain. */
   public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick) {
@@ -76,7 +78,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     p_motor.restoreFactoryDefaults();
     p_motor.setIdleMode(IdleMode.kBrake);
     p_motor.setInverted(p_inversion);
-    p_motor.burnFlash();
 
     p_encoder = p_motor.getEncoder();
     p_encoder.setPositionConversionFactor(DriverConstants.ENCODER_POSITION_CONVERSION);
@@ -139,6 +140,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public double getPitch() {
     return m_navX.getPitch();
+  }
+
+  public double getRoll() {
+    return m_navX.getRoll();
   }
 
   private Rotation2d getYawAsRotation() {

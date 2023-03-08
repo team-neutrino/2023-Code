@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.util.ViennaPIDController;
 
@@ -13,12 +14,25 @@ public class ArmToAngleCommand extends CommandBase {
   private ViennaPIDController m_pidController;
   private double m_targetAngle;
   private double voltage;
+  private boolean m_auton = false;
 
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem, ViennaPIDController p_pidController, double p_targetAngle) {
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
+    addRequirements(m_armSubsystem);
+  }
+
+  public ArmToAngleCommand(
+      ArmSubsystem p_armSubsystem,
+      ViennaPIDController p_pidController,
+      double p_targetAngle,
+      boolean p_auton) {
+    m_armSubsystem = p_armSubsystem;
+    m_pidController = p_pidController;
+    m_targetAngle = p_targetAngle;
+    m_auton = p_auton;
     addRequirements(m_armSubsystem);
   }
 
@@ -36,6 +50,9 @@ public class ArmToAngleCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    if (Math.abs(m_armSubsystem.getAbsolutePosition() - ArmConstants.BACK_MID) < 1 && m_auton) {
+      return true;
+    }
     return false;
   }
 }

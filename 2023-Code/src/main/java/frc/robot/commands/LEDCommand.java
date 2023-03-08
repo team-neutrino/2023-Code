@@ -36,13 +36,19 @@ public class LEDCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (m_scoringSubsystem.detectedGamePiece()) {
-      hasBroken = true;
+    if (m_colorMode == LEDColor.PURPLE) {
+      m_ledSubsystem.setToPurple();
     }
-    if (!m_scoringSubsystem.detectedGamePiece() && hasBroken) {
-      m_ledSubsystem.setToOrange();
-      hasBroken = false;
+    if (m_colorMode == LEDColor.YELLOW) {
+      m_ledSubsystem.setToYellow();
     }
+    // if (m_scoringSubsystem.detectedGamePiece()) {
+    //   hasBroken = true;
+    // }
+    // if (!m_scoringSubsystem.detectedGamePiece() && hasBroken) {
+    //   m_ledSubsystem.setToOrange();
+    //   hasBroken = false;
+    // }
   }
 
   @Override

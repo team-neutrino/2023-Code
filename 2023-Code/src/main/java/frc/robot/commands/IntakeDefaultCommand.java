@@ -35,6 +35,8 @@ public class IntakeDefaultCommand extends CommandBase {
    */
   @Override
   public void execute() {
+    m_intakeSubsystem.stopIntake();
+
     if (m_intakeManager.managerApproved()) {
       m_intakeManager.setIntakeUpWithArmCheck();
 
@@ -47,8 +49,6 @@ public class IntakeDefaultCommand extends CommandBase {
         m_intakeSubsystem.squeeze();
       }
     }
-
-    m_intakeSubsystem.stopIntake();
   }
 
   @Override
