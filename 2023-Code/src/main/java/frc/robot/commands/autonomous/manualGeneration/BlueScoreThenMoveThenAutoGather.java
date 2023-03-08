@@ -5,7 +5,6 @@
 package frc.robot.commands.autonomous.manualGeneration;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -52,24 +51,27 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
     // change the degrees and get positions
     toGamePieceArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), 
-            new PoseTriplet(2.7, -0.10, -15.08), 
-            new PoseTriplet(4.08, -0.22, -3.12)));
+            Arrays.asList(
+                new PoseTriplet(0, 0, 0),
+                new PoseTriplet(2.7, -0.10, -15.08),
+                new PoseTriplet(4.08, -0.22, -3.12)));
 
     runThatBack =
         new ArrayList<PoseTriplet>(
-            Arrays.asList( new PoseTriplet(4.08, -0.22, -3.12),
-            new PoseTriplet(1.3, -0.08, 0.16),  new PoseTriplet(-.3, -.31, -.32)));
+            Arrays.asList(
+                new PoseTriplet(4.08, -0.22, -3.12),
+                new PoseTriplet(1.3, -0.08, 0.16),
+                new PoseTriplet(-.3, -.31, -.32)));
 
-        //     toGamePieceArray =
-        //     new ArrayList<PoseTriplet>(
-        //         Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4.08, -0.10, -15.08)));
-    
-        // runThatBack =
-        //     new ArrayList<PoseTriplet>(
-        //         Arrays.asList( new PoseTriplet(4.08,- 0.36, -15.08), 
-        //         new PoseTriplet(1.3, -0.08, 0.16),  new PoseTriplet(-.3, -.31, -.32)));
-            // new PoseTriplet(-.23, -.35, 7.95)
+    //     toGamePieceArray =
+    //     new ArrayList<PoseTriplet>(
+    //         Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4.08, -0.10, -15.08)));
+
+    // runThatBack =
+    //     new ArrayList<PoseTriplet>(
+    //         Arrays.asList( new PoseTriplet(4.08,- 0.36, -15.08),
+    //         new PoseTriplet(1.3, -0.08, 0.16),  new PoseTriplet(-.3, -.31, -.32)));
+    // new PoseTriplet(-.23, -.35, 7.95)
     toGamePieceCommand =
         AutonomousUtil.generateRamseteFromPoses(
             toGamePieceArray,
@@ -89,9 +91,14 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager)
             .withTimeout(.5),
-        new ParallelRaceGroup( 
+        new ParallelRaceGroup(
             new ArmToAngleCommand(
-            p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID, false, false, p_ledSubsystem), 
+                p_armSubsystem,
+                p_pidController,
+                ArmConstants.FORWARD_MID,
+                false,
+                false,
+                p_ledSubsystem),
             toGamePieceCommand,
             new IntakeGatherModeCommand(p_intakeSubsystem, p_intakeManager, true)),
         new InstantCommand(p_intakeSubsystem::stopIntake, p_intakeSubsystem),
@@ -101,13 +108,20 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
         runThatBackCommand,
         new ArmToAngleCommand(
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-            new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 1, true),
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 1, true),
         new ArmToAngleCommand(
-                p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID
-                , true, true, false, p_ledSubsystem) 
-        // new ParallelCommandGroup(new ScoringOpenCommand(p_scoringS`  ubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
+            p_armSubsystem,
+            p_pidController,
+            ArmConstants.FORWARD_MID,
+            true,
+            true,
+            false,
+            p_ledSubsystem)
+        // new ParallelCommandGroup(new ScoringOpenCommand(p_scoringS`  ubsystem, p_intakeSubsystem,
+        // p_intakeManager, 2, true),
         // new ArmToAngleCommand(
-        //     p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID, true, true, false, p_ledSubsystem) )
+        //     p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID, true, true, false,
+        // p_ledSubsystem) )
         );
 
     // addCommands(

@@ -5,7 +5,6 @@
 package frc.robot.commands.autonomous.manualGeneration;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -50,15 +49,18 @@ public class RedScoreThenMoveThenAutoGather extends SequentialCommandGroup {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
 
     toGamePieceArray =
-    new ArrayList<PoseTriplet>(
-        Arrays.asList(new PoseTriplet(0, 0, 0), 
-        new PoseTriplet(2.7, 0.10, 15.08), 
-        new PoseTriplet(4.08, 0.22, 3.12)));
+        new ArrayList<PoseTriplet>(
+            Arrays.asList(
+                new PoseTriplet(0, 0, 0),
+                new PoseTriplet(2.7, 0.10, 15.08),
+                new PoseTriplet(4.08, 0.22, 3.12)));
 
-runThatBack =
-    new ArrayList<PoseTriplet>(
-        Arrays.asList( new PoseTriplet(4.08, 0.22, 3.12),
-        new PoseTriplet(1.3, 0.08, -0.16),  new PoseTriplet(-.3, .31, .32)));
+    runThatBack =
+        new ArrayList<PoseTriplet>(
+            Arrays.asList(
+                new PoseTriplet(4.08, 0.22, 3.12),
+                new PoseTriplet(1.3, 0.08, -0.16),
+                new PoseTriplet(-.3, .31, .32)));
 
     // change the degrees and get positions
     // toGamePieceArray =
@@ -98,9 +100,14 @@ runThatBack =
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager)
             .withTimeout(.5),
-        new ParallelRaceGroup( 
+        new ParallelRaceGroup(
             new ArmToAngleCommand(
-            p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID, false, false, p_ledSubsystem), 
+                p_armSubsystem,
+                p_pidController,
+                ArmConstants.FORWARD_MID,
+                false,
+                false,
+                p_ledSubsystem),
             toGamePieceCommand,
             new IntakeGatherModeCommand(p_intakeSubsystem, p_intakeManager, true)),
         new InstantCommand(p_intakeSubsystem::stopIntake, p_intakeSubsystem),
@@ -110,10 +117,15 @@ runThatBack =
         runThatBackCommand,
         new ArmToAngleCommand(
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-            new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 1, true),
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 1, true),
         new ArmToAngleCommand(
-                p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID
-                , true, true, false, p_ledSubsystem));
+            p_armSubsystem,
+            p_pidController,
+            ArmConstants.FORWARD_MID,
+            true,
+            true,
+            false,
+            p_ledSubsystem));
 
     // addCommands(
     //     new ArmToAngleCommand(

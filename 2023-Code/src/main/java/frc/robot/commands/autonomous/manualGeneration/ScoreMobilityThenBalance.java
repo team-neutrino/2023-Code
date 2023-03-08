@@ -74,7 +74,8 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, .75, true),
         new ParallelRaceGroup(
             new TimerCommand(1),
-            new ArmToAngleCommand(p_armSubsystem, p_pidController, p_scoringSubsystem, ArmConstants.FORWARD_MID)),
+            new ArmToAngleCommand(
+                p_armSubsystem, p_pidController, p_scoringSubsystem, ArmConstants.FORWARD_MID)),
         moveForwardCommand,
         new NavXBalance(p_drivetrainSubsystem),
         new AutoBalanceCommand(p_drivetrainSubsystem));
