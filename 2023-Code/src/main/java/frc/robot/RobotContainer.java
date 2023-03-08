@@ -22,8 +22,8 @@ import frc.robot.commands.ArmFeederCommand;
 import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
+import frc.robot.commands.DriveTrainAutoRotationCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
-import frc.robot.commands.DriveTrainLineUpCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeGatherModeCommand;
@@ -135,13 +135,7 @@ public class RobotContainer {
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
 
-  private final DriveTrainLineUpCommand m_DriveTrainLineUpCommandDefault =
-      new DriveTrainLineUpCommand(m_driveTrainSubsystem, m_limelightSubsystem, 0);
-  private final DriveTrainLineUpCommand m_DriveTrainLineUpCommandScoreRight = new DriveTrainLineUpCommand(m_driveTrainSubsystem, m_limelightSubsystem, 1);
-  private final DriveTrainLineUpCommand m_DriveTrainLineUpCommandScoreLeft = new DriveTrainLineUpCommand(m_driveTrainSubsystem, m_limelightSubsystem, 2);
-  private final DriveTrainLineUpCommand m_DriveTrainLineUpCommandStationRight = new DriveTrainLineUpCommand(m_driveTrainSubsystem, m_limelightSubsystem, 3);
-  private final DriveTrainLineUpCommand m_DriveTrainLineUpCommandStationLeft = new DriveTrainLineUpCommand(m_driveTrainSubsystem, m_limelightSubsystem, 4);
-
+  private final DriveTrainAutoRotationCommand m_autoRotate = new DriveTrainAutoRotationCommand(m_driveTrainSubsystem, m_limelightSubsystem);
 
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
@@ -180,12 +174,7 @@ public class RobotContainer {
     // BUTTONS
 
     // Put the arm to one of three specified target angles
-    m_rightBumper.toggleOnTrue(m_DriveTrainLineUpCommandDefault);
-
-    m_rightJoystickTopRight.toggleOnTrue(m_DriveTrainLineUpCommandScoreRight);
-    m_rightJoystickBottomRight.toggleOnTrue(m_DriveTrainLineUpCommandStationRight);
-    m_rightJoystickTopLeft.toggleOnTrue(m_DriveTrainLineUpCommandScoreLeft);
-    m_rightJoystickBottomLeft.toggleOnTrue(m_DriveTrainLineUpCommandStationLeft);
+    m_rightBumper.toggleOnTrue(m_autoRotate);
 
     m_buttonB.toggleOnTrue(
         new ArmToAngleCommand(m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID));

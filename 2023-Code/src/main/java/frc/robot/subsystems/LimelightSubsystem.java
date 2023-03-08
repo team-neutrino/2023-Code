@@ -4,19 +4,17 @@
 
 package frc.robot.subsystems;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class LimelightSubsystem extends SubsystemBase {
   private NetworkTable limelight;
   private int cycle = 0;
   private double LIMELIGHT_TO_METER_CONVERSION = 0.76189;
-
 
   /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem() {
@@ -52,18 +50,18 @@ public class LimelightSubsystem extends SubsystemBase {
     return limelight.getEntry("ty").getDouble(0.0);
   }
 
-  public double[] getCamTran() { 
+  public double[] getCamTran() {
     double[] array = limelight.getEntry("targetpose_cameraspace").getDoubleArray(new double[6]);
-    if (array.length != 0){
+    if (array.length != 0) {
       System.out.println(array[2]);
-      //System.out.println("true!");
+      // System.out.println("true!");
       return array;
     }
-    //System.out.println("cringe!");
-    return new double[] {0,0,0};
+    // System.out.println("cringe!");
+    return new double[] {0, 0, 0};
   }
 
-  public void setPipeline(int input){
+  public void setPipeline(int input) {
     limelight.getEntry("pipeline").setNumber(input);
   }
 
@@ -103,9 +101,9 @@ public class LimelightSubsystem extends SubsystemBase {
       double[] jsonOutput = parseJson();
       System.out.println(getDistance());
       /*if (jsonOutput.length != 0)
-        System.out.println("json file output: x: " + jsonOutput[0] + " z: " + jsonOutput[1]);
-        */
-      //System.out.println(getDistance());
+      System.out.println("json file output: x: " + jsonOutput[0] + " z: " + jsonOutput[1]);
+      */
+      // System.out.println(getDistance());
       // System.out.println(parseJson());
       // System.out.println("Translation X: " + camTran[0]);
       // System.out.println("Translation Y: " + camTran[1]);
@@ -140,6 +138,6 @@ public class LimelightSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     cycle++;
-    //printCamTran();
+    // printCamTran();
   }
 }

@@ -75,7 +75,7 @@ public final class Constants {
   }
 
   public static class DrivetrainConstants {
-    //0.1 in main, may be an issue so I'm changing it now
+    // 0.1 in main, may be an issue so I'm changing it now
     public static final double JOYSTICK_DEADZONE = 0.0;
     public static final double AUTO_BALANCE_DEADZONE = .3;
   }

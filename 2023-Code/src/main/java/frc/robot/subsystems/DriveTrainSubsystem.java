@@ -208,9 +208,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
         && lmotorPosition < p_lmotorPosition + motorset) {
       m_motorGroupRight.set(straightMotorSpeed);
       m_motorGroupLeft.set(straightMotorSpeed);
-      //System.out.println("Setpoint " + motorset);
-      //System.out.println("starting position " + p_rmotorPosition);
-      //System.out.println("current position " + rmotorPosition);
+      // System.out.println("Setpoint " + motorset);
+      // System.out.println("starting position " + p_rmotorPosition);
+      // System.out.println("current position " + rmotorPosition);
     } else {
       m_motorGroupRight.set(0);
       m_motorGroupLeft.set(0);
@@ -229,10 +229,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     boolean stop = false;
     if (motorset > 0) {
       stop = turnMotorRight(Math.abs(motorset), rmotorPosition, lmotorPosition);
-      //System.out.println("turning motor right");
+      // System.out.println("turning motor right");
     } else if (motorset < 0) {
       stop = turnMotorLeft(Math.abs(motorset), rmotorPosition, lmotorPosition);
-      //System.out.println("turning motor left");
+      // System.out.println("turning motor left");
     }
     return stop;
   }
@@ -245,19 +245,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     if (rmotorPosition > p_rmotorPosition - motorset
         && lmotorPosition < p_lmotorPosition + motorset) {
-      //System.out.println("setpoint " + (p_rmotorPosition - motorset));
-      //System.out.println("initial position " + p_rmotorPosition);
-      //System.out.println("current position r" + rmotorPosition);
-      m_motorGroupRight.set(-1*turnMotorSpeed);
+      // System.out.println("setpoint " + (p_rmotorPosition - motorset));
+      // System.out.println("initial position " + p_rmotorPosition);
+      // System.out.println("current position r" + rmotorPosition);
+      m_motorGroupRight.set(-1 * turnMotorSpeed);
       m_motorGroupLeft.set(turnMotorSpeed);
     } else {
       m_motorGroupRight.set(0);
 
       m_motorGroupLeft.set(0);
       stop = true;
-      //System.out.println("rmotor position " + rmotorPosition);
-      //System.out.println("lmotor position " + lmotorPosition);
-      //System.out.println("setpoint " + (p_rmotorPosition - motorset));
+      // System.out.println("rmotor position " + rmotorPosition);
+      // System.out.println("lmotor position " + lmotorPosition);
+      // System.out.println("setpoint " + (p_rmotorPosition - motorset));
 
     }
     return stop;
@@ -278,18 +278,18 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     if (rmotorPosition < p_rmotorPosition + motorset
         && lmotorPosition > p_lmotorPosition - motorset) {
-      //System.out.println("setpoint " + (p_rmotorPosition - motorset));
-      //System.out.println("initial position " + p_rmotorPosition);
-      //System.out.println("current position r " + rmotorPosition);
+      // System.out.println("setpoint " + (p_rmotorPosition - motorset));
+      // System.out.println("initial position " + p_rmotorPosition);
+      // System.out.println("current position r " + rmotorPosition);
       m_motorGroupRight.set(turnMotorSpeed);
-      m_motorGroupLeft.set(-1*turnMotorSpeed);
+      m_motorGroupLeft.set(-1 * turnMotorSpeed);
     } else {
       m_motorGroupRight.set(0);
       m_motorGroupLeft.set(0);
       stop = true;
-      //System.out.println("rmotor position " + rmotorPosition);
-      //System.out.println("lmotor position " + lmotorPosition);
-      //System.out.println("setpoint " + (p_rmotorPosition + motorset));
+      // System.out.println("rmotor position " + rmotorPosition);
+      // System.out.println("lmotor position " + lmotorPosition);
+      // System.out.println("setpoint " + (p_rmotorPosition + motorset));
     }
     return stop;
 
