@@ -20,6 +20,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.SavePoseCommand;
 import java.io.IOException;
+import frc.robot.commands.autonomous.manualGeneration.ScoreMobilityThenBalance;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
@@ -32,7 +33,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private GenericEntry m_LEDVariables[] = new GenericEntry[4];
   private SendableChooser<Command> m_autonSelector = new SendableChooser<>();
 
-  private SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
+  public SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
   private DriveTrainSubsystem m_driveTrainSubsystem;
   private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -175,7 +176,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   }
 
   public void setUpSelector() {
-    m_autoChooser.addOption("Auto 1", new ExampleCommand());
+    m_autoChooser.setDefaultOption("Defualt", new ScoreMobilityThenBalance(m_driveTrainSubsystem, null, m_arm, m_scoring, m_intake, null, m_LED));
+    m_autoChooser.addOption("Balance Mobility", new ScoreMobilityThenBalance(m_driveTrainSubsystem, null, m_arm, m_scoring, m_intake, null, m_LED));
     m_autoChooser.addOption("Auto 2", new ExampleCommand());
   }
 

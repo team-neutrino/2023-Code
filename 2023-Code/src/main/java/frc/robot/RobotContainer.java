@@ -219,7 +219,7 @@ public class RobotContainer {
       new ScoringCloseCommand(m_scoringSubsystem);
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem, m_intakeSubsystem, m_intakeManager);
-
+      
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureBindings();
@@ -291,7 +291,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     m_driveTrainSubsystem.resetOdometry();
 
-    return m_RedScoreThenMoveThenAutoGather.andThen(
+    return m_shuffleboardSubsystem.m_autoChooser.getSelected().andThen(
         new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }
