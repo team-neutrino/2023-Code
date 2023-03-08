@@ -15,6 +15,7 @@ public class DriveTrainAutoRotationCommand extends CommandBase {
     double tx;
     double rmotorPosition;
     double lmotorPosition;
+    boolean stop = false;
 
     public DriveTrainAutoRotationCommand(DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight){
         m_drivetrain = p_drivetrain;
@@ -30,7 +31,7 @@ public class DriveTrainAutoRotationCommand extends CommandBase {
   
     @Override
     public void execute() {
-      m_drivetrain.turnMotor(tx, rmotorPosition, lmotorPosition);
+      stop = m_drivetrain.turnMotor(tx, rmotorPosition, lmotorPosition);
     }
   
     @Override
@@ -40,7 +41,7 @@ public class DriveTrainAutoRotationCommand extends CommandBase {
   
     @Override
     public boolean isFinished() {
-      return false;
+      return stop;
     }
     
 }
