@@ -94,7 +94,6 @@ public class ArmToAngleCommand extends CommandBase {
     } else {
       voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), m_targetAngle);
       m_armSubsystem.smartSet(voltage);
-      System.out.print("Goober");
     }
 
     if (m_endAuton) {
