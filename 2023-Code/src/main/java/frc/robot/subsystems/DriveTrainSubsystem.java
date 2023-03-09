@@ -194,6 +194,5 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
     System.out.println(getPose2d());
-    // System.out.println("NAVX YAW: " + getYaw());
   }
 }

@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -79,11 +80,11 @@ public class ArmToAngleCommand extends CommandBase {
     if (m_buttoncheck) {
 
       if (m_ledSubsystem.getColor() == LEDColor.PURPLE) {
-        voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), 32);
+        voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), Constants.ArmConstants.QUASI_BACK_MID); // previously 32
         m_armSubsystem.smartSet(voltage);
       }
       if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
-        voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), 38.5);
+        voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), Constants.ArmConstants.BACK_MID); // previously 38.5
         m_armSubsystem.smartSet(voltage);
       }
     } else {
