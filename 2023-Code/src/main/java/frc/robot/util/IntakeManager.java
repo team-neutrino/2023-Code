@@ -5,6 +5,7 @@
 package frc.robot.util;
 
 import frc.robot.Constants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -16,6 +17,10 @@ public class IntakeManager {
     m_armSubsystem = p_armSubsystem;
     m_intakeSubystem = p_intakeSubsystem;
   }
+
+  public IntakeManager(SubsystemContainer p_subsystemContainer) {
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+  } 
 
   /**
    * If the arm is down, then we DO NOT want to put the intake down or up because it will collide

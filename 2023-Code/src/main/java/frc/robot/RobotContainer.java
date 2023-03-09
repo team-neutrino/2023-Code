@@ -102,13 +102,14 @@ public class RobotContainer {
   private final PneumaticSubsystem m_PneumaticSubsystem = new PneumaticSubsystem();
   //   private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
 
+  public SubsystemContainer m_subsystemContainer = new SubsystemContainer(m_driveTrainSubsystem,m_scoringSubsystem,m_limelightSubsystem, m_armSubsystem,m_intakeSubsystem, m_ledSubsystem);
+
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
-  private final ViennaPIDController m_armPidController =
-      new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
+  private final ViennaPIDController m_armPidController = new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
   private final ViennaPIDController m_armPidControllerAdjust =
       new ViennaPIDController(PIDConstants.ARM_P_ADJUST, PIDConstants.ARM_I, PIDConstants.ARM_D);
-  private IntakeManager m_intakeManager = new IntakeManager(m_armSubsystem, m_intakeSubsystem);
+  private IntakeManager m_intakeManager = new IntakeManager(m_subsystemContainer);
 
   // SHUFFLEBOARD
   private final ShuffleboardSubsystem m_shuffleboardSubsystem =
