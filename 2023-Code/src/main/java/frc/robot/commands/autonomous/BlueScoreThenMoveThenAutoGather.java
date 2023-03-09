@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.autonomous.manualGeneration;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
@@ -29,7 +29,7 @@ import java.util.Arrays;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class RedScoreThenMoveThenAutoGather extends SequentialCommandGroup {
+public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
   private ArrayList<PoseTriplet> toGamePieceArray;
@@ -38,7 +38,7 @@ public class RedScoreThenMoveThenAutoGather extends SequentialCommandGroup {
   private RamseteCommand runThatBackCommand;
 
   /** Creates a new TestAutonGeneratedTrajectory. */
-  public RedScoreThenMoveThenAutoGather(
+  public BlueScoreThenMoveThenAutoGather(
       DriveTrainSubsystem p_drivetrainSubsystem,
       ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
@@ -52,34 +52,15 @@ public class RedScoreThenMoveThenAutoGather extends SequentialCommandGroup {
         new ArrayList<PoseTriplet>(
             Arrays.asList(
                 new PoseTriplet(0, 0, 0),
-                new PoseTriplet(2.7, 0.10, 15.08),
-                new PoseTriplet(4.08, 0.22, 3.12)));
+                new PoseTriplet(2.7, -0.10, -15.08),
+                new PoseTriplet(4.08, -0.22, -3.12)));
 
     runThatBack =
         new ArrayList<PoseTriplet>(
             Arrays.asList(
-                new PoseTriplet(4.08, 0.22, 3.12),
-                new PoseTriplet(1.3, 0.08, -0.16),
-                new PoseTriplet(-.3, .31, .32)));
-
-    // change the degrees and get positions
-    // toGamePieceArray =
-    //     new ArrayList<PoseTriplet>(
-    //         Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(3.93, 0.13, 2.79)));
-
-    // runThatBack =
-    //     new ArrayList<PoseTriplet>(
-    //         Arrays.asList(new PoseTriplet(3.93, 0.13, 2.79), new PoseTriplet(-.28, .37, -.87)));
-
-    // toGamePieceArray =
-    //     new ArrayList<PoseTriplet>(
-    //         Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4.2, 0.25, 7.5)));
-
-    // runThatBack =
-    //     new ArrayList<PoseTriplet>(
-    //         Arrays.asList(new PoseTriplet(4.2, 0.25, 7.5),
-    //         new PoseTriplet(2, .35, .39),
-    //          new PoseTriplet(.22, .46, .39)));
+                new PoseTriplet(4.08, -0.22, -3.12),
+                new PoseTriplet(1.3, -0.08, 0.16),
+                new PoseTriplet(-.3, -.31, -.32)));
 
     toGamePieceCommand =
         AutonomousUtil.generateRamseteFromPoses(
@@ -126,19 +107,5 @@ public class RedScoreThenMoveThenAutoGather extends SequentialCommandGroup {
             true,
             false,
             p_ledSubsystem));
-
-    // addCommands(
-    //     new ArmToAngleCommand(
-    //         p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-    //     new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager)
-    //         .withTimeout(.5),
-    //     new ParallelCommandGroup(
-    //         toGamePieceCommand,
-    //         new AutonArmGatherCommand(
-    //             p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem, p_pidController)),
-    //     runThatBackCommand,
-    //     new ArmToAngleCommand(
-    //         p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-    //     new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true));
   }
 }

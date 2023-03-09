@@ -73,14 +73,6 @@ public class AutonomousUtil {
     return generatedRamseteCommand;
   }
 
-  // public static RamseteCommand generateRamseteFromPosesBack(
-  //     ArrayList<PoseTriplet> tripletList, DriveTrainSubsystem p_driveTrainSubsystem) {
-  //   Trajectory generatedTrajectory = generateTrajectoryFromPosesBack(tripletList);
-  //   RamseteCommand generatedRamseteCommand =
-  //       generateRamseteCommand(generatedTrajectory, p_driveTrainSubsystem);
-  //   return generatedRamseteCommand;
-  // }
-
   public static RamseteCommand generateRamseteFromPoseFile(
       String poseFilename, DriveTrainSubsystem p_driveTrainSubsystem) {
     ArrayList<PoseTriplet> tripletList = PoseProcessor.poseTripletsFromFile(poseFilename);

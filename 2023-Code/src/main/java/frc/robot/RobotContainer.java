@@ -32,13 +32,13 @@ import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
-import frc.robot.commands.autonomous.manualGeneration.BlueScoreThenMoveThenAutoGather;
-import frc.robot.commands.autonomous.manualGeneration.JustScore;
-import frc.robot.commands.autonomous.manualGeneration.RedScoreThenMoveThenAutoGather;
-import frc.robot.commands.autonomous.manualGeneration.ScoreMobilityThenBalance;
-import frc.robot.commands.autonomous.manualGeneration.ScoreThenBalance;
-import frc.robot.commands.autonomous.manualGeneration.ScoreThenMove;
-import frc.robot.commands.autonomous.manualGeneration.ScoreThenMoveThenAutoGather;
+import frc.robot.commands.autonomous.BlueScoreThenMoveThenAutoGather;
+import frc.robot.commands.autonomous.JustScore;
+import frc.robot.commands.autonomous.RedScoreThenMoveThenAutoGather;
+import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
+import frc.robot.commands.autonomous.ScoreThenBalance;
+import frc.robot.commands.autonomous.ScoreThenMove;
+import frc.robot.commands.autonomous.ScoreThenMoveThenAutoGather;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -100,7 +100,6 @@ public class RobotContainer {
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
   private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
   private final PneumaticSubsystem m_PneumaticSubsystem = new PneumaticSubsystem();
-  //   private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
 
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
