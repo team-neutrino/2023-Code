@@ -32,7 +32,7 @@ import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
-import frc.robot.commands.autonomous.BlueScoreThenMoveThenAutoGather;
+import frc.robot.commands.autonomous.ScoreMoveAutoGather;
 import frc.robot.commands.autonomous.JustScore;
 import frc.robot.commands.autonomous.RedScoreThenMoveThenAutoGather;
 import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
@@ -170,35 +170,27 @@ public class RobotContainer {
           m_intakeManager,
           m_ledSubsystem);
 
-  private final ScoreThenMoveThenAutoGather m_scoreThenMoveThenAutoGather =
-      new ScoreThenMoveThenAutoGather(
+  private final ScoreMoveAutoGather m_blueScoreThenMoveThenAutoGather =
+      new ScoreMoveAutoGather(
           m_driveTrainSubsystem,
           m_armPidController,
           m_armSubsystem,
           m_scoringSubsystem,
           m_intakeSubsystem,
           m_intakeManager,
-          m_ledSubsystem);
-
-  private final RedScoreThenMoveThenAutoGather m_RedScoreThenMoveThenAutoGather =
-      new RedScoreThenMoveThenAutoGather(
-          m_driveTrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem);
-  private final BlueScoreThenMoveThenAutoGather m_BlueScoreThenMoveThenAutoGather =
-      new BlueScoreThenMoveThenAutoGather(
-          m_driveTrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem,
+          m_ledSubsystem, 
           false);
+    
+  private final ScoreMoveAutoGather m_redScoreThenMoveThenAutoGather =
+      new ScoreMoveAutoGather(
+          m_driveTrainSubsystem,
+          m_armPidController,
+          m_armSubsystem,
+          m_scoringSubsystem,
+          m_intakeSubsystem,
+          m_intakeManager,
+          m_ledSubsystem, 
+          true);
 
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
@@ -218,7 +210,7 @@ public class RobotContainer {
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_scoringSubsystem);
   private final ScoringOpenCommand m_scoringOpenCommand =
-      new ScoringOpenCommand(m_scoringSubsystem, m_intakeSubsystem, m_intakeManager);
+      new ScoringOpenCommand(m_scoringSubsystem, m_intakeManager);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -291,7 +283,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     m_driveTrainSubsystem.resetOdometry();
 
-    return m_RedScoreThenMoveThenAutoGather.andThen(
+    return m_redScoreThenMoveThenAutoGather.andThen(
         new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }

@@ -4,40 +4,20 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.IntakeManager;
 
 public class ScoringOpenCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
-  private IntakeSubsystem m_intakeSubsystem;
   private IntakeManager m_intakeManager;
-  private Timer timer;
-  private boolean autonomous = false;
 
   public ScoringOpenCommand(
       ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager) {
     m_scoringSubsystem = p_scoringSubsystem;
-    m_intakeSubsystem = p_intakeSubsystem;
     m_intakeManager = p_intakeManager;
-    addRequirements(m_scoringSubsystem, m_intakeSubsystem);
-  }
-
-  public ScoringOpenCommand(
-      ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem,
-      IntakeManager p_intakeManager,
-      double p_time,
-      boolean auto) {
-    m_scoringSubsystem = p_scoringSubsystem;
-    m_intakeManager = p_intakeManager;
-
-    autonomous = auto;
-    addRequirements(p_scoringSubsystem);
+    addRequirements(m_scoringSubsystem);
   }
 
   // Called when the command is initially scheduled.
