@@ -28,6 +28,7 @@ public final class Constants {
 
     // ARM
     public static final int ARM_MOTOR = 31;
+    public static final int TELESCOPING_MOTOR = 32;
   }
 
   public static class ArmConstants {
@@ -86,6 +87,7 @@ public final class Constants {
     public static final int GRABBER_BEAMBREAK = 1;
     public static final int INTAKE_DOWN_BEAMBREAK = 2;
     public static final int ARM_ENCODER = 9;
+    public static final int TELESCOPING_ENCODER = 8;
   }
 
   public static class PWMConstants {

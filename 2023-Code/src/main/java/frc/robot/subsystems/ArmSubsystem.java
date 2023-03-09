@@ -20,32 +20,37 @@ import frc.robot.Constants.MotorConstants;
 public class ArmSubsystem extends SubsystemBase {
 
   private CANSparkMax m_armMotor = new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
+  private CANSparkMax m_telescopingMotor = new CANSparkMax(MotorConstants.TELESCOPING_MOTOR, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_armMotor.getEncoder();
+  private RelativeEncoder m_telescopingEncoder = m_telescopingMotor.getEncoder();
   private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
+  private DutyCycleEncoder m_telescopingexternalEncoder = new DutyCycleEncoder(DigitalConstants.TELESCOPING_ENCODER);
   private SparkMaxPIDController m_pidController = m_armMotor.getPIDController();
 
   public ArmSubsystem() {
     m_armMotor.restoreFactoryDefaults();
+    m_telescopingMotor.restoreFactoryDefaults();
     m_armMotor.setIdleMode(IdleMode.kBrake);
+    m_telescopingMotor.setIdleMode(IdleMode.kBrake);
   }
 
-  public double getAbsolutePosition() {
+  public double getAbsoluteArmPosition() {
     return m_externalEncoder.getAbsolutePosition() * 100;
   }
 
-  public void turnOff() {
+  public void turnArmOff() {
     m_armMotor.setVoltage(0);
   }
 
-  public void setVoltage(double voltage) {
+  public void setArmVoltage(double voltage) {
     m_armMotor.setVoltage(voltage);
   }
 
-  public void set(double voltage) {
+  public void setArm(double voltage) {
     m_armMotor.set(voltage);
   }
 
-  public double limitAmount(double voltage) {
+  public double limitArmAmount(double voltage) {
     if (voltage < -Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
       voltage = -Constants.ArmConstants.ARM_OUTPUT_LIMIT;
     } else if (voltage > Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
@@ -55,11 +60,11 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void smartSet(double desiredVoltage) {
-    if ((getAbsolutePosition() >= ArmConstants.ARM_FRONTMOST && desiredVoltage > 0)
-        || (getAbsolutePosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
-      set(0.0);
+    if ((getAbsoluteArmPosition() >= ArmConstants.ARM_FRONTMOST && desiredVoltage > 0)
+        || (getAbsoluteArmPosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
+      setArm(0.0);
     } else {
-      set(desiredVoltage);
+      setArm(desiredVoltage);
     }
   }
 
@@ -67,18 +72,18 @@ public class ArmSubsystem extends SubsystemBase {
     m_pidController.setReference(rotations, ControlType.kPosition);
   }
 
-  public double getVoltage() {
+  public double getArmVoltage() {
     double appliedOutput = m_armMotor.getAppliedOutput();
     double busVoltage = m_armMotor.getBusVoltage();
     return appliedOutput * busVoltage; // chiefdelphi.com/t/get-voltage-from-spark-max/344136/3
   }
 
-  public double getPosition() {
+  public double getArmPosition() {
     return m_encoder.getPosition();
   }
 
-  public boolean atPosition(double targetPosition) {
-    if (Math.abs(getAbsolutePosition() - targetPosition) < ArmConstants.ARM_DEADZONE) {
+  public boolean atArmPosition(double targetPosition) {
+    if (Math.abs(getAbsoluteArmPosition() - targetPosition) < ArmConstants.ARM_DEADZONE) {
       return true;
     }
     return false;
