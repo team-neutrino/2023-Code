@@ -5,11 +5,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class NavXBalance extends CommandBase {
   DriveTrainSubsystem m_DriveTrainSubsystem;
-  // prev 12
   double TILTED = -14;
 
   /** Creates a new NavXBalance. */
@@ -25,9 +25,7 @@ public class NavXBalance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("here");
-    // prev
-    m_DriveTrainSubsystem.setMotors(-.3, -.3);
+    m_DriveTrainSubsystem.setMotors(DrivetrainConstants.BALANCE_MOTOR_POWER, DrivetrainConstants.BALANCE_MOTOR_POWER);
   }
 
   // Called once the command ends or is interrupted.
