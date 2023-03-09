@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.TrajectoryConfigConstants;
@@ -36,7 +37,20 @@ public class AutonomousUtil {
         p_driveTrainSubsystem);
   }
 
-  public static Trajectory generateTrajectoryFromPoses(ArrayList<PoseTriplet> tripletList) {
+  public static Trajectory generateTrajectoryFromPoses(
+      ArrayList<PoseTriplet> tripletList, TrajectoryConfig config) {
+    ArrayList<Pose2d> poseArray = new ArrayList<Pose2d>();
+    for (PoseTriplet triplet : tripletList) {
+      poseArray.add(
+          new Pose2d(
+              triplet.getCoord1(),
+              triplet.getCoord2(),
+              Rotation2d.fromDegrees(triplet.getAngle())));
+    }
+    return TrajectoryGenerator.generateTrajectory(poseArray, config);
+  }
+
+  public static Trajectory generateTrajectoryFromPosesBack(ArrayList<PoseTriplet> tripletList) {
     ArrayList<Pose2d> poseArray = new ArrayList<Pose2d>();
     for (PoseTriplet triplet : tripletList) {
       poseArray.add(
@@ -46,12 +60,14 @@ public class AutonomousUtil {
               Rotation2d.fromDegrees(triplet.getAngle())));
     }
     return TrajectoryGenerator.generateTrajectory(
-        poseArray, TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
+        poseArray, TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG);
   }
 
   public static RamseteCommand generateRamseteFromPoses(
-      ArrayList<PoseTriplet> tripletList, DriveTrainSubsystem p_driveTrainSubsystem) {
-    Trajectory generatedTrajectory = generateTrajectoryFromPoses(tripletList);
+      ArrayList<PoseTriplet> tripletList,
+      DriveTrainSubsystem p_driveTrainSubsystem,
+      TrajectoryConfig trajectoryConfig) {
+    Trajectory generatedTrajectory = generateTrajectoryFromPoses(tripletList, trajectoryConfig);
     RamseteCommand generatedRamseteCommand =
         generateRamseteCommand(generatedTrajectory, p_driveTrainSubsystem);
     return generatedRamseteCommand;
@@ -60,7 +76,9 @@ public class AutonomousUtil {
   public static RamseteCommand generateRamseteFromPoseFile(
       String poseFilename, DriveTrainSubsystem p_driveTrainSubsystem) {
     ArrayList<PoseTriplet> tripletList = PoseProcessor.poseTripletsFromFile(poseFilename);
-    Trajectory generatedTrajectory = generateTrajectoryFromPoses(tripletList);
+    Trajectory generatedTrajectory =
+        generateTrajectoryFromPoses(
+            tripletList, TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
     RamseteCommand generatedRamseteCommand =
         generateRamseteCommand(generatedTrajectory, p_driveTrainSubsystem);
     return generatedRamseteCommand;

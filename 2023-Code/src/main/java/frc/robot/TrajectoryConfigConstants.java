@@ -7,14 +7,15 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
 
 public class TrajectoryConfigConstants {
 
-  // COPIED FROM ATLAS
   public static final double KV_VOLT_SECONDS_PER_METER = 2.363;
   public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.3851;
   public static final double K_TRACK_WIDTH_METERS = 0.635;
   public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
       new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
   public static final double K_MAX_SPEED_METERS_PER_SECOND = 2.5;
+  public static final double K_LESS_SPEED_METERS_PER_SECOND = 1;
   public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 1;
+
   public static final double K_RAMSETE_BETA = 2;
   public static final double K_RAMSETE_ZETA = 0.7;
   public static final double KP_DRIVE_VEL = .44295;
@@ -34,4 +35,24 @@ public class TrajectoryConfigConstants {
               K_MAX_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
           .setKinematics(K_DRIVE_KINEMATICS)
           .addConstraint(K_AUTO_VOLTAGE_CONSTRAINT);
+
+  public static final TrajectoryConfig K_MAX_SPEED_BACKWARD_CONFIG =
+      new TrajectoryConfig(
+              K_MAX_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+          .setKinematics(K_DRIVE_KINEMATICS)
+          .addConstraint(K_AUTO_VOLTAGE_CONSTRAINT)
+          .setReversed(true);
+
+  public static final TrajectoryConfig K_LESS_SPEED_FORWARD_CONFIG =
+      new TrajectoryConfig(
+              K_LESS_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+          .setKinematics(K_DRIVE_KINEMATICS)
+          .addConstraint(K_AUTO_VOLTAGE_CONSTRAINT);
+
+  public static final TrajectoryConfig K_LESS_SPEED_BACKWARD_CONFIG =
+      new TrajectoryConfig(
+              K_LESS_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
+          .setKinematics(K_DRIVE_KINEMATICS)
+          .addConstraint(K_AUTO_VOLTAGE_CONSTRAINT)
+          .setReversed(true);
 }

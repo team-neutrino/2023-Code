@@ -23,7 +23,7 @@ import java.io.IOException;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
-  private GenericEntry m_driveTrainVariables[] = new GenericEntry[10];
+  private GenericEntry m_driveTrainVariables[] = new GenericEntry[11];
   private GenericEntry m_limelightVariables[] = new GenericEntry[8];
   private GenericEntry m_driverStationInfoVariables[] = new GenericEntry[9];
   private GenericEntry m_scoringVariables[] = new GenericEntry[11];
@@ -43,7 +43,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private ArmSubsystem m_arm;
   private HttpCamera LLFeed;
   private IntakeSubsystem m_intake;
-  private ColorSubsystem m_color;
 
   public ShuffleboardSubsystem(
       DriverStationInfo p_driverStationInfo,
@@ -52,7 +51,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       LimelightSubsystem p_limelight,
       ArmSubsystem p_arm,
       IntakeSubsystem p_intake,
-      ColorSubsystem p_color,
       LEDSubsystem p_LED) {
 
     m_driveTrainSubsystem = p_driveTrainSubsystem;
@@ -60,7 +58,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_scoring = p_scoring;
     m_arm = p_arm;
     m_intake = p_intake;
-    m_color = p_color;
     m_LED = p_LED;
     m_driverStationInfo = p_driverStationInfo;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
@@ -82,14 +79,15 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[5].setDouble(m_driveTrainSubsystem.getR2Vel());
     m_driveTrainVariables[6].setDouble(m_driveTrainSubsystem.getL1Vel());
     m_driveTrainVariables[7].setDouble(m_driveTrainSubsystem.getL2Vel());
-    m_driveTrainVariables[8].setDouble(m_driveTrainSubsystem.getRoll());
+    m_driveTrainVariables[8].setDouble(m_driveTrainSubsystem.getPitch());
+    m_driveTrainVariables[9].setDouble(m_driveTrainSubsystem.getRoll());
+    m_driveTrainVariables[10].setDouble(m_driveTrainSubsystem.getYaw());
 
     m_scoringVariables[0].setBoolean(m_scoring.getSolenoidValue());
 
     m_LEDVariables[0].setString(m_LED.getColor().toString());
 
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
-    m_driverStationInfoVariables[1].setString(m_color.getPiece());
 
     m_armVariables[0].setDouble(m_arm.getAbsolutePosition());
   }
@@ -126,6 +124,12 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     m_driveTrainVariables[8] =
         m_drivestationTab.add("NavX Pitch", 0).withPosition(2, 2).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[9] =
+        m_drivestationTab.add("NavX Roll", 0).withPosition(2, 3).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[10] =
+        m_drivestationTab.add("NavX Yaw", 0).withPosition(2, 4).withSize(1, 1).getEntry();
 
     m_scoringVariables[0] =
         m_drivestationTab.add("Grabber Release", 0).withPosition(2, 0).withSize(1, 1).getEntry();
