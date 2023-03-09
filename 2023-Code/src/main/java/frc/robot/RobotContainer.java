@@ -119,7 +119,9 @@ public class RobotContainer {
           m_limelightSubsystem,
           m_armSubsystem,
           m_intakeSubsystem,
-          m_ledSubsystem);
+          m_ledSubsystem,
+          m_armPidController,
+          m_intakeManager);
 
   // COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand =
@@ -290,8 +292,9 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     m_driveTrainSubsystem.resetOdometry();
-
-    return m_shuffleboardSubsystem.m_autoChooser.getSelected().andThen(
+    // return m_scoreMobilityThenBalance.andThen(
+    //     new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+    return m_shuffleboardSubsystem.getAutoSelected().andThen(
         new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }

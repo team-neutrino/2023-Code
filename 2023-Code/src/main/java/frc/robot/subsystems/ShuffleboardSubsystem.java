@@ -18,9 +18,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.util.DriverStationInfo;
+import frc.robot.util.IntakeManager;
 import frc.robot.util.SavePoseCommand;
+import frc.robot.util.ViennaPIDController;
+
 import java.io.IOException;
 import frc.robot.commands.autonomous.manualGeneration.ScoreMobilityThenBalance;
+import frc.robot.commands.autonomous.manualGeneration.Test1;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
@@ -44,6 +48,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private ArmSubsystem m_arm;
   private HttpCamera LLFeed;
   private IntakeSubsystem m_intake;
+  private ViennaPIDController m_pidController;
+  private IntakeManager m_intakeManager;
 
   public ShuffleboardSubsystem(
       DriverStationInfo p_driverStationInfo,
@@ -52,7 +58,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       LimelightSubsystem p_limelight,
       ArmSubsystem p_arm,
       IntakeSubsystem p_intake,
-      LEDSubsystem p_LED) {
+      LEDSubsystem p_LED,
+      ViennaPIDController p_pidController,
+      IntakeManager p_intakeManager) {
 
     m_driveTrainSubsystem = p_driveTrainSubsystem;
     // m_limelight = p_limelight;
@@ -60,6 +68,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_arm = p_arm;
     m_intake = p_intake;
     m_LED = p_LED;
+    m_pidController = p_pidController;
+    m_intakeManager = p_intakeManager;
     m_driverStationInfo = p_driverStationInfo;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
 
@@ -176,9 +186,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   }
 
   public void setUpSelector() {
-    m_autoChooser.setDefaultOption("Defualt", new ScoreMobilityThenBalance(m_driveTrainSubsystem, null, m_arm, m_scoring, m_intake, null, m_LED));
-    m_autoChooser.addOption("Balance Mobility", new ScoreMobilityThenBalance(m_driveTrainSubsystem, null, m_arm, m_scoring, m_intake, null, m_LED));
-    m_autoChooser.addOption("Auto 2", new ExampleCommand());
+    m_autoChooser.setDefaultOption("Defualt", new ScoreMobilityThenBalance(m_driveTrainSubsystem, m_pidController, m_arm, m_scoring, m_intake, null, m_LED));
+    m_autoChooser.addOption("Balance Mobility", new ScoreMobilityThenBalance(m_driveTrainSubsystem, m_pidController, m_arm, m_scoring, m_intake, m_intakeManager, m_LED));
+    m_autoChooser.addOption("Auto 1", new Test1(m_driveTrainSubsystem, null, m_arm, m_scoring, m_intake, null, m_LED));
   }
 
   public Command getAutoSelected() {
