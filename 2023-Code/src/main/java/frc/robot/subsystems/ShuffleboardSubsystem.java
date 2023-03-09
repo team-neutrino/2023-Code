@@ -23,8 +23,7 @@ import frc.robot.util.SavePoseCommand;
 import frc.robot.util.ViennaPIDController;
 
 import java.io.IOException;
-import frc.robot.commands.autonomous.manualGeneration.ScoreMobilityThenBalance;
-import frc.robot.commands.autonomous.manualGeneration.Test1;
+import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
