@@ -88,14 +88,14 @@ public class AutonomousUtil {
     return generatedRamseteCommand;
   }
 
-  // public static RamseteCommand generateRamseteFromPoseFile(
-  //     String poseFilename, DriveTrainSubsystem p_driveTrainSubsystem) {
-  //   ArrayList<PoseTriplet> tripletList = PoseProcessor.poseTripletsFromFile(poseFilename);
-  //   Trajectory generatedTrajectory =
-  //       generateTrajectoryFromPoses(
-  //           tripletList, TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
-  //   RamseteCommand generatedRamseteCommand =
-  //       generateRamseteCommand(generatedTrajectory, p_driveTrainSubsystem);
-  //   return generatedRamseteCommand;
-  // }
+  public static RamseteCommand generateRamseteFromPoseFile(
+      String poseFilename, DriveTrainSubsystem p_driveTrainSubsystem) {
+    ArrayList<PoseTriplet> tripletList = PoseProcessor.poseTripletsFromFile(poseFilename);
+    Trajectory generatedTrajectory =
+        generateTrajectoryFromPoses(
+            tripletList, TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
+    RamseteCommand generatedRamseteCommand =
+        generateRamseteCommand(generatedTrajectory, p_driveTrainSubsystem);
+    return generatedRamseteCommand;
+  }
 }

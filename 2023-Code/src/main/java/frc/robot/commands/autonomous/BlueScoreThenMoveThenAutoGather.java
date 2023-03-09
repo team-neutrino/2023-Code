@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.autonomous.manualGeneration;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -52,7 +52,6 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
     m_inverted = p_inverted;
 
-    // change the degrees and get positions
     toGamePieceArray =
         new ArrayList<PoseTriplet>(
             Arrays.asList(
@@ -67,15 +66,6 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
                 new PoseTriplet(1.3, -0.08, 0.16),
                 new PoseTriplet(-.3, -.31, -.32)));
 
-    //     toGamePieceArray =
-    //     new ArrayList<PoseTriplet>(
-    //         Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4.08, -0.10, -15.08)));
-
-    // runThatBack =
-    //     new ArrayList<PoseTriplet>(
-    //         Arrays.asList( new PoseTriplet(4.08,- 0.36, -15.08),
-    //         new PoseTriplet(1.3, -0.08, 0.16),  new PoseTriplet(-.3, -.31, -.32)));
-    // new PoseTriplet(-.23, -.35, 7.95)
     toGamePieceCommand =
         AutonomousUtil.generateRamseteFromPoses(
             toGamePieceArray,
@@ -122,26 +112,6 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
             true,
             true,
             false,
-            p_ledSubsystem)
-        // new ParallelCommandGroup(new ScoringOpenCommand(p_scoringS`  ubsystem, p_intakeSubsystem,
-        // p_intakeManager, 2, true),
-        // new ArmToAngleCommand(
-        //     p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID, true, true, false,
-        // p_ledSubsystem) )
-        );
-
-    // addCommands(
-    //     new ArmToAngleCommand(
-    //         p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-    //     new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager)
-    //         .withTimeout(.5),
-    //     new ParallelCommandGroup(
-    //         toGamePieceCommand,
-    //         new AutonArmGatherCommand(
-    //             p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem, p_pidController)),
-    //     runThatBackCommand,
-    //     new ArmToAngleCommand(
-    //         p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-    //     new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true));
+            p_ledSubsystem));
   }
 }
