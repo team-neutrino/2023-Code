@@ -12,6 +12,7 @@ public class TrajectoryConfigConstants {
   public static final double K_TRACK_WIDTH_METERS = 0.635;
   public static final DifferentialDriveKinematics K_DRIVE_KINEMATICS =
       new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
+      
   public static final double K_MAX_SPEED_METERS_PER_SECOND = 2.5;
   public static final double K_LESS_SPEED_METERS_PER_SECOND = 1;
   public static final double K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 1;
@@ -19,6 +20,8 @@ public class TrajectoryConfigConstants {
   public static final double K_RAMSETE_BETA = 2;
   public static final double K_RAMSETE_ZETA = 0.7;
   public static final double KP_DRIVE_VEL = .44295;
+  public static final double KI_DRIVE_VEL = 0;
+  public static final double KD_DRIVE_VEL = 0;
   public static final double KS_VOLTS = 0.13804;
   public static final double K_MAX_VOLTAGE =
       10; // < 12V due to voltage dip after startup current draw, according to docs
