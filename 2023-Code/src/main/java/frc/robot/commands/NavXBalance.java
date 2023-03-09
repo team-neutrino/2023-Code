@@ -25,7 +25,8 @@ public class NavXBalance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_DriveTrainSubsystem.setMotors(DrivetrainConstants.BALANCE_MOTOR_POWER, DrivetrainConstants.BALANCE_MOTOR_POWER);
+    m_DriveTrainSubsystem.setMotors(
+        DrivetrainConstants.BALANCE_MOTOR_POWER, DrivetrainConstants.BALANCE_MOTOR_POWER);
   }
 
   // Called once the command ends or is interrupted.

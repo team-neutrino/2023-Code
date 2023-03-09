@@ -106,7 +106,6 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
             true,
             true,
             false,
-            p_ledSubsystem)
-        );
+            p_ledSubsystem));
   }
 }
