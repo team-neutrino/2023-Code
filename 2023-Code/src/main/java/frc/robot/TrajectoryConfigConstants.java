@@ -55,4 +55,8 @@ public class TrajectoryConfigConstants {
           .setKinematics(K_DRIVE_KINEMATICS)
           .addConstraint(K_AUTO_VOLTAGE_CONSTRAINT)
           .setReversed(true);
+
+//   public TrajectoryConfig generateConfig() {
+
+//   }
 }
