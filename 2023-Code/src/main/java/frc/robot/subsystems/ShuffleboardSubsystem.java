@@ -17,12 +17,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.SavePoseCommand;
 import frc.robot.util.ViennaPIDController;
+import frc.robot.commands.autonomous.ScoreThenMove;
+
 import java.io.IOException;
+import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
@@ -184,20 +186,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   }
 
   public void setUpSelector() {
-    m_autoChooser.setDefaultOption(
-        "Defualt",
-        new ScoreMobilityThenBalance(
-            m_driveTrainSubsystem, m_pidController, m_arm, m_scoring, m_intake, null, m_LED));
-    m_autoChooser.addOption(
-        "Balance Mobility",
-        new ScoreMobilityThenBalance(
-            m_driveTrainSubsystem,
-            m_pidController,
-            m_arm,
-            m_scoring,
-            m_intake,
-            m_intakeManager,
-            m_LED));
+    m_autoChooser.setDefaultOption("Default", new ScoreMobilityThenBalance(m_driveTrainSubsystem, m_pidController, m_arm, m_scoring, m_intake, null, m_LED));
+    m_autoChooser.addOption("Balance Mobility", new ScoreMobilityThenBalance(m_driveTrainSubsystem, m_pidController, m_arm, m_scoring, m_intake, m_intakeManager, m_LED));
+    m_autoChooser.addOption("Score then Move", new ScoreThenMove(m_driveTrainSubsystem, m_pidController, m_arm, m_scoring, m_intake, m_intakeManager, m_LED));
   }
 
   public Command getAutoSelected() {
