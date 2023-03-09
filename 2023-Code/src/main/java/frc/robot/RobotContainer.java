@@ -198,7 +198,8 @@ public class RobotContainer {
           m_scoringSubsystem,
           m_intakeSubsystem,
           m_intakeManager,
-          m_ledSubsystem);
+          m_ledSubsystem,
+          false);
 
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);

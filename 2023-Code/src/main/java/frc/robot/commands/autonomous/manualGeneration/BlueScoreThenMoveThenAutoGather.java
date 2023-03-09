@@ -4,6 +4,7 @@
 
 package frc.robot.commands.autonomous.manualGeneration;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -36,6 +37,7 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
   private ArrayList<PoseTriplet> runThatBack;
   private RamseteCommand toGamePieceCommand;
   private RamseteCommand runThatBackCommand;
+  private boolean m_inverted;
 
   /** Creates a new TestAutonGeneratedTrajectory. */
   public BlueScoreThenMoveThenAutoGather(
@@ -45,8 +47,10 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
-      LEDSubsystem p_ledSubsystem) {
+      LEDSubsystem p_ledSubsystem,
+      boolean p_inverted) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
+    m_inverted = p_inverted;
 
     // change the degrees and get positions
     toGamePieceArray =
@@ -76,13 +80,15 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
         AutonomousUtil.generateRamseteFromPoses(
             toGamePieceArray,
             m_drivetrainSubsystem,
-            TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
+            TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG,
+            m_inverted);
 
     runThatBackCommand =
         AutonomousUtil.generateRamseteFromPoses(
             runThatBack,
             p_drivetrainSubsystem,
-            TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG);
+            TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG,
+            m_inverted);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
