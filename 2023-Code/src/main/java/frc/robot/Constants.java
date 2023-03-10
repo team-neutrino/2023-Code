@@ -104,5 +104,6 @@ public final class Constants {
   public static class UtilConstants {
     public static final String UNIVERSAL_DIRECTORY =
         "\\src\\main\\java\\frc\\robot\\util\\trajectoryInput\\";
+    public static final double NAVX_RESET_WAIT_TIME = 2.1;
   }
 }

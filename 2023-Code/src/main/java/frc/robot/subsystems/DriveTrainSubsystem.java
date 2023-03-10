@@ -211,7 +211,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return m_navX;
   }
 
-  public int getNavXResetCounter() {
-    return navXResetCounter;
-  }
+  // public int getNavXResetCounter() {
+  //   return navXResetCounter;
+  // }
 }

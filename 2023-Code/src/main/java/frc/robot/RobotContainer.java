@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -29,6 +30,7 @@ import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.IntakeSqueezeCommand;
 import frc.robot.commands.LEDCommand;
+import frc.robot.commands.ResetNavXCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
@@ -296,12 +298,15 @@ public class RobotContainer {
         .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 
-  public void teleopInit() {
-    m_driveTrainSubsystem.resetNavX();
-    System.out.println(
-      "NavX Reset Counter: " + m_driveTrainSubsystem.getNavXResetCounter() + 
-      '\n' +
-      "NavX Yaw: " + m_driveTrainSubsystem.getYaw()
-    );
+  public void disabledInit() {
+    CommandScheduler.getInstance().schedule(new ResetNavXCommand(m_driveTrainSubsystem));
   }
+  // public void teleopInit() {
+  //   m_driveTrainSubsystem.resetNavX();
+  //   System.out.println(
+  //     "NavX Reset Counter: " + m_driveTrainSubsystem.getNavXResetCounter() + 
+  //     '\n' +
+  //     "NavX Yaw: " + m_driveTrainSubsystem.getYaw()
+  //   );
+  // }
 }
