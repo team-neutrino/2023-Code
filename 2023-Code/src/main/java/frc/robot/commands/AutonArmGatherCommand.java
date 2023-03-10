@@ -5,11 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.ViennaPIDController;
+import frc.robot.SubsystemContainer.*;
 
 public class AutonArmGatherCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
@@ -19,13 +21,11 @@ public class AutonArmGatherCommand extends CommandBase {
   private boolean detective;
 
   public AutonArmGatherCommand(
-      ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem,
-      ViennaPIDController p_pidController) {
-    m_armSubsystem = p_armSubsystem;
-    m_scoringSubsystem = p_scoringSubsystem;
-    m_intakeSubsystem = p_intakeSubsystem;
+     SubsystemContainer p_subsystemContainer,
+     ViennaPIDController p_pidController) {
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_pidController = p_pidController;
     detective = false;
 

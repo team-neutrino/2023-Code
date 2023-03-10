@@ -143,5 +143,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    System.out.println(isIntakeDown());
+  }
 }

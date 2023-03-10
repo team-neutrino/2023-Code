@@ -13,7 +13,6 @@ import frc.robot.util.ViennaPIDController;
 public class ArmDefaultCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ViennaPIDController m_pidController;
-  private SubsystemContainer m_subsystemContainer;
 
   // public ArmDefaultCommand(ArmSubsystem p_armSubsystem, ViennaPIDController p_pidController) {
   //   m_armSubsystem = p_armSubsystem;
@@ -23,9 +22,9 @@ public class ArmDefaultCommand extends CommandBase {
 
   public ArmDefaultCommand(
       SubsystemContainer p_subsystemContainer, ViennaPIDController p_pidController) {
-    m_subsystemContainer = p_subsystemContainer;
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_pidController = p_pidController;
-    addRequirements(m_subsystemContainer.getArmSubsystem());
+    addRequirements(m_armSubsystem);
   }
 
   @Override

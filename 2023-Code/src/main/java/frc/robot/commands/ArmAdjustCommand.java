@@ -16,7 +16,6 @@ public class ArmAdjustCommand extends CommandBase {
   private XboxController m_driverController;
   private ViennaPIDController m_pidController;
   private double targetAngle;
-  private SubsystemContainer m_subsystemContainer;
 
   // public ArmAdjustCommand(
   //     ArmSubsystem p_armSubsystem,
@@ -33,11 +32,11 @@ public class ArmAdjustCommand extends CommandBase {
       ViennaPIDController p_pidController,
       SubsystemContainer p_subsystemContainer) {
     m_pidController = p_pidController;
-    m_subsystemContainer = p_subsystemContainer;
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_driverController = p_driverController;
     targetAngle = m_armSubsystem.getAbsolutePosition();
 
-    addRequirements(m_subsystemContainer.getDriveTrainSubsystem());
+    addRequirements(m_armSubsystem);
   }
 
   @Override

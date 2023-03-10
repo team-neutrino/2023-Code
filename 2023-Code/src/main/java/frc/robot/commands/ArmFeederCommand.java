@@ -35,13 +35,11 @@ public class ArmFeederCommand extends CommandBase {
   public ArmFeederCommand(
       SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController) {
-    m_subsystemContainer = p_subsystemContainer;
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_pidController = p_pidController;
     m_timer = new Timer();
-  }
-
-  public ArmFeederCommand(ArmSubsystem m_armSubsystem2, ScoringSubsystem m_scoringSubsystem2,
-      ViennaPIDController m_armPidController) {
+    addRequirements(m_armSubsystem, m_scoringSubsystem);
   }
 
   @Override

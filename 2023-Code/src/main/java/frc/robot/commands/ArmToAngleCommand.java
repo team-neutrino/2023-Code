@@ -32,9 +32,9 @@ public class ArmToAngleCommand extends CommandBase {
       ) {
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
-    m_subsystemContainer = p_subsystemContainer;
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
 
-    addRequirements(m_subsystemContainer.getArmSubsystem());
+    addRequirements(m_armSubsystem);
   }
 
   public ArmToAngleCommand(
@@ -44,13 +44,14 @@ public class ArmToAngleCommand extends CommandBase {
       boolean p_auton,
       boolean p_buttoncheck,
       LEDSubsystem p_ledSubsystem) {
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
     m_Endauton = false;
     m_buttoncheck = p_buttoncheck;
-    m_ledSubsystem = p_ledSubsystem;
-    addRequirements(m_subsystemContainer.getArmSubsystem(),m_subsystemContainer.getLedSubsystem());
+    addRequirements(m_armSubsystem, m_ledSubsystem);
   }
 
   public ArmToAngleCommand(
@@ -59,16 +60,15 @@ public class ArmToAngleCommand extends CommandBase {
       double p_targetAngle,
       boolean p_auton,
       boolean p_endAuton,
-      boolean p_buttoncheck,
-      LEDSubsystem p_ledSubsystem) {
+      boolean p_buttoncheck) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
     m_Endauton = p_endAuton;
     m_buttoncheck = p_buttoncheck;
-    m_ledSubsystem = p_ledSubsystem;
-    addRequirements(m_subsystemContainer.getArmSubsystem(),m_subsystemContainer.getLedSubsystem());
+    addRequirements(m_armSubsystem, m_ledSubsystem);
   }
 
 

@@ -12,13 +12,13 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.ViennaPIDController;
+import frc.robot.SubsystemContainer;
 
 public class ArmGatherModeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
   private IntakeSubsystem m_intakeSubsystem;
   private ViennaPIDController m_pidController;
-  private SubsystemContainer m_subsystemContainer;
 
   // public ArmGatherModeCommand(
   //     ArmSubsystem p_armSubsystem,
@@ -34,20 +34,13 @@ public class ArmGatherModeCommand extends CommandBase {
   // }
 
   public ArmGatherModeCommand(
-    ArmSubsystem p_armSubsystem,
-    ScoringSubsystem p_scoringSubsystem,
-    IntakeSubsystem p_intakeSubsystem,
-    ViennaPIDController p_pidController,
-    SubsystemContainer p_subsystemContainer) {
-  m_armSubsystem = p_armSubsystem;
-  m_scoringSubsystem = p_scoringSubsystem;
-  m_intakeSubsystem = p_intakeSubsystem;
+    SubsystemContainer p_subsystemContainer,
+    ViennaPIDController p_pidController) {
+  m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+  m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
+  m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
   m_pidController = p_pidController;
-  m_subsystemContainer = p_subsystemContainer;
-  addRequirements(m_subsystemContainer.getArmSubsystem(), m_subsystemContainer.getIntakeSubsystem(), m_subsystemContainer.getScoringSubsystem());
-
-}
-  public ArmGatherModeCommand(SubsystemContainer m_subsystemContainer2, ViennaPIDController m_armPidController) {
+  addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
 }
 @Override
   public void initialize() {}

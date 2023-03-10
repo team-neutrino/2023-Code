@@ -6,10 +6,12 @@ import frc.robot.SubsystemContainer;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.SubsystemContainer.*;
 
 public class AutoBalanceCommand extends CommandBase {
 
   private final DriveTrainSubsystem m_drivetrain;
+  
 
   private double desiredPos = 0;
   private double error;
@@ -19,7 +21,7 @@ public class AutoBalanceCommand extends CommandBase {
   private double integral = 0;
   
   public AutoBalanceCommand(SubsystemContainer p_subsystemContainer) {
-    m_subsystemContainer = p_subsystemContainer;
+    m_drivetrain = p_subsystemContainer.getDriveTrainSubsystem();
     addRequirements(m_drivetrain);
 
   }

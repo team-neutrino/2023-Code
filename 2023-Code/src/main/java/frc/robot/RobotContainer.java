@@ -140,7 +140,7 @@ public class RobotContainer {
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
   private final AutoBalanceCommand m_autoBalanceCommand =
-      new AutoBalanceCommand(m_drivetrainSubsystem);
+      new AutoBalanceCommand(m_subsystemContainer);
 
   private final ScoreMobilityThenBalance m_scoreMobilityThenBalance =
       new ScoreMobilityThenBalance(
@@ -220,7 +220,7 @@ public class RobotContainer {
       new ArmGatherModeCommand(
           m_subsystemContainer, m_armPidController);
   private final ArmFeederCommand m_armFeederCommand =
-      new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem, m_armPidController);
+      new ArmFeederCommand(m_subsystemContainer, m_armPidController);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
       new IntakeHybridModeCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringCloseCommand m_scoringCloseCommand =

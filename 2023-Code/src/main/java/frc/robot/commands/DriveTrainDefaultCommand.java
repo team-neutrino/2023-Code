@@ -29,10 +29,10 @@ public class DriveTrainDefaultCommand extends CommandBase {
 
   public DriveTrainDefaultCommand(
     SubsystemContainer p_subsystemContainer, Joystick p_leftJoystick, Joystick p_rightJoystick) {
-    m_subsystemContainer = p_subsystemContainer;
+    m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
     m_leftJoystick = p_leftJoystick;
     m_rightJoystick = p_rightJoystick;
-    addRequirements(m_subsystemContainer.getDriveTrainSubsystem());
+    addRequirements(m_drivetrainSubsystem);
   }
 
   @Override
