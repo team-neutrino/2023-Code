@@ -49,7 +49,7 @@ public class ArmAdjustCommand extends CommandBase {
       int position = (int) m_armSubsystem.getAbsoluteArmPosition();
       voltage = m_pidController.run(position, targetAngle);
     }
-    m_armSubsystem.smartSet(voltage);
+    m_armSubsystem.smartArmSet(voltage);
   }
 
   @Override

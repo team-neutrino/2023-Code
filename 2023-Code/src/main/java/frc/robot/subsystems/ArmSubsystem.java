@@ -59,7 +59,7 @@ public class ArmSubsystem extends SubsystemBase {
     return voltage;
   }
 
-  public void smartSet(double desiredVoltage) {
+  public void smartArmSet(double desiredVoltage) {
     if ((getAbsoluteArmPosition() >= ArmConstants.ARM_FRONTMOST && desiredVoltage > 0)
         || (getAbsoluteArmPosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
       setArm(0.0);
@@ -88,6 +88,22 @@ public class ArmSubsystem extends SubsystemBase {
     }
     return false;
   }
+
+public double getAbsoluteTelescopePosistion() {
+  return m_telescopingexternalEncoder.getAbsolutePosition();
+}
+
+public void turnTelescopeOff() {
+  m_telescopingMotor.setVoltage(0);
+}
+
+public void setTelescopeVoltage(double p_voltage) {
+  m_telescopingMotor.setVoltage(p_voltage);
+}
+
+public void setTelescope(double p_speed) {
+  m_telescopingMotor.set(p_speed);
+}
 
   @Override
   public void periodic() {}

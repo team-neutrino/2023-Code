@@ -24,7 +24,7 @@ public class ArmDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_armSubsystem.smartSet(
+    m_armSubsystem.smartArmSet(
         m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.FORWARD_MID));
   }
 
