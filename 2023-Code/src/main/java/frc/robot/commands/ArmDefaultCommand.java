@@ -6,17 +6,26 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmDefaultCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ViennaPIDController m_pidController;
+  private SubsystemContainer m_subsystemContainer;
 
-  public ArmDefaultCommand(ArmSubsystem p_armSubsystem, ViennaPIDController p_pidController) {
-    m_armSubsystem = p_armSubsystem;
+  // public ArmDefaultCommand(ArmSubsystem p_armSubsystem, ViennaPIDController p_pidController) {
+  //   m_armSubsystem = p_armSubsystem;
+  //   m_pidController = p_pidController;
+  //   addRequirements(m_armSubsystem);
+  // }
+
+  public ArmDefaultCommand(
+      SubsystemContainer p_subsystemContainer, ViennaPIDController p_pidController) {
+    m_subsystemContainer = p_subsystemContainer;
     m_pidController = p_pidController;
-    addRequirements(m_armSubsystem);
+    addRequirements(m_subsystemContainer.getArmSubsystem());
   }
 
   @Override

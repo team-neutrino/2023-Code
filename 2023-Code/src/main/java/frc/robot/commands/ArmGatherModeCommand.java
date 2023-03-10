@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.SubsystemContainer;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -16,21 +18,38 @@ public class ArmGatherModeCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
   private IntakeSubsystem m_intakeSubsystem;
   private ViennaPIDController m_pidController;
+  private SubsystemContainer m_subsystemContainer;
+
+  // public ArmGatherModeCommand(
+  //     ArmSubsystem p_armSubsystem,
+  //     ScoringSubsystem p_scoringSubsystem,
+  //     IntakeSubsystem p_intakeSubsystem,
+  //     ViennaPIDController p_pidController) {
+  //   m_armSubsystem = p_armSubsystem;
+  //   m_scoringSubsystem = p_scoringSubsystem;
+  //   m_intakeSubsystem = p_intakeSubsystem;
+  //   m_pidController = p_pidController;
+
+  //   addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
+  // }
 
   public ArmGatherModeCommand(
-      ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem,
-      ViennaPIDController p_pidController) {
-    m_armSubsystem = p_armSubsystem;
-    m_scoringSubsystem = p_scoringSubsystem;
-    m_intakeSubsystem = p_intakeSubsystem;
-    m_pidController = p_pidController;
+    ArmSubsystem p_armSubsystem,
+    ScoringSubsystem p_scoringSubsystem,
+    IntakeSubsystem p_intakeSubsystem,
+    ViennaPIDController p_pidController,
+    SubsystemContainer p_subsystemContainer) {
+  m_armSubsystem = p_armSubsystem;
+  m_scoringSubsystem = p_scoringSubsystem;
+  m_intakeSubsystem = p_intakeSubsystem;
+  m_pidController = p_pidController;
+  m_subsystemContainer = p_subsystemContainer;
+  addRequirements(m_subsystemContainer.getArmSubsystem(), m_subsystemContainer.getIntakeSubsystem(), m_subsystemContainer.getScoringSubsystem());
 
-    addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
-  }
-
-  @Override
+}
+  public ArmGatherModeCommand(SubsystemContainer m_subsystemContainer2, ViennaPIDController m_armPidController) {
+}
+@Override
   public void initialize() {}
 
   @Override

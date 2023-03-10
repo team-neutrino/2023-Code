@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -16,6 +17,7 @@ public class ArmToAngleCommand extends CommandBase {
   private ViennaPIDController m_pidController;
   private double m_targetAngle;
   private ScoringSubsystem m_ScoringSubsystem;
+  private SubsystemContainer m_subsystemContainer;
   private double voltage;
   private LEDSubsystem m_ledSubsystem;
   private boolean m_auton = false;
@@ -24,53 +26,53 @@ public class ArmToAngleCommand extends CommandBase {
   private boolean m_buttoncheck = false;
 
   public ArmToAngleCommand(
-      ArmSubsystem p_armSubsystem,
       ViennaPIDController p_pidController,
-      ScoringSubsystem p_ScoringSubsystem,
-      double p_targetAngle) {
-    m_armSubsystem = p_armSubsystem;
-    m_ScoringSubsystem = p_ScoringSubsystem;
+      double p_targetAngle,
+      SubsystemContainer p_subsystemContainer
+      ) {
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
+    m_subsystemContainer = p_subsystemContainer;
 
-    addRequirements(m_armSubsystem);
+    addRequirements(m_subsystemContainer.getArmSubsystem());
   }
 
   public ArmToAngleCommand(
-      ArmSubsystem p_armSubsystem,
+    SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
       double p_targetAngle,
       boolean p_auton,
       boolean p_buttoncheck,
       LEDSubsystem p_ledSubsystem) {
-    m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
     m_Endauton = false;
     m_buttoncheck = p_buttoncheck;
     m_ledSubsystem = p_ledSubsystem;
-    addRequirements(m_armSubsystem);
+    addRequirements(m_subsystemContainer.getArmSubsystem(),m_subsystemContainer.getLedSubsystem());
   }
 
   public ArmToAngleCommand(
-      ArmSubsystem p_armSubsystem,
+      SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
       double p_targetAngle,
       boolean p_auton,
       boolean p_endAuton,
       boolean p_buttoncheck,
       LEDSubsystem p_ledSubsystem) {
-    m_armSubsystem = p_armSubsystem;
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
     m_Endauton = p_endAuton;
     m_buttoncheck = p_buttoncheck;
     m_ledSubsystem = p_ledSubsystem;
-    addRequirements(m_armSubsystem);
+    addRequirements(m_subsystemContainer.getArmSubsystem(),m_subsystemContainer.getLedSubsystem());
   }
 
+
+  
   @Override
   public void initialize() {}
 

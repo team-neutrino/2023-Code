@@ -23,6 +23,12 @@ import frc.robot.Constants.MotorConstants;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
+  private DriveTrainSubsystem m_drivetrainSubsystem;
+
+  public DriveTrainSubsystem(DriveTrainSubsystem p_drivetrainSubsystem) {
+    m_drivetrainSubsystem = p_drivetrainSubsystem;
+  }
+
   // ODOMETRY
   private DifferentialDriveOdometry m_diffDriveOdometry;
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);

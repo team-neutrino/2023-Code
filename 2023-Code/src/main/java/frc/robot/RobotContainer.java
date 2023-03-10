@@ -90,54 +90,61 @@ public class RobotContainer {
 
   private final JoystickButton m_rightStickButton =
       new JoystickButton(m_driverController, XboxController.Button.kRightStick.value);
+  // UTIL
+  private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
   // SUBSYSTEMS
-  private final DriveTrainSubsystem m_driveTrainSubsystem =
+  private final DriveTrainSubsystem m_drivetrainSubsystem =
       new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick);
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
   private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
-  private final PneumaticSubsystem m_PneumaticSubsystem = new PneumaticSubsystem();
-  //   private final ColorSubsystem m_colorSubsystem = new ColorSubsystem();
-
-  public SubsystemContainer m_subsystemContainer = new SubsystemContainer(m_driveTrainSubsystem,m_scoringSubsystem,m_limelightSubsystem, m_armSubsystem,m_intakeSubsystem, m_ledSubsystem);
-
-  // UTIL
-  private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
-  private final ViennaPIDController m_armPidController = new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
-  private final ViennaPIDController m_armPidControllerAdjust =
-      new ViennaPIDController(PIDConstants.ARM_P_ADJUST, PIDConstants.ARM_I, PIDConstants.ARM_D);
-  private IntakeManager m_intakeManager = new IntakeManager(m_subsystemContainer);
-
-  // SHUFFLEBOARD
+  private final PneumaticSubsystem m_pneumaticSubsystem = new PneumaticSubsystem();
   private final ShuffleboardSubsystem m_shuffleboardSubsystem =
       new ShuffleboardSubsystem(
           m_driverStationInfo,
-          m_driveTrainSubsystem,
+          m_drivetrainSubsystem,
           m_scoringSubsystem,
           m_limelightSubsystem,
           m_armSubsystem,
           m_intakeSubsystem,
           m_ledSubsystem);
 
+  public SubsystemContainer m_subsystemContainer =
+      new SubsystemContainer(
+          m_shuffleboardSubsystem,
+          m_pneumaticSubsystem,
+          m_drivetrainSubsystem,
+          m_scoringSubsystem,
+          m_limelightSubsystem,
+          m_armSubsystem,
+          m_intakeSubsystem,
+          m_ledSubsystem);
+
+  // UTIL
+  private final ViennaPIDController m_armPidController =
+      new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
+  private final ViennaPIDController m_armPidControllerAdjust =
+      new ViennaPIDController(PIDConstants.ARM_P_ADJUST, PIDConstants.ARM_I, PIDConstants.ARM_D);
+  private IntakeManager m_intakeManager = new IntakeManager(m_subsystemContainer);
+
   // COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand =
-      new ArmDefaultCommand(m_armSubsystem, m_armPidController);
+      new ArmDefaultCommand(m_subsystemContainer, m_armPidController);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
-      new DriveTrainDefaultCommand(m_driveTrainSubsystem, m_leftJoystick, m_rightJoystick);
+      new DriveTrainDefaultCommand(m_subsystemContainer, m_leftJoystick, m_rightJoystick);
   private final IntakeDefaultCommand m_intakeDefaultCommand =
       new IntakeDefaultCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
-
   private final AutoBalanceCommand m_autoBalanceCommand =
-      new AutoBalanceCommand(m_driveTrainSubsystem);
+      new AutoBalanceCommand(m_drivetrainSubsystem);
 
   private final ScoreMobilityThenBalance m_scoreMobilityThenBalance =
       new ScoreMobilityThenBalance(
-          m_driveTrainSubsystem,
+          m_drivetrainSubsystem,
           m_armPidController,
           m_armSubsystem,
           m_scoringSubsystem,
@@ -146,7 +153,7 @@ public class RobotContainer {
           m_ledSubsystem);
   private final ScoreThenMove m_scoreThenMove =
       new ScoreThenMove(
-          m_driveTrainSubsystem,
+          m_drivetrainSubsystem,
           m_armPidController,
           m_armSubsystem,
           m_scoringSubsystem,
@@ -155,7 +162,7 @@ public class RobotContainer {
           m_ledSubsystem);
   private final ScoreThenBalance m_scoreThenBalanece =
       new ScoreThenBalance(
-          m_driveTrainSubsystem,
+          m_drivetrainSubsystem,
           m_armPidController,
           m_armSubsystem,
           m_scoringSubsystem,
@@ -164,7 +171,7 @@ public class RobotContainer {
           m_ledSubsystem);
   private final JustScore m_justScore =
       new JustScore(
-          m_driveTrainSubsystem,
+          m_drivetrainSubsystem,
           m_armPidController,
           m_armSubsystem,
           m_scoringSubsystem,
@@ -174,7 +181,7 @@ public class RobotContainer {
 
   private final ScoreThenMoveThenAutoGather m_scoreThenMoveThenAutoGather =
       new ScoreThenMoveThenAutoGather(
-          m_driveTrainSubsystem,
+          m_drivetrainSubsystem,
           m_armPidController,
           m_armSubsystem,
           m_scoringSubsystem,
@@ -184,7 +191,7 @@ public class RobotContainer {
 
   private final RedScoreThenMoveThenAutoGather m_RedScoreThenMoveThenAutoGather =
       new RedScoreThenMoveThenAutoGather(
-          m_driveTrainSubsystem,
+          m_drivetrainSubsystem,
           m_armPidController,
           m_armSubsystem,
           m_scoringSubsystem,
@@ -193,7 +200,7 @@ public class RobotContainer {
           m_ledSubsystem);
   private final BlueScoreThenMoveThenAutoGather m_BlueScoreThenMoveThenAutoGather =
       new BlueScoreThenMoveThenAutoGather(
-          m_driveTrainSubsystem,
+          m_drivetrainSubsystem,
           m_armPidController,
           m_armSubsystem,
           m_scoringSubsystem,
@@ -211,7 +218,7 @@ public class RobotContainer {
       new IntakeGatherModeCommand(m_intakeSubsystem, m_intakeManager, false);
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(
-          m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
+          m_subsystemContainer, m_armPidController);
   private final ArmFeederCommand m_armFeederCommand =
       new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem, m_armPidController);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
@@ -227,7 +234,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    m_driveTrainSubsystem.setDefaultCommand(m_driveTrainDefaultCommand);
+    m_drivetrainSubsystem.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_intakeDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
@@ -237,7 +244,7 @@ public class RobotContainer {
     // Put the arm to one of three specified target angles
     m_buttonB.toggleOnTrue(
         new ArmToAngleCommand(
-            m_armSubsystem,
+            m_subsystemContainer,
             m_armPidController,
             ArmConstants.FORWARD_MID,
             false,
@@ -245,7 +252,7 @@ public class RobotContainer {
             m_ledSubsystem));
     m_buttonY.toggleOnTrue(
         new ArmToAngleCommand(
-            m_armSubsystem,
+            m_subsystemContainer,
             m_armPidController,
             ArmConstants.FORWARD_DOWN,
             false,
@@ -253,7 +260,7 @@ public class RobotContainer {
             m_ledSubsystem));
     m_buttonX.toggleOnTrue(
         new ArmToAngleCommand(
-            m_armSubsystem,
+            m_subsystemContainer,
             m_armPidController,
             ArmConstants.BACK_MID,
             false,
@@ -261,7 +268,7 @@ public class RobotContainer {
             m_ledSubsystem));
     m_buttonA.toggleOnTrue(
         new ArmToAngleCommand(
-            m_armSubsystem,
+            m_subsystemContainer,
             m_armPidController,
             ArmConstants.BACK_DOWN,
             false,
@@ -270,7 +277,7 @@ public class RobotContainer {
 
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(
-        new ArmAdjustCommand(m_armSubsystem, m_driverController, m_armPidControllerAdjust));
+        new ArmAdjustCommand(m_driverController, m_armPidControllerAdjust, m_subsystemContainer));
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
@@ -290,9 +297,9 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    m_driveTrainSubsystem.resetOdometry();
+    m_drivetrainSubsystem.resetOdometry();
 
     return m_RedScoreThenMoveThenAutoGather.andThen(
-        new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+        new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
   }
 }

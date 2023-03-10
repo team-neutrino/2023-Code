@@ -16,7 +16,11 @@ import frc.robot.Constants.MotorConstants;
 import frc.robot.Constants.PneumaticsConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
+  private IntakeSubsystem m_intakeSubsystem;
 
+  public IntakeSubsystem(IntakeSubsystem p_intakeSubsystem) {
+    m_intakeSubsystem = p_intakeSubsystem;
+  }
   /** Motor for the wheels of the intake system */
   private CANSparkMax m_wheelsMotor =
       new CANSparkMax(

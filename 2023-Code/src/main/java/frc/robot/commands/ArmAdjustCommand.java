@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.util.ViennaPIDController;
 
@@ -15,17 +16,28 @@ public class ArmAdjustCommand extends CommandBase {
   private XboxController m_driverController;
   private ViennaPIDController m_pidController;
   private double targetAngle;
+  private SubsystemContainer m_subsystemContainer;
+
+  // public ArmAdjustCommand(
+  //     ArmSubsystem p_armSubsystem,
+  //     XboxController p_driverController,
+  //     ViennaPIDController p_pidController) {
+  //   m_pidController = p_pidController;
+  //   m_armSubsystem = p_armSubsystem;
+  //   m_driverController = p_driverController;
+  //   targetAngle = m_armSubsystem.getAbsolutePosition();
+  //     }
 
   public ArmAdjustCommand(
-      ArmSubsystem p_armSubsystem,
       XboxController p_driverController,
-      ViennaPIDController p_pidController) {
+      ViennaPIDController p_pidController,
+      SubsystemContainer p_subsystemContainer) {
     m_pidController = p_pidController;
-    m_armSubsystem = p_armSubsystem;
+    m_subsystemContainer = p_subsystemContainer;
     m_driverController = p_driverController;
     targetAngle = m_armSubsystem.getAbsolutePosition();
 
-    addRequirements(m_armSubsystem);
+    addRequirements(m_subsystemContainer.getDriveTrainSubsystem());
   }
 
   @Override

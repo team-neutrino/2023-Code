@@ -1,6 +1,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -15,10 +17,11 @@ public class AutoBalanceCommand extends CommandBase {
 
   private double voltage;
   private double integral = 0;
-
-  public AutoBalanceCommand(DriveTrainSubsystem p_drivetrain) {
-    m_drivetrain = p_drivetrain;
+  
+  public AutoBalanceCommand(SubsystemContainer p_subsystemContainer) {
+    m_subsystemContainer = p_subsystemContainer;
     addRequirements(m_drivetrain);
+
   }
 
   @Override

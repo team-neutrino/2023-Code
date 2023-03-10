@@ -6,23 +6,33 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class DriveTrainDefaultCommand extends CommandBase {
   DriveTrainSubsystem m_drivetrainSubsystem;
   Joystick m_leftJoystick;
   Joystick m_rightJoystick;
+  SubsystemContainer m_subsystemContainer;
 
   /** Creates a new DriveCommand. */
-  public DriveTrainDefaultCommand(
-      DriveTrainSubsystem p_drivetrainSubsystem,
-      Joystick p_leftJoystick,
-      Joystick p_rightJoystick) {
+  // public DriveTrainDefaultCommand(
+  //     DriveTrainSubsystem p_drivetrainSubsystem,
+  //     Joystick p_leftJoystick,
+  //     Joystick p_rightJoystick) {
 
-    m_drivetrainSubsystem = p_drivetrainSubsystem;
+  //   m_drivetrainSubsystem = p_drivetrainSubsystem;
+  //   m_leftJoystick = p_leftJoystick;
+  //   m_rightJoystick = p_rightJoystick;
+  //   addRequirements(m_drivetrainSubsystem);
+  // }
+
+  public DriveTrainDefaultCommand(
+    SubsystemContainer p_subsystemContainer, Joystick p_leftJoystick, Joystick p_rightJoystick) {
+    m_subsystemContainer = p_subsystemContainer;
     m_leftJoystick = p_leftJoystick;
     m_rightJoystick = p_rightJoystick;
-    addRequirements(m_drivetrainSubsystem);
+    addRequirements(m_subsystemContainer.getDriveTrainSubsystem());
   }
 
   @Override
