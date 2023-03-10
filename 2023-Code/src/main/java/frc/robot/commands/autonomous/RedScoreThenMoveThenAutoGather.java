@@ -98,7 +98,8 @@ public class RedScoreThenMoveThenAutoGather extends SequentialCommandGroup {
         runThatBackCommand,
         new ArmToAngleCommand(
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 1, true),
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager)
+            .withTimeout(1),
         new ArmToAngleCommand(
             p_armSubsystem,
             p_pidController,

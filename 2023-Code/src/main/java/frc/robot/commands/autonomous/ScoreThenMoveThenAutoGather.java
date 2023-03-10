@@ -72,16 +72,17 @@ public class ScoreThenMoveThenAutoGather extends SequentialCommandGroup {
         new ArmToAngleCommand(
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new ParallelRaceGroup(
-            new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager),
-            new TimerCommand(2)),
+            new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager)
+                .withTimeout(2)),
         toGamePieceCommand,
         new ParallelRaceGroup(
             new ArmGatherModeCommand(
-                p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem, p_pidController),
-            new TimerCommand(2)),
+                    p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem, p_pidController)
+                .withTimeout(2)),
         runThatBackCommand,
         new ArmToAngleCommand(
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true));
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager)
+            .withTimeout(2));
   }
 }
