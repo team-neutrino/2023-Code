@@ -295,4 +295,13 @@ public class RobotContainer {
         .getAutoSelected()
         .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
+
+  public void teleopInit() {
+    m_driveTrainSubsystem.resetNavX();
+    System.out.println(
+      "NavX Reset Counter: " + m_driveTrainSubsystem.getNavXResetCounter() + 
+      '\n' +
+      "NavX Yaw: " + m_driveTrainSubsystem.getYaw()
+    );
+  }
 }
