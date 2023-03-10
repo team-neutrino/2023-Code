@@ -157,39 +157,29 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void setMotors(double leftMotorInput, double rightMotorInput) {
-    boolean turbo = m_leftJoystick.getTrigger() && m_rightJoystick.getTrigger();
-
-    double leftMotorSpeed = deadzone(leftMotorInput);
-    double rightMotorSpeed = deadzone(rightMotorInput);
-
-    if (turbo) {
-      leftMotorSpeed = turboAccel(deadzone(leftMotorInput));
-      rightMotorSpeed = turboAccel(deadzone(rightMotorInput));
-    }
-    m_motorGroupLeft.set(leftMotorSpeed);
-    m_motorGroupRight.set(rightMotorSpeed);
+    m_motorGroupLeft.set(deadzone(leftMotorInput));
+    m_motorGroupRight.set(deadzone(rightMotorInput));
   }
 
   public void smartSetMotors(double leftMotorInput, double rightMotorInput){
-    
+    if(m_rightJoystick.getTrigger()){
+      backwardToggled = true;
+    }
     /* if both triggers are held, enable turbo mode */
     if(m_leftJoystick.getTrigger() && m_rightJoystick.getTrigger()){
       m_motorGroupLeft.set(turboAccel(deadzone(leftMotorInput)));
       m_motorGroupRight.set(turboAccel(deadzone(rightMotorInput)));
     }
     /* if only the right joystick is toggled  */
-    else if(m_rightJoystick.getTrigger() && !backwardToggled){
-      backwardToggled = true;
-      m_motorGroupLeft.set(-deadzone(leftMotorInput));
-      m_motorGroupRight.set(-deadzone(rightMotorInput));
+    else if(backwardToggled){
+      m_motorGroupLeft.set(-Math.abs(deadzone(rightMotorInput)));
+      m_motorGroupRight.set(-Math.abs(deadzone(leftMotorInput)));
     } 
     else {
       backwardToggled = false;
-      
       m_motorGroupLeft.set(deadzone(leftMotorInput));
       m_motorGroupRight.set(deadzone(rightMotorInput));
     }
- 
   }
 
   public double deadzone(double joystickY) {
