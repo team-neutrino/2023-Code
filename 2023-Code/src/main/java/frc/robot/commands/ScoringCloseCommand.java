@@ -11,7 +11,7 @@ public class ScoringCloseCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
 
   public ScoringCloseCommand(ScoringSubsystem p_scoringSubsystem) {
-    m_scoringSubsystem = p_scoringSubsystem;
+    p_scoringSubsystem = m_scoringSubsystem;
     addRequirements(m_scoringSubsystem);
   }
 

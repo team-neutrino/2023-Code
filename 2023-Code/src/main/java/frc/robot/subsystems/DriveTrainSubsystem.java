@@ -20,12 +20,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.MotorConstants;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
   // ODOMETRY
-  private DifferentialDriveOdometry m_diffDriveOdometry;
+  private DifferentialDriveOdometry m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Vel(), getL1Pos());
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
+  private Rotation2d m_resetGyro;
+  private Pose2d m_resetPoseMeter;
 
   // MOTORS
   private CANSparkMax m_motorLeft1 =
@@ -86,11 +89,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void resetOdometry() {
     resetEncoders();
     m_navX.reset();
-    m_diffDriveOdometry.resetPosition(
-        Rotation2d.fromDegrees(getYaw()),
-        m_encoderLeft1.getPosition(),
-        m_encoderRight1.getPosition(),
-        m_diffDriveOdometry.getPoseMeters());
   }
 
   public double getR1Pos() {
