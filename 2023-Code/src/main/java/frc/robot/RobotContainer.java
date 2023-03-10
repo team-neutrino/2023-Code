@@ -208,7 +208,7 @@ public class RobotContainer {
   private final IntakeSqueezeCommand m_intakeSqueezeCommand =
       new IntakeSqueezeCommand(m_intakeSubsystem);
   private final IntakeGatherModeCommand m_intakeGatherModeCommand =
-      new IntakeGatherModeCommand(m_intakeSubsystem, m_intakeManager, false);
+      new IntakeGatherModeCommand(m_intakeSubsystem, m_intakeManager, m_armSubsystem, m_scoringSubsystem, m_armPidController, false);
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(
           m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
@@ -273,7 +273,7 @@ public class RobotContainer {
         new ArmAdjustCommand(m_armSubsystem, m_driverController, m_armPidControllerAdjust));
 
     m_leftTrigger.whileTrue(
-        new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
+        new SequentialCommandGroup(m_intakeGatherModeCommand));
     m_leftBumper.whileTrue(m_armFeederCommand);
 
     m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
