@@ -25,7 +25,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 public class DriveTrainSubsystem extends SubsystemBase {
 
   // ODOMETRY
-  private DifferentialDriveOdometry m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Vel(), getL1Pos());
+  private DifferentialDriveOdometry m_diffDriveOdometry;
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
   private Rotation2d m_resetGyro;
   private Pose2d m_resetPoseMeter;
