@@ -10,13 +10,9 @@ public class Bounder {
     }
   }
 
-  public static double bound(double input, double upperLimit, double lowerLimit) {
-    if (input < lowerLimit) {
-      input = lowerLimit;
-    } else if (input > upperLimit) {
-      input = upperLimit;
-    }
-    return input;
+  public static double bound(double unbounded, double lowerLimit, double upperLimit) {
+    return Math.min(
+        Math.max(unbounded, lowerLimit), upperLimit);
   }
 
   public static double bound(double input, double limit) {

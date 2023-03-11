@@ -72,9 +72,8 @@ public class ViennaPIDController {
     m_d = p_d;
   }
 
-  private double bounder(double unbounded) {
-    return Math.min(
-        Math.max(unbounded, Constants.PIDConstants.MIN_OUTPUT), Constants.PIDConstants.MAX_OUTPUT);
+  private double bound(double unbounded) {
+    return Bounder.bound(unbounded, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
   }
 
   public double run(double realPos, double desiredPos) {
@@ -91,7 +90,7 @@ public class ViennaPIDController {
 
     double output = m_p * error + m_i * m_iState + m_d * derivative + ff;
 
-    return bounder(output);
+    return bound(output);
   }
 
   public double run(double realPos, double desiredPos, double zone) {
@@ -109,6 +108,6 @@ public class ViennaPIDController {
 
     double output = m_p * error + m_i * m_iState + m_d * derivative + ff;
 
-    return bounder(output);
+    return bound(output);
   }
 }
