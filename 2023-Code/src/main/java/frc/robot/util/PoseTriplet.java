@@ -5,9 +5,9 @@
 package frc.robot.util;
 
 public class PoseTriplet {
-  private final double m_coord1;
-  private final double m_coord2;
-  private final double m_angle;
+  private double m_coord1;
+  private double m_coord2;
+  private double m_angle;
 
   public PoseTriplet(double p_coord1, double p_coord2, double p_angle) {
     m_coord1 = p_coord1;
@@ -25,5 +25,17 @@ public class PoseTriplet {
 
   public double getAngle() {
     return m_angle;
+  }
+
+  public void setCoord1(double p_coord1) {
+    m_coord1 = p_coord1;
+  }
+
+  public void setCoord2(double p_coord2) {
+    m_coord2 = p_coord2;
+  }
+
+  public void setAngle(double p_angle) {
+    m_angle = p_angle;
   }
 }
