@@ -37,12 +37,12 @@ public class ArmAdjustCommand extends CommandBase {
 
     if (m_driverController.getRightY() < -Constants.ArmConstants.ARM_INPUT_DEADZONE) {
       voltage =
-          m_armSubsystem.limitAmount(
+          m_armSubsystem.limitArmVoltage(
               m_driverController.getRightY() / Constants.ArmConstants.SCALE_FACTOR);
       targetAngle = m_armSubsystem.getAbsolutePosition();
     } else if (m_driverController.getRightY() > Constants.ArmConstants.ARM_INPUT_DEADZONE) {
       voltage =
-          m_armSubsystem.limitAmount(
+          m_armSubsystem.limitArmVoltage(
               m_driverController.getRightY() / Constants.ArmConstants.SCALE_FACTOR);
       targetAngle = m_armSubsystem.getAbsolutePosition();
     } else {
