@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
 import frc.robot.commands.autonomous.ScoreThenMove;
@@ -38,6 +39,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
   public SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
+  private SubsystemContainer m_subsystemContainer;
   private DriveTrainSubsystem m_driveTrainSubsystem;
   private ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   // private LimelightSubsystem m_limelight;
@@ -51,6 +53,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private IntakeManager m_intakeManager;
 
   public ShuffleboardSubsystem(
+    SubsystemContainer p_subsystemContainer,
       DriverStationInfo p_driverStationInfo,
       DriveTrainSubsystem p_driveTrainSubsystem,
       ScoringSubsystem p_scoring,
@@ -60,7 +63,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       LEDSubsystem p_LED,
       ViennaPIDController p_pidController,
       IntakeManager p_intakeManager) {
-
+    m_subsystemContainer = p_subsystemContainer;
     m_driveTrainSubsystem = p_driveTrainSubsystem;
     // m_limelight = p_limelight;
     m_scoring = p_scoring;
@@ -188,11 +191,11 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_autoChooser.setDefaultOption(
         "Default",
         new ScoreMobilityThenBalance(
-            m_driveTrainSubsystem, m_pidController, m_arm, m_scoring, m_intake, null, m_LED));
+            m_subsystemContainer, m_driveTrainSubsystem, m_pidController, m_arm, m_scoring, m_intake, null, m_LED));
     m_autoChooser.addOption(
         "Balance Mobility",
         new ScoreMobilityThenBalance(
-            m_driveTrainSubsystem,
+            m_subsystemContainer, m_driveTrainSubsystem,
             m_pidController,
             m_arm,
             m_scoring,
@@ -202,7 +205,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_autoChooser.addOption(
         "Score then Move",
         new ScoreThenMove(
-            m_driveTrainSubsystem,
+            m_subsystemContainer, m_driveTrainSubsystem,
             m_pidController,
             m_arm,
             m_scoring,
