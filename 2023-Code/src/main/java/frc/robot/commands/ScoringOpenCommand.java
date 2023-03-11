@@ -12,9 +12,7 @@ public class ScoringOpenCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
   private IntakeManager m_intakeManager;
 
-  public ScoringOpenCommand(
-      ScoringSubsystem p_scoringSubsystem,
-      IntakeManager p_intakeManager) {
+  public ScoringOpenCommand(ScoringSubsystem p_scoringSubsystem, IntakeManager p_intakeManager) {
     m_scoringSubsystem = p_scoringSubsystem;
     m_intakeManager = p_intakeManager;
     addRequirements(m_scoringSubsystem);
@@ -34,8 +32,7 @@ public class ScoringOpenCommand extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

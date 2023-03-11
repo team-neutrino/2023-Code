@@ -44,8 +44,7 @@ public class AutonomousUtil {
       double coord1 = triplet.getCoord1();
       double coord2 = triplet.getCoord2();
       double angle = triplet.getAngle();
-      poseArray.add(
-          new Pose2d(coord1, coord2, Rotation2d.fromDegrees(angle)));
+      poseArray.add(new Pose2d(coord1, coord2, Rotation2d.fromDegrees(angle)));
     }
     return TrajectoryGenerator.generateTrajectory(poseArray, config);
   }
@@ -61,8 +60,7 @@ public class AutonomousUtil {
         coord2 = -coord2;
         angle = -angle;
       }
-      poseArray.add(
-          new Pose2d(coord1, coord2, Rotation2d.fromDegrees(angle)));
+      poseArray.add(new Pose2d(coord1, coord2, Rotation2d.fromDegrees(angle)));
     }
     return TrajectoryGenerator.generateTrajectory(poseArray, config);
   }
@@ -72,7 +70,8 @@ public class AutonomousUtil {
       DriveTrainSubsystem p_driveTrainSubsystem,
       TrajectoryConfig trajectoryConfig,
       boolean inverted) {
-    Trajectory generatedTrajectory = generateTrajectoryFromPoses(tripletList, trajectoryConfig, inverted);
+    Trajectory generatedTrajectory =
+        generateTrajectoryFromPoses(tripletList, trajectoryConfig, inverted);
     RamseteCommand generatedRamseteCommand =
         generateRamseteCommand(generatedTrajectory, p_driveTrainSubsystem);
     return generatedRamseteCommand;

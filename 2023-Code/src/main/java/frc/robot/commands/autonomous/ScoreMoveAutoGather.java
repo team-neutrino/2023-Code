@@ -53,7 +53,7 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
       LEDSubsystem p_ledSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
     if (DriverStationInfo.getAlliance() == Alliance.Red) {
-        inverted = true;
+      inverted = true;
     }
 
     toGamePieceArray =
@@ -98,7 +98,7 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
                 false,
                 false,
                 p_ledSubsystem),
-        toGamePieceCommand,
+            toGamePieceCommand,
             new IntakeGatherModeCommand(p_intakeSubsystem, p_intakeManager, true)),
         new InstantCommand(p_intakeSubsystem::stopIntake, p_intakeSubsystem),
         new ArmGatherModeCommand(
@@ -115,7 +115,6 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
             true,
             true,
             false,
-            p_ledSubsystem)
-        );
+            p_ledSubsystem));
   }
 }
