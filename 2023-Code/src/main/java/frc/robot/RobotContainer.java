@@ -113,7 +113,6 @@ public class RobotContainer {
 
   public SubsystemContainer m_subsystemContainer =
       new SubsystemContainer(
-          m_shuffleboardSubsystem,
           m_pneumaticSubsystem,
           m_drivetrainSubsystem,
           m_scoringSubsystem,

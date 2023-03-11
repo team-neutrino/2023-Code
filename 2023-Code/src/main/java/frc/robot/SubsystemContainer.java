@@ -17,10 +17,8 @@ public class SubsystemContainer {
   private IntakeSubsystem m_intakeSubsystem;
   private LEDSubsystem m_ledSubsystem;
   private PneumaticSubsystem m_pneumaticSubsystem;
-  private ShuffleboardSubsystem m_shuffleboardSubsystem;
 
   public SubsystemContainer(
-      ShuffleboardSubsystem p_shuffleboardSubsystem,
       PneumaticSubsystem p_pneumaticSubsystem,
       DriveTrainSubsystem p_driveTrainSubsystem,
       ScoringSubsystem p_scoringSubsystem,
@@ -35,7 +33,6 @@ public class SubsystemContainer {
     m_intakeSubsystem = p_intakeSubsystem;
     m_ledSubsystem = p_ledSubsystem;
     m_pneumaticSubsystem = p_pneumaticSubsystem;
-    m_shuffleboardSubsystem = p_shuffleboardSubsystem;
   }
 
   public DriveTrainSubsystem getDriveTrainSubsystem() {
