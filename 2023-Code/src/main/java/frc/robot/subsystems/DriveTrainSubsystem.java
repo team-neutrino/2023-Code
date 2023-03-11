@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.MotorConstants;
@@ -159,20 +158,17 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_motorGroupRight.set(deadzone(rightMotorInput));
   }
 
-  public void smartSetMotors(double leftMotorInput, double rightMotorInput){
-    System.out.println(m_rightJoystick.getTop());
-
+  public void smartSetMotors(double leftMotorInput, double rightMotorInput) {
     /* if both triggers are held, enable turbo mode */
-    if(m_leftJoystick.getTrigger() && m_rightJoystick.getTrigger()){
+    if (m_leftJoystick.getTrigger() && m_rightJoystick.getTrigger()) {
       m_motorGroupLeft.set(turboAccel(deadzone(leftMotorInput)));
       m_motorGroupRight.set(turboAccel(deadzone(rightMotorInput)));
     }
-    /* if only the right joystick is toggled  */
-    else if(m_rightJoystick.getTop()){
+    /* if the top of the joystick is held  */
+    else if (m_rightJoystick.getTop()) {
       m_motorGroupLeft.set(-deadzone(rightMotorInput));
       m_motorGroupRight.set(-deadzone(leftMotorInput));
-    } 
-    else {
+    } else {
       m_motorGroupLeft.set(deadzone(leftMotorInput));
       m_motorGroupRight.set(deadzone(rightMotorInput));
     }
