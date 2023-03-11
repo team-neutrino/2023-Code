@@ -10,7 +10,7 @@ public class Bounder {
     }
   }
 
-  public static double limitAmount(double input, double upperLimit, double lowerLimit) {
+  public static double bound(double input, double upperLimit, double lowerLimit) {
     if (input < lowerLimit) {
       input = lowerLimit;
     } else if (input > upperLimit) {
@@ -19,7 +19,7 @@ public class Bounder {
     return input;
   }
 
-  public static double limitAmount(double input, double limit) {
-    return limitAmount(input, -limit, limit);
+  public static double bound(double input, double limit) {
+    return bound(input, -limit, limit);
   }
 }

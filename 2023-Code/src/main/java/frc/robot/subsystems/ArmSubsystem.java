@@ -12,10 +12,10 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
+import frc.robot.util.Bounder;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -45,13 +45,8 @@ public class ArmSubsystem extends SubsystemBase {
     m_armMotor.set(voltage);
   }
 
-  public double limitAmount(double voltage) {
-    if (voltage < -Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
-      voltage = -Constants.ArmConstants.ARM_OUTPUT_LIMIT;
-    } else if (voltage > Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
-      voltage = Constants.ArmConstants.ARM_OUTPUT_LIMIT;
-    }
-    return voltage;
+  public double limitArmVoltage(double voltage) {
+    return Bounder.bound(voltage, ArmConstants.ARM_OUTPUT_LIMIT);
   }
 
   public void smartSet(double desiredVoltage) {
@@ -70,7 +65,7 @@ public class ArmSubsystem extends SubsystemBase {
   public double getVoltage() {
     double appliedOutput = m_armMotor.getAppliedOutput();
     double busVoltage = m_armMotor.getBusVoltage();
-    return appliedOutput * busVoltage; // chiefdelphi.com/t/get-voltage-from-spark-max/344136/3
+    return appliedOutput * busVoltage; // equation taken from chiefdelphi.com/t/get-voltage-from-spark-max/344136/3
   }
 
   public double getPosition() {
