@@ -36,7 +36,7 @@ import frc.robot.commands.autonomous.manualGeneration.JustScore;
 import frc.robot.commands.autonomous.manualGeneration.ScoreMobilityThenBalance;
 import frc.robot.commands.autonomous.manualGeneration.ScoreThenBalance;
 import frc.robot.commands.autonomous.manualGeneration.ScoreThenMove;
-import frc.robot.commands.autonomous.manualGeneration.ScoreThenMoveThenAutoGather;
+import frc.robot.commands.autonomous.manualGeneration.BlueScoreThenMoveThenAutoGather;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -132,7 +132,15 @@ public class RobotContainer {
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
 
-private final ScoreMobilityThenBalance m_scoreMobilityThenBalance = new ScoreMobilityThenBalance(m_driveTrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem);
+  private final ScoreMobilityThenBalance m_scoreMobilityThenBalance =
+      new ScoreMobilityThenBalance(
+          m_driveTrainSubsystem,
+          m_armPidController,
+          m_armSubsystem,
+          m_scoringSubsystem,
+          m_intakeSubsystem,
+          m_intakeManager,
+          m_ledSubsystem);
   private final ScoreThenMove m_scoreThenMove =
       new ScoreThenMove(
           m_driveTrainSubsystem,
@@ -161,8 +169,8 @@ private final ScoreMobilityThenBalance m_scoreMobilityThenBalance = new ScoreMob
           m_intakeManager,
           m_ledSubsystem);
 
-  private final ScoreThenMoveThenAutoGather m_scoreThenMoveThenAutoGather =
-      new ScoreThenMoveThenAutoGather(
+  private final BlueScoreThenMoveThenAutoGather m_scoreThenMoveThenAutoGather =
+      new BlueScoreThenMoveThenAutoGather(
           m_driveTrainSubsystem,
           m_armPidController,
           m_armSubsystem,

@@ -41,6 +41,7 @@ public class ArmGatherModeCommand extends CommandBase {
 
     if (m_armSubsystem.getAbsolutePosition() >= ArmConstants.GATHER_POSITION) {
       if (m_intakeSubsystem.isIntakeDown()) {
+        m_intakeSubsystem.stopIntake();
         m_intakeSubsystem.unsqueeze();
       }
       m_scoringSubsystem.closeScoring();

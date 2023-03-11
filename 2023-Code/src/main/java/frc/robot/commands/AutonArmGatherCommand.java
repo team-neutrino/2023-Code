@@ -39,20 +39,19 @@ public class AutonArmGatherCommand extends CommandBase {
   public void execute() {
     m_intakeSubsystem.setIntakeDown();
 
-    if(detective == false){
-        if(m_intakeSubsystem.detectedGamePiece()){
-          detective = true;
-        }
-        m_intakeSubsystem.runIntake();
-        m_scoringSubsystem.openScoring();
-        m_armSubsystem.smartSet(
+    if (detective == false) {
+      if (m_intakeSubsystem.detectedGamePiece()) {
+        detective = true;
+      }
+      m_intakeSubsystem.runIntake();
+      m_scoringSubsystem.openScoring();
+      m_armSubsystem.smartSet(
           m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.ARM_FRONTMOST));
-    } 
-    else {
+    } else {
       m_intakeSubsystem.stopIntake();
       m_scoringSubsystem.closeScoring();
       m_armSubsystem.smartSet(
-        m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
+          m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
     }
   }
 
@@ -63,7 +62,8 @@ public class AutonArmGatherCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if(m_intakeSubsystem.detectedGamePiece() && Math.abs(m_armSubsystem.getAbsolutePosition() - ArmConstants.FORWARD_MID) < 1){
+    if (m_intakeSubsystem.detectedGamePiece()
+        && Math.abs(m_armSubsystem.getAbsolutePosition() - ArmConstants.FORWARD_MID) < 1) {
       return true;
     }
     return false;

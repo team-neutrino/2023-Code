@@ -63,8 +63,7 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
         AutonomousUtil.generateRamseteFromPoses(
             reEnterCommunity,
             p_drivetrainSubsystem,
-            TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG
-            );
+            TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -72,7 +71,9 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
         new ArmToAngleCommand(
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, .75, true),
-        new ParallelRaceGroup(new TimerCommand(1), new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID)),
+        new ParallelRaceGroup(
+            new TimerCommand(1),
+            new ArmToAngleCommand(p_armSubsystem, p_pidController, ArmConstants.FORWARD_MID)),
         moveForwardCommand,
         reEnterCommunityCommand,
         new AutoBalanceCommand(p_drivetrainSubsystem));
