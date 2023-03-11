@@ -40,6 +40,7 @@ public class ArmGatherModeCommand extends CommandBase {
   m_pidController = p_pidController;
   addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
 }
+
 @Override
   public void initialize() {}
 
