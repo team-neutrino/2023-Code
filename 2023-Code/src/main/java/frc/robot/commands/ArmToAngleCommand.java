@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.SubsystemContainer;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -20,7 +21,7 @@ public class ArmToAngleCommand extends CommandBase {
   private double voltage;
   private LEDSubsystem m_ledSubsystem;
   private boolean m_auton = false;
-  private boolean m_Endauton = false;
+  private boolean m_endAuton = false;
 
   private boolean m_buttoncheck = false;
 
@@ -46,7 +47,7 @@ public class ArmToAngleCommand extends CommandBase {
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
-    m_Endauton = false;
+    m_endAuton = false;
     m_buttoncheck = p_buttoncheck;
     addRequirements(m_armSubsystem, m_ledSubsystem);
   }
@@ -63,7 +64,7 @@ public class ArmToAngleCommand extends CommandBase {
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
-    m_Endauton = p_endAuton;
+    m_endAuton = p_endAuton;
     m_buttoncheck = p_buttoncheck;
     addRequirements(m_armSubsystem, m_ledSubsystem);
   }
@@ -76,11 +77,15 @@ public class ArmToAngleCommand extends CommandBase {
     if (m_buttoncheck) {
 
       if (m_ledSubsystem.getColor() == LEDColor.PURPLE) {
-        voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), 32);
+        voltage =
+            m_pidController.run(
+                m_armSubsystem.getAbsolutePosition(), ArmConstants.QUASI_BACK_MID);
         m_armSubsystem.smartSet(voltage);
       }
       if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
-        voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), 38.5);
+        voltage =
+            m_pidController.run(
+                m_armSubsystem.getAbsolutePosition(), ArmConstants.BACK_MID);
         m_armSubsystem.smartSet(voltage);
       }
     } else {
@@ -88,7 +93,7 @@ public class ArmToAngleCommand extends CommandBase {
       m_armSubsystem.smartSet(voltage);
     }
 
-    if (m_Endauton) {
+    if (m_endAuton) {
       m_ScoringSubsystem.openScoring();
     }
   }

@@ -31,13 +31,13 @@ import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
-import frc.robot.commands.autonomous.manualGeneration.BlueScoreThenMoveThenAutoGather;
-import frc.robot.commands.autonomous.manualGeneration.JustScore;
-import frc.robot.commands.autonomous.manualGeneration.RedScoreThenMoveThenAutoGather;
-import frc.robot.commands.autonomous.manualGeneration.ScoreMobilityThenBalance;
-import frc.robot.commands.autonomous.manualGeneration.ScoreThenBalance;
-import frc.robot.commands.autonomous.manualGeneration.ScoreThenMove;
-import frc.robot.commands.autonomous.manualGeneration.ScoreThenMoveThenAutoGather;
+import frc.robot.commands.autonomous.BlueScoreThenMoveThenAutoGather;
+import frc.robot.commands.autonomous.JustScore;
+import frc.robot.commands.autonomous.RedScoreThenMoveThenAutoGather;
+import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
+import frc.robot.commands.autonomous.ScoreThenBalance;
+import frc.robot.commands.autonomous.ScoreThenMove;
+import frc.robot.commands.autonomous.ScoreThenMoveThenAutoGather;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -89,9 +89,7 @@ public class RobotContainer {
 
   private final JoystickButton m_rightStickButton =
       new JoystickButton(m_driverController, XboxController.Button.kRightStick.value);
-  // UTIL
-  private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
-
+    
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_drivetrainSubsystem =
       new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick);
@@ -101,15 +99,6 @@ public class RobotContainer {
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
   private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
   private final PneumaticSubsystem m_pneumaticSubsystem = new PneumaticSubsystem();
-  private final ShuffleboardSubsystem m_shuffleboardSubsystem =
-      new ShuffleboardSubsystem(
-          m_driverStationInfo,
-          m_drivetrainSubsystem,
-          m_scoringSubsystem,
-          m_limelightSubsystem,
-          m_armSubsystem,
-          m_intakeSubsystem,
-          m_ledSubsystem);
 
   public SubsystemContainer m_subsystemContainer =
       new SubsystemContainer(
@@ -121,12 +110,26 @@ public class RobotContainer {
           m_intakeSubsystem,
           m_ledSubsystem);
 
-  // UTIL
+    // UTIL
   private final ViennaPIDController m_armPidController =
       new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
   private final ViennaPIDController m_armPidControllerAdjust =
       new ViennaPIDController(PIDConstants.ARM_P_ADJUST, PIDConstants.ARM_I, PIDConstants.ARM_D);
   private IntakeManager m_intakeManager = new IntakeManager(m_subsystemContainer);
+  private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
+
+  private final ShuffleboardSubsystem m_shuffleboardSubsystem =
+      new ShuffleboardSubsystem(
+        m_subsystemContainer,
+          m_driverStationInfo,
+          m_drivetrainSubsystem,
+          m_scoringSubsystem,
+          m_limelightSubsystem,
+          m_armSubsystem,
+          m_intakeSubsystem,
+          m_ledSubsystem,
+          m_armPidController,
+          m_intakeManager);
 
   // COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand =
@@ -270,8 +273,8 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     m_drivetrainSubsystem.resetOdometry();
-
-    return m_RedScoreThenMoveThenAutoGather.andThen(
-        new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
+    return m_shuffleboardSubsystem
+        .getAutoSelected()
+        .andThen(new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
   }
 }
