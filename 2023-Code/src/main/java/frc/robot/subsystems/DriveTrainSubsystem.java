@@ -49,8 +49,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private MotorControllerGroup m_motorGroupLeft =
       new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
 
-  private boolean backwardToggled = false;
-
   /** Creates a new Drivetrain. */
   public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick) {
     m_leftJoystick = p_leftJoystick;
@@ -162,21 +160,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void smartSetMotors(double leftMotorInput, double rightMotorInput){
-    if(m_rightJoystick.getTrigger()){
-      backwardToggled = true;
-    }
+    System.out.println(m_rightJoystick.getTop());
+
     /* if both triggers are held, enable turbo mode */
     if(m_leftJoystick.getTrigger() && m_rightJoystick.getTrigger()){
       m_motorGroupLeft.set(turboAccel(deadzone(leftMotorInput)));
       m_motorGroupRight.set(turboAccel(deadzone(rightMotorInput)));
     }
     /* if only the right joystick is toggled  */
-    else if(backwardToggled){
-      m_motorGroupLeft.set(-Math.abs(deadzone(rightMotorInput)));
-      m_motorGroupRight.set(-Math.abs(deadzone(leftMotorInput)));
+    else if(m_rightJoystick.getTop()){
+      m_motorGroupLeft.set(-deadzone(rightMotorInput));
+      m_motorGroupRight.set(-deadzone(leftMotorInput));
     } 
     else {
-      backwardToggled = false;
       m_motorGroupLeft.set(deadzone(leftMotorInput));
       m_motorGroupRight.set(deadzone(rightMotorInput));
     }
