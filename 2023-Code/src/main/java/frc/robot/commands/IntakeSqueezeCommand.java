@@ -13,10 +13,10 @@ public class IntakeSqueezeCommand extends CommandBase {
   IntakeSubsystem m_intakeSubsystem;
 
   /** Creates a new IntakeUnsqeezeCommand. */
-  public IntakeSqueezeCommand(SubsystemContainer p_subsystemContainer, IntakeSubsystem p_intakeSubsystem) {
+  public IntakeSqueezeCommand(SubsystemContainer p_subsystemContainer) {
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(p_intakeSubsystem);
+    addRequirements(m_intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.

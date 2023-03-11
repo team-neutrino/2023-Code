@@ -41,8 +41,7 @@ public class ArmToAngleCommand extends CommandBase {
       ViennaPIDController p_pidController,
       double p_targetAngle,
       boolean p_auton,
-      boolean p_buttoncheck,
-      LEDSubsystem p_ledSubsystem) {
+      boolean p_buttoncheck) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
     m_pidController = p_pidController;

@@ -11,7 +11,7 @@ import frc.robot.subsystems.ScoringSubsystem;
 public class ScoringDefaultCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
 
-  public ScoringDefaultCommand(SubsystemContainer p_subsystemContainer, ScoringSubsystem p_scoringSubsystem) {
+  public ScoringDefaultCommand(SubsystemContainer p_subsystemContainer) {
     m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     addRequirements(m_scoringSubsystem);
   }

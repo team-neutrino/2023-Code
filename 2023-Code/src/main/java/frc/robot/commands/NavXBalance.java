@@ -14,7 +14,7 @@ public class NavXBalance extends CommandBase {
   double TILTED = -14;
 
   /** Creates a new NavXBalance. */
-  public NavXBalance(SubsystemContainer p_subsystemContainer, DriveTrainSubsystem p_DriveTrainSubsystem) {
+  public NavXBalance(SubsystemContainer p_subsystemContainer) {
     m_DriveTrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
     // Use addRequirements() here to declare subsystem dependencies.
   }

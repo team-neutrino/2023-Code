@@ -16,7 +16,7 @@ public class IntakeGatherModeCommand extends CommandBase {
   private boolean auton;
 
   public IntakeGatherModeCommand(SubsystemContainer p_subsystemContainer,
-      IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager, boolean p_auton) {
+    IntakeManager p_intakeManager, boolean p_auton) {
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
     auton = p_auton;

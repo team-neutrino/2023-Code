@@ -11,7 +11,7 @@ public class LEDPotentialDefaultCommand extends CommandBase {
   private LEDSubsystem m_ledSubsystem;
   private DriverStationInfo m_driverStationInfo;
 
-  public LEDPotentialDefaultCommand(SubsystemContainer p_subsystemContainer, LEDSubsystem p_ledSubsystem) {
+  public LEDPotentialDefaultCommand(SubsystemContainer p_subsystemContainer) {
     m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
   }
 

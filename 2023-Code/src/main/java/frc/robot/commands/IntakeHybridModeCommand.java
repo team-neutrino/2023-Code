@@ -14,7 +14,7 @@ public class IntakeHybridModeCommand extends CommandBase {
   IntakeSubsystem m_intakeSubsystem;
   IntakeManager m_intakeManager;
 
-  public IntakeHybridModeCommand(SubsystemContainer p_subsystemContainer, IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
+  public IntakeHybridModeCommand(SubsystemContainer p_subsystemContainer, IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
     addRequirements(m_intakeSubsystem);

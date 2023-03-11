@@ -19,7 +19,7 @@ public class IntakeDefaultCommand extends CommandBase {
   IntakeManager m_intakeManager;
 
   /** Constructor, creates a new IntakeDefaultCommand. */
-  public IntakeDefaultCommand(SubsystemContainer p_subsystemContainer, IntakeSubsystem p_intakeSubsystem, IntakeManager p_inIntakeManager) {
+  public IntakeDefaultCommand(SubsystemContainer p_subsystemContainer, IntakeManager p_inIntakeManager) {
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_inIntakeManager;
 

@@ -17,7 +17,7 @@ public class IntakeCommand extends CommandBase {
   private Timer timer;
   private double m_time = 60 * 60 * 24;
 
-  public IntakeCommand(SubsystemContainer p_subsystemContainer, IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
+  public IntakeCommand(SubsystemContainer p_subsystemContainer, IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
 
