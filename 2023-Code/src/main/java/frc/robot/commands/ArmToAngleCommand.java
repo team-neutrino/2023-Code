@@ -25,9 +25,9 @@ public class ArmToAngleCommand extends CommandBase {
   private boolean m_buttoncheck = false;
 
   public ArmToAngleCommand(
+      SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
-      double p_targetAngle,
-      SubsystemContainer p_subsystemContainer
+      double p_targetAngle
       ) {
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;

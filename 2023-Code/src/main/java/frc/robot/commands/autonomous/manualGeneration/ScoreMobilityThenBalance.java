@@ -75,7 +75,7 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
         new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, .75, true),
         new ParallelRaceGroup(
             new TimerCommand(1),
-            new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.FORWARD_MID, isFinished(), isFinished())), //originally had no booleans at end, what should be put in?
+            new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.FORWARD_MID)),
         moveForwardCommand,
         new NavXBalance(p_subsystemContainer),
         new AutoBalanceCommand(p_subsystemContainer));

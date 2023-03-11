@@ -32,6 +32,7 @@ public class ScoreThenBalance extends SequentialCommandGroup {
   private RamseteCommand moveForwardCommand;
 
   public ScoreThenBalance(
+      SubsystemContainer p_subsystemContainer,
       DriveTrainSubsystem p_drivetrainSubsystem,
       ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
