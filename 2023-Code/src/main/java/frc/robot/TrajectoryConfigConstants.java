@@ -19,6 +19,8 @@ public class TrajectoryConfigConstants {
   public static final double K_RAMSETE_BETA = 2;
   public static final double K_RAMSETE_ZETA = 0.7;
   public static final double KP_DRIVE_VEL = .44295;
+  public static final double KI_DRIVE_VEL = 0;
+  public static final double KD_DRIVE_VEL = 0;
   public static final double KS_VOLTS = 0.13804;
   public static final double K_MAX_VOLTAGE =
       10; // < 12V due to voltage dip after startup current draw, according to docs

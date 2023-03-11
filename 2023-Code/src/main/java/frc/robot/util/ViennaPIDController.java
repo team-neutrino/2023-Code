@@ -93,4 +93,22 @@ public class ViennaPIDController {
 
     return bounder(output);
   }
+
+  public double run(double realPos, double desiredPos, double zone) {
+    double error = desiredPos - realPos;
+    error = Bounder.deadzone(error, zone);
+
+    /*Integral calculation */
+    m_iState += error * PIDConstants.dt;
+
+    /*Derivative calculation */
+    double derivative = (error - previousError) / PIDConstants.dt;
+    previousError = error;
+
+    double ff = desiredPos * m_f;
+
+    double output = m_p * error + m_i * m_iState + m_d * derivative + ff;
+
+    return bounder(output);
+  }
 }
