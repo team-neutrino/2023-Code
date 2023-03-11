@@ -30,7 +30,7 @@ public class DriveTrainDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_drivetrainSubsystem.setMotors(m_leftJoystick.getY() * -1, m_rightJoystick.getY() * -1);
+    m_drivetrainSubsystem.smartSetMotors(m_leftJoystick.getY() * -1, m_rightJoystick.getY() * -1);
   }
 
   @Override
