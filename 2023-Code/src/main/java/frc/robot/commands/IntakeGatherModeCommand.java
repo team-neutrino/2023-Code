@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.util.IntakeManager;
 
@@ -14,9 +15,9 @@ public class IntakeGatherModeCommand extends CommandBase {
   private IntakeManager m_intakeManager;
   private boolean auton;
 
-  public IntakeGatherModeCommand(
+  public IntakeGatherModeCommand(SubsystemContainer p_subsystemContainer,
       IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager, boolean p_auton) {
-    m_intakeSubsystem = p_intakeSubsystem;
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
     auton = p_auton;
     addRequirements(m_intakeSubsystem);

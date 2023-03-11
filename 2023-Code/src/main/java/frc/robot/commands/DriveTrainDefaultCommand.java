@@ -13,7 +13,6 @@ public class DriveTrainDefaultCommand extends CommandBase {
   DriveTrainSubsystem m_drivetrainSubsystem;
   Joystick m_leftJoystick;
   Joystick m_rightJoystick;
-  SubsystemContainer m_subsystemContainer;
 
   /** Creates a new DriveCommand. */
   // public DriveTrainDefaultCommand(

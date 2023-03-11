@@ -6,6 +6,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.IntakeManager;
@@ -18,25 +20,25 @@ public class ScoringOpenCommand extends CommandBase {
   private boolean autonomous = false;
   private double m_time = 60 * 60 * 24;
 
-  public ScoringOpenCommand(
+  public ScoringOpenCommand(SubsystemContainer p_subsystemContainer, 
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager) {
-    m_scoringSubsystem = p_scoringSubsystem;
-    m_intakeSubsystem = p_intakeSubsystem;
+    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
     timer = new Timer();
     addRequirements(m_scoringSubsystem, m_intakeSubsystem);
   }
 
-  public ScoringOpenCommand(
+  public ScoringOpenCommand(SubsystemContainer p_subsystemContainer, 
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
       double p_time,
       boolean auto) {
-    m_scoringSubsystem = p_scoringSubsystem;
-    m_intakeSubsystem = m_intakeSubsystem;
+    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
 
     timer = new Timer();

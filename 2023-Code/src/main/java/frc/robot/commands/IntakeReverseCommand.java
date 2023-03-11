@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.util.IntakeManager;
 
@@ -17,8 +18,8 @@ public class IntakeReverseCommand extends CommandBase {
   private Timer timer;
   private double squeeze_time;
 
-  public IntakeReverseCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
-    m_intakeSubsystem = p_intakeSubsystem;
+  public IntakeReverseCommand(SubsystemContainer p_subsystemContainer, IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
 
     // change and adjust this time to determine how long to intake squeezes & runs before unsquezing

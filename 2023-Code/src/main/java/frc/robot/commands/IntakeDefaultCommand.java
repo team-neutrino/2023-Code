@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.util.IntakeManager;
 
@@ -15,12 +16,11 @@ import frc.robot.util.IntakeManager;
 public class IntakeDefaultCommand extends CommandBase {
   /** An object of the intake subsystem. */
   IntakeSubsystem m_intakeSubsystem;
-
   IntakeManager m_intakeManager;
 
   /** Constructor, creates a new IntakeDefaultCommand. */
-  public IntakeDefaultCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_inIntakeManager) {
-    m_intakeSubsystem = p_intakeSubsystem;
+  public IntakeDefaultCommand(SubsystemContainer p_subsystemContainer, IntakeSubsystem p_intakeSubsystem, IntakeManager p_inIntakeManager) {
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_inIntakeManager;
 
     addRequirements(m_intakeSubsystem);

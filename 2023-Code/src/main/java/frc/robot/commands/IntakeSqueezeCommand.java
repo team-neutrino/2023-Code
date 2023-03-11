@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeSqueezeCommand extends CommandBase {
@@ -12,8 +13,8 @@ public class IntakeSqueezeCommand extends CommandBase {
   IntakeSubsystem m_intakeSubsystem;
 
   /** Creates a new IntakeUnsqeezeCommand. */
-  public IntakeSqueezeCommand(IntakeSubsystem p_intakeSubsystem) {
-    m_intakeSubsystem = p_intakeSubsystem;
+  public IntakeSqueezeCommand(SubsystemContainer p_subsystemContainer, IntakeSubsystem p_intakeSubsystem) {
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(p_intakeSubsystem);
   }

@@ -17,7 +17,6 @@ public class ArmToAngleCommand extends CommandBase {
   private ViennaPIDController m_pidController;
   private double m_targetAngle;
   private ScoringSubsystem m_ScoringSubsystem;
-  private SubsystemContainer m_subsystemContainer;
   private double voltage;
   private LEDSubsystem m_ledSubsystem;
   private boolean m_auton = false;

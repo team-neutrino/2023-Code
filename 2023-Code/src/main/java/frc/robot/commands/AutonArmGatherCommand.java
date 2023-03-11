@@ -11,7 +11,6 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.ViennaPIDController;
-import frc.robot.SubsystemContainer.*;
 
 public class AutonArmGatherCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;

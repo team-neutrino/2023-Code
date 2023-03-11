@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.util.IntakeManager;
 
@@ -16,16 +17,16 @@ public class IntakeCommand extends CommandBase {
   private Timer timer;
   private double m_time = 60 * 60 * 24;
 
-  public IntakeCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
-    m_intakeSubsystem = p_intakeSubsystem;
+  public IntakeCommand(SubsystemContainer p_subsystemContainer, IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
 
     addRequirements(m_intakeSubsystem);
   }
 
-  public IntakeCommand(
+  public IntakeCommand(SubsystemContainer p_subsystemContainer,
       IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager, double p_time) {
-    m_intakeSubsystem = p_intakeSubsystem;
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
     timer = new Timer();
     m_time = p_time;

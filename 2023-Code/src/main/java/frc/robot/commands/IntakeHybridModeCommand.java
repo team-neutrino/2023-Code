@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.util.IntakeManager;
 
@@ -13,8 +14,8 @@ public class IntakeHybridModeCommand extends CommandBase {
   IntakeSubsystem m_intakeSubsystem;
   IntakeManager m_intakeManager;
 
-  public IntakeHybridModeCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
-    m_intakeSubsystem = p_intakeSubsystem;
+  public IntakeHybridModeCommand(SubsystemContainer p_subsystemContainer, IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager) {
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
     addRequirements(m_intakeSubsystem);
   }
