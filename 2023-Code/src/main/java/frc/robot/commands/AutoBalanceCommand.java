@@ -1,11 +1,9 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.util.Bounder;
 import frc.robot.util.ViennaPIDController;
 
 public class AutoBalanceCommand extends CommandBase {
@@ -13,8 +11,6 @@ public class AutoBalanceCommand extends CommandBase {
   private final DriveTrainSubsystem m_drivetrainSubsystem;
 
   private double desiredPos = 0;
-  private double error;
-
   private double voltage;
 
   private ViennaPIDController PIDController;
