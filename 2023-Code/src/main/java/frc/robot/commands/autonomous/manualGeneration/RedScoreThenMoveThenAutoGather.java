@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants;
+import frc.robot.SubsystemContainer;
 import frc.robot.TrajectoryConfigConstants;
 import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
@@ -39,6 +41,7 @@ public class RedScoreThenMoveThenAutoGather extends SequentialCommandGroup {
 
   /** Creates a new TestAutonGeneratedTrajectory. */
   public RedScoreThenMoveThenAutoGather(
+      SubsystemContainer p_subsystemContainer,
       DriveTrainSubsystem p_drivetrainSubsystem,
       ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
@@ -96,36 +99,20 @@ public class RedScoreThenMoveThenAutoGather extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(
-            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager)
+        new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
+        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)
             .withTimeout(.5),
         new ParallelRaceGroup(
-            new ArmToAngleCommand(
-                p_armSubsystem,
-                p_pidController,
-                ArmConstants.FORWARD_MID,
-                false,
-                false,
-                p_ledSubsystem),
+            new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.FORWARD_MID, false, false),
             toGamePieceCommand,
-            new IntakeGatherModeCommand(p_intakeSubsystem, p_intakeManager, true)),
+            new IntakeGatherModeCommand(p_subsystemContainer, p_intakeManager, true)),
         new InstantCommand(p_intakeSubsystem::stopIntake, p_intakeSubsystem),
-        new ArmGatherModeCommand(
-                p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem, p_pidController)
+        new ArmGatherModeCommand(p_subsystemContainer, p_pidController)
             .withTimeout(2),
         runThatBackCommand,
-        new ArmToAngleCommand(
-            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 1, true),
-        new ArmToAngleCommand(
-            p_armSubsystem,
-            p_pidController,
-            ArmConstants.FORWARD_MID,
-            true,
-            true,
-            false,
-            p_ledSubsystem));
+        new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
+        new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 1, true),
+        new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.FORWARD_MID, true, true, false));
 
     // addCommands(
     //     new ArmToAngleCommand(
