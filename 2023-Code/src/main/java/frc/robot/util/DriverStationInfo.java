@@ -7,11 +7,11 @@ public class DriverStationInfo {
 
   public DriverStationInfo() {}
 
-  public double getMatchTime() {
+  public static double getMatchTime() {
     return DriverStation.getMatchTime();
   }
 
-  public Alliance getAlliance() {
+  public static Alliance getAlliance() {
     return DriverStation.getAlliance();
   }
 }

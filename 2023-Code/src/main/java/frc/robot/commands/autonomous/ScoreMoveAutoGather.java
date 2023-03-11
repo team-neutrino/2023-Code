@@ -21,6 +21,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
+import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
@@ -39,7 +40,7 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
   private ArrayList<PoseTriplet> runThatBack;
   private RamseteCommand toGamePieceCommand;
   private RamseteCommand runThatBackCommand;
-  private boolean m_inverted;
+  private boolean inverted = false;
 
   /** Creates a new TestAutonGeneratedTrajectory. */
   public ScoreMoveAutoGather(
@@ -49,10 +50,11 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
-      LEDSubsystem p_ledSubsystem,
-      boolean p_inverted) {
+      LEDSubsystem p_ledSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
-    m_inverted = p_inverted;
+    if (DriverStationInfo.getAlliance() == Alliance.Red) {
+        inverted = true;
+    }
 
     toGamePieceArray =
         new ArrayList<PoseTriplet>(
@@ -73,14 +75,14 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
             toGamePieceArray,
             m_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG,
-            m_inverted);
+            inverted);
 
     runThatBackCommand =
         AutonomousUtil.generateRamseteFromPoses(
             runThatBack,
             p_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG,
-            m_inverted);
+            inverted);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -96,7 +98,7 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
                 false,
                 false,
                 p_ledSubsystem),
-            toGamePieceCommand,
+        toGamePieceCommand,
             new IntakeGatherModeCommand(p_intakeSubsystem, p_intakeManager, true)),
         new InstantCommand(p_intakeSubsystem::stopIntake, p_intakeSubsystem),
         new ArmGatherModeCommand(
@@ -113,6 +115,7 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
             true,
             true,
             false,
-            p_ledSubsystem));
+            p_ledSubsystem)
+        );
   }
 }

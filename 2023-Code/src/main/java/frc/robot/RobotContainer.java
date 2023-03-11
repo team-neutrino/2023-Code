@@ -168,7 +168,7 @@ public class RobotContainer {
           m_intakeManager,
           m_ledSubsystem);
 
-  private final ScoreMoveAutoGather m_blueScoreThenMoveThenAutoGather =
+  private final ScoreMoveAutoGather m_scoreThenMoveThenAutoGather =
       new ScoreMoveAutoGather(
           m_driveTrainSubsystem,
           m_armPidController,
@@ -176,19 +176,7 @@ public class RobotContainer {
           m_scoringSubsystem,
           m_intakeSubsystem,
           m_intakeManager,
-          m_ledSubsystem, 
-          false);
-    
-  private final ScoreMoveAutoGather m_redScoreThenMoveThenAutoGather =
-      new ScoreMoveAutoGather(
-          m_driveTrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem, 
-          true);
+          m_ledSubsystem);
 
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
@@ -281,7 +269,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     m_driveTrainSubsystem.resetOdometry();
 
-    return m_redScoreThenMoveThenAutoGather.andThen(
+    return m_scoreThenMoveThenAutoGather.andThen(
         new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 }
