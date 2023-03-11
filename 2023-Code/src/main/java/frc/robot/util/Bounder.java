@@ -11,8 +11,7 @@ public class Bounder {
   }
 
   public static double bound(double unbounded, double lowerLimit, double upperLimit) {
-    return Math.min(
-        Math.max(unbounded, lowerLimit), upperLimit);
+    return Math.min(Math.max(unbounded, lowerLimit), upperLimit);
   }
 
   public static double bound(double input, double limit) {
