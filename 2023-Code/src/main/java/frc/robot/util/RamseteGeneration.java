@@ -15,9 +15,11 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.TrajectoryConfigConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.util.trajectoryInput.PoseProcessor;
+
 import java.util.ArrayList;
 
-public class AutonomousUtil {
+public class RamseteGeneration {
 
   public static RamseteCommand generateRamseteCommand(
       Trajectory trajectory, DriveTrainSubsystem p_driveTrainSubsystem) {
@@ -31,8 +33,8 @@ public class AutonomousUtil {
             TrajectoryConfigConstants.KV_VOLT_SECONDS_PER_METER),
         TrajectoryConfigConstants.K_DRIVE_KINEMATICS,
         p_driveTrainSubsystem::getDriveWheelSpeeds,
-        new PIDController(TrajectoryConfigConstants.KP_DRIVE_VEL, 0, 0),
-        new PIDController(TrajectoryConfigConstants.KP_DRIVE_VEL, 0, 0),
+        new PIDController(TrajectoryConfigConstants.KP_DRIVE_VEL, TrajectoryConfigConstants.KI_DRIVE_VEL, TrajectoryConfigConstants.KD_DRIVE_VEL),
+        new PIDController(TrajectoryConfigConstants.KP_DRIVE_VEL, TrajectoryConfigConstants.KI_DRIVE_VEL, TrajectoryConfigConstants.KD_DRIVE_VEL),
         p_driveTrainSubsystem::setVoltage,
         p_driveTrainSubsystem);
   }

@@ -1,6 +1,8 @@
-package frc.robot.util;
+package frc.robot.util.trajectoryInput;
 
 import frc.robot.Constants;
+import frc.robot.util.PoseTriplet;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
