@@ -111,10 +111,15 @@ public final class Constants {
 
   public static class LEDConstants {
     public static final int LED_LENGTH = 58;
-    public static final Color ORANGE = new Color(LEDColor.ORANGE.getR(), LEDColor.ORANGE.getG(), LEDColor.ORANGE.getB());
-    public static final Color PURPLE = new Color(LEDColor.PURPLE.getR(), LEDColor.PURPLE.getG(), LEDColor.PURPLE.getB());
-    public static final Color YELLOW = new Color(LEDColor.YELLOW.getR(), LEDColor.YELLOW.getG(), LEDColor.YELLOW.getB());
-    public static final Color RED = new Color(LEDColor.RED.getR(), LEDColor.RED.getG(), LEDColor.RED.getB());
-    public static final Color BLUE = new Color(LEDColor.BLUE.getR(), LEDColor.BLUE.getG(), LEDColor.BLUE.getB());
+    public static final Color ORANGE =
+        new Color(LEDColor.ORANGE.getR(), LEDColor.ORANGE.getG(), LEDColor.ORANGE.getB());
+    public static final Color PURPLE =
+        new Color(LEDColor.PURPLE.getR(), LEDColor.PURPLE.getG(), LEDColor.PURPLE.getB());
+    public static final Color YELLOW =
+        new Color(LEDColor.YELLOW.getR(), LEDColor.YELLOW.getG(), LEDColor.YELLOW.getB());
+    public static final Color RED =
+        new Color(LEDColor.RED.getR(), LEDColor.RED.getG(), LEDColor.RED.getB());
+    public static final Color BLUE =
+        new Color(LEDColor.BLUE.getR(), LEDColor.BLUE.getG(), LEDColor.BLUE.getB());
   }
 }

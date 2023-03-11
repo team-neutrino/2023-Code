@@ -26,7 +26,9 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public void execute() {
-    voltage = PIDController.run(desiredPos, m_drivetrainSubsystem.getRoll(), DrivetrainConstants.AUTO_BALANCE_DEADZONE);
+    voltage =
+        PIDController.run(
+            desiredPos, m_drivetrainSubsystem.getRoll(), DrivetrainConstants.AUTO_BALANCE_DEADZONE);
     m_drivetrainSubsystem.setVoltage(-voltage);
   }
 

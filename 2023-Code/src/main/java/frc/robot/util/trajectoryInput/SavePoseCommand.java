@@ -7,7 +7,6 @@ package frc.robot.util.trajectoryInput;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
