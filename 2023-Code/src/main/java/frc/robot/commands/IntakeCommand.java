@@ -24,8 +24,11 @@ public class IntakeCommand extends CommandBase {
     addRequirements(m_intakeSubsystem);
   }
 
-  public IntakeCommand(SubsystemContainer p_subsystemContainer,
-      IntakeSubsystem p_intakeSubsystem, IntakeManager p_intakeManager, double p_time) {
+  public IntakeCommand(
+      SubsystemContainer p_subsystemContainer,
+      IntakeSubsystem p_intakeSubsystem,
+      IntakeManager p_intakeManager,
+      double p_time) {
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
     timer = new Timer();

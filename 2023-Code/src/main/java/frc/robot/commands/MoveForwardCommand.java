@@ -14,8 +14,8 @@ public class MoveForwardCommand extends CommandBase {
   private double m_motorPower;
 
   /** Creates a new MoveForwardCommand. */
-  public MoveForwardCommand(SubsystemContainer p_subsystemContainer, 
-  double p_distance, double p_motorPower) {
+  public MoveForwardCommand(
+      SubsystemContainer p_subsystemContainer, double p_distance, double p_motorPower) {
     m_driveTrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
     m_distance = p_distance;
     m_motorPower = p_motorPower;

@@ -98,20 +98,32 @@ public class RedScoreThenMoveThenAutoGather extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)
-            .withTimeout(.5),
+        new ArmToAngleCommand(
+            p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
+        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(.5),
         new ParallelRaceGroup(
-            new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.FORWARD_MID, false, false),
+            new ArmToAngleCommand(
+                p_subsystemContainer,
+                p_pidController,
+                Constants.ArmConstants.FORWARD_MID,
+                false,
+                false),
             toGamePieceCommand,
             new IntakeGatherModeCommand(p_subsystemContainer, p_intakeManager, true)),
         new InstantCommand(p_intakeSubsystem::stopIntake, p_intakeSubsystem),
-        new ArmGatherModeCommand(p_subsystemContainer, p_pidController)
-            .withTimeout(2),
+        new ArmGatherModeCommand(p_subsystemContainer, p_pidController).withTimeout(2),
         runThatBackCommand,
-        new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 1, true),
-        new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.FORWARD_MID, true, true, false));
+        new ArmToAngleCommand(
+            p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
+        new ScoringOpenCommand(
+            p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 1, true),
+        new ArmToAngleCommand(
+            p_subsystemContainer,
+            p_pidController,
+            Constants.ArmConstants.FORWARD_MID,
+            true,
+            true,
+            false));
 
     // addCommands(
     //     new ArmToAngleCommand(

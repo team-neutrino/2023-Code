@@ -16,10 +16,12 @@ import frc.robot.util.IntakeManager;
 public class IntakeDefaultCommand extends CommandBase {
   /** An object of the intake subsystem. */
   IntakeSubsystem m_intakeSubsystem;
+
   IntakeManager m_intakeManager;
 
   /** Constructor, creates a new IntakeDefaultCommand. */
-  public IntakeDefaultCommand(SubsystemContainer p_subsystemContainer, IntakeManager p_inIntakeManager) {
+  public IntakeDefaultCommand(
+      SubsystemContainer p_subsystemContainer, IntakeManager p_inIntakeManager) {
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_inIntakeManager;
 

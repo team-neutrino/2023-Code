@@ -33,7 +33,8 @@ public class ScoreThenMove extends SequentialCommandGroup {
   private RamseteCommand forwardBackCommand;
 
   /** Creates a new TestAutonGeneratedTrajectory. */
-  public ScoreThenMove(SubsystemContainer p_subsystemContainer,
+  public ScoreThenMove(
+      SubsystemContainer p_subsystemContainer,
       DriveTrainSubsystem p_drivetrainSubsystem,
       ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
@@ -56,8 +57,10 @@ public class ScoreThenMove extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
+        new ArmToAngleCommand(
+            p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
+        new ScoringOpenCommand(
+            p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
         forwardBackCommand);
 
     // forwardBackCommand

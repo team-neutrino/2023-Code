@@ -27,8 +27,7 @@ public class ArmToAngleCommand extends CommandBase {
   public ArmToAngleCommand(
       SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
-      double p_targetAngle
-      ) {
+      double p_targetAngle) {
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
@@ -37,7 +36,7 @@ public class ArmToAngleCommand extends CommandBase {
   }
 
   public ArmToAngleCommand(
-    SubsystemContainer p_subsystemContainer,
+      SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
       double p_targetAngle,
       boolean p_auton,
@@ -69,8 +68,6 @@ public class ArmToAngleCommand extends CommandBase {
     addRequirements(m_armSubsystem, m_ledSubsystem);
   }
 
-
-  
   @Override
   public void initialize() {}
 

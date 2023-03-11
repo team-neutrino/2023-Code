@@ -71,11 +71,19 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, .75, true),
+        new ArmToAngleCommand(
+            p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
+        new ScoringOpenCommand(
+            p_subsystemContainer,
+            p_scoringSubsystem,
+            p_intakeSubsystem,
+            p_intakeManager,
+            .75,
+            true),
         new ParallelRaceGroup(
             new TimerCommand(1),
-            new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.FORWARD_MID)),
+            new ArmToAngleCommand(
+                p_subsystemContainer, p_pidController, Constants.ArmConstants.FORWARD_MID)),
         moveForwardCommand,
         new NavXBalance(p_subsystemContainer),
         new AutoBalanceCommand(p_subsystemContainer));

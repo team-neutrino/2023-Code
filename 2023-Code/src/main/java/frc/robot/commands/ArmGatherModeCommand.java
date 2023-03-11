@@ -5,8 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.SubsystemContainer;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -32,16 +32,15 @@ public class ArmGatherModeCommand extends CommandBase {
   // }
 
   public ArmGatherModeCommand(
-    SubsystemContainer p_subsystemContainer,
-    ViennaPIDController p_pidController) {
-  m_armSubsystem = p_subsystemContainer.getArmSubsystem();
-  m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
-  m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
-  m_pidController = p_pidController;
-  addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
-}
+      SubsystemContainer p_subsystemContainer, ViennaPIDController p_pidController) {
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
+    m_pidController = p_pidController;
+    addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
+  }
 
-@Override
+  @Override
   public void initialize() {}
 
   @Override

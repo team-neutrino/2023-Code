@@ -18,7 +18,8 @@ public class IntakeReverseCommand extends CommandBase {
   private Timer timer;
   private double squeeze_time;
 
-  public IntakeReverseCommand(SubsystemContainer p_subsystemContainer, IntakeManager p_intakeManager) {
+  public IntakeReverseCommand(
+      SubsystemContainer p_subsystemContainer, IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
 

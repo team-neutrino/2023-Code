@@ -39,7 +39,8 @@ public class ScoreThenMoveThenAutoGather extends SequentialCommandGroup {
   private RamseteCommand runThatBackCommand;
 
   /** Creates a new TestAutonGeneratedTrajectory. */
-  public ScoreThenMoveThenAutoGather(SubsystemContainer p_subsystemContainer,
+  public ScoreThenMoveThenAutoGather(
+      SubsystemContainer p_subsystemContainer,
       DriveTrainSubsystem p_drivetrainSubsystem,
       ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
@@ -71,16 +72,17 @@ public class ScoreThenMoveThenAutoGather extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
+        new ArmToAngleCommand(
+            p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
         new ParallelRaceGroup(
-            new ScoringOpenCommand(p_subsystemContainer, p_intakeManager),
-            new TimerCommand(2)),
+            new ScoringOpenCommand(p_subsystemContainer, p_intakeManager), new TimerCommand(2)),
         toGamePieceCommand,
         new ParallelRaceGroup(
-            new ArmGatherModeCommand(p_subsystemContainer, p_pidController),
-            new TimerCommand(2)),
+            new ArmGatherModeCommand(p_subsystemContainer, p_pidController), new TimerCommand(2)),
         runThatBackCommand,
-        new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true));
+        new ArmToAngleCommand(
+            p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
+        new ScoringOpenCommand(
+            p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true));
   }
 }

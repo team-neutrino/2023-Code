@@ -19,8 +19,8 @@ public class ScoringOpenCommand extends CommandBase {
   private boolean autonomous = false;
   private double m_time = 60 * 60 * 24;
 
-  public ScoringOpenCommand(SubsystemContainer p_subsystemContainer, 
-      IntakeManager p_intakeManager) {
+  public ScoringOpenCommand(
+      SubsystemContainer p_subsystemContainer, IntakeManager p_intakeManager) {
     m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
@@ -28,7 +28,8 @@ public class ScoringOpenCommand extends CommandBase {
     addRequirements(m_scoringSubsystem, m_intakeSubsystem);
   }
 
-  public ScoringOpenCommand(SubsystemContainer p_subsystemContainer, 
+  public ScoringOpenCommand(
+      SubsystemContainer p_subsystemContainer,
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,

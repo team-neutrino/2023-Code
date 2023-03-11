@@ -14,7 +14,8 @@ public class LEDCommand extends CommandBase {
   private LEDColor m_colorMode;
   private boolean hasBroken = false;
 
-  public LEDCommand(SubsystemContainer p_subsystemContainer, 
+  public LEDCommand(
+      SubsystemContainer p_subsystemContainer,
       LEDColor p_colorMode,
       DriverStationInfo p_DriverStationInfo) {
     m_ledSubsystem = p_subsystemContainer.getLedSubsystem();

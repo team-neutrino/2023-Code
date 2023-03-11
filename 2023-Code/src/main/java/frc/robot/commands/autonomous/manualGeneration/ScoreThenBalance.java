@@ -53,8 +53,10 @@ public class ScoreThenBalance extends SequentialCommandGroup {
             TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
     addCommands(
-        new ArmToAngleCommand(p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
+        new ArmToAngleCommand(
+            p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
+        new ScoringOpenCommand(
+            p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true),
         moveForwardCommand,
         new AutoBalanceCommand(p_subsystemContainer));
   }
