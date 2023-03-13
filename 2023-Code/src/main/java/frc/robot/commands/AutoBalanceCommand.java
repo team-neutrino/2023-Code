@@ -11,11 +11,10 @@ public class AutoBalanceCommand extends CommandBase {
 
   private double desiredPos = 0;
   private double error;
-  private double previousError;
-
-  private double integral = 0;
+  private double previousError = 0;
 
   private double voltage;
+  private double integral = 0;
 
   public AutoBalanceCommand(DriveTrainSubsystem p_drivetrain) {
     m_drivetrain = p_drivetrain;
