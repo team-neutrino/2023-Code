@@ -1,7 +1,5 @@
 package frc.robot.util;
 
-import frc.robot.util.Limiter;
-import frc.robot.Constants;
 import frc.robot.Constants.PIDConstants;
 
 public class ViennaPIDController {
@@ -105,6 +103,6 @@ public class ViennaPIDController {
 
     double output = m_p * error + m_i * m_iState + m_d * derivative + ff;
 
-    return bound(output);
+    return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
   }
 }
