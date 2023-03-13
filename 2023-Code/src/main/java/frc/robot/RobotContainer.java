@@ -274,4 +274,8 @@ public class RobotContainer {
         .getAutoSelected()
         .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
+
+  public void resetNavX() {
+    m_driveTrainSubsystem.getNavX().zeroYaw();
+  }
 }
