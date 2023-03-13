@@ -30,7 +30,6 @@ import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.IntakeSqueezeCommand;
 import frc.robot.commands.LEDCommand;
-import frc.robot.commands.ResetNavXCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
@@ -272,13 +271,15 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     m_driveTrainSubsystem.resetOdometry();
-    return m_shuffleboardSubsystem
-        .getAutoSelected()
-        .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+    // return m_shuffleboardSubsystem
+    //     .getAutoSelected()
+    //     .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+    return null;
   }
 
-  public void disabledInit() {
-    CommandScheduler.getInstance().schedule(new ResetNavXCommand(m_driveTrainSubsystem));
+  public void resetNavX() {
+    // CommandScheduler.getInstance().schedule(new ResetNavXCommand(m_driveTrainSubsystem));
+    m_driveTrainSubsystem.getNavX().zeroYaw();
   }
   // public void teleopInit() {
   //   m_driveTrainSubsystem.resetNavX();
