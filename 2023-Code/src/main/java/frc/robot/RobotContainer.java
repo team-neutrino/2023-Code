@@ -271,22 +271,12 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     m_driveTrainSubsystem.resetOdometry();
-    // return m_shuffleboardSubsystem
-    //     .getAutoSelected()
-    //     .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
-    return null;
+    return m_shuffleboardSubsystem
+        .getAutoSelected()
+        .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 
   public void resetNavX() {
-    // CommandScheduler.getInstance().schedule(new ResetNavXCommand(m_driveTrainSubsystem));
     m_driveTrainSubsystem.getNavX().zeroYaw();
   }
-  // public void teleopInit() {
-  //   m_driveTrainSubsystem.resetNavX();
-  //   System.out.println(
-  //     "NavX Reset Counter: " + m_driveTrainSubsystem.getNavXResetCounter() + 
-  //     '\n' +
-  //     "NavX Yaw: " + m_driveTrainSubsystem.getYaw()
-  //   );
-  // }
 }

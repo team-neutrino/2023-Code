@@ -191,6 +191,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return Math.pow(joystickY, 3) * 1.6 + (0.17 * joystickY);
   }
 
+  public AHRS getNavX() {
+    return m_navX;
+  }
+
   @Override
   public void periodic() {
     m_diffDriveOdometry.update(
@@ -198,24 +202,4 @@ public class DriveTrainSubsystem extends SubsystemBase {
     
     System.out.println("NAVX YAW: " + getYaw());
   }
-
-  // private int navXResetCounter = 0;
-
-  // public void resetNavX() {
-  //   if (navXResetCounter <= 100) {
-  //     ++navXResetCounter;
-  //   }
-  //   else {
-  //     m_navX.zeroYaw();
-  //     navXResetCounter = 0;
-  //   }
-  // }
-
-  public AHRS getNavX() {
-    return m_navX;
-  }
-
-  // public int getNavXResetCounter() {
-  //   return navXResetCounter;
-  // }
 }
