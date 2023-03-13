@@ -16,7 +16,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
-import frc.robot.util.RamseteGeneration;
+import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
@@ -33,7 +33,7 @@ public class ScoreThenBalance extends SequentialCommandGroup {
 
   public ScoreThenBalance(
       DriveTrainSubsystem p_drivetrainSubsystem,
-      ViennaPIDController p_armPIDController,
+      ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
@@ -45,14 +45,14 @@ public class ScoreThenBalance extends SequentialCommandGroup {
             Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(2, 0, 0)));
 
     moveForwardCommand =
-        RamseteGeneration.generateRamseteFromPoses(
+        AutonomousUtil.generateRamseteFromPoses(
             moveForwardArray,
             p_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
     addCommands(
         new ArmToAngleCommand(
-            p_armSubsystem, p_armPIDController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager)
             .withTimeout(2),
         moveForwardCommand,
