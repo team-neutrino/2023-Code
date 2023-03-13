@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.MotorConstants;
+import frc.robot.util.Limiter;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
@@ -153,6 +154,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_motorGroupRight.setVoltage(rightVoltage);
   }
 
+  public void setVoltage(double voltage) {
+    setVoltage(voltage, voltage);
+  }
+
   public void setMotors(double leftMotorInput, double rightMotorInput) {
     m_motorGroupLeft.set(deadzone(leftMotorInput));
     m_motorGroupRight.set(deadzone(rightMotorInput));
@@ -175,12 +180,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public double deadzone(double joystickY) {
-    double absJoystickY = Math.abs(joystickY);
-    if (absJoystickY <= DrivetrainConstants.JOYSTICK_DEADZONE) {
-      return 0.0;
-    } else {
-      return joystickY;
-    }
+    return Limiter.deadzone(joystickY, DrivetrainConstants.JOYSTICK_DEADZONE);
   }
 
   public static double turboAccel(double joystickY) {
