@@ -1,6 +1,6 @@
 package frc.robot.util;
 
-import frc.robot.util.Bounder;
+import frc.robot.util.Limiter;
 import frc.robot.Constants;
 import frc.robot.Constants.PIDConstants;
 
@@ -73,10 +73,6 @@ public class ViennaPIDController {
     m_d = p_d;
   }
 
-  private double bound(double unbounded) {
-    return Bounder.bound(unbounded, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
-  }
-
   public double run(double realPos, double desiredPos) {
     double error = desiredPos - realPos;
 
@@ -91,12 +87,12 @@ public class ViennaPIDController {
 
     double output = m_p * error + m_i * m_iState + m_d * derivative + ff;
 
-    return bound(output);
+    return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
   }
 
   public double run(double realPos, double desiredPos, double zone) {
     double error = desiredPos - realPos;
-    error = Bounder.deadzone(error, zone);
+    error = Limiter.deadzone(error, zone);
 
     /*Integral calculation */
     m_iState += error * PIDConstants.dt;

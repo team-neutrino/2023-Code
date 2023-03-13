@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.MotorConstants;
-import frc.robot.util.Bounder;
+import frc.robot.util.Limiter;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
@@ -150,14 +150,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return new DifferentialDriveWheelSpeeds(getL1Vel(), getR1Vel());
   }
 
-  public void setVoltage(double voltage) {
-    m_motorGroupLeft.setVoltage(voltage);
-    m_motorGroupRight.setVoltage(voltage);
-  }
-
   public void setVoltage(double leftVoltage, double rightVoltage) {
     m_motorGroupLeft.setVoltage(leftVoltage);
     m_motorGroupRight.setVoltage(rightVoltage);
+  }
+
+  public void setVoltage(double voltage) {
+    setVoltage(voltage, voltage);
   }
 
   public void setMotors(double leftMotorInput, double rightMotorInput) {
@@ -175,7 +174,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public double deadzone(double joystickY) {
-    return Bounder.deadzone(joystickY, DrivetrainConstants.JOYSTICK_DEADZONE);
+    return Limiter.deadzone(joystickY, DrivetrainConstants.JOYSTICK_DEADZONE);
   }
 
   public static double linearAccel(double joystickY) {
