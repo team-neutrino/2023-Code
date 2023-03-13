@@ -85,7 +85,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public void resetOdometry() {
     resetEncoders();
-    //m_navX.reset();
+    // m_navX.reset();
     m_diffDriveOdometry.resetPosition(
         Rotation2d.fromDegrees(getYaw()),
         m_encoderLeft1.getPosition(),
@@ -199,7 +199,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void periodic() {
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
-    
+
     System.out.println("NAVX YAW: " + getYaw());
   }
 }
