@@ -17,7 +17,7 @@ public class ArmToAngleCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ViennaPIDController m_pidController;
   private double m_targetAngle;
-  private ScoringSubsystem m_ScoringSubsystem;
+  private ScoringSubsystem m_scoringSubsystem;
   private double voltage;
   private LEDSubsystem m_ledSubsystem;
   private boolean m_auton = false;
@@ -32,6 +32,7 @@ public class ArmToAngleCommand extends CommandBase {
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
 
     addRequirements(m_armSubsystem);
   }
@@ -44,6 +45,7 @@ public class ArmToAngleCommand extends CommandBase {
       boolean p_buttoncheck) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
+    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
@@ -61,6 +63,7 @@ public class ArmToAngleCommand extends CommandBase {
       boolean p_buttoncheck) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
+    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_pidController = p_pidController;
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
@@ -91,7 +94,7 @@ public class ArmToAngleCommand extends CommandBase {
     }
 
     if (m_endAuton) {
-      m_ScoringSubsystem.openScoring();
+      m_scoringSubsystem.openScoring();
     }
   }
 
