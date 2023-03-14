@@ -7,7 +7,6 @@ import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
-import frc.robot.subsystems.ShuffleboardSubsystem;
 
 public class SubsystemContainer {
   private DriveTrainSubsystem m_driveTrainSubsystem;

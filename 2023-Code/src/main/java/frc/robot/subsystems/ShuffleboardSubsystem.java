@@ -53,7 +53,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private IntakeManager m_intakeManager;
 
   public ShuffleboardSubsystem(
-    SubsystemContainer p_subsystemContainer,
+      SubsystemContainer p_subsystemContainer,
       DriverStationInfo p_driverStationInfo,
       DriveTrainSubsystem p_driveTrainSubsystem,
       ScoringSubsystem p_scoring,
@@ -191,11 +191,19 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_autoChooser.setDefaultOption(
         "Default",
         new ScoreMobilityThenBalance(
-            m_subsystemContainer, m_driveTrainSubsystem, m_pidController, m_arm, m_scoring, m_intake, null, m_LED));
+            m_subsystemContainer,
+            m_driveTrainSubsystem,
+            m_pidController,
+            m_arm,
+            m_scoring,
+            m_intake,
+            null,
+            m_LED));
     m_autoChooser.addOption(
         "Balance Mobility",
         new ScoreMobilityThenBalance(
-            m_subsystemContainer, m_driveTrainSubsystem,
+            m_subsystemContainer,
+            m_driveTrainSubsystem,
             m_pidController,
             m_arm,
             m_scoring,
@@ -205,7 +213,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_autoChooser.addOption(
         "Score then Move",
         new ScoreThenMove(
-            m_subsystemContainer, m_driveTrainSubsystem,
+            m_subsystemContainer,
+            m_driveTrainSubsystem,
             m_pidController,
             m_arm,
             m_scoring,

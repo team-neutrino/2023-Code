@@ -91,7 +91,7 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
     addCommands(
         new ArmToAngleCommand(
             p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(.5),
+        new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeManager).withTimeout(.5),
         new ParallelRaceGroup(
             new ArmToAngleCommand(
                 p_subsystemContainer,
@@ -106,8 +106,8 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
         runThatBackCommand,
         new ArmToAngleCommand(
             p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(
-            p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 1, true).withTimeout(1),
+        new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeManager)
+            .withTimeout(1),
         new ArmToAngleCommand(
             p_subsystemContainer,
             p_pidController,
