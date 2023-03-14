@@ -5,11 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ArmSubsystem;
 
 public class TelescopreToPositionCommand extends CommandBase {
+  ArmSubsystem m_armSubsystem;
   /** Creates a new TelescopreToPositionCommand. */
-  public TelescopreToPositionCommand() {
+  public TelescopreToPositionCommand(ArmSubsystem p_armSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    p_armSubsystem = m_armSubsystem;
+    addRequirements(m_armSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -18,7 +22,9 @@ public class TelescopreToPositionCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_armSubsystem.setTelescope(.3);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
