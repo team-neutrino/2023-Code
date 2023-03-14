@@ -16,6 +16,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
+import frc.robot.util.Limiter;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -42,16 +43,8 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void set(double voltage) {
+    voltage = Limiter.bound(voltage, ArmConstants.ARM_OUTPUT_LIMIT);
     m_armMotor.set(voltage);
-  }
-
-  public double limitAmount(double voltage) {
-    if (voltage < -Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
-      voltage = -Constants.ArmConstants.ARM_OUTPUT_LIMIT;
-    } else if (voltage > Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
-      voltage = Constants.ArmConstants.ARM_OUTPUT_LIMIT;
-    }
-    return voltage;
   }
 
   public void smartSet(double desiredVoltage) {

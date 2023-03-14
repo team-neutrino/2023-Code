@@ -7,7 +7,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.util.Limiter;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmAdjustCommand extends CommandBase {
@@ -33,23 +35,15 @@ public class ArmAdjustCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double voltage = 0;
-
-    if (m_driverController.getRightY() < -Constants.ArmConstants.ARM_INPUT_DEADZONE) {
-      voltage =
-          m_armSubsystem.limitAmount(
-              m_driverController.getRightY() / Constants.ArmConstants.SCALE_FACTOR);
-      targetAngle = m_armSubsystem.getAbsolutePosition();
-    } else if (m_driverController.getRightY() > Constants.ArmConstants.ARM_INPUT_DEADZONE) {
-      voltage =
-          m_armSubsystem.limitAmount(
-              m_driverController.getRightY() / Constants.ArmConstants.SCALE_FACTOR);
+    double output;
+    if (Math.abs(m_driverController.getRightY()) > ArmConstants.ARM_INPUT_DEADZONE) {
+      output = m_driverController.getRightY() / ArmConstants.SCALE_QUOTIENT;
       targetAngle = m_armSubsystem.getAbsolutePosition();
     } else {
       int position = (int) m_armSubsystem.getAbsolutePosition();
-      voltage = m_pidController.run(position, targetAngle);
+      output = m_pidController.run(position, targetAngle);
     }
-    m_armSubsystem.smartSet(voltage);
+    m_armSubsystem.smartSet(output);
   }
 
   @Override
