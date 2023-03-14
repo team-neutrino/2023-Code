@@ -182,7 +182,7 @@ public class RobotContainer {
           m_ledSubsystem);
 
   private final ScoreMoveAutoGather m_scoreThenMoveThenAutoGather =
-      new ScoreMoveAutoGather(m_subsystemContainer, m_armPidController, m_intakeManager);
+      new ScoreMoveAutoGather(m_drivetrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_subsystemContainer, m_ledSubsystem);
 
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_subsystemContainer, m_intakeManager);
@@ -201,7 +201,7 @@ public class RobotContainer {
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_subsystemContainer);
   private final ScoringOpenCommand m_scoringOpenCommand =
-      new ScoringOpenCommand(m_subsystemContainer, m_intakeManager);
+      new ScoringOpenCommand(m_subsystemContainer, m_scoringSubsystem, m_intakeManager);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -273,6 +273,6 @@ public class RobotContainer {
   }
 
   public void resetNavX() {
-    m_driveTrainSubsystem.getNavX().zeroYaw();
+    m_drivetrainSubsystem.getNavX().zeroYaw();
   }
 }
