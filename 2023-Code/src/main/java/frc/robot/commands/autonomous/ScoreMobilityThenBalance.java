@@ -70,7 +70,7 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
     addCommands(
         new ArmToAngleCommand(
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, .75, true),
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(.75),
         new ParallelRaceGroup(
             new TimerCommand(1),
             new ArmToAngleCommand(

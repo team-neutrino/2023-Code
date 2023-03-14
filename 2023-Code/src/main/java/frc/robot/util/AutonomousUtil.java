@@ -41,26 +41,40 @@ public class AutonomousUtil {
       ArrayList<PoseTriplet> tripletList, TrajectoryConfig config) {
     ArrayList<Pose2d> poseArray = new ArrayList<Pose2d>();
     for (PoseTriplet triplet : tripletList) {
-      poseArray.add(
-          new Pose2d(
-              triplet.getCoord1(),
-              triplet.getCoord2(),
-              Rotation2d.fromDegrees(triplet.getAngle())));
+      double coord1 = triplet.getCoord1();
+      double coord2 = triplet.getCoord2();
+      double angle = triplet.getAngle();
+      poseArray.add(new Pose2d(coord1, coord2, Rotation2d.fromDegrees(angle)));
     }
     return TrajectoryGenerator.generateTrajectory(poseArray, config);
   }
 
-  public static Trajectory generateTrajectoryFromPosesBack(ArrayList<PoseTriplet> tripletList) {
+  public static Trajectory generateTrajectoryFromPoses(
+      ArrayList<PoseTriplet> tripletList, TrajectoryConfig config, boolean inverted) {
     ArrayList<Pose2d> poseArray = new ArrayList<Pose2d>();
     for (PoseTriplet triplet : tripletList) {
-      poseArray.add(
-          new Pose2d(
-              triplet.getCoord1(),
-              triplet.getCoord2(),
-              Rotation2d.fromDegrees(triplet.getAngle())));
+      double coord1 = triplet.getCoord1();
+      double coord2 = triplet.getCoord2();
+      double angle = triplet.getAngle();
+      if (inverted) {
+        coord2 = -coord2;
+        angle = -angle;
+      }
+      poseArray.add(new Pose2d(coord1, coord2, Rotation2d.fromDegrees(angle)));
     }
-    return TrajectoryGenerator.generateTrajectory(
-        poseArray, TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG);
+    return TrajectoryGenerator.generateTrajectory(poseArray, config);
+  }
+
+  public static RamseteCommand generateRamseteFromPoses(
+      ArrayList<PoseTriplet> tripletList,
+      DriveTrainSubsystem p_driveTrainSubsystem,
+      TrajectoryConfig trajectoryConfig,
+      boolean inverted) {
+    Trajectory generatedTrajectory =
+        generateTrajectoryFromPoses(tripletList, trajectoryConfig, inverted);
+    RamseteCommand generatedRamseteCommand =
+        generateRamseteCommand(generatedTrajectory, p_driveTrainSubsystem);
+    return generatedRamseteCommand;
   }
 
   public static RamseteCommand generateRamseteFromPoses(
