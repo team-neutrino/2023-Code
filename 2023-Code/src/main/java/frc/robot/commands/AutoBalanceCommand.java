@@ -4,21 +4,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.util.ViennaPIDController;
 
 public class AutoBalanceCommand extends CommandBase {
 
   private final DriveTrainSubsystem m_drivetrain;
+  private final ViennaPIDController pidController;
 
   private double desiredPos = 0;
-  private double error;
-  private double previousError = 0;
-
-  private double voltage;
-  private double integral = 0;
 
   public AutoBalanceCommand(DriveTrainSubsystem p_drivetrain) {
     m_drivetrain = p_drivetrain;
     addRequirements(m_drivetrain);
+
+    pidController = new ViennaPIDController(PIDConstants.BALANCE_P, PIDConstants.BALANCE_I, PIDConstants.BALANCE_D);
   }
 
   @Override
@@ -26,16 +25,9 @@ public class AutoBalanceCommand extends CommandBase {
 
   @Override
   public void execute() {
-    error = desiredPos - m_drivetrain.getRoll();
-    if (Math.abs(error) <= DrivetrainConstants.AUTO_BALANCE_DEADZONE) {
-      error = 0;
-    }
-    voltage =
-        error * PIDConstants.BALANCE_P
-            + PIDConstants.BALANCE_I * (integral += (error * PIDConstants.dt))
-            + PIDConstants.BALANCE_D * (error - previousError) / PIDConstants.dt;
-    m_drivetrain.setVoltage(-voltage, -voltage);
-    previousError = error;
+    double currentRoll = m_drivetrain.getRoll();
+    double output = pidController.run(currentRoll, desiredPos, DrivetrainConstants.AUTO_BALANCE_DEADZONE);
+    m_drivetrain.setVoltage(-output);
   }
 
   @Override
