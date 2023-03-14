@@ -43,12 +43,12 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
 
   /** Creates a new TestAutonGeneratedTrajectory. */
   public ScoreMoveAutoGather(
-    SubsystemContainer p_subsystemContainer,
-    ViennaPIDController p_pidController,
-    IntakeManager p_intakeManager) {
-  m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
-  m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
-  
+      SubsystemContainer p_subsystemContainer,
+      ViennaPIDController p_pidController,
+      IntakeManager p_intakeManager) {
+    m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
+
     if (DriverStationInfo.getAlliance() == Alliance.Red) {
       inverted = true;
     }
@@ -86,8 +86,7 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
     addCommands(
         new ArmToAngleCommand(
             p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)
-            .withTimeout(.5),
+        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(.5),
         new ParallelRaceGroup(
             new ArmToAngleCommand(
                 p_subsystemContainer, p_pidController, ArmConstants.FORWARD_MID, false, false),
@@ -98,8 +97,7 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
         runThatBackCommand,
         new ArmToAngleCommand(
             p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)
-            .withTimeout(1),
+        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(1),
         new ArmToAngleCommand(
             p_subsystemContainer, p_pidController, ArmConstants.FORWARD_MID, true, false));
   }

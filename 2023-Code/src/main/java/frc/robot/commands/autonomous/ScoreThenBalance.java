@@ -33,7 +33,7 @@ public class ScoreThenBalance extends SequentialCommandGroup {
       SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
       IntakeManager p_intakeManager) {
-        m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
+    m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
 
     moveForwardArray =
         new ArrayList<PoseTriplet>(
@@ -48,8 +48,7 @@ public class ScoreThenBalance extends SequentialCommandGroup {
     addCommands(
         new ArmToAngleCommand(
             p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)
-            .withTimeout(2),
+        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(2),
         moveForwardCommand,
         new AutoBalanceCommand(p_subsystemContainer));
   }

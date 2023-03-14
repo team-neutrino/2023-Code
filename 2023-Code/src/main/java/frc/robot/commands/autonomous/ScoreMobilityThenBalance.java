@@ -33,7 +33,6 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
   private RamseteCommand moveForwardCommand;
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
-  
 
   /** Creates a new TestAutonGeneratedTrajectory. */
   public ScoreMobilityThenBalance(
