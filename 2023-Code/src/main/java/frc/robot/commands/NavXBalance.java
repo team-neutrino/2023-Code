@@ -5,17 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ScoringSubsystem;
-import frc.robot.util.IntakeManager;
+import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.subsystems.DriveTrainSubsystem;
 
-public class ScoringOpenCommand extends CommandBase {
-  private ScoringSubsystem m_scoringSubsystem;
-  private IntakeManager m_intakeManager;
+public class NavXBalance extends CommandBase {
+  DriveTrainSubsystem m_DriveTrainSubsystem;
+  double TILTED = -14;
 
-  public ScoringOpenCommand(ScoringSubsystem p_scoringSubsystem, IntakeManager p_intakeManager) {
-    m_scoringSubsystem = p_scoringSubsystem;
-    m_intakeManager = p_intakeManager;
-    addRequirements(m_scoringSubsystem);
+  /** Creates a new NavXBalance. */
+  public NavXBalance(DriveTrainSubsystem p_DriveTrainSubsystem) {
+    m_DriveTrainSubsystem = p_DriveTrainSubsystem;
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -25,9 +25,8 @@ public class ScoringOpenCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_intakeManager.managerApproved()) {
-      m_scoringSubsystem.openScoring();
-    }
+    m_DriveTrainSubsystem.setMotors(
+        DrivetrainConstants.BALANCE_MOTOR_POWER, DrivetrainConstants.BALANCE_MOTOR_POWER);
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +36,9 @@ public class ScoringOpenCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (m_DriveTrainSubsystem.getRoll() < TILTED) {
+      return true;
+    }
     return false;
   }
 }

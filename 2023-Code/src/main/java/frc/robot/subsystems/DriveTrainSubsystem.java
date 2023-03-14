@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.MotorConstants;
+import frc.robot.util.Limiter;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
@@ -53,7 +54,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   /** Creates a new Drivetrain. */
   public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick) {
-
     m_leftJoystick = p_leftJoystick;
     m_rightJoystick = p_rightJoystick;
 
@@ -63,13 +63,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_encoderRight2 = initializeMotor(m_motorRight2, false);
 
     m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
-    resetOdometry(m_diffDriveOdometry.getPoseMeters());
-
-    m_encoderRight1.setPosition(0);
-    m_encoderRight2.setPosition(0);
-    m_encoderLeft1.setPosition(0);
-    m_encoderLeft2.setPosition(0);
-    setMotors(0.3, 0);
+    resetOdometry();
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
@@ -92,14 +86,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_encoderLeft2.setPosition(0);
   }
 
-  public void resetOdometry(Pose2d pose) {
+  public void resetOdometry() {
     resetEncoders();
-    m_navX.reset();
     m_diffDriveOdometry.resetPosition(
         Rotation2d.fromDegrees(getYaw()),
         m_encoderLeft1.getPosition(),
         m_encoderRight1.getPosition(),
-        pose);
+        m_diffDriveOdometry.getPoseMeters());
   }
 
   public double getR1Pos() {
@@ -135,7 +128,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public double getYaw() {
-    return m_navX.getYaw();
+    return m_navX.getYaw() * -1;
   }
 
   public double getPitch() {
@@ -163,18 +156,29 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_motorGroupRight.setVoltage(rightVoltage);
   }
 
+  public void setVoltage(double voltage) {
+    setVoltage(voltage, voltage);
+  }
+
   public void setMotors(double leftMotorInput, double rightMotorInput) {
-    boolean turbo = m_leftJoystick.getTrigger() && m_rightJoystick.getTrigger();
+    m_motorGroupLeft.set(deadzone(leftMotorInput));
+    m_motorGroupRight.set(deadzone(rightMotorInput));
+  }
 
-    double leftMotorSpeed = linearAccel(deadzone(leftMotorInput));
-    double rightMotorSpeed = linearAccel(deadzone(rightMotorInput));
-
-    if (turbo) {
-      leftMotorSpeed = turboAccel(deadzone(leftMotorInput));
-      rightMotorSpeed = turboAccel(deadzone(rightMotorInput));
+  public void smartSetMotors(double leftMotorInput, double rightMotorInput) {
+    /* if both triggers are held, enable turbo mode */
+    if (m_leftJoystick.getTrigger() && m_rightJoystick.getTrigger()) {
+      m_motorGroupLeft.set(turboAccel(deadzone(leftMotorInput)));
+      m_motorGroupRight.set(turboAccel(deadzone(rightMotorInput)));
     }
-    m_motorGroupLeft.set(leftMotorSpeed);
-    m_motorGroupRight.set(rightMotorSpeed);
+    /* if the top of the joystick is held  */
+    else if (m_rightJoystick.getTop()) {
+      m_motorGroupLeft.set(-deadzone(rightMotorInput));
+      m_motorGroupRight.set(-deadzone(leftMotorInput));
+    } else {
+      m_motorGroupLeft.set(deadzone(leftMotorInput));
+      m_motorGroupRight.set(deadzone(rightMotorInput));
+    }
   }
 
   public void setMotorsStraight(double m_bothMotorSpeed, double placeholder) {
@@ -302,7 +306,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public static double linearAccel(double joystickY) {
-    return joystickY;
+    return Limiter.deadzone(joystickY, DrivetrainConstants.JOYSTICK_DEADZONE);
   }
 
   public static double turboAccel(double joystickY) {
@@ -311,6 +315,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public static double slowAccel(double joystickY) {
     return Math.pow(joystickY, 3) * 1.6 + (0.17 * joystickY);
+  }
+
+  public AHRS getNavX() {
+    return m_navX;
   }
 
   @Override

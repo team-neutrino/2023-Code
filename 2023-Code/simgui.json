@@ -10,7 +10,15 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/Drivestation Tab123/Autonomous Chooser": "String Chooser",
+      "/SmartDashboard/Save Pose": "Command",
       "/SmartDashboard/TestCommand": "Command"
+    },
+    "windows": {
+      "/Shuffleboard/Drivestation Tab123/Autonomous Chooser": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   },
   "NetworkTables": {

@@ -36,6 +36,7 @@ public final class Constants {
 
     public static final double FORWARD_DOWN = 90;
     public static final double FORWARD_MID = 80;
+    public static final double QUASI_BACK_MID = 32;
     public static final double BACK_MID = 38.5;
     public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
@@ -75,9 +76,9 @@ public final class Constants {
   }
 
   public static class DrivetrainConstants {
-    // 0.1 in main, may be an issue so I'm changing it now
-    public static final double JOYSTICK_DEADZONE = 0.0;
-    public static final double AUTO_BALANCE_DEADZONE = .3;
+    public static final double JOYSTICK_DEADZONE = 0.1;
+    public static final double AUTO_BALANCE_DEADZONE = .4;
+    public static final double BALANCE_MOTOR_POWER = -.3;
   }
 
   public static class DigitalConstants {
