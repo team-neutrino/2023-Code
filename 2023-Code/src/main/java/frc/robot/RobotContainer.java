@@ -199,6 +199,8 @@ public class RobotContainer {
       new ScoringCloseCommand(m_scoringSubsystem);
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem, m_intakeManager);
+  private final TelescopeCommand m_telescopeCommand =
+      new TelescopeCommand();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -266,6 +268,7 @@ public class RobotContainer {
         new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
     m_leftArrow.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
+    m_upArrow.whileTrue(m_)
   }
 
   public Command getAutonomousCommand() {

@@ -7,8 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TelescopreToPositionCommand extends CommandBase {
+  private ArmSubsystem m_armSubsystem;
+
   /** Creates a new TelescopreToPositionCommand. */
-  public TelescopreToPositionCommand() {
+  public TelescopeCommand(ArmSubsystem p_armSubsystem) {
+    m_armSubsystem = p_armSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
