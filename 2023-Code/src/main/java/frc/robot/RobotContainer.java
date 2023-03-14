@@ -149,25 +149,10 @@ public class RobotContainer {
   private final ScoreThenBalance m_scoreThenBalanece =
       new ScoreThenBalance(m_subsystemContainer, m_armPidController, m_intakeManager);
   private final JustScore m_justScore =
-      new JustScore(
-          m_drivetrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem);
+      new JustScore(m_subsystemContainer, m_armPidController, m_intakeManager);
 
   private final ScoreMoveAutoGather m_scoreThenMoveThenAutoGather =
-      new ScoreMoveAutoGather(
-          m_drivetrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_subsystemContainer,
-          m_ledSubsystem);
+      new ScoreMoveAutoGather(m_subsystemContainer, m_armPidController, m_intakeManager);
 
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_subsystemContainer, m_intakeManager);
