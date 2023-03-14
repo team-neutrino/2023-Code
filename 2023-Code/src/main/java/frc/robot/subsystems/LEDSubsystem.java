@@ -14,12 +14,6 @@ import frc.robot.util.EnumConstants.LEDColor;
 
 public class LEDSubsystem extends SubsystemBase {
 
-  private LEDSubsystem m_ledSubsystem;
-
-  public LEDSubsystem(LEDSubsystem p_ledSubsystem) {
-    m_ledSubsystem = p_ledSubsystem;
-  }
-
   public AddressableLED m_addressableLED;
   public AddressableLEDBuffer m_LEDBuffer;
   private int m_LEDLength = 58;

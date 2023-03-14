@@ -19,8 +19,8 @@ public class LEDCommand extends CommandBase {
       LEDColor p_colorMode,
       DriverStationInfo p_DriverStationInfo) {
     m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
-    m_colorMode = p_colorMode;
     m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
+    m_colorMode = p_colorMode;
     addRequirements(m_ledSubsystem);
   }
 

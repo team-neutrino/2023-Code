@@ -6,12 +6,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PneumaticSubsystem extends SubsystemBase {
 
-  private PneumaticSubsystem m_pneumaticSubsystem;
-
-  public PneumaticSubsystem(PneumaticSubsystem p_pneumaticSubsystem) {
-    m_pneumaticSubsystem = p_pneumaticSubsystem;
-  }
-
   private Compressor m_compressor = new Compressor(PneumaticsModuleType.CTREPCM);
 
   public PneumaticSubsystem() {}

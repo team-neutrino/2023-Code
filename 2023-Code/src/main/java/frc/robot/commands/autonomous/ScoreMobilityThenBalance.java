@@ -7,10 +7,9 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.SubsystemContainer;
 import frc.robot.TrajectoryConfigConstants;
-import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.NavXBalance;
@@ -76,8 +75,7 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
         new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeManager),
         new ParallelRaceGroup(
             new TimerCommand(1),
-            new ArmToAngleCommand(
-                p_subsystemContainer, p_pidController, ArmConstants.FORWARD_MID)),
+            new ArmToAngleCommand(p_subsystemContainer, p_pidController, ArmConstants.FORWARD_MID)),
         moveForwardCommand,
         new NavXBalance(p_subsystemContainer),
         new AutoBalanceCommand(p_subsystemContainer));

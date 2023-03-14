@@ -11,11 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ScoringSubsystem extends SubsystemBase {
-  private ScoringSubsystem m_scoringSubsystem;
-
-  public ScoringSubsystem(ScoringSubsystem p_scoringSubsystem) {
-    m_scoringSubsystem = p_scoringSubsystem;
-  }
 
   private Solenoid solenoid =
       new Solenoid(PneumaticsModuleType.CTREPCM, Constants.PneumaticsConstants.GRABBER);

@@ -14,7 +14,6 @@ public class DriveTrainDefaultCommand extends CommandBase {
   Joystick m_leftJoystick;
   Joystick m_rightJoystick;
 
-  /** Creates a new DriveCommand. */
   // public DriveTrainDefaultCommand(
   //     DriveTrainSubsystem p_drivetrainSubsystem,
   //     Joystick p_leftJoystick,

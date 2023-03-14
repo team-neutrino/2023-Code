@@ -14,12 +14,6 @@ public class ArmDefaultCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ViennaPIDController m_pidController;
 
-  // public ArmDefaultCommand(ArmSubsystem p_armSubsystem, ViennaPIDController p_pidController) {
-  //   m_armSubsystem = p_armSubsystem;
-  //   m_pidController = p_pidController;
-  //   addRequirements(m_armSubsystem);
-  // }
-
   public ArmDefaultCommand(
       SubsystemContainer p_subsystemContainer, ViennaPIDController p_pidController) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();

@@ -4,9 +4,8 @@
 
 package frc.robot.util;
 
-import frc.robot.Constants;
-import frc.robot.SubsystemContainer;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 

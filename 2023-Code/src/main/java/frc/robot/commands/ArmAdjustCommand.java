@@ -6,9 +6,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.SubsystemContainer;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.util.ViennaPIDController;
 
@@ -18,20 +17,10 @@ public class ArmAdjustCommand extends CommandBase {
   private ViennaPIDController m_pidController;
   private double targetAngle;
 
-  // public ArmAdjustCommand(
-  //     ArmSubsystem p_armSubsystem,
-  //     XboxController p_driverController,
-  //     ViennaPIDController p_pidController) {
-  //   m_pidController = p_pidController;
-  //   m_armSubsystem = p_armSubsystem;
-  //   m_driverController = p_driverController;
-  //   targetAngle = m_armSubsystem.getAbsolutePosition();
-  //     }
-
   public ArmAdjustCommand(
+      SubsystemContainer p_subsystemContainer,
       XboxController p_driverController,
-      ViennaPIDController p_pidController,
-      SubsystemContainer p_subsystemContainer) {
+      ViennaPIDController p_pidController) {
     m_pidController = p_pidController;
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_driverController = p_driverController;
@@ -49,13 +38,11 @@ public class ArmAdjustCommand extends CommandBase {
 
     if (m_driverController.getRightY() < -ArmConstants.ARM_INPUT_DEADZONE) {
       voltage =
-          m_armSubsystem.limitAmount(
-              m_driverController.getRightY() / ArmConstants.SCALE_FACTOR);
+          m_armSubsystem.limitAmount(m_driverController.getRightY() / ArmConstants.SCALE_FACTOR);
       targetAngle = m_armSubsystem.getAbsolutePosition();
     } else if (m_driverController.getRightY() > ArmConstants.ARM_INPUT_DEADZONE) {
       voltage =
-          m_armSubsystem.limitAmount(
-              m_driverController.getRightY() / ArmConstants.SCALE_FACTOR);
+          m_armSubsystem.limitAmount(m_driverController.getRightY() / ArmConstants.SCALE_FACTOR);
       targetAngle = m_armSubsystem.getAbsolutePosition();
     } else {
       int position = (int) m_armSubsystem.getAbsolutePosition();

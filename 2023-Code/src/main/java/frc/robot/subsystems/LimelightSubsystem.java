@@ -11,12 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimelightSubsystem extends SubsystemBase {
 
-  private LimelightSubsystem m_limelightSubsystem;
-
-  public LimelightSubsystem(LimelightSubsystem p_limelightSubsystem) {
-    m_limelightSubsystem = p_limelightSubsystem;
-  }
-
   private NetworkTable limelight;
   private int cycle = 0;
   private double LIMELIGHT_TO_METER_CONVERSION = 0.76189;

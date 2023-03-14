@@ -183,7 +183,15 @@ public class RobotContainer {
           m_ledSubsystem);
 
   private final ScoreMoveAutoGather m_scoreThenMoveThenAutoGather =
-      new ScoreMoveAutoGather(m_drivetrainSubsystem, m_armPidController, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_subsystemContainer, m_ledSubsystem);
+      new ScoreMoveAutoGather(
+          m_drivetrainSubsystem,
+          m_armPidController,
+          m_armSubsystem,
+          m_scoringSubsystem,
+          m_intakeSubsystem,
+          m_intakeManager,
+          m_subsystemContainer,
+          m_ledSubsystem);
 
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_subsystemContainer, m_intakeManager);
@@ -220,36 +228,20 @@ public class RobotContainer {
     // Put the arm to one of three specified target angles
     m_buttonB.toggleOnTrue(
         new ArmToAngleCommand(
-            m_subsystemContainer,
-            m_armPidController,
-            ArmConstants.FORWARD_MID,
-            false,
-            false));
+            m_subsystemContainer, m_armPidController, ArmConstants.FORWARD_MID, false, false));
     m_buttonY.toggleOnTrue(
         new ArmToAngleCommand(
-            m_subsystemContainer,
-            m_armPidController,
-            ArmConstants.FORWARD_DOWN,
-            false,
-            false));
+            m_subsystemContainer, m_armPidController, ArmConstants.FORWARD_DOWN, false, false));
     m_buttonX.toggleOnTrue(
         new ArmToAngleCommand(
-            m_subsystemContainer,
-            m_armPidController,
-            ArmConstants.BACK_MID,
-            false,
-            true));
+            m_subsystemContainer, m_armPidController, ArmConstants.BACK_MID, false, true));
     m_buttonA.toggleOnTrue(
         new ArmToAngleCommand(
-            m_subsystemContainer,
-            m_armPidController,
-            ArmConstants.BACK_DOWN,
-            false,
-            false));
+            m_subsystemContainer, m_armPidController, ArmConstants.BACK_DOWN, false, false));
 
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(
-        new ArmAdjustCommand(m_driverController, m_armPidControllerAdjust, m_subsystemContainer));
+        new ArmAdjustCommand(m_subsystemContainer, m_driverController, m_armPidController));
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));

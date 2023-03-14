@@ -12,18 +12,11 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
 
 public class ArmSubsystem extends SubsystemBase {
-
-  private ArmSubsystem m_armSubsystem;
-
-  public ArmSubsystem(ArmSubsystem p_armSubsystem) {
-    m_armSubsystem = p_armSubsystem;
-  }
 
   private CANSparkMax m_armMotor = new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_armMotor.getEncoder();
