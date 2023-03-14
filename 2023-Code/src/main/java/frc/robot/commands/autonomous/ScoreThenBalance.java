@@ -12,11 +12,7 @@ import frc.robot.TrajectoryConfigConstants;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.ScoringOpenCommand;
-import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
@@ -31,16 +27,13 @@ public class ScoreThenBalance extends SequentialCommandGroup {
 
   private ArrayList<PoseTriplet> moveForwardArray;
   private RamseteCommand moveForwardCommand;
+  private DriveTrainSubsystem m_drivetrainSubsystem;
 
   public ScoreThenBalance(
       SubsystemContainer p_subsystemContainer,
-      DriveTrainSubsystem p_drivetrainSubsystem,
       ViennaPIDController p_pidController,
-      ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem,
-      IntakeManager p_intakeManager,
-      LEDSubsystem p_ledSubsystem) {
+      IntakeManager p_intakeManager) {
+        m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
 
     moveForwardArray =
         new ArrayList<PoseTriplet>(
@@ -49,13 +42,13 @@ public class ScoreThenBalance extends SequentialCommandGroup {
     moveForwardCommand =
         AutonomousUtil.generateRamseteFromPoses(
             moveForwardArray,
-            p_drivetrainSubsystem,
+            m_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
     addCommands(
         new ArmToAngleCommand(
             p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeManager)
+        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)
             .withTimeout(2),
         moveForwardCommand,
         new AutoBalanceCommand(p_subsystemContainer));

@@ -11,14 +11,10 @@ import frc.robot.SubsystemContainer;
 import frc.robot.TrajectoryConfigConstants;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.ScoringOpenCommand;
-import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LEDSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
@@ -35,14 +31,9 @@ public class ScoreThenMove extends SequentialCommandGroup {
   /** Creates a new TestAutonGeneratedTrajectory. */
   public ScoreThenMove(
       SubsystemContainer p_subsystemContainer,
-      DriveTrainSubsystem p_drivetrainSubsystem,
       ViennaPIDController p_pidController,
-      ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem,
-      IntakeManager p_intakeManager,
-      LEDSubsystem p_ledSubsystem) {
-    m_drivetrainSubsystem = p_drivetrainSubsystem;
+      IntakeManager p_intakeManager) {
+    m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(
@@ -59,7 +50,7 @@ public class ScoreThenMove extends SequentialCommandGroup {
     addCommands(
         new ArmToAngleCommand(
             p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeManager)
+        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)
             .withTimeout(2),
         forwardBackCommand);
   }

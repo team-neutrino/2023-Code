@@ -16,11 +16,8 @@ import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.IntakeGatherModeCommand;
 import frc.robot.commands.ScoringOpenCommand;
-import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
@@ -37,6 +34,7 @@ import java.util.Arrays;
 public class ScoreMoveAutoGather extends SequentialCommandGroup {
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
+  private IntakeSubsystem m_intakeSubsystem;
   private ArrayList<PoseTriplet> toGamePieceArray;
   private ArrayList<PoseTriplet> runThatBack;
   private RamseteCommand toGamePieceCommand;
@@ -45,15 +43,12 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
 
   /** Creates a new TestAutonGeneratedTrajectory. */
   public ScoreMoveAutoGather(
-      DriveTrainSubsystem p_drivetrainSubsystem,
-      ViennaPIDController p_pidController,
-      ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem,
-      IntakeManager p_intakeManager,
-      SubsystemContainer p_subsystemContainer,
-      LEDSubsystem p_ledSubsystem) {
-    m_drivetrainSubsystem = p_drivetrainSubsystem;
+    SubsystemContainer p_subsystemContainer,
+    ViennaPIDController p_pidController,
+    IntakeManager p_intakeManager) {
+  m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
+  m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
+  
     if (DriverStationInfo.getAlliance() == Alliance.Red) {
       inverted = true;
     }
@@ -82,7 +77,7 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
     runThatBackCommand =
         AutonomousUtil.generateRamseteFromPoses(
             runThatBack,
-            p_drivetrainSubsystem,
+            m_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG,
             inverted);
 
@@ -91,19 +86,19 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
     addCommands(
         new ArmToAngleCommand(
             p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeManager)
+        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)
             .withTimeout(.5),
         new ParallelRaceGroup(
             new ArmToAngleCommand(
                 p_subsystemContainer, p_pidController, ArmConstants.FORWARD_MID, false, false),
             toGamePieceCommand,
             new IntakeGatherModeCommand(p_subsystemContainer, p_intakeManager, true)),
-        new InstantCommand(p_intakeSubsystem::stopIntake, p_intakeSubsystem),
+        new InstantCommand(m_intakeSubsystem::stopIntake, m_intakeSubsystem),
         new ArmGatherModeCommand(p_subsystemContainer, p_pidController).withTimeout(2),
         runThatBackCommand,
         new ArmToAngleCommand(
             p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeManager)
+        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)
             .withTimeout(1),
         new ArmToAngleCommand(
             p_subsystemContainer, p_pidController, ArmConstants.FORWARD_MID, true, false));

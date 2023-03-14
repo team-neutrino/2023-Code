@@ -15,7 +15,6 @@ public class ScoringOpenCommand extends CommandBase {
 
   public ScoringOpenCommand(
       SubsystemContainer p_subsystemContainer,
-      ScoringSubsystem p_scoringSubsystem,
       IntakeManager p_intakeManager) {
     m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_intakeManager = p_intakeManager;

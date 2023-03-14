@@ -143,35 +143,11 @@ public class RobotContainer {
       new AutoBalanceCommand(m_subsystemContainer);
 
   private final ScoreMobilityThenBalance m_scoreMobilityThenBalance =
-      new ScoreMobilityThenBalance(
-          m_subsystemContainer,
-          m_drivetrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem);
+      new ScoreMobilityThenBalance(m_subsystemContainer, m_armPidController, m_intakeManager);
   private final ScoreThenMove m_scoreThenMove =
-      new ScoreThenMove(
-          m_subsystemContainer,
-          m_drivetrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem);
+      new ScoreThenMove(m_subsystemContainer, m_armPidController, m_intakeManager);
   private final ScoreThenBalance m_scoreThenBalanece =
-      new ScoreThenBalance(
-          m_subsystemContainer,
-          m_drivetrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem);
+      new ScoreThenBalance(m_subsystemContainer, m_armPidController, m_intakeManager);
   private final JustScore m_justScore =
       new JustScore(
           m_drivetrainSubsystem,
@@ -210,7 +186,7 @@ public class RobotContainer {
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_subsystemContainer);
   private final ScoringOpenCommand m_scoringOpenCommand =
-      new ScoringOpenCommand(m_subsystemContainer, m_scoringSubsystem, m_intakeManager);
+      new ScoringOpenCommand(m_subsystemContainer, m_intakeManager);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
