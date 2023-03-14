@@ -31,13 +31,11 @@ import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
-import frc.robot.commands.autonomous.BlueScoreThenMoveThenAutoGather;
 import frc.robot.commands.autonomous.JustScore;
-import frc.robot.commands.autonomous.RedScoreThenMoveThenAutoGather;
 import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
+import frc.robot.commands.autonomous.ScoreMoveAutoGather;
 import frc.robot.commands.autonomous.ScoreThenBalance;
 import frc.robot.commands.autonomous.ScoreThenMove;
-import frc.robot.commands.autonomous.ScoreThenMoveThenAutoGather;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -175,37 +173,11 @@ public class RobotContainer {
           m_intakeManager,
           m_ledSubsystem);
 
-  private final ScoreThenMoveThenAutoGather m_scoreThenMoveThenAutoGather =
-      new ScoreThenMoveThenAutoGather(
+  private final ScoreMoveAutoGather m_scoreThenMoveThenAutoGather =
+      new ScoreMoveAutoGather(
           m_subsystemContainer,
-          m_drivetrainSubsystem,
           m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem);
-
-  private final RedScoreThenMoveThenAutoGather m_RedScoreThenMoveThenAutoGather =
-      new RedScoreThenMoveThenAutoGather(
-          m_subsystemContainer,
-          m_drivetrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem);
-  private final BlueScoreThenMoveThenAutoGather m_BlueScoreThenMoveThenAutoGather =
-      new BlueScoreThenMoveThenAutoGather(
-        m_drivetrainSubsystem, 
-        m_armPidController, 
-        m_armSubsystem, 
-        m_scoringSubsystem, 
-        m_intakeSubsystem, 
-        m_intakeManager, 
-        m_subsystemContainer, 
-        m_ledSubsystem);
+          m_intakeManager);
 
   private final IntakeCommand m_intakeCommand =
       new IntakeCommand(m_subsystemContainer, m_intakeManager);
@@ -276,5 +248,9 @@ public class RobotContainer {
     return m_shuffleboardSubsystem
         .getAutoSelected()
         .andThen(new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
+  }
+
+  public void resetNavX() {
+    m_driveTrainSubsystem.getNavX().zeroYaw();
   }
 }

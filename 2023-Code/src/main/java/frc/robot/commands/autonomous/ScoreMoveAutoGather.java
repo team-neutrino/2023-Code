@@ -4,6 +4,7 @@
 
 package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -21,6 +22,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
+import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
@@ -30,16 +32,19 @@ import java.util.Arrays;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
+
+// FOR BLUE PATH
+public class ScoreMoveAutoGather extends SequentialCommandGroup {
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
   private ArrayList<PoseTriplet> toGamePieceArray;
   private ArrayList<PoseTriplet> runThatBack;
   private RamseteCommand toGamePieceCommand;
   private RamseteCommand runThatBackCommand;
+  private boolean inverted = false;
 
   /** Creates a new TestAutonGeneratedTrajectory. */
-  public BlueScoreThenMoveThenAutoGather(
+  public ScoreMoveAutoGather(
       DriveTrainSubsystem p_drivetrainSubsystem,
       ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
@@ -49,6 +54,9 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
       SubsystemContainer p_subsystemContainer,
       LEDSubsystem p_ledSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
+    if (DriverStationInfo.getAlliance() == Alliance.Red) {
+      inverted = true;
+    }
 
     toGamePieceArray =
         new ArrayList<PoseTriplet>(
@@ -68,13 +76,15 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
         AutonomousUtil.generateRamseteFromPoses(
             toGamePieceArray,
             m_drivetrainSubsystem,
-            TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
+            TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG,
+            inverted);
 
     runThatBackCommand =
         AutonomousUtil.generateRamseteFromPoses(
             runThatBack,
             p_drivetrainSubsystem,
-            TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG);
+            TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG,
+            inverted);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -97,7 +107,7 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
         new ArmToAngleCommand(
             p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
         new ScoringOpenCommand(
-            p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 1, true),
+            p_subsystemContainer, p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 1, true).withTimeout(1),
         new ArmToAngleCommand(
             p_subsystemContainer,
             p_pidController,
