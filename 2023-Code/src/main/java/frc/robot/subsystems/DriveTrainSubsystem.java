@@ -160,6 +160,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     setVoltage(voltage, voltage);
   }
 
+  public void turn(double output) {
+    setMotors(output, -output);
+  }
+
   public void setMotors(double leftMotorInput, double rightMotorInput) {
     m_motorGroupLeft.set(deadzone(leftMotorInput));
     m_motorGroupRight.set(deadzone(rightMotorInput));

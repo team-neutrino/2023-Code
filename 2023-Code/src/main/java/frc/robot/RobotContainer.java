@@ -31,6 +31,7 @@ import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.IntakeSqueezeCommand;
 import frc.robot.commands.LEDCommand;
+import frc.robot.commands.LimelightRotationCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
@@ -138,8 +139,9 @@ public class RobotContainer {
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
 
-  private final DriveTrainAutoRotationCommand m_autoRotate = new DriveTrainAutoRotationCommand(m_driveTrainSubsystem, m_limelightSubsystem);
-
+  //private final DriveTrainAutoRotationCommand m_autoRotate = new DriveTrainAutoRotationCommand(m_driveTrainSubsystem, m_limelightSubsystem);
+  private final LimelightRotationCommand m_autoRotate = new LimelightRotationCommand(m_limelightSubsystem, m_driveTrainSubsystem);
+  
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
 

@@ -36,12 +36,11 @@ public class DriveTrainAutoRotationCommand extends CommandBase {
   
     @Override
     public void end(boolean interrupted) {
-        System.out.println("tx is " + m_limelight.getTx());
+      //System.out.println("tx is " + m_limelight.getTx());
     }
   
     @Override
     public boolean isFinished() {
       return stop;
     }
-    
 }
