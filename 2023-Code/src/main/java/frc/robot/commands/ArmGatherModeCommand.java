@@ -18,19 +18,6 @@ public class ArmGatherModeCommand extends CommandBase {
   private IntakeSubsystem m_intakeSubsystem;
   private ViennaPIDController m_pidController;
 
-  // public ArmGatherModeCommand(
-  //     ArmSubsystem p_armSubsystem,
-  //     ScoringSubsystem p_scoringSubsystem,
-  //     IntakeSubsystem p_intakeSubsystem,
-  //     ViennaPIDController p_pidController) {
-  //   m_armSubsystem = p_armSubsystem;
-  //   m_scoringSubsystem = p_scoringSubsystem;
-  //   m_intakeSubsystem = p_intakeSubsystem;
-  //   m_pidController = p_pidController;
-
-  //   addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
-  // }
-
   public ArmGatherModeCommand(
       SubsystemContainer p_subsystemContainer, ViennaPIDController p_pidController) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
