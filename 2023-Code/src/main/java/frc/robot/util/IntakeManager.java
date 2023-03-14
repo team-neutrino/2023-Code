@@ -6,6 +6,7 @@ package frc.robot.util;
 
 import frc.robot.Constants;
 import frc.robot.SubsystemContainer;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -29,7 +30,7 @@ public class IntakeManager {
    * @return If it is OK to run intake-dependant commands.
    */
   public boolean managerApproved() {
-    return m_armSubsystem.getAbsolutePosition() <= Constants.ArmConstants.INTAKE_RUNNABLE;
+    return m_armSubsystem.getAbsolutePosition() <= ArmConstants.INTAKE_RUNNABLE;
   }
 
   /**

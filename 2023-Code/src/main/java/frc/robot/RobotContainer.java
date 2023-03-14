@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.commands.ArmAdjustCommand;
@@ -221,28 +222,28 @@ public class RobotContainer {
         new ArmToAngleCommand(
             m_subsystemContainer,
             m_armPidController,
-            Constants.ArmConstants.FORWARD_MID,
+            ArmConstants.FORWARD_MID,
             false,
             false));
     m_buttonY.toggleOnTrue(
         new ArmToAngleCommand(
             m_subsystemContainer,
             m_armPidController,
-            Constants.ArmConstants.FORWARD_DOWN,
+            ArmConstants.FORWARD_DOWN,
             false,
             false));
     m_buttonX.toggleOnTrue(
         new ArmToAngleCommand(
             m_subsystemContainer,
             m_armPidController,
-            Constants.ArmConstants.BACK_MID,
+            ArmConstants.BACK_MID,
             false,
             true));
     m_buttonA.toggleOnTrue(
         new ArmToAngleCommand(
             m_subsystemContainer,
             m_armPidController,
-            Constants.ArmConstants.BACK_DOWN,
+            ArmConstants.BACK_DOWN,
             false,
             false));
 

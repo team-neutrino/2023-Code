@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.SubsystemContainer;
 import frc.robot.TrajectoryConfigConstants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.IntakeGatherModeCommand;
@@ -90,13 +91,13 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmToAngleCommand(
-            p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
+            p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true, false),
         new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeManager).withTimeout(.5),
         new ParallelRaceGroup(
             new ArmToAngleCommand(
                 p_subsystemContainer,
                 p_pidController,
-                Constants.ArmConstants.FORWARD_MID,
+                ArmConstants.FORWARD_MID,
                 false,
                 false),
             toGamePieceCommand,
@@ -105,13 +106,13 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
         new ArmGatherModeCommand(p_subsystemContainer, p_pidController).withTimeout(2),
         runThatBackCommand,
         new ArmToAngleCommand(
-            p_subsystemContainer, p_pidController, Constants.ArmConstants.BACK_MID, true, false),
+            p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true, false),
         new ScoringOpenCommand(p_subsystemContainer, p_scoringSubsystem, p_intakeManager)
             .withTimeout(1),
         new ArmToAngleCommand(
             p_subsystemContainer,
             p_pidController,
-            Constants.ArmConstants.FORWARD_MID,
+            ArmConstants.FORWARD_MID,
             true,
             false));
   }

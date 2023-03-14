@@ -52,10 +52,10 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public double limitAmount(double voltage) {
-    if (voltage < -Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
-      voltage = -Constants.ArmConstants.ARM_OUTPUT_LIMIT;
-    } else if (voltage > Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
-      voltage = Constants.ArmConstants.ARM_OUTPUT_LIMIT;
+    if (voltage < -ArmConstants.ARM_OUTPUT_LIMIT) {
+      voltage = -ArmConstants.ARM_OUTPUT_LIMIT;
+    } else if (voltage > ArmConstants.ARM_OUTPUT_LIMIT) {
+      voltage = ArmConstants.ARM_OUTPUT_LIMIT;
     }
     return voltage;
   }

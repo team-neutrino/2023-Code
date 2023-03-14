@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.SubsystemContainer;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.util.ViennaPIDController;
 
@@ -46,15 +47,15 @@ public class ArmAdjustCommand extends CommandBase {
   public void execute() {
     double voltage = 0;
 
-    if (m_driverController.getRightY() < -Constants.ArmConstants.ARM_INPUT_DEADZONE) {
+    if (m_driverController.getRightY() < -ArmConstants.ARM_INPUT_DEADZONE) {
       voltage =
           m_armSubsystem.limitAmount(
-              m_driverController.getRightY() / Constants.ArmConstants.SCALE_FACTOR);
+              m_driverController.getRightY() / ArmConstants.SCALE_FACTOR);
       targetAngle = m_armSubsystem.getAbsolutePosition();
-    } else if (m_driverController.getRightY() > Constants.ArmConstants.ARM_INPUT_DEADZONE) {
+    } else if (m_driverController.getRightY() > ArmConstants.ARM_INPUT_DEADZONE) {
       voltage =
           m_armSubsystem.limitAmount(
-              m_driverController.getRightY() / Constants.ArmConstants.SCALE_FACTOR);
+              m_driverController.getRightY() / ArmConstants.SCALE_FACTOR);
       targetAngle = m_armSubsystem.getAbsolutePosition();
     } else {
       int position = (int) m_armSubsystem.getAbsolutePosition();
