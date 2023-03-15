@@ -9,31 +9,36 @@ import frc.robot.subsystems.ArmSubsystem;
 
 public class TelescopreToPositionCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
+  private boolean m_isTelescopingOut;
 
-  /** Creates a new TelescopreToPositionCommand. */
-  public TelescopeCommand(ArmSubsystem p_armSubsystem) {
+  public TelescopeCommand(ArmSubsystem p_armSubsystem, boolean p_isTelescopingOut) {
     m_armSubsystem = p_armSubsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_armSubsystem);
+
+    m_isTelescopingOut = p_isTelescopingOut;
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_armSubsystem.setTelescope(.3);
+    if (m_isTelescopingOut) {
+      m_armSubsystem.setTelescope(ArmConstants.TELESCOPING_OUT_SPEED);
+    }
+    else {
+      m_armSubsystem.setTelescope(ArmConstants.TELESCOPING_IN_SPEED);
+    }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (m_armSubsystem.getSwitch()) {
+      return true;
+    }
     return false;
   }
 }

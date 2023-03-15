@@ -51,6 +51,9 @@ public final class Constants {
     public static final double ARM_OUTPUT_LIMIT = 0.2;
     public static final double SCALE_FACTOR = 10;
     public static final double ARM_INPUT_DEADZONE = 0.2;
+
+    public static final double TELESCOPING_OUT_SPEED = 0.3;
+    public static final double TELESCOPING_IN_SPEED = -0.3;
   }
 
   public static class PIDConstants {
@@ -86,8 +89,9 @@ public final class Constants {
     public static final int INTAKE_BEAMBREAK = 0;
     public static final int GRABBER_BEAMBREAK = 1;
     public static final int INTAKE_DOWN_BEAMBREAK = 2;
-    public static final int ARM_ENCODER = 9;
+    public static final int CLIMBER_LIMIT_SWITCH = 3;
     public static final int TELESCOPING_ENCODER = 8;
+    public static final int ARM_ENCODER = 9;
   }
 
   public static class PWMConstants {

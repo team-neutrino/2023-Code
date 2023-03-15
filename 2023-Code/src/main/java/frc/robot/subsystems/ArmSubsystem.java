@@ -26,6 +26,7 @@ public class ArmSubsystem extends SubsystemBase {
   private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
   private DutyCycleEncoder m_telescopingexternalEncoder = new DutyCycleEncoder(DigitalConstants.TELESCOPING_ENCODER);
   private SparkMaxPIDController m_pidController = m_armMotor.getPIDController();
+  private DigitalInput m_limitSwitch = new DigitalInput(DigitalConstants.CLIMBER_SWITCH);
 
   public ArmSubsystem() {
     m_armMotor.restoreFactoryDefaults();
@@ -103,6 +104,10 @@ public void setTelescopeVoltage(double p_voltage) {
 
 public void setTelescope(double p_speed) {
   m_telescopingMotor.set(p_speed);
+}
+
+public boolean getSwitch() {
+  return m_limitSwitch.get();
 }
 
   @Override
