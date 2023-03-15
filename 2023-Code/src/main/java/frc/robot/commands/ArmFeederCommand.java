@@ -21,9 +21,7 @@ public class ArmFeederCommand extends CommandBase {
   Timer m_timer;
   double time = 1.5;
 
-  public ArmFeederCommand(
-      ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem) {
+  public ArmFeederCommand(ArmSubsystem p_armSubsystem, ScoringSubsystem p_scoringSubsystem) {
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
     m_pidController = ViennaContainer.getArmSetPositionController();

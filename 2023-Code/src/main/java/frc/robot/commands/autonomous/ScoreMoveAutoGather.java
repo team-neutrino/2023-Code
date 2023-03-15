@@ -88,31 +88,20 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(
-            p_armSubsystem, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+        new ArmToAngleCommand(p_armSubsystem, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(.5),
         new ParallelRaceGroup(
             new ArmToAngleCommand(
-                p_armSubsystem,
-                ArmConstants.FORWARD_MID,
-                false,
-                false,
-                p_ledSubsystem),
+                p_armSubsystem, ArmConstants.FORWARD_MID, false, false, p_ledSubsystem),
             toGamePieceCommand,
             new IntakeGatherModeCommand(p_intakeSubsystem, p_intakeManager, true)),
         new InstantCommand(p_intakeSubsystem::stopIntake, p_intakeSubsystem),
-        new ArmGatherModeCommand(
-                p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem)
+        new ArmGatherModeCommand(p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem)
             .withTimeout(2),
         runThatBackCommand,
-        new ArmToAngleCommand(
-            p_armSubsystem, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+        new ArmToAngleCommand(p_armSubsystem, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(1),
         new ArmToAngleCommand(
-            p_armSubsystem,
-            ArmConstants.FORWARD_MID,
-            true,
-            true,
-            p_ledSubsystem));
+            p_armSubsystem, ArmConstants.FORWARD_MID, true, true, p_ledSubsystem));
   }
 }

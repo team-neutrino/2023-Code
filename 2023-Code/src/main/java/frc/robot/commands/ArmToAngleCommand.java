@@ -26,9 +26,7 @@ public class ArmToAngleCommand extends CommandBase {
   private boolean m_buttoncheck = false;
 
   public ArmToAngleCommand(
-      ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_ScoringSubsystem,
-      double p_targetAngle) {
+      ArmSubsystem p_armSubsystem, ScoringSubsystem p_ScoringSubsystem, double p_targetAngle) {
     m_armSubsystem = p_armSubsystem;
     m_ScoringSubsystem = p_ScoringSubsystem;
     m_pidController = ViennaContainer.getArmSetPositionController();
@@ -54,17 +52,17 @@ public class ArmToAngleCommand extends CommandBase {
   }
 
   public ArmToAngleCommand(
-    ArmSubsystem p_armSubsystem,
-    double p_targetAngle,
-    boolean p_auton,
-    boolean p_endAuton,
-    boolean p_buttoncheck,
-    LEDSubsystem p_ledSubsystem) {
-  m_armSubsystem = p_armSubsystem;
-  m_pidController = ViennaContainer.getArmSetPositionController();
-  m_targetAngle = p_targetAngle;
-  m_auton = p_auton;
-  m_endAuton = p_endAuton;
+      ArmSubsystem p_armSubsystem,
+      double p_targetAngle,
+      boolean p_auton,
+      boolean p_endAuton,
+      boolean p_buttoncheck,
+      LEDSubsystem p_ledSubsystem) {
+    m_armSubsystem = p_armSubsystem;
+    m_pidController = ViennaContainer.getArmSetPositionController();
+    m_targetAngle = p_targetAngle;
+    m_auton = p_auton;
+    m_endAuton = p_endAuton;
     addRequirements(m_armSubsystem);
   }
 

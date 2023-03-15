@@ -17,9 +17,7 @@ public class ArmAdjustCommand extends CommandBase {
   private ViennaPIDController m_pidController;
   private double targetAngle;
 
-  public ArmAdjustCommand(
-      ArmSubsystem p_armSubsystem,
-      XboxController p_driverController) {
+  public ArmAdjustCommand(ArmSubsystem p_armSubsystem, XboxController p_driverController) {
     m_pidController = ViennaContainer.getArmAdjustController();
     m_armSubsystem = p_armSubsystem;
     m_driverController = p_driverController;

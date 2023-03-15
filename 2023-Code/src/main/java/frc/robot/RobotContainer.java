@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.PIDConstants;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmFeederCommand;
@@ -48,7 +47,6 @@ import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.EnumConstants.LEDColor;
 import frc.robot.util.IntakeManager;
-import frc.robot.util.ViennaPIDController;
 
 public class RobotContainer {
   // CONTROLLERS
@@ -116,8 +114,7 @@ public class RobotContainer {
           m_intakeManager);
 
   // COMMANDS
-  private final ArmDefaultCommand m_armDefaultCommand =
-      new ArmDefaultCommand(m_armSubsystem);
+  private final ArmDefaultCommand m_armDefaultCommand = new ArmDefaultCommand(m_armSubsystem);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrainSubsystem, m_leftJoystick, m_rightJoystick);
   private final IntakeDefaultCommand m_intakeDefaultCommand =
@@ -129,13 +126,29 @@ public class RobotContainer {
       new AutoBalanceCommand(m_driveTrainSubsystem);
 
   private final ScoreMobilityThenBalance m_scoreMobilityThenBalance =
-      new ScoreMobilityThenBalance(m_driveTrainSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem);
+      new ScoreMobilityThenBalance(
+          m_driveTrainSubsystem,
+          m_armSubsystem,
+          m_scoringSubsystem,
+          m_intakeSubsystem,
+          m_intakeManager,
+          m_ledSubsystem);
   private final ScoreThenMove m_scoreThenMove =
-      new ScoreThenMove(m_driveTrainSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem
-          );
+      new ScoreThenMove(
+          m_driveTrainSubsystem,
+          m_armSubsystem,
+          m_scoringSubsystem,
+          m_intakeSubsystem,
+          m_intakeManager,
+          m_ledSubsystem);
   private final ScoreThenBalance m_scoreThenBalanece =
-      new ScoreThenBalance(m_driveTrainSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem
-          );
+      new ScoreThenBalance(
+          m_driveTrainSubsystem,
+          m_armSubsystem,
+          m_scoringSubsystem,
+          m_intakeSubsystem,
+          m_intakeManager,
+          m_ledSubsystem);
   private final JustScore m_justScore =
       new JustScore(
           m_driveTrainSubsystem,
@@ -163,8 +176,7 @@ public class RobotContainer {
   private final IntakeGatherModeCommand m_intakeGatherModeCommand =
       new IntakeGatherModeCommand(m_intakeSubsystem, m_intakeManager, false);
   private final ArmGatherModeCommand m_armGatherModeCommand =
-      new ArmGatherModeCommand(
-          m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
+      new ArmGatherModeCommand(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
   private final ArmFeederCommand m_armFeederCommand =
       new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
@@ -190,36 +202,18 @@ public class RobotContainer {
     // Put the arm to one of three specified target angles
     m_buttonB.toggleOnTrue(
         new ArmToAngleCommand(
-            m_armSubsystem,
-            ArmConstants.FORWARD_MID,
-            false,
-            false,
-            m_ledSubsystem));
+            m_armSubsystem, ArmConstants.FORWARD_MID, false, false, m_ledSubsystem));
     m_buttonY.toggleOnTrue(
         new ArmToAngleCommand(
-            m_armSubsystem,
-            ArmConstants.FORWARD_DOWN,
-            false,
-            false,
-            m_ledSubsystem));
+            m_armSubsystem, ArmConstants.FORWARD_DOWN, false, false, m_ledSubsystem));
     m_buttonX.toggleOnTrue(
-        new ArmToAngleCommand(
-            m_armSubsystem,
-            ArmConstants.BACK_MID,
-            false,
-            true,
-            m_ledSubsystem));
+        new ArmToAngleCommand(m_armSubsystem, ArmConstants.BACK_MID, false, true, m_ledSubsystem));
     m_buttonA.toggleOnTrue(
         new ArmToAngleCommand(
-            m_armSubsystem,
-            ArmConstants.BACK_DOWN,
-            false,
-            false,
-            m_ledSubsystem));
+            m_armSubsystem, ArmConstants.BACK_DOWN, false, false, m_ledSubsystem));
 
     // used for small adjustments of the arm
-    m_rightStickButton.toggleOnTrue(
-        new ArmAdjustCommand(m_armSubsystem, m_driverController));
+    m_rightStickButton.toggleOnTrue(new ArmAdjustCommand(m_armSubsystem, m_driverController));
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));

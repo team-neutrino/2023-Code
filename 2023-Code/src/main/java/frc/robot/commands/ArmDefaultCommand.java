@@ -7,8 +7,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.util.ViennaPIDController;
 import frc.robot.util.ViennaContainer;
+import frc.robot.util.ViennaPIDController;
 
 public class ArmDefaultCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;

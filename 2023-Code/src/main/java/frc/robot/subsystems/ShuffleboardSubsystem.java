@@ -192,21 +192,11 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_autoChooser.addOption(
         "Balance Mobility",
         new ScoreMobilityThenBalance(
-            m_driveTrainSubsystem,
-            m_arm,
-            m_scoring,
-            m_intake,
-            m_intakeManager,
-            m_LED));
+            m_driveTrainSubsystem, m_arm, m_scoring, m_intake, m_intakeManager, m_LED));
     m_autoChooser.addOption(
         "Score then Move",
         new ScoreThenMove(
-            m_driveTrainSubsystem,
-            m_arm,
-            m_scoring,
-            m_intake,
-            m_intakeManager,
-            m_LED));
+            m_driveTrainSubsystem, m_arm, m_scoring, m_intake, m_intakeManager, m_LED));
   }
 
   public Command getAutoSelected() {
