@@ -19,7 +19,6 @@ public class ArmDefaultCommand extends CommandBase {
     m_pidController = ViennaContainer.getArmSetPositionController();
     addRequirements(m_armSubsystem);
   }
-    private 
 
   @Override
   public void initialize() {}

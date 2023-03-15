@@ -113,7 +113,6 @@ public class RobotContainer {
           m_armSubsystem,
           m_intakeSubsystem,
           m_ledSubsystem,
-          m_armPidController,
           m_intakeManager);
 
   // COMMANDS
@@ -130,36 +129,16 @@ public class RobotContainer {
       new AutoBalanceCommand(m_driveTrainSubsystem);
 
   private final ScoreMobilityThenBalance m_scoreMobilityThenBalance =
-      new ScoreMobilityThenBalance(
-          m_driveTrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem);
+      new ScoreMobilityThenBalance(m_driveTrainSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem);
   private final ScoreThenMove m_scoreThenMove =
-      new ScoreThenMove(
-          m_driveTrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem);
+      new ScoreThenMove(m_driveTrainSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem
+          );
   private final ScoreThenBalance m_scoreThenBalanece =
-      new ScoreThenBalance(
-          m_driveTrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem);
+      new ScoreThenBalance(m_driveTrainSubsystem, m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_intakeManager, m_ledSubsystem
+          );
   private final JustScore m_justScore =
       new JustScore(
           m_driveTrainSubsystem,
-          m_armPidController,
           m_armSubsystem,
           m_scoringSubsystem,
           m_intakeSubsystem,
@@ -169,7 +148,6 @@ public class RobotContainer {
   private final ScoreMoveAutoGather m_scoreThenMoveThenAutoGather =
       new ScoreMoveAutoGather(
           m_driveTrainSubsystem,
-          m_armPidController,
           m_armSubsystem,
           m_scoringSubsystem,
           m_intakeSubsystem,
@@ -186,9 +164,9 @@ public class RobotContainer {
       new IntakeGatherModeCommand(m_intakeSubsystem, m_intakeManager, false);
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(
-          m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_armPidController);
+          m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
   private final ArmFeederCommand m_armFeederCommand =
-      new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem, m_armPidController);
+      new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
       new IntakeHybridModeCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringCloseCommand m_scoringCloseCommand =
@@ -213,7 +191,6 @@ public class RobotContainer {
     m_buttonB.toggleOnTrue(
         new ArmToAngleCommand(
             m_armSubsystem,
-            m_armPidController,
             ArmConstants.FORWARD_MID,
             false,
             false,
@@ -221,7 +198,6 @@ public class RobotContainer {
     m_buttonY.toggleOnTrue(
         new ArmToAngleCommand(
             m_armSubsystem,
-            m_armPidController,
             ArmConstants.FORWARD_DOWN,
             false,
             false,
@@ -229,7 +205,6 @@ public class RobotContainer {
     m_buttonX.toggleOnTrue(
         new ArmToAngleCommand(
             m_armSubsystem,
-            m_armPidController,
             ArmConstants.BACK_MID,
             false,
             true,
@@ -237,7 +212,6 @@ public class RobotContainer {
     m_buttonA.toggleOnTrue(
         new ArmToAngleCommand(
             m_armSubsystem,
-            m_armPidController,
             ArmConstants.BACK_DOWN,
             false,
             false,
@@ -245,7 +219,7 @@ public class RobotContainer {
 
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(
-        new ArmAdjustCommand(m_armSubsystem, m_driverController, m_armPidControllerAdjust));
+        new ArmAdjustCommand(m_armSubsystem, m_driverController));
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));

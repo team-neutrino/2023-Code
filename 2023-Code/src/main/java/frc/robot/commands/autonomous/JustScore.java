@@ -18,6 +18,7 @@ import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
+import frc.robot.util.ViennaContainer;
 import frc.robot.util.ViennaPIDController;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,12 +34,13 @@ public class JustScore extends SequentialCommandGroup {
   /** Creates a new TestAutonGeneratedTrajectory. */
   public JustScore(
       DriveTrainSubsystem p_drivetrainSubsystem,
-      ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem) {
+
+      ViennaPIDController p_pidController = ViennaContainer.getArmSetPositionController();
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(

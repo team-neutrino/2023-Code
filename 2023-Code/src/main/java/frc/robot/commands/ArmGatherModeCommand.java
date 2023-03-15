@@ -9,6 +9,7 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.util.ViennaContainer;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmGatherModeCommand extends CommandBase {
@@ -20,12 +21,11 @@ public class ArmGatherModeCommand extends CommandBase {
   public ArmGatherModeCommand(
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem,
-      ViennaPIDController p_pidController) {
+      IntakeSubsystem p_intakeSubsystem) {
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
     m_intakeSubsystem = p_intakeSubsystem;
-    m_pidController = p_pidController;
+    m_pidController = ViennaContainer.getArmSetPositionController();
 
     addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
   }

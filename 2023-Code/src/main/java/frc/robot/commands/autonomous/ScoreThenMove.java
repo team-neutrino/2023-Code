@@ -21,6 +21,7 @@ import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
+import frc.robot.util.ViennaContainer;
 import frc.robot.util.ViennaPIDController;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,13 +35,13 @@ public class ScoreThenMove extends SequentialCommandGroup {
   /** Creates a new TestAutonGeneratedTrajectory. */
   public ScoreThenMove(
       DriveTrainSubsystem p_drivetrainSubsystem,
-      ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
+    ViennaPIDController pidController = ViennaContainer.getArmSetPositionController();
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(
@@ -56,7 +57,7 @@ public class ScoreThenMove extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmToAngleCommand(
-            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+            p_armSubsystem, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(2),
         forwardBackCommand);
   }

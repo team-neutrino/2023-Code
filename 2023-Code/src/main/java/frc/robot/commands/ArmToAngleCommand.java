@@ -10,6 +10,7 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.EnumConstants.LEDColor;
+import frc.robot.util.ViennaContainer;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmToAngleCommand extends CommandBase {
@@ -26,12 +27,11 @@ public class ArmToAngleCommand extends CommandBase {
 
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem,
-      ViennaPIDController p_pidController,
       ScoringSubsystem p_ScoringSubsystem,
       double p_targetAngle) {
     m_armSubsystem = p_armSubsystem;
     m_ScoringSubsystem = p_ScoringSubsystem;
-    m_pidController = p_pidController;
+    m_pidController = ViennaContainer.getArmSetPositionController();
     m_targetAngle = p_targetAngle;
 
     addRequirements(m_armSubsystem);
@@ -39,13 +39,12 @@ public class ArmToAngleCommand extends CommandBase {
 
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem,
-      ViennaPIDController p_pidController,
       double p_targetAngle,
-      boolean p_auton,
       boolean p_buttoncheck,
+      boolean p_auton,
       LEDSubsystem p_ledSubsystem) {
     m_armSubsystem = p_armSubsystem;
-    m_pidController = p_pidController;
+    m_pidController = ViennaContainer.getArmSetPositionController();
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
     m_endAuton = false;
@@ -55,20 +54,17 @@ public class ArmToAngleCommand extends CommandBase {
   }
 
   public ArmToAngleCommand(
-      ArmSubsystem p_armSubsystem,
-      ViennaPIDController p_pidController,
-      double p_targetAngle,
-      boolean p_auton,
-      boolean p_endAuton,
-      boolean p_buttoncheck,
-      LEDSubsystem p_ledSubsystem) {
-    m_armSubsystem = p_armSubsystem;
-    m_pidController = p_pidController;
-    m_targetAngle = p_targetAngle;
-    m_auton = p_auton;
-    m_endAuton = p_endAuton;
-    m_buttoncheck = p_buttoncheck;
-    m_ledSubsystem = p_ledSubsystem;
+    ArmSubsystem p_armSubsystem,
+    double p_targetAngle,
+    boolean p_auton,
+    boolean p_endAuton,
+    boolean p_buttoncheck,
+    LEDSubsystem p_ledSubsystem) {
+  m_armSubsystem = p_armSubsystem;
+  m_pidController = ViennaContainer.getArmSetPositionController();
+  m_targetAngle = p_targetAngle;
+  m_auton = p_auton;
+  m_endAuton = p_endAuton;
     addRequirements(m_armSubsystem);
   }
 

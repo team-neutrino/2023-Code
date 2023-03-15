@@ -22,6 +22,7 @@ import frc.robot.commands.autonomous.ScoreThenMove;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.SavePoseCommand;
+import frc.robot.util.ViennaContainer;
 import frc.robot.util.ViennaPIDController;
 import java.io.IOException;
 
@@ -58,7 +59,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       ArmSubsystem p_arm,
       IntakeSubsystem p_intake,
       LEDSubsystem p_LED,
-      ViennaPIDController p_pidController,
       IntakeManager p_intakeManager) {
 
     m_driveTrainSubsystem = p_driveTrainSubsystem;
@@ -67,7 +67,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_arm = p_arm;
     m_intake = p_intake;
     m_LED = p_LED;
-    m_pidController = p_pidController;
+    m_pidController = ViennaContainer.getArmSetPositionController();
     m_intakeManager = p_intakeManager;
     m_driverStationInfo = p_driverStationInfo;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
@@ -188,12 +188,11 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_autoChooser.setDefaultOption(
         "Default",
         new ScoreMobilityThenBalance(
-            m_driveTrainSubsystem, m_pidController, m_arm, m_scoring, m_intake, null, m_LED));
+            m_driveTrainSubsystem, m_arm, m_scoring, m_intake, null, m_LED));
     m_autoChooser.addOption(
         "Balance Mobility",
         new ScoreMobilityThenBalance(
             m_driveTrainSubsystem,
-            m_pidController,
             m_arm,
             m_scoring,
             m_intake,
@@ -203,7 +202,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
         "Score then Move",
         new ScoreThenMove(
             m_driveTrainSubsystem,
-            m_pidController,
             m_arm,
             m_scoring,
             m_intake,
