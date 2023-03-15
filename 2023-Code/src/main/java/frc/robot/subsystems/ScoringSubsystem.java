@@ -24,11 +24,11 @@ public class ScoringSubsystem extends SubsystemBase {
     solenoid.toggle();
   }
 
-  public void openScoring() {
+  public void closeScoring() {
     solenoid.set(false);
   }
 
-  public void closeScoring() {
+  public void openScoring() {
     solenoid.set(true);
   }
 
@@ -36,8 +36,8 @@ public class ScoringSubsystem extends SubsystemBase {
     return solenoid.get();
   }
 
-  public boolean getBeamBreak() {
-    return m_beamBreak.get();
+  public boolean detectedGamePiece() {
+    return !m_beamBreak.get();
   }
 
   @Override

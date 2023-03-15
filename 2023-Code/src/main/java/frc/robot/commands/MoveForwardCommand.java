@@ -5,18 +5,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveTrainSubsystem;
 
-/** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+public class MoveForwardCommand extends CommandBase {
+  private DriveTrainSubsystem m_driveTrainSubsystem;
+  private double m_distance;
+  private double m_motorPower;
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public ExampleCommand() {
+  /** Creates a new MoveForwardCommand. */
+  public MoveForwardCommand(
+      DriveTrainSubsystem p_driveTrainSubsystem, double p_distance, double p_motorPower) {
+    m_driveTrainSubsystem = p_driveTrainSubsystem;
+    m_distance = p_distance;
+    m_motorPower = p_motorPower;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_driveTrainSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +28,9 @@ public class ExampleCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_driveTrainSubsystem.setMotors(m_motorPower, m_motorPower);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -34,6 +39,9 @@ public class ExampleCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (m_driveTrainSubsystem.getL1Pos() >= m_distance) {
+      return true;
+    }
     return false;
   }
 }

@@ -10,7 +10,6 @@ import frc.robot.subsystems.ScoringSubsystem;
 public class ScoringDefaultCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
 
-  /** Creates a new ScoringDefaultCommand. */
   public ScoringDefaultCommand(ScoringSubsystem p_scoringSubsystem) {
     m_scoringSubsystem = p_scoringSubsystem;
     addRequirements(m_scoringSubsystem);
@@ -21,7 +20,7 @@ public class ScoringDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_scoringSubsystem.openScoring();
+    m_scoringSubsystem.closeScoring();
   }
 
   @Override

@@ -6,49 +6,31 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMax.SoftLimitDirection;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.DigitalConstants;
+import frc.robot.Constants.MotorConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
-  private CANSparkMax m_armMotor =
-      new CANSparkMax(Constants.MotorConstants.ARM_MOTOR1, MotorType.kBrushless);
+  private CANSparkMax m_armMotor = new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
   private RelativeEncoder m_encoder = m_armMotor.getEncoder();
-  private DutyCycleEncoder m_externalEncoder =
-      new DutyCycleEncoder(Constants.DigitalConstants.ARM_ENCODER);
-  private SparkMaxPIDController m_pidController;
+  private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
+  private SparkMaxPIDController m_pidController = m_armMotor.getPIDController();
 
-  /** Creates a new ArmSubsystem. */
   public ArmSubsystem() {
     m_armMotor.restoreFactoryDefaults();
-    setSoftLimits();
-
-    m_pidController = m_armMotor.getPIDController();
-    m_encoder.setPositionConversionFactor(Constants.ArmConstants.ROTATION_TO_INCHES);
-
-    m_pidController.setFeedbackDevice(m_encoder);
-    m_pidController.setP(Constants.PIDConstants.ARM_P);
-    m_pidController.setI(Constants.PIDConstants.ARM_I);
-    m_pidController.setD(Constants.PIDConstants.ARM_D);
-    m_pidController.setFF(Constants.PIDConstants.ARM_FF);
-    m_pidController.setOutputRange(
-        Constants.PIDConstants.ARM_MINIMUM, Constants.PIDConstants.ARM_MAXIMUM);
+    m_armMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public double getAbsolutePosition() {
     return m_externalEncoder.getAbsolutePosition() * 100;
-  }
-
-  private void setSoftLimits() {
-    m_armMotor.enableSoftLimit(SoftLimitDirection.kForward, true);
-    m_armMotor.enableSoftLimit(SoftLimitDirection.kReverse, true);
-    m_armMotor.setSoftLimit(SoftLimitDirection.kForward, Constants.ArmConstants.MAX_SOFT_LIM);
-    m_armMotor.setSoftLimit(SoftLimitDirection.kReverse, Constants.ArmConstants.MIN_SOFT_LIM);
   }
 
   public void turnOff() {
@@ -63,6 +45,24 @@ public class ArmSubsystem extends SubsystemBase {
     m_armMotor.set(voltage);
   }
 
+  public double limitAmount(double voltage) {
+    if (voltage < -Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
+      voltage = -Constants.ArmConstants.ARM_OUTPUT_LIMIT;
+    } else if (voltage > Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
+      voltage = Constants.ArmConstants.ARM_OUTPUT_LIMIT;
+    }
+    return voltage;
+  }
+
+  public void smartSet(double desiredVoltage) {
+    if ((getAbsolutePosition() >= ArmConstants.ARM_FRONTMOST && desiredVoltage > 0)
+        || (getAbsolutePosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
+      set(0.0);
+    } else {
+      set(desiredVoltage);
+    }
+  }
+
   public void setReference(double rotations) {
     m_pidController.setReference(rotations, ControlType.kPosition);
   }
@@ -75,6 +75,13 @@ public class ArmSubsystem extends SubsystemBase {
 
   public double getPosition() {
     return m_encoder.getPosition();
+  }
+
+  public boolean atPosition(double targetPosition) {
+    if (Math.abs(getAbsolutePosition() - targetPosition) < ArmConstants.ARM_DEADZONE) {
+      return true;
+    }
+    return false;
   }
 
   @Override

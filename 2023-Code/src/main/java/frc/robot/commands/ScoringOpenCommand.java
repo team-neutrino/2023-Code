@@ -6,26 +6,35 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.util.IntakeManager;
 
-public class ScoringCloseCommand extends CommandBase {
+public class ScoringOpenCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
+  private IntakeManager m_intakeManager;
 
-  public ScoringCloseCommand(ScoringSubsystem p_scoringSubsystem) {
+  public ScoringOpenCommand(ScoringSubsystem p_scoringSubsystem, IntakeManager p_intakeManager) {
     m_scoringSubsystem = p_scoringSubsystem;
+    m_intakeManager = p_intakeManager;
     addRequirements(m_scoringSubsystem);
   }
 
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_scoringSubsystem.closeScoring();
+    if (m_intakeManager.managerApproved()) {
+      m_scoringSubsystem.openScoring();
+    }
   }
 
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
+  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
