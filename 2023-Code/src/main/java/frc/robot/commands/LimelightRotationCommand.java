@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.PIDConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.util.ViennaPIDController;
@@ -16,8 +17,13 @@ public class LimelightRotationCommand extends CommandBase {
 
   private ViennaPIDController pidController;
   
-  private double tx;
+  private double initialLLMeasurement; // initial limelight tx measurement
+  private double initialYaw; // initial NavX yaw measurement
+  private double initialAbsoluteAprilTagAngle; // initial angle of AprilTag, relative to 0 yaw of NavX
+
   private double currentYaw;
+  
+  
 
   /** Creates a new LimelightRotationCommand. */
   public LimelightRotationCommand(LimelightSubsystem p_limelightSubsystem, DriveTrainSubsystem p_drivetrainSubsystem) {
@@ -25,20 +31,26 @@ public class LimelightRotationCommand extends CommandBase {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drivetrainSubsystem);
-    pidController = new ViennaPIDController();
+    pidController = new ViennaPIDController(
+      PIDConstants.ROTATE_P,
+      PIDConstants.ROTATE_I,
+      PIDConstants.ROTATE_D
+    );
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    tx = m_limelightSubsystem.getTx();
+    initialLLMeasurement = m_limelightSubsystem.getTx(); // relative to current angle of robot
+    initialYaw = m_drivetrainSubsystem.getYaw();
+    initialAbsoluteAprilTagAngle = initialLLMeasurement + initialYaw;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     currentYaw = m_drivetrainSubsystem.getYaw();
-    double output = pidController.run(currentYaw, tx);
+    double output = pidController.run(currentYaw, initialAbsoluteAprilTagAngle);
     m_drivetrainSubsystem.turn(output);
   }
 

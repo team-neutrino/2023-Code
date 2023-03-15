@@ -67,6 +67,10 @@ public final class Constants {
 
     public static final double MIN_OUTPUT = -.3;
     public static final double MAX_OUTPUT = .3;
+
+    public static final double ROTATE_P  = 0;
+    public static final double ROTATE_I = 0;
+    public static final double ROTATE_D = 0;
   }
 
   public static class PneumaticsConstants {
