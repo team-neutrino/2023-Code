@@ -268,7 +268,7 @@ public class RobotContainer {
         new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
     m_leftArrow.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
-    m_upArrow.whileTrue(m_)
+    
   }
 
   public Command getAutonomousCommand() {
