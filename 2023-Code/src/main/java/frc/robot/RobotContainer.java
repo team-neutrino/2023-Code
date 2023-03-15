@@ -118,7 +118,7 @@ public class RobotContainer {
 
   // COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand =
-      new ArmDefaultCommand(m_armSubsystem, m_armPidController);
+      new ArmDefaultCommand(m_armSubsystem);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_driveTrainSubsystem, m_leftJoystick, m_rightJoystick);
   private final IntakeDefaultCommand m_intakeDefaultCommand =
