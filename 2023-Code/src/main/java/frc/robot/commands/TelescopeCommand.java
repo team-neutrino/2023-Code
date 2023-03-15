@@ -5,9 +5,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class TelescopreToPositionCommand extends CommandBase {
+public class TelescopeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private boolean m_isTelescopingOut;
 

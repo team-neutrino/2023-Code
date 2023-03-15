@@ -10,6 +10,8 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -26,7 +28,7 @@ public class ArmSubsystem extends SubsystemBase {
   private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
   private DutyCycleEncoder m_telescopingexternalEncoder = new DutyCycleEncoder(DigitalConstants.TELESCOPING_ENCODER);
   private SparkMaxPIDController m_pidController = m_armMotor.getPIDController();
-  private DigitalInput m_limitSwitch = new DigitalInput(DigitalConstants.CLIMBER_SWITCH);
+  private DigitalInput m_limitSwitch = new DigitalInput(DigitalConstants.CLIMBER_LIMIT_SWITCH);
 
   public ArmSubsystem() {
     m_armMotor.restoreFactoryDefaults();

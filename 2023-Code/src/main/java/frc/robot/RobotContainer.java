@@ -32,6 +32,7 @@ import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
+import frc.robot.commands.TelescopeCommand;
 import frc.robot.commands.autonomous.JustScore;
 import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
 import frc.robot.commands.autonomous.ScoreMoveAutoGather;
@@ -199,8 +200,10 @@ public class RobotContainer {
       new ScoringCloseCommand(m_scoringSubsystem);
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem, m_intakeManager);
-  private final TelescopeCommand m_telescopeCommand =
-      new TelescopeCommand();
+  private final TelescopeCommand m_telescopeOutwardCommand =
+      new TelescopeCommand(m_armSubsystem, true);
+  private final TelescopeCommand m_telescopeInwardCommand =
+      new TelescopeCommand(m_armSubsystem, false);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -264,6 +267,8 @@ public class RobotContainer {
     m_buttonBack.whileTrue(m_scoringOpenCommand);
 
     // LED Buttons
+    m_upArrow.whileTrue(m_telescopeOutwardCommand);
+    m_downArrow.whileTrue(m_telescopeInwardCommand);
     m_rightArrow.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
     m_leftArrow.onTrue(
