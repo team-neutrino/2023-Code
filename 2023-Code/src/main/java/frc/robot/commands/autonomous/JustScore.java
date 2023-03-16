@@ -39,9 +39,7 @@ public class JustScore extends SequentialCommandGroup {
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem) {
-
-    ViennaPIDController p_pidController = ViennaContainer.getArmSetPositionController();
-
+        
     forwardBackArray =
         new ArrayList<PoseTriplet>(
             Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(2, 0, 0)));

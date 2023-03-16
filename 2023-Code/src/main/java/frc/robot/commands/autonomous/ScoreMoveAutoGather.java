@@ -52,7 +52,6 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
-    ViennaPIDController p_pidController = ViennaContainer.getArmSetPositionController();
     if (DriverStationInfo.getAlliance() == Alliance.Red) {
       inverted = true;
     }

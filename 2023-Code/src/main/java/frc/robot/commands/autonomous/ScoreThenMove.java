@@ -41,8 +41,6 @@ public class ScoreThenMove extends SequentialCommandGroup {
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
-    ViennaPIDController pidController = ViennaContainer.getArmSetPositionController();
-
     forwardBackArray =
         new ArrayList<PoseTriplet>(
             Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4, 0, 0)));

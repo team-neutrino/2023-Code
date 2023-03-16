@@ -45,8 +45,6 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem) {
 
-    ViennaPIDController p_pidController = ViennaContainer.getArmSetPositionController();
-
     forwardBackArray =
         new ArrayList<PoseTriplet>(
             Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(3.8, 0, 0)));
