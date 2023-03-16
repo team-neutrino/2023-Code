@@ -17,9 +17,9 @@ public class LimelightRotationCommand extends CommandBase {
 
   private ViennaPIDController pidController;
   
-  private double initialLLMeasurement; // initial limelight tx measurement
+  private double initialTx; // initial limelight tx measurement
   private double initialYaw; // initial NavX yaw measurement
-  private double initialAbsoluteAprilTagAngle; // initial angle of AprilTag, relative to 0 yaw of NavX
+  private double initialAprilAngle; // initial angle of AprilTag, relative to 0 yaw of NavX
 
   private double currentYaw;
   
@@ -41,16 +41,16 @@ public class LimelightRotationCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    initialLLMeasurement = m_limelightSubsystem.getTx(); // relative to current angle of robot
+    initialTx = m_limelightSubsystem.getTx(); // relative to current angle of robot
     initialYaw = m_drivetrainSubsystem.getYaw();
-    initialAbsoluteAprilTagAngle = initialLLMeasurement + initialYaw;
+    initialAprilAngle = initialYaw - initialTx;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     currentYaw = m_drivetrainSubsystem.getYaw();
-    double output = pidController.run(currentYaw, initialAbsoluteAprilTagAngle);
+    double output = pidController.run(currentYaw, initialAprilAngle);
     m_drivetrainSubsystem.turn(output);
   }
 
