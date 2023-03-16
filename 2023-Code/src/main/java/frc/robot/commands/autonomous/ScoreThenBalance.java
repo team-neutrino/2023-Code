@@ -19,8 +19,6 @@ import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
-import frc.robot.util.ViennaContainer;
-import frc.robot.util.ViennaPIDController;
 import java.util.ArrayList;
 import java.util.Arrays;
 

@@ -18,8 +18,6 @@ import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
-import frc.robot.util.ViennaContainer;
-import frc.robot.util.ViennaPIDController;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -39,7 +37,7 @@ public class JustScore extends SequentialCommandGroup {
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem) {
-        
+
     forwardBackArray =
         new ArrayList<PoseTriplet>(
             Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(2, 0, 0)));
