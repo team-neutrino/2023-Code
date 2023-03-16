@@ -21,36 +21,35 @@ import frc.robot.Constants.MotorConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
-  private CANSparkMax m_armMotor = new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
+  private CANSparkMax m_positionMotor = new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
   private CANSparkMax m_telescopingMotor = new CANSparkMax(MotorConstants.TELESCOPING_MOTOR, MotorType.kBrushless);
-  private RelativeEncoder m_encoder = m_armMotor.getEncoder();
-  private RelativeEncoder m_telescopingEncoder = m_telescopingMotor.getEncoder();
-  private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
-  private DutyCycleEncoder m_telescopingexternalEncoder = new DutyCycleEncoder(DigitalConstants.TELESCOPING_ENCODER);
-  private SparkMaxPIDController m_pidController = m_armMotor.getPIDController();
+
+  private DutyCycleEncoder m_positionEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
+  private DutyCycleEncoder m_telescopingEncoder = new DutyCycleEncoder(DigitalConstants.TELESCOPING_ENCODER);
+
   private DigitalInput m_limitSwitch = new DigitalInput(DigitalConstants.CLIMBER_LIMIT_SWITCH);
 
   public ArmSubsystem() {
-    m_armMotor.restoreFactoryDefaults();
+    m_positionMotor.restoreFactoryDefaults();
     m_telescopingMotor.restoreFactoryDefaults();
-    m_armMotor.setIdleMode(IdleMode.kBrake);
+    m_positionMotor.setIdleMode(IdleMode.kBrake);
     m_telescopingMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public double getAbsoluteArmPosition() {
-    return m_externalEncoder.getAbsolutePosition() * 100;
+    return m_positionEncoder.getAbsolutePosition() * 100;
   }
 
   public void turnArmOff() {
-    m_armMotor.setVoltage(0);
+    m_positionMotor.setVoltage(0);
   }
 
   public void setArmVoltage(double voltage) {
-    m_armMotor.setVoltage(voltage);
+    m_positionMotor.setVoltage(voltage);
   }
 
   public void setArm(double voltage) {
-    m_armMotor.set(voltage);
+    m_positionMotor.set(voltage);
   }
 
   public double limitArmAmount(double voltage) {
@@ -71,18 +70,10 @@ public class ArmSubsystem extends SubsystemBase {
     }
   }
 
-  public void setReference(double rotations) {
-    m_pidController.setReference(rotations, ControlType.kPosition);
-  }
-
   public double getArmVoltage() {
-    double appliedOutput = m_armMotor.getAppliedOutput();
-    double busVoltage = m_armMotor.getBusVoltage();
+    double appliedOutput = m_positionMotor.getAppliedOutput();
+    double busVoltage = m_positionMotor.getBusVoltage();
     return appliedOutput * busVoltage; // chiefdelphi.com/t/get-voltage-from-spark-max/344136/3
-  }
-
-  public double getArmPosition() {
-    return m_encoder.getPosition();
   }
 
   public boolean atArmPosition(double targetPosition) {
@@ -93,7 +84,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
 public double getAbsoluteTelescopePosistion() {
-  return m_telescopingexternalEncoder.getAbsolutePosition();
+  return m_telescopingEncoder.getAbsolutePosition();
 }
 
 public void turnTelescopeOff() {
@@ -104,8 +95,8 @@ public void setTelescopeVoltage(double p_voltage) {
   m_telescopingMotor.setVoltage(p_voltage);
 }
 
-public void setTelescope(double p_speed) {
-  m_telescopingMotor.set(p_speed);
+public void setTelescope(double p_output) {
+  m_telescopingMotor.set(p_output);
 }
 
 public boolean getSwitch() {
