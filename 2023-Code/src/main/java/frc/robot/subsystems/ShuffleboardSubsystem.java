@@ -24,6 +24,7 @@ import frc.robot.util.IntakeManager;
 import frc.robot.util.SavePoseCommand;
 import frc.robot.util.ViennaPIDController;
 import java.io.IOException;
+import java.util.Map;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
@@ -121,8 +122,13 @@ public class ShuffleboardSubsystem extends SubsystemBase {
         m_drivestationTab.add("Squeeze", 0).withPosition(1, 0).withSize(1, 1).getEntry();
 
     m_driverStationInfoVariables[0] =
-        m_drivestationTab.add("Match Time", 0).withPosition(2, 0).withSize(6, 4).getEntry();
-
+        m_drivestationTab
+            .add("Match Time", 0)
+            .withPosition(2, 0)
+            .withSize(6, 4)
+            .withWidget(BuiltInWidgets.kDial)
+            .withProperties(Map.of("min", 0, "max", 150))
+            .getEntry();
     m_driverStationInfoVariables[1] =
         m_drivestationTab
             .add("Game Piece", "No Piece")
