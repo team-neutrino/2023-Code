@@ -201,10 +201,20 @@ public class RobotContainer {
       new ScoringOpenCommand(m_scoringSubsystem, m_intakeManager);
   private final ArmToAngleCommand m_armToForwardMid =
       new ArmToAngleCommand(
-          m_armSubsystem, m_armPidController, ArmConstants.FORWARD_MID, false, false, m_ledSubsystem);
+          m_armSubsystem,
+          m_armPidController,
+          ArmConstants.FORWARD_MID,
+          false,
+          false,
+          m_ledSubsystem);
   private final ArmToAngleCommand m_armToForwardDown =
-      new ArmToAngleCommand( 
-          m_armSubsystem, m_armPidController, ArmConstants.FORWARD_DOWN, false, false, m_ledSubsystem);
+      new ArmToAngleCommand(
+          m_armSubsystem,
+          m_armPidController,
+          ArmConstants.FORWARD_DOWN,
+          false,
+          false,
+          m_ledSubsystem);
   private final ArmToAngleCommand m_armToBackMid =
       new ArmToAngleCommand(
           m_armSubsystem, m_armPidController, ArmConstants.BACK_MID, false, true, m_ledSubsystem);
