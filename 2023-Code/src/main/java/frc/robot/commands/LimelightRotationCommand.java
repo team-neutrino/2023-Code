@@ -16,24 +16,23 @@ public class LimelightRotationCommand extends CommandBase {
   private DriveTrainSubsystem m_drivetrainSubsystem;
 
   private ViennaPIDController pidController;
-  
+
   private double initialTx; // initial limelight tx measurement
   private double initialYaw; // initial NavX yaw measurement
   private double initialAprilAngle; // initial angle of AprilTag, relative to 0 yaw of NavX
 
   private double currentYaw;
-  
+
   /** Creates a new LimelightRotationCommand. */
-  public LimelightRotationCommand(LimelightSubsystem p_limelightSubsystem, DriveTrainSubsystem p_drivetrainSubsystem) {
+  public LimelightRotationCommand(
+      LimelightSubsystem p_limelightSubsystem, DriveTrainSubsystem p_drivetrainSubsystem) {
     m_limelightSubsystem = p_limelightSubsystem;
     m_drivetrainSubsystem = p_drivetrainSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drivetrainSubsystem);
-    pidController = new ViennaPIDController(
-      PIDConstants.ROTATE_P,
-      PIDConstants.ROTATE_I,
-      PIDConstants.ROTATE_D
-    );
+    pidController =
+        new ViennaPIDController(
+            PIDConstants.ROTATE_P, PIDConstants.ROTATE_I, PIDConstants.ROTATE_D);
   }
 
   // Called when the command is initially scheduled.

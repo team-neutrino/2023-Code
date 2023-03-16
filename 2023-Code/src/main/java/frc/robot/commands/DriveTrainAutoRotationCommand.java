@@ -10,37 +10,38 @@ import frc.robot.subsystems.LimelightSubsystem;
 
 public class DriveTrainAutoRotationCommand extends CommandBase {
 
-    DriveTrainSubsystem m_drivetrain;
-    LimelightSubsystem m_limelight;
-    double tx;
-    double rmotorPosition;
-    double lmotorPosition;
-    boolean stop = false;
+  DriveTrainSubsystem m_drivetrain;
+  LimelightSubsystem m_limelight;
+  double tx;
+  double rmotorPosition;
+  double lmotorPosition;
+  boolean stop = false;
 
-    public DriveTrainAutoRotationCommand(DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight){
-        m_drivetrain = p_drivetrain;
-        m_limelight = p_limelight;
-    }
+  public DriveTrainAutoRotationCommand(
+      DriveTrainSubsystem p_drivetrain, LimelightSubsystem p_limelight) {
+    m_drivetrain = p_drivetrain;
+    m_limelight = p_limelight;
+  }
 
-    @Override
-    public void initialize() {
-        tx = m_limelight.getTx();
-        rmotorPosition = m_drivetrain.getR1Pos();
-        lmotorPosition = m_drivetrain.getL1Pos();
-    }
-  
-    @Override
-    public void execute() {
-      stop = m_drivetrain.turnMotor(tx, rmotorPosition, lmotorPosition);
-    }
-  
-    @Override
-    public void end(boolean interrupted) {
-      //System.out.println("tx is " + m_limelight.getTx());
-    }
-  
-    @Override
-    public boolean isFinished() {
-      return stop;
-    }
+  @Override
+  public void initialize() {
+    tx = m_limelight.getTx();
+    rmotorPosition = m_drivetrain.getR1Pos();
+    lmotorPosition = m_drivetrain.getL1Pos();
+  }
+
+  @Override
+  public void execute() {
+    stop = m_drivetrain.turnMotor(tx, rmotorPosition, lmotorPosition);
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    // System.out.println("tx is " + m_limelight.getTx());
+  }
+
+  @Override
+  public boolean isFinished() {
+    return stop;
+  }
 }

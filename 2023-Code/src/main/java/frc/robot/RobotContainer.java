@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.ButtonType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -22,7 +21,6 @@ import frc.robot.commands.ArmFeederCommand;
 import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
-import frc.robot.commands.DriveTrainAutoRotationCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
@@ -89,7 +87,6 @@ public class RobotContainer {
   private final JoystickButton m_rightJoystickTopLeft = new JoystickButton(m_rightJoystick, 7);
   private final JoystickButton m_rightJoystickBottomLeft = new JoystickButton(m_rightJoystick, 8);
 
-
   private final POVButton m_upArrow = new POVButton(m_driverController, 0);
   private final POVButton m_downArrow = new POVButton(m_driverController, 180);
   private final POVButton m_leftArrow = new POVButton(m_driverController, 270);
@@ -139,9 +136,11 @@ public class RobotContainer {
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
 
-  //private final DriveTrainAutoRotationCommand m_autoRotate = new DriveTrainAutoRotationCommand(m_driveTrainSubsystem, m_limelightSubsystem);
-  private final LimelightRotationCommand m_autoRotate = new LimelightRotationCommand(m_limelightSubsystem, m_driveTrainSubsystem);
-  
+  // private final DriveTrainAutoRotationCommand m_autoRotate = new
+  // DriveTrainAutoRotationCommand(m_driveTrainSubsystem, m_limelightSubsystem);
+  private final LimelightRotationCommand m_autoRotate =
+      new LimelightRotationCommand(m_limelightSubsystem, m_driveTrainSubsystem);
+
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
 
