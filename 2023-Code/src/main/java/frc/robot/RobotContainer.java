@@ -22,6 +22,7 @@ import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
+import frc.robot.commands.HybridNodeOverideCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeGatherModeCommand;
@@ -184,6 +185,8 @@ public class RobotContainer {
       new IntakeCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeReverseCommand m_intakeReverseCommand =
       new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
+  private final HybridNodeOverideCommand m_HybridNodeOverideCommand =
+      new HybridNodeOverideCommand(m_intakeSubsystem, m_intakeManager);
   private final IntakeSqueezeCommand m_intakeSqueezeCommand =
       new IntakeSqueezeCommand(m_intakeSubsystem);
   private final IntakeGatherModeCommand m_intakeGatherModeCommand =
