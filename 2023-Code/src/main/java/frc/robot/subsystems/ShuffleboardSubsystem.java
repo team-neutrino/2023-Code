@@ -186,11 +186,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     m_driveTrainVariables[10] =
         m_troubleshootingTab.add("NavX Yaw", 0).withPosition(2, 2).withSize(1, 1).getEntry();
-        
-     m_limelightVariables[0] =
-       m_troubleshootingTab.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
-    
 
+    m_limelightVariables[0] =
+        m_troubleshootingTab.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
   }
 
   public void setUpSelector() {
