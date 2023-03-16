@@ -23,8 +23,6 @@ public class LimelightRotationCommand extends CommandBase {
 
   private double currentYaw;
   
-  
-
   /** Creates a new LimelightRotationCommand. */
   public LimelightRotationCommand(LimelightSubsystem p_limelightSubsystem, DriveTrainSubsystem p_drivetrainSubsystem) {
     m_limelightSubsystem = p_limelightSubsystem;
