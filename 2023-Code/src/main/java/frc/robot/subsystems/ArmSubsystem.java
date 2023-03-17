@@ -34,6 +34,7 @@ public class ArmSubsystem extends SubsystemBase {
     m_telescopingMotor.restoreFactoryDefaults();
     m_positionMotor.setIdleMode(IdleMode.kBrake);
     m_telescopingMotor.setIdleMode(IdleMode.kBrake);
+    m_telescopingMotor.setInverted(true);
   }
 
   public double getAbsoluteArmPosition() {
@@ -100,7 +101,8 @@ public void setTelescope(double p_output) {
 }
 
 public boolean getSwitch() {
-  return m_limitSwitch.get();
+  return false;
+  // return m_limitSwitch.get();
 }
 
   @Override

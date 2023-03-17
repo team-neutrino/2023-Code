@@ -10,13 +10,13 @@ import frc.robot.subsystems.ArmSubsystem;
 
 public class TelescopeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
-  private boolean m_isTelescopingOut;
+  private boolean m_isExtending;
 
-  public TelescopeCommand(ArmSubsystem p_armSubsystem, boolean p_isTelescopingOut) {
+  public TelescopeCommand(ArmSubsystem p_armSubsystem, boolean p_isExtending) {
     m_armSubsystem = p_armSubsystem;
     addRequirements(m_armSubsystem);
 
-    m_isTelescopingOut = p_isTelescopingOut;
+    m_isExtending = p_isExtending;
   }
 
   @Override
@@ -24,7 +24,8 @@ public class TelescopeCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (m_isTelescopingOut) {
+    System.out.println(m_armSubsystem.getSwitch());
+    if (m_isExtending) {
       m_armSubsystem.setTelescope(ArmConstants.TELESCOPE_EXTEND_SPEED);
     }
     else {
@@ -37,7 +38,7 @@ public class TelescopeCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if (m_armSubsystem.getSwitch()) {
+    if (m_armSubsystem.getSwitch() && !m_isExtending) {
       return true;
     }
     return false;
