@@ -23,7 +23,7 @@ public class ArmAdjustCommand extends CommandBase {
     m_pidController = p_pidController;
     m_armSubsystem = p_armSubsystem;
     m_driverController = p_driverController;
-    targetAngle = m_armSubsystem.getAbsolutePosition();
+    targetAngle = m_armSubsystem.getAbsoluteArmPosition();
 
     addRequirements(m_armSubsystem);
   }
@@ -36,12 +36,12 @@ public class ArmAdjustCommand extends CommandBase {
     double output;
     if (Math.abs(m_driverController.getRightY()) > ArmConstants.ARM_INPUT_DEADZONE) {
       output = m_driverController.getRightY() / ArmConstants.SCALE_QUOTIENT;
-      targetAngle = m_armSubsystem.getAbsolutePosition();
+      targetAngle = m_armSubsystem.getAbsoluteArmPosition();
     } else {
-      int position = (int) m_armSubsystem.getAbsolutePosition();
+      int position = (int) m_armSubsystem.getAbsoluteArmPosition();
       output = m_pidController.run(position, targetAngle);
     }
-    m_armSubsystem.smartSet(output);
+    m_armSubsystem.smartArmSet(output);
   }
 
   @Override

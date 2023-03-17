@@ -24,7 +24,7 @@ public class IntakeManager {
    * @return If it is OK to run intake-dependant commands.
    */
   public boolean managerApproved() {
-    return m_armSubsystem.getAbsolutePosition() <= Constants.ArmConstants.INTAKE_RUNNABLE;
+    return m_armSubsystem.getAbsoluteArmPosition() <= Constants.ArmConstants.INTAKE_RUNNABLE;
   }
 
   /**
