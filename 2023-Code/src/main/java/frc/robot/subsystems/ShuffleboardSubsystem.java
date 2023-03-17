@@ -21,7 +21,6 @@ import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
 import frc.robot.commands.autonomous.ScoreThenMove;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
-import frc.robot.util.SavePoseCommand;
 import frc.robot.util.ViennaPIDController;
 import frc.robot.util.trajectoryInput.SavePoseCommand;
 import java.io.IOException;

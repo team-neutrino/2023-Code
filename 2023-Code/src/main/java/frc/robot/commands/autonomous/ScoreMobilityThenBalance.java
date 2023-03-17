@@ -17,7 +17,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
-import frc.robot.util.AutonomousUtil;
+import frc.robot.util.RamseteGeneration;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.RamseteGeneration;
@@ -54,13 +54,13 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
             Arrays.asList(new PoseTriplet(3.8, 0, 0), new PoseTriplet(1.5, 0, 0)));
 
     moveForwardCommand =
-        AutonomousUtil.generateRamseteFromPoses(
+        RamseteGeneration.generateRamseteFromPoses(
             forwardBackArray,
             p_drivetrainSubsystem,
             TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG);
 
     reEnterCommunityCommand =
-        AutonomousUtil.generateRamseteFromPoses(
+        RamseteGeneration.generateRamseteFromPoses(
             reEnterCommunity,
             p_drivetrainSubsystem,
             TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);

@@ -20,7 +20,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
-import frc.robot.util.AutonomousUtil;
+import frc.robot.util.RamseteGeneration;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
@@ -72,14 +72,14 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
                 new PoseTriplet(-.3, -.31, -.32)));
 
     toGamePieceCommand =
-        AutonomousUtil.generateRamseteFromPoses(
+        RamseteGeneration.generateRamseteFromPoses(
             toGamePieceArray,
             m_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG,
             inverted);
 
     runThatBackCommand =
-        AutonomousUtil.generateRamseteFromPoses(
+        RamseteGeneration.generateRamseteFromPoses(
             runThatBack,
             p_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG,

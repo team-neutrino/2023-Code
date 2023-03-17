@@ -18,7 +18,6 @@ import frc.robot.subsystems.LEDSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 import frc.robot.subsystems.ScoringSubsystem;
-import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.RamseteGeneration;
@@ -48,7 +47,7 @@ public class ScoreThenMove extends SequentialCommandGroup {
             Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4, 0, 0)));
 
     forwardBackCommand =
-        AutonomousUtil.generateRamseteFromPoses(
+        RamseteGeneration.generateRamseteFromPoses(
             forwardBackArray,
             m_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);

@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.util.LEDColor;
+
 public final class Constants {
   public static class OperatorConstants {
     public static final int JOYSTICK_LEFT = 0;

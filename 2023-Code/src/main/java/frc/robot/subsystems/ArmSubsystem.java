@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
-import frc.robot.util.Bounder;
+import frc.robot.util.Limiter;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -53,7 +53,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public double limitArmVoltage(double voltage) {
-    return Bounder.bound(voltage, ArmConstants.ARM_OUTPUT_LIMIT);
+    return Limiter.bound(voltage, ArmConstants.ARM_OUTPUT_LIMIT);
   }
 
   public void smartArmSet(double desiredVoltage) {
