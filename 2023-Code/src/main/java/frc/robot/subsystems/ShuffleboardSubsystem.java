@@ -103,7 +103,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
-    m_armVariables[0].setDouble(m_arm.getAbsolutePosition());
+    m_armVariables[0].setDouble(m_arm.getAbsoluteArmPosition());
   }
 
   private void driveStationTab() {
