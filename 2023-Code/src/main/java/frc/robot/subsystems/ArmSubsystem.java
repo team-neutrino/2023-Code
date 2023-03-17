@@ -34,6 +34,7 @@ public class ArmSubsystem extends SubsystemBase {
     m_positionMotor.setIdleMode(IdleMode.kBrake);
     m_telescopingMotor.setIdleMode(IdleMode.kBrake);
     m_telescopingMotor.setInverted(true);
+    m_telescopingEncoder.setDistancePerRotation(ArmConstants.ROTATIONS_FACTOR);
   }
 
   public double getAbsoluteArmPosition() {
@@ -83,8 +84,8 @@ public class ArmSubsystem extends SubsystemBase {
     return false;
   }
 
-  public double getAbsoluteTelescopePosistion() {
-    return m_telescopingEncoder.getAbsolutePosition();
+  public double getTelescopingArmDistance() {
+    return m_telescopingEncoder.getDistance();
   }
 
   public void turnTelescopeOff() {
@@ -100,8 +101,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public boolean getSwitch() {
-    return false;
-    // return m_limitSwitch.get();
+    return m_limitSwitch.get();
   }
 
   @Override

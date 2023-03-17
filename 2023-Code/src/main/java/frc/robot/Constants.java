@@ -54,6 +54,7 @@ public final class Constants {
 
     public static final double TELESCOPE_EXTEND_SPEED = 0.3; // note: setInverted is true
     public static final double TELESCOPE_RETRACT_SPEED = -0.3;
+    public static final double ROTATIONS_FACTOR = 1;
   }
 
   public static class PIDConstants {

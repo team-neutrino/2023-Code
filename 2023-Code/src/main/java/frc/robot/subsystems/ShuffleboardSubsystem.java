@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import java.io.IOException;
+import java.util.Map;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
@@ -23,8 +26,6 @@ import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.SavePoseCommand;
 import frc.robot.util.ViennaPIDController;
-import java.io.IOException;
-import java.util.Map;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
@@ -104,6 +105,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
     m_armVariables[0].setDouble(m_arm.getAbsoluteArmPosition());
+    m_armVariables[1].setDouble(m_arm.getTelescopingArmDistance());
+    m_armVariables[2].setBoolean(m_arm.getSwitch());
   }
 
   private void driveStationTab() {
@@ -195,6 +198,12 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     m_limelightVariables[0] =
         m_troubleshootingTab.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
+
+    m_armVariables[1] = 
+        m_troubleshootingTab.add("Telescoping Arm Distance",0).withPosition(3,0).withSize(1,1).getEntry();
+
+    m_armVariables[2] = 
+        m_troubleshootingTab.add("Switch", 0).withPosition(3,1).withSize(1,1).getEntry();
   }
 
   public void setUpSelector() {
