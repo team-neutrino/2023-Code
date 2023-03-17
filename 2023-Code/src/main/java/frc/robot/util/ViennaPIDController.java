@@ -102,7 +102,7 @@ public class ViennaPIDController {
     double ff = desiredPos * m_f;
 
     double output = m_p * error + m_i * m_iState + m_d * derivative + ff;
-
-    return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
+    output = Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
+    return output;
   }
 }

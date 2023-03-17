@@ -10,10 +10,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
+import frc.robot.util.Limiter;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -49,16 +49,8 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void setArm(double voltage) {
+    voltage = Limiter.bound(voltage, ArmConstants.ARM_OUTPUT_LIMIT);
     m_positionMotor.set(voltage);
-  }
-
-  public double limitArmAmount(double voltage) {
-    if (voltage < -Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
-      voltage = -Constants.ArmConstants.ARM_OUTPUT_LIMIT;
-    } else if (voltage > Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
-      voltage = Constants.ArmConstants.ARM_OUTPUT_LIMIT;
-    }
-    return voltage;
   }
 
   public void smartArmSet(double desiredVoltage) {
