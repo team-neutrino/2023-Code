@@ -24,9 +24,11 @@ import frc.robot.util.IntakeManager;
 import frc.robot.util.SavePoseCommand;
 import frc.robot.util.ViennaPIDController;
 import java.io.IOException;
+import java.util.Map;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
+  private ShuffleboardTab m_troubleshootingTab;
   private GenericEntry m_driveTrainVariables[] = new GenericEntry[11];
   private GenericEntry m_limelightVariables[] = new GenericEntry[8];
   private GenericEntry m_driverStationInfoVariables[] = new GenericEntry[9];
@@ -71,9 +73,11 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_intakeManager = p_intakeManager;
     m_driverStationInfo = p_driverStationInfo;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
+    m_troubleshootingTab = Shuffleboard.getTab("Troubleshooting Tab");
 
     setUpSelector();
     driveStationTab();
+    troubleshootingTab();
     setCommandButtons(); // This is SmartDashboard. Find way to make it not.
   }
 
@@ -106,82 +110,91 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_drivestationTab = Shuffleboard.getTab("Drivestation Tab123");
 
     m_LEDVariables[0] =
-        m_drivestationTab.add("LED Color", "Off").withPosition(8, 1).withSize(2, 1).getEntry();
-
-    m_driveTrainVariables[0] =
-        m_drivestationTab.add("RMotor 1 Pos", 0).withPosition(0, 0).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[1] =
-        m_drivestationTab.add("RMotor 2 Pos", 0).withPosition(1, 0).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[2] =
-        m_drivestationTab.add("LMotor 1 Pos", 0).withPosition(0, 1).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[3] =
-        m_drivestationTab.add("LMotor 2 Pos", 0).withPosition(1, 1).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[4] =
-        m_drivestationTab.add("RMotor 1 Vel", 0).withPosition(0, 2).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[5] =
-        m_drivestationTab.add("RMotor 2 Vel", 0).withPosition(1, 2).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[6] =
-        m_drivestationTab.add("LMotor 1 Vel", 0).withPosition(0, 3).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[7] =
-        m_drivestationTab.add("LMotor 2 Vel", 0).withPosition(1, 3).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[8] =
-        m_drivestationTab.add("NavX Pitch", 0).withPosition(2, 2).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[9] =
-        m_drivestationTab.add("NavX Roll", 0).withPosition(2, 3).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[10] =
-        m_drivestationTab.add("NavX Yaw", 0).withPosition(2, 4).withSize(1, 1).getEntry();
+        m_drivestationTab.add("LED Color", "Off").withPosition(8, 3).withSize(2, 1).getEntry();
 
     m_scoringVariables[0] =
-        m_drivestationTab.add("Grabber Release", 0).withPosition(2, 0).withSize(1, 1).getEntry();
+        m_drivestationTab.add("Grabber Release", 0).withPosition(0, 0).withSize(1, 1).getEntry();
 
     m_scoringVariables[1] =
-        m_drivestationTab.add("Intake Down ", 0).withPosition(2, 1).withSize(1, 1).getEntry();
+        m_drivestationTab.add("Intake Down ", 0).withPosition(0, 1).withSize(1, 1).getEntry();
 
     m_scoringVariables[3] =
-        m_drivestationTab.add("Squeeze", 0).withPosition(3, 0).withSize(1, 1).getEntry();
+        m_drivestationTab.add("Squeeze", 0).withPosition(1, 0).withSize(1, 1).getEntry();
 
     m_driverStationInfoVariables[0] =
-        m_drivestationTab.add("Match Time", 0).withPosition(4, 0).withSize(4, 2).getEntry();
-
+        m_drivestationTab
+            .add("Match Time", 0)
+            .withPosition(2, 0)
+            .withSize(6, 4)
+            .withWidget(BuiltInWidgets.kDial)
+            .withProperties(Map.of("min", 0, "max", 150))
+            .getEntry();
     m_driverStationInfoVariables[1] =
         m_drivestationTab
             .add("Game Piece", "No Piece")
-            .withPosition(8, 2)
+            .withPosition(0, 2)
             .withSize(2, 2)
             .getEntry();
 
     m_armVariables[0] =
-        m_drivestationTab.add("Arm Position", 0).withPosition(3, 2).withSize(1, 1).getEntry();
+        m_drivestationTab.add("Arm Position", 0).withPosition(1, 1).withSize(1, 1).getEntry();
 
     m_drivestationTab
         .add("Autonomous Chooser", m_autoChooser)
         .withWidget(BuiltInWidgets.kComboBoxChooser)
-        .withPosition(8, 0)
+        .withPosition(10, 3)
         .withSize(2, 1);
-
-    m_limelightVariables[0] =
-        m_drivestationTab.add("Distance", 0).withPosition(3, 1).withSize(1, 1).getEntry();
 
     try {
       LLFeed = new HttpCamera("limelight", "http://10.39.28.92", HttpCameraKind.kMJPGStreamer);
       CameraServer.startAutomaticCapture(LLFeed);
       m_drivestationTab
           .add(LLFeed)
-          .withPosition(4, 2)
+          .withPosition(8, 0)
           .withSize(4, 3)
           .withWidget(BuiltInWidgets.kCameraStream);
     } catch (VideoException e) {
     }
+  }
+
+  private void troubleshootingTab() {
+    m_troubleshootingTab = Shuffleboard.getTab("Troubleshooting Tab");
+
+    m_driveTrainVariables[0] =
+        m_troubleshootingTab.add("RMotor 1 Pos", 0).withPosition(0, 0).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[1] =
+        m_troubleshootingTab.add("RMotor 2 Pos", 0).withPosition(1, 0).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[2] =
+        m_troubleshootingTab.add("LMotor 1 Pos", 0).withPosition(0, 1).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[3] =
+        m_troubleshootingTab.add("LMotor 2 Pos", 0).withPosition(1, 1).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[4] =
+        m_troubleshootingTab.add("RMotor 1 Vel", 0).withPosition(0, 2).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[5] =
+        m_troubleshootingTab.add("RMotor 2 Vel", 0).withPosition(1, 2).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[6] =
+        m_troubleshootingTab.add("LMotor 1 Vel", 0).withPosition(0, 3).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[7] =
+        m_troubleshootingTab.add("LMotor 2 Vel", 0).withPosition(1, 3).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[8] =
+        m_troubleshootingTab.add("NavX Pitch", 0).withPosition(2, 0).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[9] =
+        m_troubleshootingTab.add("NavX Roll", 0).withPosition(2, 1).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[10] =
+        m_troubleshootingTab.add("NavX Yaw", 0).withPosition(2, 2).withSize(1, 1).getEntry();
+
+    m_limelightVariables[0] =
+        m_troubleshootingTab.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
   }
 
   public void setUpSelector() {
