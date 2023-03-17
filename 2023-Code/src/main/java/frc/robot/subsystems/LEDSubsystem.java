@@ -8,20 +8,21 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.PWMConstants;
 import frc.robot.util.LEDColor;
+import frc.robot.util.EnumConstants.LEDColor;
 
 public class LEDSubsystem extends SubsystemBase {
 
   public AddressableLED m_addressableLED;
   public AddressableLEDBuffer m_LEDBuffer;
+  private int m_LEDLength = 58;
   private Timer timer = new Timer();
 
   /** Creates a new LEDSubsystem. */
   public LEDSubsystem() {
     m_addressableLED = new AddressableLED(PWMConstants.LED_PORT);
-    m_LEDBuffer = new AddressableLEDBuffer(LEDConstants.LED_LENGTH);
+    m_LEDBuffer = new AddressableLEDBuffer(m_LEDLength);
 
     m_addressableLED.setLength(m_LEDBuffer.getLength());
     m_addressableLED.setData(m_LEDBuffer);
@@ -37,36 +38,41 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void setToPurple() {
-    setToColor(LEDColor.PURPLE.getR(), LEDColor.PURPLE.getG(), LEDColor.PURPLE.getB());
+    setToColor(210, 25, 210);
   }
 
   public void setToYellow() {
-    setToColor(LEDColor.YELLOW.getR(), LEDColor.YELLOW.getG(), LEDColor.YELLOW.getB());
+    setToColor(255, 100, 0);
   }
 
   public void setToOrange() {
-    setToColor(LEDColor.ORANGE.getR(), LEDColor.ORANGE.getG(), LEDColor.ORANGE.getB());
+    setToColor(255, 15, 0);
   }
 
   public void setToRed() {
-    setToColor(LEDColor.RED.getR(), LEDColor.RED.getG(), LEDColor.RED.getB());
+    setToColor(255, 0, 0);
   }
 
   public void setToBlue() {
-    setToColor(LEDColor.BLUE.getR(), LEDColor.BLUE.getG(), LEDColor.BLUE.getB());
+    setToColor(0, 0, 255);
   }
 
   public LEDColor getColor() {
-    // use of 1 as index is arbitrary
-    if (m_LEDBuffer.getLED(1).equals(LEDConstants.ORANGE)) {
+    Color orange = new Color(255, 15, 0);
+    Color purple = new Color(210, 25, 210);
+    Color yellow = new Color(255, 100, 0);
+    Color red = new Color(255, 0, 0);
+    Color blue = new Color(0, 0, 255);
+
+    if (m_LEDBuffer.getLED(1).equals(orange)) {
       return LEDColor.ORANGE;
-    } else if (m_LEDBuffer.getLED(1).equals(LEDConstants.PURPLE)) {
+    } else if (m_LEDBuffer.getLED(1).equals(purple)) {
       return LEDColor.PURPLE;
-    } else if (m_LEDBuffer.getLED(1).equals(LEDConstants.YELLOW)) {
+    } else if (m_LEDBuffer.getLED(1).equals(yellow)) {
       return LEDColor.YELLOW;
-    } else if (m_LEDBuffer.getLED(1).equals(LEDConstants.RED)) {
+    } else if (m_LEDBuffer.getLED(1).equals(red)) {
       return LEDColor.RED;
-    } else if (m_LEDBuffer.getLED(1).equals(LEDConstants.BLUE)) {
+    } else if (m_LEDBuffer.getLED(1).equals(blue)) {
       return LEDColor.BLUE;
     } else {
       return LEDColor.INDETERMINATE;

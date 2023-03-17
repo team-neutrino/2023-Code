@@ -7,16 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.util.ViennaPIDController;
 
-public class ArmDefaultCommand extends CommandBase {
+public class TelescopeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
-  private ViennaPIDController m_pidController;
+  private boolean m_isExtending;
 
-  public ArmDefaultCommand(ArmSubsystem p_armSubsystem, ViennaPIDController p_pidController) {
+  public TelescopeCommand(ArmSubsystem p_armSubsystem, boolean p_isExtending) {
     m_armSubsystem = p_armSubsystem;
-    m_pidController = p_pidController;
     addRequirements(m_armSubsystem);
+
+    m_isExtending = p_isExtending;
   }
 
   @Override
@@ -24,9 +24,12 @@ public class ArmDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_armSubsystem.smartArmSet(
-        m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.FORWARD_MID));
-    m_armSubsystem.turnTelescopeOff();
+    System.out.println(m_armSubsystem.getSwitch());
+    if (m_isExtending) {
+      m_armSubsystem.setTelescope(ArmConstants.TELESCOPE_EXTEND_SPEED);
+    } else {
+      m_armSubsystem.setTelescope(ArmConstants.TELESCOPE_RETRACT_SPEED);
+    }
   }
 
   @Override
@@ -34,6 +37,9 @@ public class ArmDefaultCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    if (m_armSubsystem.getSwitch() && !m_isExtending) {
+      return true;
+    }
     return false;
   }
 }

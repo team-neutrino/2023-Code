@@ -1,6 +1,6 @@
 package frc.robot.util;
 
-public class Bounder {
+public class Limiter {
   public static double deadzone(double input, double zone) {
     double absInput = Math.abs(input);
     if (absInput <= zone) {

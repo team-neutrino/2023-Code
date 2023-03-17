@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.DriverStationInfo;
-import frc.robot.util.LEDColor;
+import frc.robot.util.EnumConstants.LEDColor;
 
 public class LEDCommand extends CommandBase {
 

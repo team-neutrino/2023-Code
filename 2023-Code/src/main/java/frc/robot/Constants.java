@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.util.Color;
-import frc.robot.util.LEDColor;
-
 public final class Constants {
   public static class OperatorConstants {
     public static final int JOYSTICK_LEFT = 0;
@@ -31,6 +28,7 @@ public final class Constants {
 
     // ARM
     public static final int ARM_MOTOR = 31;
+    public static final int TELESCOPING_MOTOR = 32;
   }
 
   public static class ArmConstants {
@@ -38,26 +36,28 @@ public final class Constants {
     public static final double FEEDER = 37.5;
 
     public static final double FORWARD_DOWN = 90;
-    public static final double FORWARD_MID = 80;
+    public static final double FORWARD_MID = 82;
     public static final double QUASI_BACK_MID = 32;
-    public static final double BACK_MID = 38.5;
+    public static final double BACK_MID = 32;
     public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
 
-    public static final double ARM_BACKMOST = 17;
-    public static final double ARM_FRONTMOST = 91.5;
+    public static final double ARM_BACKMOST = 18;
+    public static final double ARM_FRONTMOST = 95;
 
     public static final double GATHER_POSITION = 91;
-    public static final double INTAKE_RUNNABLE = 83;
+    public static final double INTAKE_RUNNABLE = 84;
 
     public static final double ARM_OUTPUT_LIMIT = 0.2;
     public static final double SCALE_FACTOR = 10;
     public static final double ARM_INPUT_DEADZONE = 0.2;
+
+    public static final double TELESCOPE_EXTEND_SPEED = 0.3; // note: setInverted is true
+    public static final double TELESCOPE_RETRACT_SPEED = -0.3;
   }
 
   public static class PIDConstants {
     public static final double dt = 20;
-
     public static final double ARM_P = 0.04;
     public static final double ARM_P_ADJUST = 0.02;
     public static final int ARM_I = 0;
@@ -88,6 +88,8 @@ public final class Constants {
     public static final int INTAKE_BEAMBREAK = 0;
     public static final int GRABBER_BEAMBREAK = 1;
     public static final int INTAKE_DOWN_BEAMBREAK = 2;
+    public static final int TELESCOPING_LIMIT_SWITCH = 3;
+    public static final int TELESCOPING_ENCODER = 8;
     public static final int ARM_ENCODER = 9;
   }
 

@@ -4,7 +4,6 @@
 
 package frc.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
@@ -18,6 +17,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.RamseteGeneration;
@@ -54,13 +54,13 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
             Arrays.asList(new PoseTriplet(3.8, 0, 0), new PoseTriplet(1.5, 0, 0)));
 
     moveForwardCommand =
-        RamseteGeneration.generateRamseteFromPoses(
+        AutonomousUtil.generateRamseteFromPoses(
             forwardBackArray,
             p_drivetrainSubsystem,
             TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG);
 
     reEnterCommunityCommand =
-        RamseteGeneration.generateRamseteFromPoses(
+        AutonomousUtil.generateRamseteFromPoses(
             reEnterCommunity,
             p_drivetrainSubsystem,
             TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
@@ -70,11 +70,10 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
     addCommands(
         new ArmToAngleCommand(
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, .75, true),
-        new ParallelRaceGroup(
-            new TimerCommand(1),
-            new ArmToAngleCommand(
-                p_armSubsystem, p_pidController, p_scoringSubsystem, ArmConstants.FORWARD_MID)),
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(.75),
+        new ArmToAngleCommand(
+                p_armSubsystem, p_pidController, p_scoringSubsystem, ArmConstants.FORWARD_MID)
+            .withTimeout(1),
         moveForwardCommand,
         new NavXBalance(p_drivetrainSubsystem),
         new AutoBalanceCommand(p_drivetrainSubsystem));
