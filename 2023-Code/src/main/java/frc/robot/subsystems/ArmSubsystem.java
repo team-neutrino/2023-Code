@@ -5,12 +5,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,11 +17,14 @@ import frc.robot.Constants.MotorConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
-  private CANSparkMax m_positionMotor = new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
-  private CANSparkMax m_telescopingMotor = new CANSparkMax(MotorConstants.TELESCOPING_MOTOR, MotorType.kBrushless);
+  private CANSparkMax m_positionMotor =
+      new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
+  private CANSparkMax m_telescopingMotor =
+      new CANSparkMax(MotorConstants.TELESCOPING_MOTOR, MotorType.kBrushless);
 
   private DutyCycleEncoder m_positionEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
-  private DutyCycleEncoder m_telescopingEncoder = new DutyCycleEncoder(DigitalConstants.TELESCOPING_ENCODER);
+  private DutyCycleEncoder m_telescopingEncoder =
+      new DutyCycleEncoder(DigitalConstants.TELESCOPING_ENCODER);
 
   private DigitalInput m_limitSwitch = new DigitalInput(DigitalConstants.CLIMBER_LIMIT_SWITCH);
 
@@ -84,26 +83,26 @@ public class ArmSubsystem extends SubsystemBase {
     return false;
   }
 
-public double getAbsoluteTelescopePosistion() {
-  return m_telescopingEncoder.getAbsolutePosition();
-}
+  public double getAbsoluteTelescopePosistion() {
+    return m_telescopingEncoder.getAbsolutePosition();
+  }
 
-public void turnTelescopeOff() {
-  m_telescopingMotor.setVoltage(0);
-}
+  public void turnTelescopeOff() {
+    m_telescopingMotor.setVoltage(0);
+  }
 
-public void setTelescopeVoltage(double p_voltage) {
-  m_telescopingMotor.setVoltage(p_voltage);
-}
+  public void setTelescopeVoltage(double p_voltage) {
+    m_telescopingMotor.setVoltage(p_voltage);
+  }
 
-public void setTelescope(double p_output) {
-  m_telescopingMotor.set(p_output);
-}
+  public void setTelescope(double p_output) {
+    m_telescopingMotor.set(p_output);
+  }
 
-public boolean getSwitch() {
-  return false;
-  // return m_limitSwitch.get();
-}
+  public boolean getSwitch() {
+    return false;
+    // return m_limitSwitch.get();
+  }
 
   @Override
   public void periodic() {}
