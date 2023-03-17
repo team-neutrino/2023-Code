@@ -26,7 +26,7 @@ public class ArmSubsystem extends SubsystemBase {
   private DutyCycleEncoder m_telescopingEncoder =
       new DutyCycleEncoder(DigitalConstants.TELESCOPING_ENCODER);
 
-  private DigitalInput m_limitSwitch = new DigitalInput(DigitalConstants.CLIMBER_LIMIT_SWITCH);
+  private DigitalInput m_limitSwitch = new DigitalInput(DigitalConstants.TELESCOPING_LIMIT_SWITCH);
 
   public ArmSubsystem() {
     m_positionMotor.restoreFactoryDefaults();
