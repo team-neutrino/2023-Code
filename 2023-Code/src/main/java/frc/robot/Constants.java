@@ -35,17 +35,17 @@ public final class Constants {
     public static final double FEEDER = 37.5;
 
     public static final double FORWARD_DOWN = 90;
-    public static final double FORWARD_MID = 80;
+    public static final double FORWARD_MID = 82;
     public static final double QUASI_BACK_MID = 32;
-    public static final double BACK_MID = 38.5;
+    public static final double BACK_MID = 32;
     public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
 
-    public static final double ARM_BACKMOST = 17;
-    public static final double ARM_FRONTMOST = 91.5;
+    public static final double ARM_BACKMOST = 18;
+    public static final double ARM_FRONTMOST = 95;
 
     public static final double GATHER_POSITION = 91;
-    public static final double INTAKE_RUNNABLE = 83;
+    public static final double INTAKE_RUNNABLE = 84;
 
     public static final double ARM_OUTPUT_LIMIT = 0.2;
     public static final double SCALE_FACTOR = 10;
@@ -54,7 +54,6 @@ public final class Constants {
 
   public static class PIDConstants {
     public static final double dt = 20;
-
     public static final double ARM_P = 0.04;
     public static final double ARM_P_ADJUST = 0.02;
     public static final int ARM_I = 0;
