@@ -25,10 +25,10 @@ public class TelescopeCommand extends CommandBase {
   @Override
   public void execute() {
     if (m_isTelescopingOut) {
-      m_armSubsystem.setTelescope(ArmConstants.TELESCOPING_OUT_SPEED);
+      m_armSubsystem.setTelescope(ArmConstants.TELESCOPE_EXTEND_SPEED);
     }
     else {
-      m_armSubsystem.setTelescope(ArmConstants.TELESCOPING_IN_SPEED);
+      m_armSubsystem.setTelescope(ArmConstants.TELESCOPE_RETRACT_SPEED);
     }
   }
 
