@@ -53,7 +53,7 @@ public final class Constants {
     public static final double ARM_INPUT_DEADZONE = 0.2;
 
     public static final double TELESCOPE_EXTEND_SPEED = 0.1;
-    public static final double TELESCOPE_RETRACT_SPEED = -0.2;
+    public static final double TELESCOPE_RETRACT_SPEED = -0.25;
   }
 
   public static class PIDConstants {
