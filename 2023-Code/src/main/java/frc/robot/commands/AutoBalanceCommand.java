@@ -17,7 +17,9 @@ public class AutoBalanceCommand extends CommandBase {
     m_drivetrain = p_drivetrain;
     addRequirements(m_drivetrain);
 
-    pidController = new ViennaPIDController(PIDConstants.BALANCE_P, PIDConstants.BALANCE_I, PIDConstants.BALANCE_D);
+    pidController =
+        new ViennaPIDController(
+            PIDConstants.BALANCE_P, PIDConstants.BALANCE_I, PIDConstants.BALANCE_D);
   }
 
   @Override
@@ -26,7 +28,8 @@ public class AutoBalanceCommand extends CommandBase {
   @Override
   public void execute() {
     double currentRoll = m_drivetrain.getRoll();
-    double output = pidController.run(currentRoll, desiredPos, DrivetrainConstants.AUTO_BALANCE_DEADZONE);
+    double output =
+        pidController.run(currentRoll, desiredPos, DrivetrainConstants.AUTO_BALANCE_DEADZONE);
     m_drivetrain.setVoltage(-output);
   }
 
