@@ -59,7 +59,8 @@ public class LimelightSubsystem extends SubsystemBase {
 
   public double getDistance() {
     double[] camTran = getCamTran();
-    return camTran[2] * LIMELIGHT_TO_METER_CONVERSION;
+    // return camTran[2] * LIMELIGHT_TO_METER_CONVERSION;
+    return 0;
   }
 
   /* is a print that access and prints the full array that is accessed when getting the camTran. Inert for right now,
