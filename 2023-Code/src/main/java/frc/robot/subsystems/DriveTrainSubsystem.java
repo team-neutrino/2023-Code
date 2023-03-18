@@ -66,7 +66,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     angleAcceptable = false;
   }
 
-  public boolean isAngleAcceptable(){
+  public boolean isAngleAcceptable() {
     return angleAcceptable;
   }
 
@@ -203,10 +203,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (Math.abs(getYaw() - DrivetrainConstants.PLAYERSTATION_ANGLE) < DrivetrainConstants.ANGLE_DEADZONE) {
+    if (Math.abs(getYaw() - DrivetrainConstants.PLAYERSTATION_ANGLE)
+        < DrivetrainConstants.ANGLE_DEADZONE) {
       angleAcceptable = true;
-    }
-    else {
+    } else {
       angleAcceptable = false;
     }
     m_diffDriveOdometry.update(

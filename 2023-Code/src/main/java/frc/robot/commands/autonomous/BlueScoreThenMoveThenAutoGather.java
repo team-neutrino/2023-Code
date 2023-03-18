@@ -21,7 +21,7 @@ import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
-import frc.robot.util.RamseteGeneration;
+import frc.robot.util.AutonomousUtil;
 import frc.robot.util.ViennaPIDController;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,13 +63,13 @@ public class BlueScoreThenMoveThenAutoGather extends SequentialCommandGroup {
                 new PoseTriplet(-.3, -.31, -.32)));
 
     toGamePieceCommand =
-        RamseteGeneration.generateRamseteFromPoses(
+        AutonomousUtil.generateRamseteFromPoses(
             toGamePieceArray,
             m_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
     runThatBackCommand =
-        RamseteGeneration.generateRamseteFromPoses(
+        AutonomousUtil.generateRamseteFromPoses(
             runThatBack,
             p_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG);

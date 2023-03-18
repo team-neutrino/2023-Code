@@ -135,7 +135,13 @@ public class RobotContainer {
       new ScoringDefaultCommand(m_scoringSubsystem);
 
   private final PlayerstationLineupCommand m_playerstationLineupCommand =
-      new PlayerstationLineupCommand(m_driveTrainSubsystem, m_limelightSubsystem, m_scoringSubsystem, m_intakeManager, m_armSubsystem, m_armPidController);
+      new PlayerstationLineupCommand(
+          m_driveTrainSubsystem,
+          m_limelightSubsystem,
+          m_scoringSubsystem,
+          m_intakeManager,
+          m_armSubsystem,
+          m_armPidController);
 
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);

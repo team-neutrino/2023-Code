@@ -17,7 +17,7 @@ import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
-import frc.robot.util.RamseteGeneration;
+import frc.robot.util.AutonomousUtil;
 import frc.robot.util.ViennaPIDController;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +45,7 @@ public class JustScore extends SequentialCommandGroup {
             Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(2, 0, 0)));
 
     forwardBackCommand =
-        RamseteGeneration.generateRamseteFromPoses(
+        AutonomousUtil.generateRamseteFromPoses(
             forwardBackArray,
             p_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
@@ -55,7 +55,7 @@ public class JustScore extends SequentialCommandGroup {
             Arrays.asList(new PoseTriplet(2, 0, 0), new PoseTriplet(0, 0, 0)));
 
     moveBackCommand =
-        RamseteGeneration.generateRamseteFromPoses(
+        AutonomousUtil.generateRamseteFromPoses(
             moveBackArray,
             p_drivetrainSubsystem,
             TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);

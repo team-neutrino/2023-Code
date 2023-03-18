@@ -140,8 +140,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_armVariables[0] =
         m_drivestationTab.add("Arm Position", 0).withPosition(1, 1).withSize(1, 1).getEntry();
 
-    m_driveTrainVariables[11] = 
-        m_drivestationTab.add("Acceptable Angle", 0).withPosition(10, 4).withSize(1,1).getEntry();
+    m_driveTrainVariables[11] =
+        m_drivestationTab.add("Acceptable Angle", 0).withPosition(10, 4).withSize(1, 1).getEntry();
 
     m_drivestationTab
         .add("Autonomous Chooser", m_autoChooser)
