@@ -28,6 +28,7 @@ import frc.robot.commands.IntakeGatherModeCommand;
 import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.IntakeSqueezeCommand;
+import frc.robot.commands.KeyCombo;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
@@ -50,6 +51,7 @@ import frc.robot.util.DriverStationInfo;
 import frc.robot.util.EnumConstants.LEDColor;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.ViennaPIDController;
+import frc.robot.util.KeyCombination;
 
 public class RobotContainer {
   // CONTROLLERS
@@ -102,6 +104,7 @@ public class RobotContainer {
 
   // UTIL
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
+  private final KeyCombination m_keycombo = new KeyCombination();
   private final ViennaPIDController m_armPidController =
       new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
   private final ViennaPIDController m_armPidControllerAdjust =
@@ -226,7 +229,6 @@ public class RobotContainer {
       new TelescopeCommand(m_armSubsystem, true);
   private final TelescopeCommand m_telescopeRetractCommand =
       new TelescopeCommand(m_armSubsystem, false);
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureBindings();
