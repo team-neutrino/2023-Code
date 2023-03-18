@@ -8,18 +8,23 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.util.KeyCombination;
+
 public class KeyCombo extends CommandBase {
   JoystickButton m_button;
   Command m_defaultCommand;
   Command m_comboCommand;
   KeyCombination m_keyCombination;
   /** Creates a new KeyCombo. */
-  public KeyCombo(JoystickButton p_button, Command p_defaultCommand, Command p_comboCommand, KeyCombination p_keyCombination) {
+  public KeyCombo(
+      JoystickButton p_button,
+      Command p_defaultCommand,
+      Command p_comboCommand,
+      KeyCombination p_keyCombination) {
     p_button = m_button;
     p_defaultCommand = m_defaultCommand;
     p_comboCommand = m_comboCommand;
     p_keyCombination = m_keyCombination;
-  } 
+  }
 
   // Called when the command is initially scheduled.
   @Override

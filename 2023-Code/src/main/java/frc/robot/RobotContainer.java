@@ -28,7 +28,6 @@ import frc.robot.commands.IntakeGatherModeCommand;
 import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.IntakeSqueezeCommand;
-import frc.robot.commands.KeyCombo;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
@@ -50,8 +49,8 @@ import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.EnumConstants.LEDColor;
 import frc.robot.util.IntakeManager;
-import frc.robot.util.ViennaPIDController;
 import frc.robot.util.KeyCombination;
+import frc.robot.util.ViennaPIDController;
 
 public class RobotContainer {
   // CONTROLLERS
