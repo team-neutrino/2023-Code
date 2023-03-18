@@ -31,6 +31,7 @@ import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
+import frc.robot.commands.TelescopeCommand;
 import frc.robot.commands.autonomous.JustScore;
 import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
 import frc.robot.commands.autonomous.ScoreMoveAutoGather;
@@ -185,6 +186,32 @@ public class RobotContainer {
       new ScoringCloseCommand(m_scoringSubsystem);
   private final ScoringOpenCommand m_scoringOpenCommand =
       new ScoringOpenCommand(m_scoringSubsystem, m_intakeManager);
+  private final ArmToAngleCommand m_armToForwardMid =
+      new ArmToAngleCommand(
+          m_armSubsystem,
+          m_armPidController,
+          ArmConstants.FORWARD_MID,
+          false,
+          false,
+          m_ledSubsystem);
+  private final ArmToAngleCommand m_armToForwardDown =
+      new ArmToAngleCommand(
+          m_armSubsystem,
+          m_armPidController,
+          ArmConstants.FORWARD_DOWN,
+          false,
+          false,
+          m_ledSubsystem);
+  private final ArmToAngleCommand m_armToBackMid =
+      new ArmToAngleCommand(
+          m_armSubsystem, m_armPidController, ArmConstants.BACK_MID, false, true, m_ledSubsystem);
+  private final ArmToAngleCommand m_armToBackDown =
+      new ArmToAngleCommand(
+          m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN, false, false, m_ledSubsystem);
+  private final TelescopeCommand m_telescopeExtendCommand =
+      new TelescopeCommand(m_armSubsystem, true);
+  private final TelescopeCommand m_telescopeRetractCommand =
+      new TelescopeCommand(m_armSubsystem, false);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -200,17 +227,10 @@ public class RobotContainer {
     // BUTTONS
 
     // Put the arm to one of three specified target angles
-    m_buttonB.toggleOnTrue(
-        new ArmToAngleCommand(
-            m_armSubsystem, ArmConstants.FORWARD_MID, false, false, m_ledSubsystem));
-    m_buttonY.toggleOnTrue(
-        new ArmToAngleCommand(
-            m_armSubsystem, ArmConstants.FORWARD_DOWN, false, false, m_ledSubsystem));
-    m_buttonX.toggleOnTrue(
-        new ArmToAngleCommand(m_armSubsystem, ArmConstants.BACK_MID, false, true, m_ledSubsystem));
-    m_buttonA.toggleOnTrue(
-        new ArmToAngleCommand(
-            m_armSubsystem, ArmConstants.BACK_DOWN, false, false, m_ledSubsystem));
+    m_buttonB.toggleOnTrue(m_armToForwardMid);
+    m_buttonY.toggleOnTrue(m_armToForwardDown);
+    m_buttonX.toggleOnTrue(m_armToBackMid);
+    m_buttonA.toggleOnTrue(m_armToBackDown);
 
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(new ArmAdjustCommand(m_armSubsystem, m_driverController));
@@ -226,6 +246,8 @@ public class RobotContainer {
     m_buttonBack.whileTrue(m_scoringOpenCommand);
 
     // LED Buttons
+    m_upArrow.whileTrue(m_telescopeExtendCommand);
+    m_downArrow.whileTrue(m_telescopeRetractCommand);
     m_rightArrow.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
     m_leftArrow.onTrue(
