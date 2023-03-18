@@ -53,7 +53,7 @@ public class ScoreThenBalance extends SequentialCommandGroup {
     addCommands(
         new ArmToAngleCommand(
             p_armSubsystem, p_armPIDController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager)
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager)
             .withTimeout(2),
         moveForwardCommand,
         new AutoBalanceCommand(p_drivetrainSubsystem));
