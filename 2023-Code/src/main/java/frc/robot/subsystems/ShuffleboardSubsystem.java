@@ -29,7 +29,7 @@ import java.util.Map;
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
   private ShuffleboardTab m_troubleshootingTab;
-  private GenericEntry m_driveTrainVariables[] = new GenericEntry[11];
+  private GenericEntry m_driveTrainVariables[] = new GenericEntry[12];
   private GenericEntry m_limelightVariables[] = new GenericEntry[8];
   private GenericEntry m_driverStationInfoVariables[] = new GenericEntry[9];
   private GenericEntry m_scoringVariables[] = new GenericEntry[11];
@@ -96,6 +96,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driveTrainVariables[8].setDouble(m_driveTrainSubsystem.getPitch());
     m_driveTrainVariables[9].setDouble(m_driveTrainSubsystem.getRoll());
     m_driveTrainVariables[10].setDouble(m_driveTrainSubsystem.getYaw());
+    m_driveTrainVariables[11].setBoolean(m_driveTrainSubsystem.isAngleAcceptable());
 
     m_scoringVariables[0].setBoolean(m_scoring.getSolenoidValue());
 
@@ -138,6 +139,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     m_armVariables[0] =
         m_drivestationTab.add("Arm Position", 0).withPosition(1, 1).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[11] = 
+        m_drivestationTab.add("Acceptable Angle", 0).withPosition(10, 4).withSize(1,1).getEntry();
 
     m_drivestationTab
         .add("Autonomous Chooser", m_autoChooser)
