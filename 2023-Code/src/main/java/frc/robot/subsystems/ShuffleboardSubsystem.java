@@ -34,7 +34,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private GenericEntry m_limelightVariables[] = new GenericEntry[8];
   private GenericEntry m_driverStationInfoVariables[] = new GenericEntry[9];
   private GenericEntry m_scoringVariables[] = new GenericEntry[11];
-  private GenericEntry m_armVariables[] = new GenericEntry[1];
+  private GenericEntry m_armVariables[] = new GenericEntry[4];
   private GenericEntry m_intakeVariables[] = new GenericEntry[4];
   private GenericEntry m_LEDVariables[] = new GenericEntry[4];
   private SendableChooser<Command> m_autonSelector = new SendableChooser<>();
@@ -199,10 +199,10 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_limelightVariables[0] =
         m_troubleshootingTab.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
 
-    m_armVariables[1] = 
+    m_armVariables[1] =
         m_troubleshootingTab.add("Telescoping Arm Distance",0).withPosition(3,0).withSize(1,1).getEntry();
 
-    m_armVariables[2] = 
+    m_armVariables[2] =
         m_troubleshootingTab.add("Switch", 0).withPosition(3,1).withSize(1,1).getEntry();
   }
 
