@@ -7,7 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.DigitalInput;
+import com.revrobotics.SparkMaxLimitSwitch;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -26,7 +26,7 @@ public class ArmSubsystem extends SubsystemBase {
   private DutyCycleEncoder m_telescopingEncoder =
       new DutyCycleEncoder(DigitalConstants.TELESCOPING_ENCODER);
 
-  private DigitalInput m_limitSwitch = new DigitalInput(DigitalConstants.TELESCOPING_LIMIT_SWITCH);
+  private SparkMaxLimitSwitch m_limitSwitch;
 
   public ArmSubsystem() {
     m_positionMotor.restoreFactoryDefaults();
@@ -34,6 +34,9 @@ public class ArmSubsystem extends SubsystemBase {
     m_positionMotor.setIdleMode(IdleMode.kBrake);
     m_telescopingMotor.setIdleMode(IdleMode.kBrake);
     m_telescopingMotor.setInverted(true);
+    m_limitSwitch =
+        m_telescopingMotor.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
+    m_limitSwitch.enableLimitSwitch(true);
   }
 
   public double getAbsoluteArmPosition() {
