@@ -35,10 +35,10 @@ public final class Constants {
     public static final double UP = 56;
     public static final double FEEDER = 37.5;
 
-    public static final double FORWARD_DOWN = 90;
-    public static final double FORWARD_MID = 82;
-    public static final double QUASI_BACK_MID = 32;
-    public static final double BACK_MID = 32;
+    public static final double FORWARD_DOWN = 92;
+    public static final double FORWARD_MID = 80.5;
+    public static final double QUASI_BACK_MID = 32.4;
+    public static final double BACK_MID = 35.8;
     public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
 
@@ -54,6 +54,7 @@ public final class Constants {
 
     public static final double TELESCOPE_EXTEND_SPEED = 0.5; // note: setInverted is true
     public static final double TELESCOPE_RETRACT_SPEED = -0.5;
+    public static final double TELESCOPE_EXTEND_LIMIT = 8000;
   }
 
   public static class PIDConstants {

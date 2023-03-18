@@ -5,17 +5,16 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxLimitSwitch;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
-import edu.wpi.first.wpilibj.Encoder;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -25,10 +24,13 @@ public class ArmSubsystem extends SubsystemBase {
       new CANSparkMax(MotorConstants.TELESCOPING_MOTOR, MotorType.kBrushless);
 
   private DutyCycleEncoder m_positionEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
-  private Encoder m_telescopingEncoder = new Encoder(Constants.DigitalConstants.TELESCOPING_ENCODERA, Constants.DigitalConstants.TELESCOPING_ENCODERB);
+  private Encoder m_telescopingEncoder =
+      new Encoder(
+          Constants.DigitalConstants.TELESCOPING_ENCODERA,
+          Constants.DigitalConstants.TELESCOPING_ENCODERB);
 
   private SparkMaxLimitSwitch m_limitSwitch;
-  private boolean startUp = true;
+
   public ArmSubsystem() {
     m_positionMotor.restoreFactoryDefaults();
     m_telescopingMotor.restoreFactoryDefaults();
@@ -39,7 +41,6 @@ public class ArmSubsystem extends SubsystemBase {
     m_limitSwitch =
         m_telescopingMotor.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
     m_limitSwitch.enableLimitSwitch(true);
-
   }
 
   public double getAbsoluteArmPosition() {
@@ -102,21 +103,13 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void setTelescope(double p_output) {
-  if(p_output < 0 || getEncoderDistance() < 10000)
-    m_telescopingMotor.set(p_output);
+    if (p_output < 0 || getEncoderDistance() < Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT)
+      m_telescopingMotor.set(p_output);
   }
 
   public boolean getSwitch() {
     return false;
     // return m_limitSwitch.get();
-  }
-  public void startUp() {
-  if(!m_limitSwitch.isPressed() && startUp) {
-    setTelescope(-.3);
-  }
-  if(m_limitSwitch.isPressed()) {
-    startUp = false;
-  }
   }
 
   public void setEncoder() {
@@ -126,8 +119,9 @@ public class ArmSubsystem extends SubsystemBase {
   public double getEncoderDistance() {
     return m_telescopingEncoder.getDistance();
   }
+
   public void resetEncoder() {
-    if(m_limitSwitch.isPressed()) {
+    if (m_limitSwitch.isPressed()) {
       m_telescopingEncoder.reset();
     }
   }
