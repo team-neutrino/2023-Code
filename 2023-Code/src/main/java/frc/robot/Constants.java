@@ -35,10 +35,10 @@ public final class Constants {
     public static final double UP = 56;
     public static final double FEEDER = 37.5;
 
-    public static final double FORWARD_DOWN = 90;
-    public static final double FORWARD_MID = 82;
-    public static final double QUASI_BACK_MID = 32;
-    public static final double BACK_MID = 32;
+    public static final double FORWARD_DOWN = 92;
+    public static final double FORWARD_MID = 80.5;
+    public static final double QUASI_BACK_MID = 32.4;
+    public static final double BACK_MID = 35.8;
     public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
 
@@ -52,8 +52,9 @@ public final class Constants {
     public static final double SCALE_FACTOR = 10;
     public static final double ARM_INPUT_DEADZONE = 0.2;
 
-    public static final double TELESCOPE_EXTEND_SPEED = 0.3; // note: setInverted is true
-    public static final double TELESCOPE_RETRACT_SPEED = -0.3;
+    public static final double TELESCOPE_EXTEND_SPEED = 0.5; // note: setInverted is true
+    public static final double TELESCOPE_RETRACT_SPEED = -0.5;
+    public static final double TELESCOPE_EXTEND_LIMIT = 8000;
   }
 
   public static class PIDConstants {
@@ -88,8 +89,10 @@ public final class Constants {
     public static final int INTAKE_BEAMBREAK = 0;
     public static final int GRABBER_BEAMBREAK = 1;
     public static final int INTAKE_DOWN_BEAMBREAK = 2;
-    public static final int TELESCOPING_LIMIT_SWITCH = 3;
-    public static final int TELESCOPING_ENCODER = 8;
+    public static final int TELESCOPING_LIMIT_SWITCHA = 3;
+    public static final int TELESCOPING_LIMIT_SWITCHB = 4;
+    public static final int TELESCOPING_ENCODERA = 7;
+    public static final int TELESCOPING_ENCODERB = 8;
     public static final int ARM_ENCODER = 9;
   }
 
