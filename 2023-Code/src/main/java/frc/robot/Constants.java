@@ -37,6 +37,7 @@ public final class Constants {
 
     public static final double FORWARD_DOWN = 90;
     public static final double FORWARD_MID = 82;
+    public static final double PLAYERSTATION = 79;
     public static final double QUASI_BACK_MID = 32;
     public static final double BACK_MID = 32;
     public static final double BACK_DOWN = 18;
@@ -82,6 +83,9 @@ public final class Constants {
     public static final double JOYSTICK_DEADZONE = 0.1;
     public static final double AUTO_BALANCE_DEADZONE = .4;
     public static final double BALANCE_MOTOR_POWER = -.3;
+    public static final double ANGLE_DEADZONE = 1;
+    public static final double PLAYERSTATION_ANGLE = 0;
+    public static final double ARM_LENGTH = 1;
   }
 
   public static class DigitalConstants {

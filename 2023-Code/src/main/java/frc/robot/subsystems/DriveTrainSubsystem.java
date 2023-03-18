@@ -49,6 +49,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private MotorControllerGroup m_motorGroupLeft =
       new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
 
+  private boolean angleAcceptable;
+
   /** Creates a new Drivetrain. */
   public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick) {
     m_leftJoystick = p_leftJoystick;
@@ -61,6 +63,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
     resetOdometry();
+    angleAcceptable = false;
+  }
+
+  public boolean isAngleAcceptable(){
+    return angleAcceptable;
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
@@ -196,6 +203,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if (Math.abs(getYaw() - DrivetrainConstants.PLAYERSTATION_ANGLE) < DrivetrainConstants.ANGLE_DEADZONE) {
+      angleAcceptable = true;
+    }
+    else {
+      angleAcceptable = false;
+    }
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
   }

@@ -29,6 +29,7 @@ import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.IntakeSqueezeCommand;
 import frc.robot.commands.LEDCommand;
+import frc.robot.commands.PlayerstationLineupCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
@@ -89,6 +90,8 @@ public class RobotContainer {
 
   private final JoystickButton m_rightStickButton =
       new JoystickButton(m_driverController, XboxController.Button.kRightStick.value);
+  private final JoystickButton m_leftStickButton =
+      new JoystickButton(m_driverController, XboxController.Button.kLeftStick.value);
 
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrainSubsystem =
@@ -130,6 +133,9 @@ public class RobotContainer {
       new IntakeDefaultCommand(m_intakeSubsystem, m_intakeManager);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_scoringSubsystem);
+
+  private final PlayerstationLineupCommand m_playerstationLineupCommand =
+      new PlayerstationLineupCommand(m_driveTrainSubsystem, m_limelightSubsystem, m_scoringSubsystem, m_intakeManager, m_armSubsystem, m_armPidController);
 
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_driveTrainSubsystem);
@@ -249,6 +255,7 @@ public class RobotContainer {
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(
         new ArmAdjustCommand(m_armSubsystem, m_driverController, m_armPidControllerAdjust));
+    m_leftStickButton.onTrue(m_playerstationLineupCommand);
 
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
