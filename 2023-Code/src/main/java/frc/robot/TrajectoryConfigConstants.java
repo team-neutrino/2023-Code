@@ -33,7 +33,7 @@ public class TrajectoryConfigConstants {
           K_DRIVE_KINEMATICS,
           K_MAX_VOLTAGE);
 
-  public static TrajectoryConfig trajectoryConfigGenerator(
+  public static TrajectoryConfig trajectoryConfigMeabhGenerator(
       double maxSpeed, double maxAcceleration, boolean isReversed) {
     TrajectoryConfig ret =
         new TrajectoryConfig(maxSpeed, maxAcceleration)
@@ -44,15 +44,15 @@ public class TrajectoryConfigConstants {
   }
 
   public static final TrajectoryConfig K_MAX_SPEED_FORWARD_CONFIG =
-      trajectoryConfigGenerator(
+      trajectoryConfigMeabhGenerator(
           K_MAX_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED, false);
   public static final TrajectoryConfig K_MAX_SPEED_BACKWARD_CONFIG =
-      trajectoryConfigGenerator(
+      trajectoryConfigMeabhGenerator(
           K_MAX_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED, true);
   public static final TrajectoryConfig K_LESS_SPEED_FORWARD_CONFIG =
-      trajectoryConfigGenerator(
+      trajectoryConfigMeabhGenerator(
           K_LESS_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED, false);
   public static final TrajectoryConfig K_LESS_SPEED_BACKWARD_CONFIG =
-      trajectoryConfigGenerator(
+      trajectoryConfigMeabhGenerator(
           K_LESS_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED, true);
 }
