@@ -22,7 +22,6 @@ import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
@@ -32,7 +31,6 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
   private ArrayList<PoseTriplet> reEnterCommunity;
   private RamseteCommand reEnterCommunityCommand;
   private RamseteCommand moveForwardCommand;
-
   /** Creates a new TestAutonGeneratedTrajectory. */
   public ScoreMobilityThenBalance(
       DriveTrainSubsystem p_drivetrainSubsystem,
@@ -68,7 +66,7 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
         new ArmToAngleCommand(p_armSubsystem, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(.75),
         new ArmToAngleCommand(
-                p_armSubsystem, p_pidController, p_scoringSubsystem, ArmConstants.FORWARD_MID)
+                p_armSubsystem, p_scoringSubsystem, ArmConstants.FORWARD_MID)
             .withTimeout(1),
         moveForwardCommand,
         new NavXBalance(p_drivetrainSubsystem),
