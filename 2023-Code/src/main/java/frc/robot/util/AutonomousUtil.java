@@ -84,3 +84,9 @@ public class AutonomousUtil {
     return generatedRamseteCommand;
   }
 }
+
+  public void TrajectoryConfig(){}
+
+  public static TrajectoryConfig trajectoryConfig {
+      
+  }
