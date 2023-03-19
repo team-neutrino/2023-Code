@@ -24,7 +24,7 @@ public class TelescopeCommand extends CommandBase {
 
   @Override
   public void execute() {
-    System.out.println(m_armSubsystem.getSwitch());
+    // System.out.println(m_armSubsystem.getSwitch());
     if (m_isExtending) {
       m_armSubsystem.setTelescope(ArmConstants.TELESCOPE_EXTEND_SPEED);
     } else {
