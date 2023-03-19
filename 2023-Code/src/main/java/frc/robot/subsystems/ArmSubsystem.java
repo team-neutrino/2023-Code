@@ -102,7 +102,6 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void setTelescope(double p_output) {
-    System.out.println(p_output);
     if (p_output < 0 || getEncoderDistance() > Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT) {
       m_telescopingMotor.set(p_output);
     } else if (getEncoderDistance() <= Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT) {
@@ -131,7 +130,6 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println(getDistance());
     resetEncoder();
   }
 }
