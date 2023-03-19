@@ -37,7 +37,6 @@ public class ArmSubsystem extends SubsystemBase {
     m_telescopingMotor.setSmartCurrentLimit(20);
     m_positionMotor.setIdleMode(IdleMode.kBrake);
     m_telescopingMotor.setIdleMode(IdleMode.kBrake);
-    m_telescopingMotor.setInverted(true);
     m_limitSwitch =
         m_telescopingMotor.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
     m_limitSwitch.enableLimitSwitch(true);
@@ -103,8 +102,11 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void setTelescope(double p_output) {
-    if (p_output < 0 || getEncoderDistance() < Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT)
+    if (p_output < 0 || getEncoderDistance() > Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT) {
       m_telescopingMotor.set(p_output);
+    } else if (getEncoderDistance() <= Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT) {
+      m_telescopingMotor.set(0);
+    }
   }
 
   public boolean getSwitch() {
@@ -128,7 +130,6 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println(getEncoderDistance());
     resetEncoder();
   }
 }

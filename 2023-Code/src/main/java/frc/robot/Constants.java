@@ -49,12 +49,12 @@ public final class Constants {
     public static final double INTAKE_RUNNABLE = 84;
 
     public static final double ARM_OUTPUT_LIMIT = 0.2;
-    public static final double SCALE_FACTOR = 10;
+    public static final double SCALE_FACTOR = 5;
     public static final double ARM_INPUT_DEADZONE = 0.2;
 
     public static final double TELESCOPE_EXTEND_SPEED = 0.5; // note: setInverted is true
     public static final double TELESCOPE_RETRACT_SPEED = -0.5;
-    public static final double TELESCOPE_EXTEND_LIMIT = 8000;
+    public static final double TELESCOPE_EXTEND_LIMIT = -6500;
   }
 
   public static class PIDConstants {
