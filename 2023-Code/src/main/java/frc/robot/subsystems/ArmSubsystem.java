@@ -105,8 +105,7 @@ public class ArmSubsystem extends SubsystemBase {
     System.out.println(p_output);
     if (p_output < 0 || getEncoderDistance() > Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT) {
       m_telescopingMotor.set(p_output);
-    }
-    else if (getEncoderDistance() <= Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT) {
+    } else if (getEncoderDistance() <= Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT) {
       m_telescopingMotor.set(0);
     }
   }
