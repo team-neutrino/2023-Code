@@ -107,18 +107,16 @@ public class ViennaPIDController {
     return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
   }
 
-  public void setInitialPos(double initialPos){
+  public void setInitialPos(double initialPos) {}
 
-  }
   public double magicMotion(double realPos, double desiredPos, double time) {
-    double setPos = 
-    initialPos + (desiredPos - initialPos) * (
-      PIDConstants.A*Math.pow(time/PIDConstants.timeF, 3)
-    - PIDConstants.B*Math.pow(time/PIDConstants.timeF, 4) 
-    + PIDConstants.C*Math.pow(time/PIDConstants.timeF, 5)
-    );
+    double setPos =
+        initialPos
+            + (desiredPos - initialPos)
+                * (PIDConstants.A * Math.pow(time / PIDConstants.timeF, 3)
+                    - PIDConstants.B * Math.pow(time / PIDConstants.timeF, 4)
+                    + PIDConstants.C * Math.pow(time / PIDConstants.timeF, 5));
 
     return run(realPos, setPos);
   }
-
 }
