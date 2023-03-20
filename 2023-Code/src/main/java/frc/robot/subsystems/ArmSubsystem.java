@@ -67,7 +67,16 @@ public class ArmSubsystem extends SubsystemBase {
     return voltage;
   }
 
+  public void limitHeight() {
+    if ((getAbsoluteArmPosition() <= Constants.ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
+            && getAbsoluteArmPosition() >= Constants.ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)
+        && getEncoderDistance() <= 0) {
+      setTelescope(ArmConstants.TELESCOPE_HEIGHT_LIMIT_RETRACT_SPEED);
+    }
+  }
+
   public void smartArmSet(double desiredVoltage) {
+    limitHeight();
     if ((getAbsoluteArmPosition() >= ArmConstants.ARM_FRONTMOST && desiredVoltage > 0)
         || (getAbsoluteArmPosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
       setArm(0.0);

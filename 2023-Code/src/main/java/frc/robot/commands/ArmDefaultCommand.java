@@ -24,13 +24,15 @@ public class ArmDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
+    m_armSubsystem.limitHeight();
     m_armSubsystem.smartArmSet(
         m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.FORWARD_MID));
-    m_armSubsystem.turnTelescopeOff();
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_armSubsystem.turnTelescopeOff();
+  }
 
   @Override
   public boolean isFinished() {
