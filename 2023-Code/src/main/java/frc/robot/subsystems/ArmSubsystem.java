@@ -68,9 +68,9 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void limitHeight() {
-    if ((getAbsoluteArmPosition() <= Constants.ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
-            && getAbsoluteArmPosition() >= Constants.ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)
-        && getEncoderDistance() <= 0) {
+    if (getAbsoluteArmPosition() <= ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
+            && getAbsoluteArmPosition() >= ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT
+        && getEncoderDistance() <= ArmConstants.HEIGHT_LIMIT_RETRACT_DISTANCE) {
       setTelescope(ArmConstants.TELESCOPE_HEIGHT_LIMIT_RETRACT_SPEED);
     }
   }

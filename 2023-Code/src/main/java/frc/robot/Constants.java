@@ -59,6 +59,7 @@ public final class Constants {
     public static final double FORWARD_ARM_HEIGHT_LIMIT = 73; // actual limit 69
     public static final double BACKWARD_ARM_HEIGHT_LIMIT = 40; // actual limit 44
     public static final double TELESCOPE_HEIGHT_LIMIT_RETRACT_SPEED = -0.85;
+    public static final double HEIGHT_LIMIT_RETRACT_DISTANCE = -200; // maximum 6 feet 6 inches
   }
 
   public static class PIDConstants {
