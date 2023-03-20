@@ -4,8 +4,10 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -21,8 +23,9 @@ public class ArmToAngleCommand extends CommandBase {
   private LEDSubsystem m_ledSubsystem;
   private boolean m_auton = false;
   private boolean m_endAuton = false;
-
   private boolean m_buttoncheck = false;
+
+  private Timer timer = new Timer();
 
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem,
@@ -73,7 +76,10 @@ public class ArmToAngleCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_pidController.setInitialPos(m_armSubsystem.getAbsoluteArmPosition());
+    timer.start();
+  }
 
   @Override
   public void execute() {
@@ -81,8 +87,7 @@ public class ArmToAngleCommand extends CommandBase {
 
       if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
         voltage =
-            m_pidController.run(
-                m_armSubsystem.getAbsoluteArmPosition(), Constants.ArmConstants.BACK_MID);
+            m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.BACK_MID);
         m_armSubsystem.smartArmSet(voltage);
       } else {
         voltage =
@@ -91,7 +96,9 @@ public class ArmToAngleCommand extends CommandBase {
         m_armSubsystem.smartArmSet(voltage);
       }
     } else {
-      voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle);
+      voltage =
+          m_pidController.magicMotion(
+              m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle, timer.get());
       m_armSubsystem.smartArmSet(voltage);
     }
 
@@ -101,7 +108,10 @@ public class ArmToAngleCommand extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    timer.stop();
+    timer.reset();
+  }
 
   @Override
   public boolean isFinished() {
