@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
@@ -84,7 +83,8 @@ public class ArmToAngleCommand extends CommandBase {
 
       if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
         voltage =
-            m_pidController.magicMotion(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.BACK_MID);
+            m_pidController.magicMotion(
+                m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.BACK_MID);
         m_armSubsystem.smartArmSet(voltage);
       } else {
         voltage =
@@ -93,9 +93,7 @@ public class ArmToAngleCommand extends CommandBase {
         m_armSubsystem.smartArmSet(voltage);
       }
     } else {
-      voltage =
-          m_pidController.magicMotion(
-              m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle);
+      voltage = m_pidController.magicMotion(m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle);
       m_armSubsystem.smartArmSet(voltage);
     }
 
