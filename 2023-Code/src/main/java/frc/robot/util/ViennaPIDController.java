@@ -1,5 +1,6 @@
 package frc.robot.util;
 
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.PIDConstants;
 
 public class ViennaPIDController {
@@ -13,6 +14,8 @@ public class ViennaPIDController {
 
   private double previousError = 0;
   private double initialPos = 0;
+
+  private Timer timer = new Timer();
 
   public ViennaPIDController() {}
 
@@ -72,6 +75,16 @@ public class ViennaPIDController {
     m_d = p_d;
   }
 
+  public void end() {
+    timer.stop();
+    timer.reset();
+  }
+
+  public void start(double pos){
+    initialPos = pos;
+    timer.start();
+  }
+
   public double run(double realPos, double desiredPos) {
     double error = desiredPos - realPos;
 
@@ -107,10 +120,8 @@ public class ViennaPIDController {
     return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
   }
 
-  public void setInitialPos(double initialPos){
-
-  }
-  public double magicMotion(double realPos, double desiredPos, double time) {
+  public double magicMotion(double realPos, double desiredPos) {
+    double time = timer.get();
     double setPos = 
     initialPos + (desiredPos - initialPos) * (
       PIDConstants.A*Math.pow(time/PIDConstants.timeF, 3)

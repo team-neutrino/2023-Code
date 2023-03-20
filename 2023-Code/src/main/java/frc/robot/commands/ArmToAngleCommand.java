@@ -25,8 +25,6 @@ public class ArmToAngleCommand extends CommandBase {
   private boolean m_endAuton = false;
   private boolean m_buttoncheck = false;
 
-  private Timer timer = new Timer();
-
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem,
       ViennaPIDController p_pidController,
@@ -77,8 +75,7 @@ public class ArmToAngleCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    m_pidController.setInitialPos(m_armSubsystem.getAbsoluteArmPosition());
-    timer.start();
+    m_pidController.start(m_armSubsystem.getAbsoluteArmPosition());
   }
 
   @Override
@@ -87,18 +84,18 @@ public class ArmToAngleCommand extends CommandBase {
 
       if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
         voltage =
-            m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.BACK_MID);
+            m_pidController.magicMotion(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.BACK_MID);
         m_armSubsystem.smartArmSet(voltage);
       } else {
         voltage =
-            m_pidController.run(
+            m_pidController.magicMotion(
                 m_armSubsystem.getAbsoluteArmPosition(), Constants.ArmConstants.QUASI_BACK_MID);
         m_armSubsystem.smartArmSet(voltage);
       }
     } else {
       voltage =
           m_pidController.magicMotion(
-              m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle, timer.get());
+              m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle);
       m_armSubsystem.smartArmSet(voltage);
     }
 
@@ -109,8 +106,7 @@ public class ArmToAngleCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    timer.stop();
-    timer.reset();
+    m_pidController.end();
   }
 
   @Override
