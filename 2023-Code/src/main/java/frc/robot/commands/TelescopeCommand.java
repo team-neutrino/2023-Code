@@ -14,7 +14,6 @@ public class TelescopeCommand extends CommandBase {
 
   public TelescopeCommand(ArmSubsystem p_armSubsystem, boolean p_isExtending) {
     m_armSubsystem = p_armSubsystem;
-    addRequirements(m_armSubsystem);
 
     m_isExtending = p_isExtending;
   }
