@@ -34,7 +34,7 @@ public class ArmSubsystem extends SubsystemBase {
   public ArmSubsystem() {
     m_positionMotor.restoreFactoryDefaults();
     m_telescopingMotor.restoreFactoryDefaults();
-    m_telescopingMotor.setSmartCurrentLimit(20);
+    m_telescopingMotor.setSmartCurrentLimit(18);
     m_positionMotor.setIdleMode(IdleMode.kBrake);
     m_telescopingMotor.setIdleMode(IdleMode.kBrake);
     m_limitSwitch =
