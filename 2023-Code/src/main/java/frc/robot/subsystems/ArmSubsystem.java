@@ -69,8 +69,9 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void limitHeight() {
     if ((getAbsoluteArmPosition() >= ArmConstants.FORWARD_FLOOR_ARM_ANGLE_LIMIT
-    || (getAbsoluteArmPosition() <= Constants.ArmConstants.FORWARD_ARM_HEIGHT_LIMIT && getAbsoluteArmPosition() >= Constants.ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT))
-    && getEncoderDistance() <= 0) {
+            || (getAbsoluteArmPosition() <= ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
+                && getAbsoluteArmPosition() >= ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT))
+        && getTelescopingExtension() <= 0) {
       setTelescope(ArmConstants.TELESCOPE_HEIGHT_LIMIT_RETRACT_SPEED);
     }
   }
@@ -98,10 +99,6 @@ public class ArmSubsystem extends SubsystemBase {
     return false;
   }
 
-  public double getDistance() {
-    return m_telescopingEncoder.getDistance();
-  }
-
   public void turnTelescopeOff() {
     m_telescopingMotor.setVoltage(0);
   }
@@ -111,9 +108,10 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void setTelescope(double p_output) {
-    if ((p_output < 0 || getEncoderDistance() > Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT) && getAbsoluteArmPosition() < 90) {
+    if ((p_output < 0 || getTelescopingExtension() > Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT)
+        && getAbsoluteArmPosition() < 90) {
       m_telescopingMotor.set(p_output);
-    } else if (getEncoderDistance() <= Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT) {
+    } else if (getTelescopingExtension() <= Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT) {
       m_telescopingMotor.set(0);
     }
   }
@@ -127,7 +125,7 @@ public class ArmSubsystem extends SubsystemBase {
     m_telescopingEncoder.setDistancePerPulse(1);
   }
 
-  public double getEncoderDistance() {
+  public double getTelescopingExtension() {
     return m_telescopingEncoder.getDistance();
   }
 

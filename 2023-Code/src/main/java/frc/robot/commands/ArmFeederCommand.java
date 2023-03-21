@@ -8,25 +8,30 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.util.EnumConstants.LEDColor;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmFeederCommand extends CommandBase {
-  ArmSubsystem m_armSubsystem;
-  ScoringSubsystem m_scoringSubsystem;
-  ViennaPIDController m_pidController;
-  double voltage;
-  double hasGamePiece;
-  Timer m_timer;
-  double time = 1.5;
+  private ArmSubsystem m_armSubsystem;
+  private ScoringSubsystem m_scoringSubsystem;
+  private ViennaPIDController m_pidController;
+  private LEDSubsystem m_ledSubsystem;
+  private double voltage;
+  private double hasGamePiece;
+  private Timer m_timer;
+  private double time = 1.5;
 
   public ArmFeederCommand(
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
-      ViennaPIDController p_pidController) {
+      ViennaPIDController p_pidController,
+      LEDSubsystem p_ledSubsystem) {
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
     m_pidController = p_pidController;
+    m_ledSubsystem = p_ledSubsystem;
     m_timer = new Timer();
   }
 
@@ -38,8 +43,22 @@ public class ArmFeederCommand extends CommandBase {
 
   @Override
   public void execute() {
-    voltage = m_pidController.armRun(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.FEEDER, m_armSubsystem.getDistance());
-    m_armSubsystem.setArm(voltage);
+
+    if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
+      voltage =
+          m_pidController.armRun(
+              m_armSubsystem.getAbsoluteArmPosition(),
+              ArmConstants.FEEDER + 3,
+              m_armSubsystem.getTelescopingExtension());
+      m_armSubsystem.smartArmSet(voltage);
+    } else {
+      voltage =
+          m_pidController.armRun(
+              m_armSubsystem.getAbsoluteArmPosition(),
+              ArmConstants.FEEDER,
+              m_armSubsystem.getTelescopingExtension());
+      m_armSubsystem.smartArmSet(voltage);
+    }
 
     if (m_scoringSubsystem.detectedGamePiece()) {
       hasGamePiece++;

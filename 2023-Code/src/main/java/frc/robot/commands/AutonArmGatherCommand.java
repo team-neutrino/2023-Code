@@ -46,12 +46,18 @@ public class AutonArmGatherCommand extends CommandBase {
       m_intakeSubsystem.runIntake();
       m_scoringSubsystem.openScoring();
       m_armSubsystem.smartArmSet(
-          m_pidController.armRun(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.ARM_FRONTMOST, m_armSubsystem.getDistance()));
+          m_pidController.armRun(
+              m_armSubsystem.getAbsoluteArmPosition(),
+              ArmConstants.ARM_FRONTMOST,
+              m_armSubsystem.getTelescopingExtension()));
     } else {
       m_intakeSubsystem.stopIntake();
       m_scoringSubsystem.closeScoring();
       m_armSubsystem.smartArmSet(
-          m_pidController.armRun(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.FORWARD_MID, m_armSubsystem.getDistance()));
+          m_pidController.armRun(
+              m_armSubsystem.getAbsoluteArmPosition(),
+              ArmConstants.FORWARD_MID,
+              m_armSubsystem.getTelescopingExtension()));
     }
   }
 

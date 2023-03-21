@@ -109,12 +109,12 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(1),
         new ArmToAngleCommand(
-            p_armSubsystem,
-            p_pidController,
-            ArmConstants.FORWARD_MID,
-            true,
-            true,
-            false,
-            p_ledSubsystem));
+                p_armSubsystem,
+                p_pidController,
+                ArmConstants.FORWARD_MID,
+                true,
+                false,
+                p_ledSubsystem)
+            .alongWith(new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager)));
   }
 }

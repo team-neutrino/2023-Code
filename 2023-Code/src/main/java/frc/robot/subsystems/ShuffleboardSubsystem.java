@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
 import frc.robot.commands.autonomous.ScoreThenMove;
 import frc.robot.util.DriverStationInfo;
@@ -226,12 +225,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
   public Command getAutoSelected() {
     return m_autoChooser.getSelected();
-  }
-
-  public void setUpAutoSelector() {
-    m_autonSelector.addOption("Example Auto 1", new ExampleCommand());
-    m_autonSelector.addOption("Example Auto 2", new ExampleCommand());
-    m_autonSelector.addOption("Example Auto 2", new ExampleCommand());
   }
 
   public Command getAuto() {

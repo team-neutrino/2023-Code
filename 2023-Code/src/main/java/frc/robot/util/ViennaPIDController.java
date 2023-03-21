@@ -116,12 +116,12 @@ public class ViennaPIDController {
     /*Derivative calculation */
     double derivative = (error - previousError) / PIDConstants.dt;
     previousError = error;
-
     double ff = desiredPos * m_f;
 
-    double pAlteration = PIDConstants.ARM_EXTENSION_P * armExtension / ArmConstants.TELESCOPE_EXTEND_LIMIT;
+    double pAlteration =
+        PIDConstants.ARM_EXTENSION_P * armExtension / ArmConstants.TELESCOPE_EXTEND_LIMIT;
 
-    double output = (pAlteration  + m_p) * error + m_i * m_iState + m_d * derivative + ff;
+    double output = (pAlteration + m_p) * error + m_i * m_iState + m_d * derivative + ff;
 
     System.out.println("output: " + output);
     return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
