@@ -31,6 +31,8 @@ public class ArmSubsystem extends SubsystemBase {
 
   private SparkMaxLimitSwitch m_limitSwitch;
 
+  private boolean isShift;
+
   public ArmSubsystem() {
     m_positionMotor.restoreFactoryDefaults();
     m_telescopingMotor.restoreFactoryDefaults();
@@ -133,6 +135,14 @@ public class ArmSubsystem extends SubsystemBase {
     if (m_limitSwitch.isPressed()) {
       m_telescopingEncoder.reset();
     }
+  }
+
+  public void invertIsShift() {
+    isShift = !isShift;
+  }
+
+  public boolean getIsShift() {
+    return isShift;
   }
 
   @Override

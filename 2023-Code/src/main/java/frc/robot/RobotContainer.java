@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -240,11 +241,11 @@ public class RobotContainer {
     m_buttonX.toggleOnTrue(m_armToBackMid);
     m_buttonA.toggleOnTrue(m_armToBackDown);
 
-    m_buttonStart.toggleOnTrue(m_extendModeCommand);
+    m_buttonStart.onTrue(new InstantCommand(m_armSubsystem::invertIsShift));
     m_buttonBack.whileTrue(m_scoringOpenCommand);
 
     // used for small adjustments of the arm
-    m_rightStickButton.toggleOnTrue(
+    m_rightStickButton.onTrue(
         new ArmAdjustCommand(m_armSubsystem, m_driverController, m_armPidControllerAdjust));
 
     m_leftTrigger.whileTrue(
