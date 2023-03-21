@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.util.EnumConstants.LEDColor;
@@ -52,19 +53,21 @@ public class ArmToAngleCommand extends CommandBase {
   public void execute() {
     // if button is X or B and the LED indicates a cone, move arm angle higher than preset.
     // Otherwise assume cube and usual angle.
-    if (m_buttoncheck && m_ledSubsystem.getColor() == LEDColor.YELLOW) {
-      voltage =
-          m_pidController.armRun(
-              m_armSubsystem.getAbsoluteArmPosition(),
-              m_targetAngle + 3,
-              m_armSubsystem.getTelescopingExtension());
-      m_armSubsystem.smartArmSet(voltage);
+    if (m_buttoncheck) {
+
+      if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
+        voltage =
+            m_pidController.run(
+                m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle+ArmConstants.CONE_ADDITION);
+        m_armSubsystem.smartArmSet(voltage);
+      } else {
+        voltage =
+            m_pidController.run(
+                m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle);
+        m_armSubsystem.smartArmSet(voltage);
+      }
     } else {
-      voltage =
-          m_pidController.armRun(
-              m_armSubsystem.getAbsoluteArmPosition(),
-              m_targetAngle,
-              m_armSubsystem.getTelescopingExtension());
+      voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle);
       m_armSubsystem.smartArmSet(voltage);
     }
   }

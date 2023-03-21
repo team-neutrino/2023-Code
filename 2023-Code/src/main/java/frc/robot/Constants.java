@@ -42,6 +42,8 @@ public final class Constants {
     public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
 
+    public static final double CONE_ADDITION = 3;
+
     public static final double ARM_BACKMOST = 18;
     public static final double ARM_FRONTMOST = 95;
 

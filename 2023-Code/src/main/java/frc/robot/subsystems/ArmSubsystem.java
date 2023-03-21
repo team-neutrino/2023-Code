@@ -29,7 +29,7 @@ public class ArmSubsystem extends SubsystemBase {
           Constants.DigitalConstants.TELESCOPING_ENCODERA,
           Constants.DigitalConstants.TELESCOPING_ENCODERB);
 
-  private SparkMaxLimitSwitch m_limitSwitch = m_telescopingMotor.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
+  private SparkMaxLimitSwitch m_limitSwitch;
 
   public ArmSubsystem() {
     m_positionMotor.restoreFactoryDefaults();
