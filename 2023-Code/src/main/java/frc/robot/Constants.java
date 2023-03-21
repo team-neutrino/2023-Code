@@ -54,20 +54,22 @@ public final class Constants {
 
     public static final double TELESCOPE_EXTEND_SPEED = 0.5; // note: setInverted is true
     public static final double TELESCOPE_RETRACT_SPEED = -0.5;
-    public static final double TELESCOPE_EXTEND_LIMIT = -6500;
+    public static final double TELESCOPE_EXTEND_LIMIT = -6000;
 
     public static final double FORWARD_ARM_HEIGHT_LIMIT = 73; // actual limit 69
     public static final double BACKWARD_ARM_HEIGHT_LIMIT = 40; // actual limit 44
+    public static final double FORWARD_FLOOR_ARM_ANGLE_LIMIT = 90;
     public static final double TELESCOPE_HEIGHT_LIMIT_RETRACT_SPEED = -0.85;
   }
 
   public static class PIDConstants {
     public static final double dt = 20;
-    public static final double ARM_P = 0.04;
+    public static final double ARM_P = 0.08;
     public static final double ARM_P_ADJUST = 0.02;
-    public static final int ARM_I = 0;
-    public static final int ARM_D = 0;
-    public static final int ARM_FF = 0;
+    public static final double ARM_EXTENSION_P = .02;
+    public static final double ARM_I = 0;
+    public static final double ARM_D = 0;
+    public static final double ARM_FF = .01;
 
     public static final double BALANCE_P = 0.1;
     public static final double BALANCE_I = 0;
@@ -91,17 +93,15 @@ public final class Constants {
 
   public static class DigitalConstants {
     public static final int INTAKE_BEAMBREAK = 0;
-    public static final int GRABBER_BEAMBREAK = 1;
     public static final int INTAKE_DOWN_BEAMBREAK = 2;
-    public static final int TELESCOPING_LIMIT_SWITCHA = 3;
-    public static final int TELESCOPING_LIMIT_SWITCHB = 4;
+    public static final int GRABBER_BEAMBREAK = 4;
     public static final int TELESCOPING_ENCODERA = 7;
     public static final int TELESCOPING_ENCODERB = 8;
     public static final int ARM_ENCODER = 9;
   }
 
   public static class PWMConstants {
-    public static final int LED_PORT = 0;
+    public static final int LED_PORT = 2;
   }
 
   public static class DriverConstants {

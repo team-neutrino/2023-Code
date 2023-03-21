@@ -35,19 +35,14 @@ public class ArmAdjustCommand extends CommandBase {
   public void execute() {
     double voltage = 0;
 
-    if (m_driverController.getRightY() < -Constants.ArmConstants.ARM_INPUT_DEADZONE) {
-      voltage =
-          m_armSubsystem.limitArmAmount(
-              m_driverController.getRightY() / Constants.ArmConstants.SCALE_FACTOR);
-      targetAngle = m_armSubsystem.getAbsoluteArmPosition();
-    } else if (m_driverController.getRightY() > Constants.ArmConstants.ARM_INPUT_DEADZONE) {
+    System.out.println("xbox controller: " + m_driverController.getRightY());
+    if (Math.abs(m_driverController.getRightY()) > Constants.ArmConstants.ARM_INPUT_DEADZONE) {
       voltage =
           m_armSubsystem.limitArmAmount(
               m_driverController.getRightY() / Constants.ArmConstants.SCALE_FACTOR);
       targetAngle = m_armSubsystem.getAbsoluteArmPosition();
     } else {
-      int position = (int) m_armSubsystem.getAbsoluteArmPosition();
-      voltage = m_pidController.run(position, targetAngle);
+      voltage = m_pidController.armRun(m_armSubsystem.getAbsoluteArmPosition(), targetAngle, m_armSubsystem.getDistance());
     }
     m_armSubsystem.smartArmSet(voltage);
   }

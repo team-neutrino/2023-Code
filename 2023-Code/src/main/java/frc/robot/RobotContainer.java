@@ -240,6 +240,11 @@ public class RobotContainer {
 
     // BUTTONS
 
+    //need: scoring from the back mid and high (cube and cone versions)
+
+
+    //want: scoring from the front mid, feeder from the front
+
     // Put the arm to one of three specified target angles
     m_buttonB.toggleOnTrue(m_armToForwardMid);
     m_buttonY.toggleOnTrue(m_armToForwardDown);

@@ -81,17 +81,17 @@ public class ArmToAngleCommand extends CommandBase {
 
       if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
         voltage =
-            m_pidController.run(
-                m_armSubsystem.getAbsoluteArmPosition(), Constants.ArmConstants.BACK_MID);
+            m_pidController.armRun(
+                m_armSubsystem.getAbsoluteArmPosition(), Constants.ArmConstants.BACK_MID, m_armSubsystem.getDistance());
         m_armSubsystem.smartArmSet(voltage);
       } else {
         voltage =
-            m_pidController.run(
-                m_armSubsystem.getAbsoluteArmPosition(), Constants.ArmConstants.QUASI_BACK_MID);
+            m_pidController.armRun(
+                m_armSubsystem.getAbsoluteArmPosition(), Constants.ArmConstants.QUASI_BACK_MID, m_armSubsystem.getDistance());
         m_armSubsystem.smartArmSet(voltage);
       }
     } else {
-      voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle);
+      voltage = m_pidController.armRun(m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle, m_armSubsystem.getDistance());
       m_armSubsystem.smartArmSet(voltage);
     }
 

@@ -1,5 +1,6 @@
 package frc.robot.util;
 
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.PIDConstants;
 
 public class ViennaPIDController {
@@ -103,6 +104,26 @@ public class ViennaPIDController {
 
     double output = m_p * error + m_i * m_iState + m_d * derivative + ff;
 
+    return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
+  }
+
+  public double armRun(double realPos, double desiredPos, double armExtension) {
+    double error = desiredPos - realPos;
+
+    /*Integral calculation */
+    m_iState += error * PIDConstants.dt;
+
+    /*Derivative calculation */
+    double derivative = (error - previousError) / PIDConstants.dt;
+    previousError = error;
+
+    double ff = desiredPos * m_f;
+
+    double pAlteration = PIDConstants.ARM_EXTENSION_P * armExtension / ArmConstants.TELESCOPE_EXTEND_LIMIT;
+
+    double output = (pAlteration  + m_p) * error + m_i * m_iState + m_d * derivative + ff;
+
+    System.out.println("output: " + output);
     return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
   }
 }

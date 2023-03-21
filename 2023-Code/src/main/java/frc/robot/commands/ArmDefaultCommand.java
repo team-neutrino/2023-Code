@@ -26,7 +26,7 @@ public class ArmDefaultCommand extends CommandBase {
   public void execute() {
     m_armSubsystem.limitHeight();
     m_armSubsystem.smartArmSet(
-        m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.FORWARD_MID));
+        m_pidController.armRun(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.FORWARD_MID, m_armSubsystem.getDistance()));
   }
 
   @Override
