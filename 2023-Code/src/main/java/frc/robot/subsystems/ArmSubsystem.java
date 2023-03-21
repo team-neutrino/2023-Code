@@ -29,7 +29,7 @@ public class ArmSubsystem extends SubsystemBase {
           Constants.DigitalConstants.TELESCOPING_ENCODERA,
           Constants.DigitalConstants.TELESCOPING_ENCODERB);
 
-  private SparkMaxLimitSwitch m_limitSwitch;
+  private SparkMaxLimitSwitch m_limitSwitch = m_telescopingMotor.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
 
   public ArmSubsystem() {
     m_positionMotor.restoreFactoryDefaults();
@@ -117,8 +117,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public boolean getSwitch() {
-    return false;
-    // return m_limitSwitch.get();
+    return m_limitSwitch.isPressed();
   }
 
   public void setEncoder() {
@@ -137,6 +136,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    System.out.println("arm voltage: " + getArmVoltage());
     resetEncoder();
   }
 }

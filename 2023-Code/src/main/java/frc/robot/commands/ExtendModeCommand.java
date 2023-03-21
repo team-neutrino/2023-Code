@@ -10,7 +10,7 @@ import frc.robot.subsystems.ArmSubsystem;
 
 public class ExtendModeCommand extends CommandBase {
 
-  private ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  private ArmSubsystem m_armSubsystem;
 
   public ExtendModeCommand(ArmSubsystem p_armSubsystem) {
     m_armSubsystem = p_armSubsystem;
@@ -35,7 +35,8 @@ public class ExtendModeCommand extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   @Override
   public boolean isFinished() {
