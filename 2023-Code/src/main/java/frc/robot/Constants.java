@@ -33,12 +33,12 @@ public final class Constants {
 
   public static class ArmConstants {
     public static final double UP = 56;
-    public static final double FEEDER = 35; // previously 37.5
+    public static final double FEEDER = 37.5;
 
     public static final double FORWARD_DOWN = 92;
-    public static final double FORWARD_MID = 80; // previously 80.5
-    public static final double QUASI_BACK_MID = 34; // previously 32.4
-    public static final double BACK_MID = 40; // previously 35.8
+    public static final double FORWARD_MID = 80.5;
+    public static final double QUASI_BACK_MID = 32.4;
+    public static final double BACK_MID = 35.8;
     public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
 
@@ -49,6 +49,24 @@ public final class Constants {
 
     public static final double GATHER_POSITION = 91;
     public static final double INTAKE_RUNNABLE = 84;
+
+    // public static final double UP = 56;
+    // public static final double FEEDER = 35; // previously 37.5
+
+    // public static final double FORWARD_DOWN = 92;
+    // public static final double FORWARD_MID = 80; // previously 80.5
+    // public static final double QUASI_BACK_MID = 34; // previously 32.4
+    // public static final double BACK_MID = 40; // previously 35.8
+    // public static final double BACK_DOWN = 18;
+    // public static final double ARM_DEADZONE = 1;
+
+    // public static final double CONE_ADDITION = 3;
+
+    // public static final double ARM_BACKMOST = 18;
+    // public static final double ARM_FRONTMOST = 95;
+
+    // public static final double GATHER_POSITION = 91;
+    // public static final double INTAKE_RUNNABLE = 84;
 
     public static final double ARM_OUTPUT_LIMIT = 0.2;
     public static final double SCALE_FACTOR = 5;
