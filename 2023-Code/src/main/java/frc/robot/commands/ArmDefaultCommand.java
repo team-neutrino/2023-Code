@@ -24,7 +24,7 @@ public class ArmDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if(!m_armSubsystem.isPressed()){
+    if (!m_armSubsystem.isPressed()) {
       m_armSubsystem.retractTelescoping();
     }
 

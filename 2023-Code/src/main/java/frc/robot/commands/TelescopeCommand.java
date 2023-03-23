@@ -12,28 +12,10 @@ import frc.robot.subsystems.ArmSubsystem;
 public class TelescopeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private XboxController m_driverController;
-  private boolean m_isExtending;
 
-<<<<<<< HEAD
-  public TelescopeCommand(ArmSubsystem p_armSubsystem, XboxController p_driverController,
-  boolean p_isExtending) {
-=======
-  private double m_endLength = 0;
-
-  public TelescopeCommand(ArmSubsystem p_armSubsystem, boolean p_isExtending) {
->>>>>>> 73506eb9939f254b0e08c094783599b678b282bc
+  public TelescopeCommand(ArmSubsystem p_armSubsystem, XboxController p_driverController) {
     m_armSubsystem = p_armSubsystem;
     m_driverController = p_driverController;
-    m_isExtending = p_isExtending;
-  }
-
-  // arm extends fully if p_endLength is not set
-  public TelescopeCommand(ArmSubsystem p_armSubsystem, boolean p_isExtending, double p_endLength) {
-    m_armSubsystem = p_armSubsystem;
-
-    m_isExtending = p_isExtending;
-
-    m_endLength = p_endLength;
   }
 
   @Override
@@ -55,12 +37,6 @@ public class TelescopeCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if (m_armSubsystem.isPressed() && !m_isExtending) {
-      return true;
-    }
-    if (m_endLength != 0 && m_armSubsystem.getAbsoluteArmPosition() <= m_endLength) {
-      return true;
-    }
     return false;
   }
 }

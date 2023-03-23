@@ -4,6 +4,7 @@
 
 package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
@@ -43,7 +44,8 @@ public class ScoreHighThenMove extends SequentialCommandGroup {
       ViennaPIDController p_pidController,
       LEDSubsystem p_ledSubsystem,
       ScoringSubsystem p_scoringSubsystem,
-      IntakeManager p_intakeManager) {
+      IntakeManager p_intakeManager,
+      XboxController p_driverController) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
@@ -66,7 +68,7 @@ public class ScoreHighThenMove extends SequentialCommandGroup {
     addCommands(
         new ArmToAngleCommand(
             p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new TelescopeCommand(p_armSubsystem, true),
+        new TelescopeCommand(p_armSubsystem, p_driverController),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(2),
         moveForwardCommand);
   }

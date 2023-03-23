@@ -9,6 +9,7 @@ import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.cscore.VideoException;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -51,6 +52,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private IntakeSubsystem m_intake;
   private ViennaPIDController m_pidController;
   private IntakeManager m_intakeManager;
+  private XboxController m_driverController;
 
   public ShuffleboardSubsystem(
       DriverStationInfo p_driverStationInfo,
@@ -61,7 +63,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       IntakeSubsystem p_intake,
       LEDSubsystem p_LED,
       ViennaPIDController p_pidController,
-      IntakeManager p_intakeManager) {
+      IntakeManager p_intakeManager,
+      XboxController p_driverController) {
 
     m_driveTrainSubsystem = p_driveTrainSubsystem;
     // m_limelight = p_limelight;
@@ -72,6 +75,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_pidController = p_pidController;
     m_intakeManager = p_intakeManager;
     m_driverStationInfo = p_driverStationInfo;
+    m_driverController = p_driverController;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
     m_troubleshootingTab = Shuffleboard.getTab("Troubleshooting Tab");
 
@@ -225,7 +229,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_autoChooser.addOption(
         "Score High then Move",
         new ScoreHighThenMove(
-            m_driveTrainSubsystem, m_arm, m_pidController, m_LED, m_scoring, m_intakeManager));
+            m_driveTrainSubsystem, m_arm, m_pidController, m_LED, m_scoring, m_intakeManager, m_driverController));
   }
 
   public Command getAutoSelected() {

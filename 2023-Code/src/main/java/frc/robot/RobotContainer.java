@@ -120,7 +120,7 @@ public class RobotContainer {
           m_intakeSubsystem,
           m_ledSubsystem,
           m_armPidController,
-          m_intakeManager);
+          m_intakeManager, m_driverController);
 
   // DEFAULT COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand =
