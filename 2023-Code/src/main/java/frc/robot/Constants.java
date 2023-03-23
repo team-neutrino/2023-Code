@@ -2,6 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+/*
+ * TO DO:
+ * - driver backward controller to a lower button on the joystick 
+ * - turn telescoping into a diff subsystem
+ * - be able to retract telescoping while using armToAngle and arm adjust
+ * - feeder lower (check all the angles)
+ * - 
+ */
 package frc.robot;
 
 public final class Constants {
