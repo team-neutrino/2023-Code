@@ -26,7 +26,7 @@ public class TelescopeCommand extends CommandBase {
   public void execute() {
     System.out.println("get left: " + m_driverController.getLeftY());
     
-    m_armSubsystem.setTelescope(Limiter.deadzone(m_driverController.getLeftY(),  ArmConstants.ARM_INPUT_DEADZONE));
+    m_armSubsystem.setTelescope(-(Limiter.deadzone(m_driverController.getLeftY(),  ArmConstants.ARM_INPUT_DEADZONE)));
   }
 
   @Override
