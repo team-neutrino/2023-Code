@@ -91,17 +91,15 @@ public final class Constants {
 
   public static class DigitalConstants {
     public static final int INTAKE_BEAMBREAK = 0;
-    public static final int GRABBER_BEAMBREAK = 1;
+    public static final int GRABBER_BEAMBREAK = 4;
     public static final int INTAKE_DOWN_BEAMBREAK = 2;
-    public static final int TELESCOPING_LIMIT_SWITCHA = 3;
-    public static final int TELESCOPING_LIMIT_SWITCHB = 4;
     public static final int TELESCOPING_ENCODERA = 7;
     public static final int TELESCOPING_ENCODERB = 8;
     public static final int ARM_ENCODER = 9;
   }
 
   public static class PWMConstants {
-    public static final int LED_PORT = 0;
+    public static final int LED_PORT = 2;
   }
 
   public static class DriverConstants {
