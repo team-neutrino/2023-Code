@@ -241,6 +241,10 @@ public class RobotContainer {
   private final TelescopeCommand m_telescopeCommand =
       new TelescopeCommand(m_armSubsystem, m_driverController);
   private final ExtendModeCommand m_extendModeCommand = new ExtendModeCommand(m_armSubsystem);
+  private final TelescopeCommand m_telescopeExtendCommand =
+  new TelescopeCommand(m_armSubsystem, true);
+private final TelescopeCommand m_telescopeRetractCommand =
+  new TelescopeCommand(m_armSubsystem, false);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
