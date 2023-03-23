@@ -4,6 +4,7 @@
 
 package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
@@ -38,7 +39,8 @@ public class ScoreThenBalance extends SequentialCommandGroup {
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
-      LEDSubsystem p_ledSubsystem) {
+      LEDSubsystem p_ledSubsystem,
+      XboxController p_driverController) {
 
     moveForwardArray =
         new ArrayList<PoseTriplet>(
@@ -52,7 +54,13 @@ public class ScoreThenBalance extends SequentialCommandGroup {
 
     addCommands(
         new ArmToAngleCommand(
-            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+            p_armSubsystem,
+            p_pidController,
+            p_driverController,
+            ArmConstants.BACK_MID,
+            true,
+            false,
+            p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(2),
         moveForwardCommand,
         new AutoBalanceCommand(p_drivetrainSubsystem));

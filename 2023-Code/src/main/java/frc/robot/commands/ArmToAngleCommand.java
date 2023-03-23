@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
@@ -14,6 +15,7 @@ import frc.robot.util.ViennaPIDController;
 public class ArmToAngleCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ViennaPIDController m_pidController;
+  private XboxController m_driverController;
   private double m_targetAngle;
   private double voltage;
   private LEDSubsystem m_ledSubsystem;
@@ -22,9 +24,13 @@ public class ArmToAngleCommand extends CommandBase {
   private boolean m_buttoncheck = false;
 
   public ArmToAngleCommand(
-      ArmSubsystem p_armSubsystem, ViennaPIDController p_pidController, double p_targetAngle) {
+      ArmSubsystem p_armSubsystem,
+      ViennaPIDController p_pidController,
+      XboxController p_driverController,
+      double p_targetAngle) {
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
+    m_driverController = p_driverController;
     m_targetAngle = p_targetAngle;
 
     addRequirements(m_armSubsystem);
@@ -33,12 +39,14 @@ public class ArmToAngleCommand extends CommandBase {
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem,
       ViennaPIDController p_pidController,
+      XboxController p_drivController,
       double p_targetAngle,
       boolean p_auton,
       boolean p_buttoncheck,
       LEDSubsystem p_ledSubsystem) {
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
+    m_driverController = p_drivController;
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
     m_buttoncheck = p_buttoncheck;
@@ -61,6 +69,11 @@ public class ArmToAngleCommand extends CommandBase {
     } else {
       voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle);
       m_armSubsystem.smartArmSet(voltage);
+    }
+
+    if (m_driverController.getStartButton()
+        && Math.abs(m_targetAngle - m_armSubsystem.getAbsoluteArmPosition()) < 3) {
+      m_armSubsystem.setTelescope(ArmConstants.TELESCOPE_EXTEND_SPEED);
     }
   }
 

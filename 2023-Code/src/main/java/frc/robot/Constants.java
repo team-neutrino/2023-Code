@@ -67,7 +67,7 @@ public final class Constants {
 
   public static class PIDConstants {
     public static final double dt = 20;
-    public static final double ARM_P = 0.08;
+    public static final double ARM_P = 0.06;
     public static final double ARM_P_ADJUST = 0.02;
     public static final double ARM_EXTENSION_P = .02;
     public static final double ARM_I = 0;

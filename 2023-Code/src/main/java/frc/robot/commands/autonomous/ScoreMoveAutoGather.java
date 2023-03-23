@@ -5,6 +5,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -50,7 +51,8 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
-      LEDSubsystem p_ledSubsystem) {
+      LEDSubsystem p_ledSubsystem,
+      XboxController p_driverController) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
     if (DriverStationInfo.getAlliance() == Alliance.Red) {
       inverted = true;
@@ -88,12 +90,19 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmToAngleCommand(
-            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+            p_armSubsystem,
+            p_pidController,
+            p_driverController,
+            ArmConstants.BACK_MID,
+            true,
+            false,
+            p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(.5),
         new ParallelRaceGroup(
             new ArmToAngleCommand(
                 p_armSubsystem,
                 p_pidController,
+                p_driverController,
                 ArmConstants.FORWARD_MID,
                 false,
                 false,
@@ -106,11 +115,18 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
             .withTimeout(2),
         runThatBackCommand,
         new ArmToAngleCommand(
-            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+            p_armSubsystem,
+            p_pidController,
+            p_driverController,
+            ArmConstants.BACK_MID,
+            true,
+            false,
+            p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(1),
         new ArmToAngleCommand(
                 p_armSubsystem,
                 p_pidController,
+                p_driverController,
                 ArmConstants.FORWARD_MID,
                 true,
                 false,

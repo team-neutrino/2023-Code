@@ -88,7 +88,7 @@ public class RobotContainer {
 
   private final JoystickButton m_rightStickButton =
       new JoystickButton(m_driverController, XboxController.Button.kRightStick.value);
-      private final JoystickButton m_leftJoystickButton =
+  private final JoystickButton m_leftJoystickButton =
       new JoystickButton(m_driverController, XboxController.Button.kLeftStick.value);
 
   // SUBSYSTEMS
@@ -120,7 +120,8 @@ public class RobotContainer {
           m_intakeSubsystem,
           m_ledSubsystem,
           m_armPidController,
-          m_intakeManager, m_driverController);
+          m_intakeManager,
+          m_driverController);
 
   // DEFAULT COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand =
@@ -143,7 +144,8 @@ public class RobotContainer {
           m_scoringSubsystem,
           m_intakeSubsystem,
           m_intakeManager,
-          m_ledSubsystem);
+          m_ledSubsystem,
+          m_driverController);
   private final ScoreThenMove m_scoreThenMove =
       new ScoreThenMove(
           m_driveTrainSubsystem,
@@ -152,7 +154,8 @@ public class RobotContainer {
           m_scoringSubsystem,
           m_intakeSubsystem,
           m_intakeManager,
-          m_ledSubsystem);
+          m_ledSubsystem,
+          m_driverController);
   private final ScoreThenBalance m_scoreThenBalanece =
       new ScoreThenBalance(
           m_driveTrainSubsystem,
@@ -161,7 +164,8 @@ public class RobotContainer {
           m_scoringSubsystem,
           m_intakeSubsystem,
           m_intakeManager,
-          m_ledSubsystem);
+          m_ledSubsystem,
+          m_driverController);
   private final ScoreMoveAutoGather m_scoreThenMoveThenAutoGather =
       new ScoreMoveAutoGather(
           m_driveTrainSubsystem,
@@ -170,7 +174,8 @@ public class RobotContainer {
           m_scoringSubsystem,
           m_intakeSubsystem,
           m_intakeManager,
-          m_ledSubsystem);
+          m_ledSubsystem,
+          m_driverController);
 
   // INTAKE COMMANDS
   private final IntakeReverseCommand m_intakeReverseCommand =
@@ -199,6 +204,7 @@ public class RobotContainer {
       new ArmToAngleCommand(
           m_armSubsystem,
           m_armPidController,
+          m_driverController,
           ArmConstants.FORWARD_MID,
           false,
           true,
@@ -207,16 +213,29 @@ public class RobotContainer {
       new ArmToAngleCommand(
           m_armSubsystem,
           m_armPidController,
+          m_driverController,
           ArmConstants.FORWARD_DOWN,
           false,
           false,
           m_ledSubsystem);
   private final ArmToAngleCommand m_armToBackMid =
       new ArmToAngleCommand(
-          m_armSubsystem, m_armPidController, ArmConstants.BACK_MID, false, true, m_ledSubsystem);
+          m_armSubsystem,
+          m_armPidController,
+          m_driverController,
+          ArmConstants.BACK_MID,
+          false,
+          true,
+          m_ledSubsystem);
   private final ArmToAngleCommand m_armToBackDown =
       new ArmToAngleCommand(
-          m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN, false, false, m_ledSubsystem);
+          m_armSubsystem,
+          m_armPidController,
+          m_driverController,
+          ArmConstants.BACK_DOWN,
+          false,
+          false,
+          m_ledSubsystem);
 
   // TELESCOPING ARM COMMANDS
   private final TelescopeCommand m_telescopeCommand =
@@ -270,7 +289,8 @@ public class RobotContainer {
             m_scoringSubsystem,
             m_intakeSubsystem,
             m_intakeManager,
-            m_ledSubsystem)
+            m_ledSubsystem,
+            m_driverController)
         .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
     // return m_shuffleboardSubsystem
     //     .getAutoSelected()
