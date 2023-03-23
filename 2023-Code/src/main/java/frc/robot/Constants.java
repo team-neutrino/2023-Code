@@ -96,8 +96,8 @@ public final class Constants {
 
   public static class DigitalConstants {
     public static final int INTAKE_BEAMBREAK = 0;
-    public static final int INTAKE_DOWN_BEAMBREAK = 2;
     public static final int GRABBER_BEAMBREAK = 4;
+    public static final int INTAKE_DOWN_BEAMBREAK = 2;
     public static final int TELESCOPING_ENCODERA = 7;
     public static final int TELESCOPING_ENCODERB = 8;
     public static final int ARM_ENCODER = 9;
