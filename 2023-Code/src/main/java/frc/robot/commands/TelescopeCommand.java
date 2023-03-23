@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.util.Limiter;
 
 public class TelescopeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
@@ -23,11 +24,9 @@ public class TelescopeCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (Math.abs(m_driverController.getLeftY()) > ArmConstants.ARM_INPUT_DEADZONE) {
-      m_armSubsystem.setTelescope(m_driverController.getRightY());
-    } else {
-      m_armSubsystem.turnTelescopeOff();
-    }
+    System.out.println("get left: " + m_driverController.getLeftY());
+    
+    m_armSubsystem.setTelescope(Limiter.deadzone(m_driverController.getLeftY(),  ArmConstants.ARM_INPUT_DEADZONE));
   }
 
   @Override
