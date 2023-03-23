@@ -140,7 +140,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println("arm voltage: " + getArmVoltage());
+    //System.out.println("arm voltage: " + getArmVoltage());
     resetEncoder();
   }
 }

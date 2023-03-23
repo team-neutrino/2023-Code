@@ -33,12 +33,12 @@ public final class Constants {
 
   public static class ArmConstants {
     public static final double UP = 56;
-    public static final double FEEDER = 37.5;
+    public static final double FEEDER = 35; // previously 37.5
 
     public static final double FORWARD_DOWN = 92;
-    public static final double FORWARD_MID = 80.5;
-    public static final double QUASI_BACK_MID = 32.4;
-    public static final double BACK_MID = 35.8;
+    public static final double FORWARD_MID = 80; // previously 80.5
+    public static final double QUASI_BACK_MID = 34; // previously 32.4
+    public static final double BACK_MID = 40; // previously 35.8
     public static final double BACK_DOWN = 18;
     public static final double ARM_DEADZONE = 1;
 
@@ -96,8 +96,8 @@ public final class Constants {
 
   public static class DigitalConstants {
     public static final int INTAKE_BEAMBREAK = 0;
-    public static final int INTAKE_DOWN_BEAMBREAK = 2;
     public static final int GRABBER_BEAMBREAK = 4;
+    public static final int INTAKE_DOWN_BEAMBREAK = 2;
     public static final int TELESCOPING_ENCODERA = 7;
     public static final int TELESCOPING_ENCODERB = 8;
     public static final int ARM_ENCODER = 9;

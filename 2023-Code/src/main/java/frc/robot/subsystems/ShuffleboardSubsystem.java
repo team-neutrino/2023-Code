@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.autonomous.ScoreHighThenMove;
 import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
 import frc.robot.commands.autonomous.ScoreThenMove;
 import frc.robot.util.DriverStationInfo;
@@ -212,7 +213,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             m_intakeManager,
             m_LED));
     m_autoChooser.addOption(
-        "Score then Move",
+        "Score Mid then Move",
         new ScoreThenMove(
             m_driveTrainSubsystem,
             m_pidController,
@@ -221,6 +222,10 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             m_intake,
             m_intakeManager,
             m_LED));
+    m_autoChooser.addOption(
+        "Score High then Move",
+        new ScoreHighThenMove(
+            m_driveTrainSubsystem, m_arm, m_pidController, m_LED, m_scoring, m_intakeManager));
   }
 
   public Command getAutoSelected() {
