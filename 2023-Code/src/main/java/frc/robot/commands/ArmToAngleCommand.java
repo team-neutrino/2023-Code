@@ -52,24 +52,12 @@ public class ArmToAngleCommand extends CommandBase {
   @Override
   public void execute() {
     // if button is X or B and the LED indicates a cone, move arm angle higher than preset.
-    // Otherwise assume cube and usual angle.
-    if (m_buttoncheck) {
-
-      if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
-        voltage =
-            m_pidController.run(
-                m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle+ArmConstants.CONE_ADDITION);
-        m_armSubsystem.smartArmSet(voltage);
-      } else {
-        voltage =
-            m_pidController.run(
-                m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle);
-        m_armSubsystem.smartArmSet(voltage);
-      }
-    } else {
-      voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle);
+    // Otherwise assume cube is the usual angle
+    if (m_buttoncheck && m_ledSubsystem.getColor() == LEDColor.YELLOW) {
+        m_targetAngle += ArmConstants.CONE_ADDITION;
+    } 
+    voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle);
       m_armSubsystem.smartArmSet(voltage);
-    }
   }
 
   @Override

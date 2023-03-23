@@ -4,17 +4,20 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
 public class TelescopeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
+  private XboxController m_driverController;
   private boolean m_isExtending;
 
-  public TelescopeCommand(ArmSubsystem p_armSubsystem, boolean p_isExtending) {
+  public TelescopeCommand(ArmSubsystem p_armSubsystem, XboxController p_driverController,
+  boolean p_isExtending) {
     m_armSubsystem = p_armSubsystem;
-
+    m_driverController = p_driverController;
     m_isExtending = p_isExtending;
   }
 
@@ -23,10 +26,10 @@ public class TelescopeCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (m_isExtending) {
-      m_armSubsystem.setTelescope(ArmConstants.TELESCOPE_EXTEND_SPEED);
+    if (Math.abs(m_driverController.getLeftY()) > ArmConstants.ARM_INPUT_DEADZONE) {
+      m_armSubsystem.setTelescope(m_driverController.getRightY());
     } else {
-      m_armSubsystem.setTelescope(ArmConstants.TELESCOPE_RETRACT_SPEED);
+      m_armSubsystem.turnTelescopeOff();
     }
   }
 
@@ -37,7 +40,7 @@ public class TelescopeCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if (m_armSubsystem.getSwitch() && !m_isExtending) {
+    if (m_armSubsystem.isPressed() && !m_isExtending) {
       return true;
     }
     return false;

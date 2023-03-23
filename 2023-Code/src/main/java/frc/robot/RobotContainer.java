@@ -88,6 +88,8 @@ public class RobotContainer {
 
   private final JoystickButton m_rightStickButton =
       new JoystickButton(m_driverController, XboxController.Button.kRightStick.value);
+      private final JoystickButton m_leftJoystickButton =
+      new JoystickButton(m_driverController, XboxController.Button.kLeftStick.value);
 
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_driveTrainSubsystem =
@@ -211,16 +213,14 @@ public class RobotContainer {
           m_ledSubsystem);
   private final ArmToAngleCommand m_armToBackMid =
       new ArmToAngleCommand(
-          m_armSubsystem, m_armPidController, ArmConstants.BACK_MID, true, true, m_ledSubsystem);
+          m_armSubsystem, m_armPidController, ArmConstants.BACK_MID, false, true, m_ledSubsystem);
   private final ArmToAngleCommand m_armToBackDown =
       new ArmToAngleCommand(
           m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN, false, false, m_ledSubsystem);
 
   // TELESCOPING ARM COMMANDS
-  private final TelescopeCommand m_telescopeExtendCommand =
-      new TelescopeCommand(m_armSubsystem, true);
-  private final TelescopeCommand m_telescopeRetractCommand =
-      new TelescopeCommand(m_armSubsystem, false);
+  private final TelescopeCommand m_telescopeCommand =
+      new TelescopeCommand(m_armSubsystem, m_driverController);
   private final ExtendModeCommand m_extendModeCommand = new ExtendModeCommand(m_armSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -246,7 +246,7 @@ public class RobotContainer {
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(
         new ArmAdjustCommand(m_armSubsystem, m_driverController, m_armPidControllerAdjust));
-
+    m_leftJoystickButton.toggleOnTrue(m_telescopeCommand);
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
     m_leftBumper.whileTrue(m_armFeederCommand);
@@ -255,8 +255,6 @@ public class RobotContainer {
     m_rightBumper.whileTrue(m_intakeReverseCommand);
 
     // LED Buttons
-    m_upArrow.whileTrue(m_telescopeExtendCommand);
-    m_downArrow.whileTrue(m_telescopeRetractCommand);
     m_rightArrow.onTrue(
         new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
     m_leftArrow.onTrue(

@@ -24,7 +24,10 @@ public class ArmDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_armSubsystem.limitHeight();
+    if(!m_armSubsystem.isPressed()){
+      m_armSubsystem.retractTelescoping();
+    }
+
     m_armSubsystem.smartArmSet(
         m_pidController.armRun(
             m_armSubsystem.getAbsoluteArmPosition(),

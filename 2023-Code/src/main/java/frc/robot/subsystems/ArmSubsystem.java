@@ -111,12 +111,16 @@ public class ArmSubsystem extends SubsystemBase {
     if ((p_output < 0 || getTelescopingExtension() > Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT)
         && getAbsoluteArmPosition() < 90) {
       m_telescopingMotor.set(p_output);
-    } else if (getTelescopingExtension() <= Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT) {
+    } else {
       m_telescopingMotor.set(0);
     }
   }
 
-  public boolean getSwitch() {
+  public void retractTelescoping(){
+    m_telescopingMotor.set(-.3);
+  }
+
+  public boolean isPressed() {
     return m_limitSwitch.isPressed();
   }
 
