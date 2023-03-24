@@ -44,7 +44,7 @@ public class ArmGatherModeCommand extends CommandBase {
         m_pidController.armRun(
             m_armSubsystem.getAbsoluteArmPosition(),
             ArmConstants.ARM_FRONTMOST,
-            m_telescopeSubsystem.getTelescopingExtension()));
+            m_telescopeSubsystem.getTelescopingExtension(), m_armSubsystem.getAbsoluteArmPosition()));
 
     if (m_armSubsystem.getAbsoluteArmPosition() >= ArmConstants.GATHER_POSITION) {
       if (m_intakeSubsystem.isIntakeDown()) {

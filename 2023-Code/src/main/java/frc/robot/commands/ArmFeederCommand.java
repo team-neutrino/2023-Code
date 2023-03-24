@@ -50,7 +50,7 @@ public class ArmFeederCommand extends CommandBase {
         m_pidController.armRun(
             m_armSubsystem.getAbsoluteArmPosition(),
             ArmConstants.FEEDER,
-            m_telescopeSubsystem.getTelescopingExtension());
+            m_telescopeSubsystem.getTelescopingExtension(), m_armSubsystem.getAbsoluteArmPosition());
     m_armSubsystem.smartArmSet(voltage);
 
     if (m_scoringSubsystem.detectedGamePiece()) {

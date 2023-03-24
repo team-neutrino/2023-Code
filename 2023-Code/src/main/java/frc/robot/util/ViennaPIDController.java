@@ -107,25 +107,7 @@ public class ViennaPIDController {
     return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
   }
 
-  public double run(double realPos, double desiredPos, double zone,  double armAngle) {
-    double error = desiredPos - realPos;
-    error = Limiter.deadzone(error, zone);
-
-    /*Integral calculation */
-    m_iState += error * PIDConstants.dt;
-
-    /*Derivative calculation */
-    double derivative = (error - previousError) / PIDConstants.dt;
-    previousError = error;
-
-    double ff = m_f * Math.cos(armAngle * ArmConstants.ARM_ENCODER_TO_ANGLE_CONVERSION);
-
-    double output = m_p * error + m_i * m_iState + m_d * derivative + ff;
-
-    return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
-  }
-
-  public double armRun(double realPos, double desiredPos, double armExtension) {
+  public double armRun(double realPos, double desiredPos, double armExtension, double armAngle) {
     double error = desiredPos - realPos;
 
     /*Integral calculation */
@@ -136,7 +118,7 @@ public class ViennaPIDController {
     previousError = error;
 
     //double ff = m_f * armExtension * Math.cos(armAngle)
-    double ff = desiredPos * m_f;
+    double ff =  m_f * Math.cos(armAngle * ArmConstants.ARM_ENCODER_TO_ANGLE_CONVERSION);
 
     double pAlteration =
         PIDConstants.ARM_EXTENSION_P * armExtension / ArmConstants.TELESCOPE_EXTEND_LIMIT;

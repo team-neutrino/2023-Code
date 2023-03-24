@@ -53,7 +53,7 @@ public class AutonArmGatherCommand extends CommandBase {
           m_pidController.armRun(
               m_armSubsystem.getAbsoluteArmPosition(),
               ArmConstants.ARM_FRONTMOST,
-              m_telescopeSubsystem.getTelescopingExtension()));
+              m_telescopeSubsystem.getTelescopingExtension(), m_armSubsystem.getAbsoluteArmPosition()));
     } else {
       m_intakeSubsystem.stopIntake();
       m_scoringSubsystem.closeScoring();
@@ -61,7 +61,7 @@ public class AutonArmGatherCommand extends CommandBase {
           m_pidController.armRun(
               m_armSubsystem.getAbsoluteArmPosition(),
               ArmConstants.FORWARD_MID,
-              m_telescopeSubsystem.getTelescopingExtension()));
+              m_telescopeSubsystem.getTelescopingExtension(), m_armSubsystem.getAbsoluteArmPosition()));
     }
   }
 

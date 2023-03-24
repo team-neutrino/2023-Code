@@ -34,7 +34,7 @@ public class ArmDefaultCommand extends CommandBase {
         m_pidController.armRun(
             m_armSubsystem.getAbsoluteArmPosition(),
             ArmConstants.FORWARD_MID,
-            m_telescopeSubsystem.getTelescopingExtension()));
+            m_telescopeSubsystem.getTelescopingExtension(), m_armSubsystem.getAbsoluteArmPosition()));
   }
 
   @Override
