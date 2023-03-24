@@ -117,7 +117,7 @@ public class ViennaPIDController {
     double derivative = (error - previousError) / PIDConstants.dt;
     previousError = error;
 
-    //double ff = m_f * armExtension * Math.cos(armAngle)
+    //double ff = m_f * armExtension * Math.cos(armAngle * ArmConstants.ARM_ENCODER_TO_ANGLE_CONVERSION)
     double ff =  m_f * Math.cos(armAngle * ArmConstants.ARM_ENCODER_TO_ANGLE_CONVERSION);
 
     double pAlteration =
