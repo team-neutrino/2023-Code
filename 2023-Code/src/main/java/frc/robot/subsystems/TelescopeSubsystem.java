@@ -92,7 +92,7 @@ public void resetEncoder() {
   @Override
   public void periodic() {
     resetEncoder();
-    System.out.println(getTelescopingExtension());
+    //System.out.println(getTelescopingExtension());
     // This method will be called once per scheduler run
   }
 }

@@ -41,15 +41,21 @@ public final class Constants {
 
   public static class ArmConstants {
     public static final double UP = 56;
-    public static final double FEEDER = 37.5;
+    public static final double FEEDER = 34.5;
 
     public static final double FORWARD_DOWN = 92;
-    public static final double FORWARD_MID = 80.5;
-    public static final double QUASI_BACK_MID = 32.4;
-    public static final double BACK_MID = 35.8;
     public static final double BACK_DOWN = 18;
-    public static final double ARM_DEADZONE = 1;
 
+    public static final double FORWARD_MID = 80.5;
+
+    public static final double BACK_MID = 36.7; 
+    //public static final double BACK_MID_CONE = 36.7;
+    public static final double BACK_HIGH_CONE = 37.5;
+
+    public static final double BACK_MID_CUBE = 30;
+    public static final double BACK_HIGH_CUBE = 34;
+
+    public static final double ARM_DEADZONE = 1;
     public static final double CONE_ADDITION = 3;
 
     public static final double ARM_BACKMOST = 18;

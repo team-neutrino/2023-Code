@@ -34,6 +34,8 @@ public class ExtendModeCommand extends CommandBase {
     //         && m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)) {
     //   m_telescopeSubsystem.setTelescope(.3);
     // }
+    // if (m_armSubsystem.getAbsoluteArmPosition() > ArmConstants.FORWARD_ARM_HEIGHT_LIMIT ||
+    //     m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT) 
     m_telescopeSubsystem.extendTelescoping();
   }
 

@@ -34,6 +34,7 @@ public class ArmFeederCommand extends CommandBase {
     m_scoringSubsystem = p_scoringSubsystem;
     m_pidController = p_pidController;
     m_ledSubsystem = p_ledSubsystem;
+    m_telescopeSubsystem = p_telescopeSubsystem;
     m_timer = new Timer();
   }
 
@@ -45,22 +46,12 @@ public class ArmFeederCommand extends CommandBase {
 
   @Override
   public void execute() {
-
-    if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
-      voltage =
-          m_pidController.armRun(
-              m_armSubsystem.getAbsoluteArmPosition(),
-              ArmConstants.FEEDER + 3,
-              m_telescopeSubsystem.getTelescopingExtension());
-      m_armSubsystem.smartArmSet(voltage);
-    } else {
       voltage =
           m_pidController.armRun(
               m_armSubsystem.getAbsoluteArmPosition(),
               ArmConstants.FEEDER,
               m_telescopeSubsystem.getTelescopingExtension());
       m_armSubsystem.smartArmSet(voltage);
-    }
 
     if (m_scoringSubsystem.detectedGamePiece()) {
       hasGamePiece++;
@@ -68,7 +59,7 @@ public class ArmFeederCommand extends CommandBase {
       hasGamePiece = 0;
     }
 
-    if (m_scoringSubsystem.detectedGamePiece() && m_timer.get() > time && hasGamePiece > 18) {
+    if (m_scoringSubsystem.detectedGamePiece() && m_timer.get() > time && hasGamePiece > 6) {
       m_scoringSubsystem.closeScoring();
     } else {
       m_scoringSubsystem.openScoring();

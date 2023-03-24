@@ -23,7 +23,9 @@ public class ArmToAngleCommand extends CommandBase {
   private LEDSubsystem m_ledSubsystem;
   private boolean m_auton = false;
 
-  private boolean m_buttoncheck = false;
+  private boolean m_backCheck = false;
+  private boolean started;
+  private double armAngle;
 
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem,
@@ -45,7 +47,7 @@ public class ArmToAngleCommand extends CommandBase {
       XboxController p_drivController, TelescopeSubsystem p_telescopeSubsystem,
       double p_targetAngle,
       boolean p_auton,
-      boolean p_buttoncheck,
+      boolean p_backCheck,
       LEDSubsystem p_ledSubsystem) {
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
@@ -53,7 +55,7 @@ public class ArmToAngleCommand extends CommandBase {
     m_telescopeSubsystem = p_telescopeSubsystem;
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
-    m_buttoncheck = p_buttoncheck;
+    m_backCheck = p_backCheck;
     m_ledSubsystem = p_ledSubsystem;
     addRequirements(m_armSubsystem);
   }
@@ -63,17 +65,24 @@ public class ArmToAngleCommand extends CommandBase {
 
   @Override
   public void execute() {
-    // if button is X or B and the LED indicates a cone, move arm angle higher than preset.
-    // Otherwise assume cube and usual angle.
-    if (m_buttoncheck && m_ledSubsystem.getColor() == LEDColor.YELLOW) {
-      voltage =
-          m_pidController.run(
-              m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle + ArmConstants.CONE_ADDITION);
-      m_armSubsystem.smartArmSet(voltage);
-    } else {
-      voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle);
-      m_armSubsystem.smartArmSet(voltage);
+    if(m_driverController.getStartButton()){
+      started = !started;
     }
+
+    if( m_backCheck && started && m_ledSubsystem.getColor() == LEDColor.PURPLE){
+      armAngle = ArmConstants.BACK_HIGH_CUBE;
+    }
+    else if(m_backCheck &&  !started && m_ledSubsystem.getColor() == LEDColor.PURPLE) {
+      armAngle = ArmConstants.BACK_MID_CUBE;
+    }
+    else{
+      armAngle = m_targetAngle;
+    }
+
+    voltage =
+        m_pidController.run(
+            m_armSubsystem.getAbsoluteArmPosition(), armAngle);
+    m_armSubsystem.smartArmSet(voltage);
   }
 
   @Override
