@@ -7,15 +7,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 
 public class ExtendModeCommand extends CommandBase {
 
   private ArmSubsystem m_armSubsystem;
+  private TelescopeSubsystem m_telescopeSubsystem;
 
-  public ExtendModeCommand(ArmSubsystem p_armSubsystem) {
-    m_armSubsystem = p_armSubsystem;
+  public ExtendModeCommand(TelescopeSubsystem p_telescopeSubsystem) {
+    m_telescopeSubsystem = p_telescopeSubsystem;
 
-    addRequirements();
+    addRequirements(m_telescopeSubsystem);
   }
 
   @Override
@@ -26,12 +28,13 @@ public class ExtendModeCommand extends CommandBase {
     /* if arm is front and past the forward great divide OR if arm is back and is past the back great divide
      * set telescoping out to the max (restricted inside the setTelescope) */
 
-    if ((m_armSubsystem.getArmVoltage() > 0
-            && m_armSubsystem.getAbsoluteArmPosition() > ArmConstants.FORWARD_ARM_HEIGHT_LIMIT)
-        || (m_armSubsystem.getArmVoltage() < 0
-            && m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)) {
-      m_armSubsystem.setTelescope(.3);
-    }
+    // if ((m_armSubsystem.getArmVoltage() > 0
+    //         && m_armSubsystem.getAbsoluteArmPosition() > ArmConstants.FORWARD_ARM_HEIGHT_LIMIT)
+    //     || (m_armSubsystem.getArmVoltage() < 0
+    //         && m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)) {
+    //   m_telescopeSubsystem.setTelescope(.3);
+    // }
+    m_telescopeSubsystem.extendTelescoping();
   }
 
   @Override

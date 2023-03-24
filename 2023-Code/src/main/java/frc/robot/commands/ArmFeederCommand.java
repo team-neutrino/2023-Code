@@ -10,6 +10,7 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.EnumConstants.LEDColor;
 import frc.robot.util.ViennaPIDController;
 
@@ -18,6 +19,7 @@ public class ArmFeederCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
   private ViennaPIDController m_pidController;
   private LEDSubsystem m_ledSubsystem;
+  private TelescopeSubsystem m_telescopeSubsystem;
   private double voltage;
   private double hasGamePiece;
   private Timer m_timer;
@@ -26,7 +28,7 @@ public class ArmFeederCommand extends CommandBase {
   public ArmFeederCommand(
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
-      ViennaPIDController p_pidController,
+      ViennaPIDController p_pidController, TelescopeSubsystem p_telescopeSubsystem,
       LEDSubsystem p_ledSubsystem) {
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
@@ -49,14 +51,14 @@ public class ArmFeederCommand extends CommandBase {
           m_pidController.armRun(
               m_armSubsystem.getAbsoluteArmPosition(),
               ArmConstants.FEEDER + 3,
-              m_armSubsystem.getTelescopingExtension());
+              m_telescopeSubsystem.getTelescopingExtension());
       m_armSubsystem.smartArmSet(voltage);
     } else {
       voltage =
           m_pidController.armRun(
               m_armSubsystem.getAbsoluteArmPosition(),
               ArmConstants.FEEDER,
-              m_armSubsystem.getTelescopingExtension());
+              m_telescopeSubsystem.getTelescopingExtension());
       m_armSubsystem.smartArmSet(voltage);
     }
 

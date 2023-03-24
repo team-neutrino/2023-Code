@@ -9,23 +9,26 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.ViennaPIDController;
 
 public class AutonArmGatherCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
   private IntakeSubsystem m_intakeSubsystem;
+  private TelescopeSubsystem m_telescopeSubsystem;
   private ViennaPIDController m_pidController;
   private boolean detective;
 
   public AutonArmGatherCommand(
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem,
+      IntakeSubsystem p_intakeSubsystem, TelescopeSubsystem p_telescopeSubsystem,
       ViennaPIDController p_pidController) {
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
     m_intakeSubsystem = p_intakeSubsystem;
+    m_telescopeSubsystem = p_telescopeSubsystem;
     m_pidController = p_pidController;
     detective = false;
 
@@ -49,7 +52,7 @@ public class AutonArmGatherCommand extends CommandBase {
           m_pidController.armRun(
               m_armSubsystem.getAbsoluteArmPosition(),
               ArmConstants.ARM_FRONTMOST,
-              m_armSubsystem.getTelescopingExtension()));
+              m_telescopeSubsystem.getTelescopingExtension()));
     } else {
       m_intakeSubsystem.stopIntake();
       m_scoringSubsystem.closeScoring();
@@ -57,7 +60,7 @@ public class AutonArmGatherCommand extends CommandBase {
           m_pidController.armRun(
               m_armSubsystem.getAbsoluteArmPosition(),
               ArmConstants.FORWARD_MID,
-              m_armSubsystem.getTelescopingExtension()));
+              m_telescopeSubsystem.getTelescopingExtension()));
     }
   }
 

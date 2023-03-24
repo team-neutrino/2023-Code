@@ -8,21 +8,24 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmAdjustCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private XboxController m_driverController;
   private ViennaPIDController m_pidController;
+  private TelescopeSubsystem m_telescopeSubsystem;
   private double targetAngle;
 
   public ArmAdjustCommand(
-      ArmSubsystem p_armSubsystem,
+      ArmSubsystem p_armSubsystem, TelescopeSubsystem p_telescopeSubsystem,
       XboxController p_driverController,
       ViennaPIDController p_pidController) {
     m_pidController = p_pidController;
     m_armSubsystem = p_armSubsystem;
     m_driverController = p_driverController;
+    m_telescopeSubsystem = p_telescopeSubsystem;
     targetAngle = m_armSubsystem.getAbsoluteArmPosition();
 
     addRequirements(m_armSubsystem);
@@ -45,7 +48,7 @@ public class ArmAdjustCommand extends CommandBase {
           m_pidController.armRun(
               m_armSubsystem.getAbsoluteArmPosition(),
               targetAngle,
-              m_armSubsystem.getTelescopingExtension());
+              m_telescopeSubsystem.getTelescopingExtension());
     }
     m_armSubsystem.smartArmSet(voltage);
   }

@@ -17,6 +17,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
@@ -40,7 +41,7 @@ public class ScoreThenBalance extends SequentialCommandGroup {
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem,
-      XboxController p_driverController) {
+      XboxController p_driverController, TelescopeSubsystem p_telescopeSubsystem) {
 
     moveForwardArray =
         new ArrayList<PoseTriplet>(
@@ -56,7 +57,7 @@ public class ScoreThenBalance extends SequentialCommandGroup {
         new ArmToAngleCommand(
             p_armSubsystem,
             p_pidController,
-            p_driverController,
+            p_driverController, p_telescopeSubsystem,
             ArmConstants.BACK_MID,
             true,
             false,

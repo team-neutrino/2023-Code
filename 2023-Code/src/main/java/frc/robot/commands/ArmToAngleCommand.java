@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.EnumConstants.LEDColor;
 import frc.robot.util.ViennaPIDController;
 
@@ -16,6 +17,7 @@ public class ArmToAngleCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ViennaPIDController m_pidController;
   private XboxController m_driverController;
+  private TelescopeSubsystem m_telescopeSubsystem;
   private double m_targetAngle;
   private double voltage;
   private LEDSubsystem m_ledSubsystem;
@@ -26,11 +28,12 @@ public class ArmToAngleCommand extends CommandBase {
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem,
       ViennaPIDController p_pidController,
-      XboxController p_driverController,
+      XboxController p_driverController, TelescopeSubsystem p_telescopeSubsystem,
       double p_targetAngle) {
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
     m_driverController = p_driverController;
+    m_telescopeSubsystem = p_telescopeSubsystem;
     m_targetAngle = p_targetAngle;
 
     addRequirements(m_armSubsystem);
@@ -39,7 +42,7 @@ public class ArmToAngleCommand extends CommandBase {
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem,
       ViennaPIDController p_pidController,
-      XboxController p_drivController,
+      XboxController p_drivController, TelescopeSubsystem p_telescopeSubsystem,
       double p_targetAngle,
       boolean p_auton,
       boolean p_buttoncheck,
@@ -47,6 +50,7 @@ public class ArmToAngleCommand extends CommandBase {
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
     m_driverController = p_drivController;
+    m_telescopeSubsystem = p_telescopeSubsystem;
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
     m_buttoncheck = p_buttoncheck;
@@ -69,11 +73,6 @@ public class ArmToAngleCommand extends CommandBase {
     } else {
       voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), m_targetAngle);
       m_armSubsystem.smartArmSet(voltage);
-    }
-
-    if (m_driverController.getStartButton()
-        && Math.abs(m_targetAngle - m_armSubsystem.getAbsoluteArmPosition()) < 3) {
-      m_armSubsystem.setTelescope(ArmConstants.TELESCOPE_EXTEND_SPEED);
     }
   }
 

@@ -19,6 +19,7 @@ import frc.robot.subsystems.LEDSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
@@ -41,7 +42,7 @@ public class ScoreThenMove extends SequentialCommandGroup {
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem,
-      XboxController p_driverController) {
+      XboxController p_driverController, TelescopeSubsystem p_telescopeSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
 
     forwardBackArray =
@@ -60,7 +61,7 @@ public class ScoreThenMove extends SequentialCommandGroup {
         new ArmToAngleCommand(
             p_armSubsystem,
             p_pidController,
-            p_driverController,
+            p_driverController, p_telescopeSubsystem,
             ArmConstants.BACK_MID,
             true,
             false,

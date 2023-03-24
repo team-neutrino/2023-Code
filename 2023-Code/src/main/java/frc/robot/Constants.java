@@ -4,11 +4,11 @@
 
 /*
  * TO DO:
- * - driver backward controller to a lower button on the joystick 
+ * - driver backward controller to a lower button on the joystick
  * - turn telescoping into a diff subsystem
  * - be able to retract telescoping while using armToAngle and arm adjust
  * - feeder lower (check all the angles)
- * - 
+ * -
  */
 package frc.robot;
 
@@ -78,11 +78,11 @@ public final class Constants {
 
     public static final double ARM_OUTPUT_LIMIT = 0.2;
     public static final double SCALE_FACTOR = 5;
-    public static final double ARM_INPUT_DEADZONE = 0.2;
+    public static final double ARM_INPUT_DEADZONE = 0.5;
 
     public static final double TELESCOPE_EXTEND_SPEED = 0.5; // note: setInverted is true
     public static final double TELESCOPE_RETRACT_SPEED = -0.5;
-    public static final double TELESCOPE_EXTEND_LIMIT = -6000;
+    public static final double TELESCOPE_EXTEND_LIMIT = -5500;
     public static final double TELESCOPING_DEADZONE = 250;
 
     public static final double FORWARD_ARM_HEIGHT_LIMIT = 73; // actual limit 69
