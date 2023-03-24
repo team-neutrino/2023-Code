@@ -14,8 +14,9 @@ public class ExtendModeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private TelescopeSubsystem m_telescopeSubsystem;
 
-  public ExtendModeCommand(TelescopeSubsystem p_telescopeSubsystem) {
+  public ExtendModeCommand(TelescopeSubsystem p_telescopeSubsystem, ArmSubsystem p_armSubsystem) {
     m_telescopeSubsystem = p_telescopeSubsystem;
+    m_armSubsystem = p_armSubsystem;
 
     addRequirements(m_telescopeSubsystem);
   }
@@ -34,8 +35,6 @@ public class ExtendModeCommand extends CommandBase {
     //         && m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)) {
     //   m_telescopeSubsystem.setTelescope(.3);
     // }
-    // if (m_armSubsystem.getAbsoluteArmPosition() > ArmConstants.FORWARD_ARM_HEIGHT_LIMIT ||
-    //     m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT) 
     m_telescopeSubsystem.extendTelescoping();
   }
 
@@ -44,6 +43,12 @@ public class ExtendModeCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    if ((m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.FORWARD_ARM_HEIGHT_LIMIT &&
+        m_armSubsystem.getAbsoluteArmPosition() > ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT) ||
+        m_armSubsystem.getAbsoluteArmPosition() > 84) {
+      System.out.println("end!");
+      return true;
+    }
     return false;
   }
 }
