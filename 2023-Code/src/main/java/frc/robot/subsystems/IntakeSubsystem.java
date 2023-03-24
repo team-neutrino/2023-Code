@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import javax.lang.model.util.ElementScanner14;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
@@ -21,6 +23,8 @@ public class IntakeSubsystem extends SubsystemBase {
   private CANSparkMax m_wheelsMotor =
       new CANSparkMax(
           MotorConstants.INTAKEMOTOR, MotorType.kBrushless); // motor type subject to change;
+
+  private int hasGamePiece = 0;
 
   /** Encoder for the wheels on the intake */
   private RelativeEncoder m_wheelsEncoder;
@@ -83,6 +87,10 @@ public class IntakeSubsystem extends SubsystemBase {
     return m_beamBreak.get();
   }
 
+  public boolean unDebouncedDetectedGamePiece() {
+    return !m_beamBreak.get();
+  }
+
   public boolean isIntakeDown() {
     return m_intakeDownSensor.get();
   }
@@ -93,7 +101,20 @@ public class IntakeSubsystem extends SubsystemBase {
    * @return True if a game piece is present.
    */
   public boolean detectedGamePiece() {
-    return !getBeamBreak();
+    return hasGamePiece > 10;
+  }
+
+
+  public void gamePieceBeamBroken(){
+    if(!getBeamBreak() && isIntakeDown()){
+      hasGamePiece++;
+    } else{
+      hasGamePiece = 0;
+    }
+  }
+
+  public void resetDebouncer(){
+    hasGamePiece = 0;
   }
 
   /** Pushes the intake out a little */
@@ -139,5 +160,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    gamePieceBeamBroken();
+  }
 }

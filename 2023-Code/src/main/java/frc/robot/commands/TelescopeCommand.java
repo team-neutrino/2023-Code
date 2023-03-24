@@ -23,6 +23,7 @@ public class TelescopeCommand extends CommandBase {
       XboxController p_driverController) {
     m_driverController = p_driverController;
     m_telescopeSubsystem = p_telescopeSubsystem;
+    m_armSubsystem = p_armSubsystem;
     addRequirements(m_telescopeSubsystem);
   }
 

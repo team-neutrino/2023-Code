@@ -38,7 +38,9 @@ public class IntakeHybridModeCommand extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_intakeSubsystem.resetDebouncer();
+  }
 
   @Override
   public boolean isFinished() {

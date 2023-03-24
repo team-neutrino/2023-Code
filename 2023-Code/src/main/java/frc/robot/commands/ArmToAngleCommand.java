@@ -24,7 +24,7 @@ public class ArmToAngleCommand extends CommandBase {
   private boolean m_auton = false;
 
   private boolean m_backCheck = false;
-  private boolean started;
+  private boolean started = false;
   private double armAngle;
 
   public ArmToAngleCommand(
@@ -68,14 +68,18 @@ public class ArmToAngleCommand extends CommandBase {
   @Override
   public void execute() {
     if (m_driverController.getStartButton()) {
-      started = !started;
+      started = true;
     }
 
     if (m_backCheck && started && m_ledSubsystem.getColor() == LEDColor.PURPLE) {
       armAngle = ArmConstants.BACK_HIGH_CUBE;
-    } else if (m_backCheck && !started && m_ledSubsystem.getColor() == LEDColor.PURPLE) {
+    } else if (m_backCheck && started && m_ledSubsystem.getColor() == LEDColor.YELLOW) {
+      armAngle = ArmConstants.BACK_HIGH_CONE;
+    }
+     else if (m_backCheck && started == false && m_ledSubsystem.getColor() == LEDColor.PURPLE) {
       armAngle = ArmConstants.BACK_MID_CUBE;
-    } else {
+    } 
+    else {
       armAngle = m_targetAngle;
     }
 
@@ -84,7 +88,9 @@ public class ArmToAngleCommand extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    started = false;
+  }
 
   @Override
   public boolean isFinished() {

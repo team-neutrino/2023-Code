@@ -47,7 +47,6 @@ public class ExtendModeCommand extends CommandBase {
     if ((m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
             && m_armSubsystem.getAbsoluteArmPosition() > ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)
         || m_armSubsystem.getAbsoluteArmPosition() > 84) {
-      System.out.println("end!");
       return true;
     }
     return false;
