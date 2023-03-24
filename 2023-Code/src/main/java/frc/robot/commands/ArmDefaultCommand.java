@@ -15,7 +15,10 @@ public class ArmDefaultCommand extends CommandBase {
   private ViennaPIDController m_pidController;
   private TelescopeSubsystem m_telescopeSubsystem;
 
-  public ArmDefaultCommand(ArmSubsystem p_armSubsystem, TelescopeSubsystem p_telescopeSubsystem, ViennaPIDController p_pidController) {
+  public ArmDefaultCommand(
+      ArmSubsystem p_armSubsystem,
+      TelescopeSubsystem p_telescopeSubsystem,
+      ViennaPIDController p_pidController) {
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
     m_telescopeSubsystem = p_telescopeSubsystem;
@@ -35,8 +38,7 @@ public class ArmDefaultCommand extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {

@@ -65,7 +65,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       LEDSubsystem p_LED,
       ViennaPIDController p_pidController,
       IntakeManager p_intakeManager,
-      XboxController p_driverController, TelescopeSubsystem p_telescopeSubsystem) {
+      XboxController p_driverController,
+      TelescopeSubsystem p_telescopeSubsystem) {
 
     m_driveTrainSubsystem = p_driveTrainSubsystem;
     // m_limelight = p_limelight;
@@ -214,7 +215,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             m_intake,
             null,
             m_LED,
-            m_driverController, m_telescopeSubsystem));
+            m_driverController,
+            m_telescopeSubsystem));
     m_autoChooser.addOption(
         "Balance Mobility",
         new ScoreMobilityThenBalance(
@@ -225,7 +227,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             m_intake,
             m_intakeManager,
             m_LED,
-            m_driverController, m_telescopeSubsystem));
+            m_driverController,
+            m_telescopeSubsystem));
     m_autoChooser.addOption(
         "Score Mid then Move",
         new ScoreThenMove(
@@ -236,7 +239,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             m_intake,
             m_intakeManager,
             m_LED,
-            m_driverController, m_telescopeSubsystem));
+            m_driverController,
+            m_telescopeSubsystem));
     m_autoChooser.addOption(
         "Score High then Move",
         new ScoreHighThenMove(
@@ -246,7 +250,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             m_LED,
             m_scoring,
             m_intakeManager,
-            m_driverController, m_telescopeSubsystem));
+            m_driverController,
+            m_telescopeSubsystem));
   }
 
   public Command getAutoSelected() {

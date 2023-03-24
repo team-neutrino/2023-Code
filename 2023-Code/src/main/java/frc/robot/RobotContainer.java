@@ -124,7 +124,8 @@ public class RobotContainer {
           m_ledSubsystem,
           m_armPidController,
           m_intakeManager,
-          m_driverController, m_telescopeSubsystem);
+          m_driverController,
+          m_telescopeSubsystem);
 
   // DEFAULT COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand =
@@ -148,7 +149,8 @@ public class RobotContainer {
           m_intakeSubsystem,
           m_intakeManager,
           m_ledSubsystem,
-          m_driverController, m_telescopeSubsystem);
+          m_driverController,
+          m_telescopeSubsystem);
   private final ScoreThenMove m_scoreThenMove =
       new ScoreThenMove(
           m_driveTrainSubsystem,
@@ -158,7 +160,8 @@ public class RobotContainer {
           m_intakeSubsystem,
           m_intakeManager,
           m_ledSubsystem,
-          m_driverController, m_telescopeSubsystem);
+          m_driverController,
+          m_telescopeSubsystem);
   private final ScoreThenBalance m_scoreThenBalanece =
       new ScoreThenBalance(
           m_driveTrainSubsystem,
@@ -168,7 +171,8 @@ public class RobotContainer {
           m_intakeSubsystem,
           m_intakeManager,
           m_ledSubsystem,
-          m_driverController, m_telescopeSubsystem);
+          m_driverController,
+          m_telescopeSubsystem);
   private final ScoreMoveAutoGather m_scoreThenMoveThenAutoGather =
       new ScoreMoveAutoGather(
           m_driveTrainSubsystem,
@@ -178,7 +182,8 @@ public class RobotContainer {
           m_intakeSubsystem,
           m_intakeManager,
           m_ledSubsystem,
-          m_driverController, m_telescopeSubsystem);
+          m_driverController,
+          m_telescopeSubsystem);
 
   // INTAKE COMMANDS
   private final IntakeReverseCommand m_intakeReverseCommand =
@@ -199,15 +204,25 @@ public class RobotContainer {
   // ARM COMMANDS
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(
-          m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem, m_telescopeSubsystem, m_armPidController);
+          m_armSubsystem,
+          m_scoringSubsystem,
+          m_intakeSubsystem,
+          m_telescopeSubsystem,
+          m_armPidController);
   private final ArmFeederCommand m_armFeederCommand =
-      new ArmFeederCommand(m_armSubsystem, m_scoringSubsystem, m_armPidController, m_telescopeSubsystem, m_ledSubsystem);
+      new ArmFeederCommand(
+          m_armSubsystem,
+          m_scoringSubsystem,
+          m_armPidController,
+          m_telescopeSubsystem,
+          m_ledSubsystem);
 
   private final ArmToAngleCommand m_armToForwardMid =
       new ArmToAngleCommand(
           m_armSubsystem,
           m_armPidController,
-          m_driverController, m_telescopeSubsystem,
+          m_driverController,
+          m_telescopeSubsystem,
           ArmConstants.FORWARD_MID,
           false,
           true,
@@ -216,7 +231,8 @@ public class RobotContainer {
       new ArmToAngleCommand(
           m_armSubsystem,
           m_armPidController,
-          m_driverController, m_telescopeSubsystem,
+          m_driverController,
+          m_telescopeSubsystem,
           ArmConstants.FORWARD_DOWN,
           false,
           false,
@@ -225,7 +241,8 @@ public class RobotContainer {
       new ArmToAngleCommand(
           m_armSubsystem,
           m_armPidController,
-          m_driverController, m_telescopeSubsystem, 
+          m_driverController,
+          m_telescopeSubsystem,
           ArmConstants.BACK_HIGH_CONE,
           false,
           true,
@@ -234,19 +251,21 @@ public class RobotContainer {
       new ArmToAngleCommand(
           m_armSubsystem,
           m_armPidController,
-          m_driverController, m_telescopeSubsystem,
+          m_driverController,
+          m_telescopeSubsystem,
           ArmConstants.BACK_DOWN,
           false,
           false,
           m_ledSubsystem);
 
-  private final TelescopeDefaultCommand m_TelescopeDefaultCommand = new TelescopeDefaultCommand(m_telescopeSubsystem, m_armSubsystem);
+  private final TelescopeDefaultCommand m_TelescopeDefaultCommand =
+      new TelescopeDefaultCommand(m_telescopeSubsystem, m_armSubsystem);
 
   // TELESCOPING ARM COMMANDS
   private final TelescopeCommand m_telescopeCommand =
       new TelescopeCommand(m_armSubsystem, m_telescopeSubsystem, m_driverController);
-  private final ExtendModeCommand m_extendModeCommand = new ExtendModeCommand(m_telescopeSubsystem, m_armSubsystem);
-
+  private final ExtendModeCommand m_extendModeCommand =
+      new ExtendModeCommand(m_telescopeSubsystem, m_armSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -271,7 +290,8 @@ public class RobotContainer {
 
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(
-        new ArmAdjustCommand(m_armSubsystem, m_telescopeSubsystem, m_driverController, m_armPidControllerAdjust));
+        new ArmAdjustCommand(
+            m_armSubsystem, m_telescopeSubsystem, m_driverController, m_armPidControllerAdjust));
     m_leftJoystickButton.toggleOnTrue(m_telescopeCommand);
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
@@ -297,7 +317,8 @@ public class RobotContainer {
             m_intakeSubsystem,
             m_intakeManager,
             m_ledSubsystem,
-            m_driverController, m_telescopeSubsystem)
+            m_driverController,
+            m_telescopeSubsystem)
         .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
     // return m_shuffleboardSubsystem
     //     .getAutoSelected()

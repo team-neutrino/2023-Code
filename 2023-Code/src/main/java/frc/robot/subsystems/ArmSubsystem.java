@@ -19,9 +19,7 @@ public class ArmSubsystem extends SubsystemBase {
   private CANSparkMax m_positionMotor =
       new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
 
-
   private DutyCycleEncoder m_positionEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
-
 
   public ArmSubsystem() {
     m_positionMotor.restoreFactoryDefaults();
@@ -55,7 +53,6 @@ public class ArmSubsystem extends SubsystemBase {
     return voltage;
   }
 
-
   public void smartArmSet(double desiredVoltage) {
     if ((getAbsoluteArmPosition() >= ArmConstants.ARM_FRONTMOST && desiredVoltage > 0)
         || (getAbsoluteArmPosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
@@ -82,8 +79,6 @@ public class ArmSubsystem extends SubsystemBase {
     return false;
   }
 
-  
   @Override
-  public void periodic() {
-      }
+  public void periodic() {}
 }

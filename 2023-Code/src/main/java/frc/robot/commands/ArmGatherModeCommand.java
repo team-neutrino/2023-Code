@@ -22,7 +22,8 @@ public class ArmGatherModeCommand extends CommandBase {
   public ArmGatherModeCommand(
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem, TelescopeSubsystem p_telescopeSubsystem,
+      IntakeSubsystem p_intakeSubsystem,
+      TelescopeSubsystem p_telescopeSubsystem,
       ViennaPIDController p_pidController) {
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;

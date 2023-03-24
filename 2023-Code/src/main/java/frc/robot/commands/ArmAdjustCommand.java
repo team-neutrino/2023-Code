@@ -19,7 +19,8 @@ public class ArmAdjustCommand extends CommandBase {
   private double targetAngle;
 
   public ArmAdjustCommand(
-      ArmSubsystem p_armSubsystem, TelescopeSubsystem p_telescopeSubsystem,
+      ArmSubsystem p_armSubsystem,
+      TelescopeSubsystem p_telescopeSubsystem,
       XboxController p_driverController,
       ViennaPIDController p_pidController) {
     m_pidController = p_pidController;

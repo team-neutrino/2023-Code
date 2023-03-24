@@ -31,7 +31,7 @@ public class PoseProcessor {
       }
       scanner.close();
     } catch (FileNotFoundException e) {
-      //System.out.println("Scanner reading error");
+      // System.out.println("Scanner reading error");
       e.printStackTrace();
     }
     return poseArray;

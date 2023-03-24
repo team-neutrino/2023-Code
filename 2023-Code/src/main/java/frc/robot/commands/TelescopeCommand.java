@@ -17,7 +17,10 @@ public class TelescopeCommand extends CommandBase {
   private XboxController m_driverController;
   private boolean m_isExtending;
 
-  public TelescopeCommand(ArmSubsystem p_armSubsystem, TelescopeSubsystem p_telescopeSubsystem, XboxController p_driverController) {
+  public TelescopeCommand(
+      ArmSubsystem p_armSubsystem,
+      TelescopeSubsystem p_telescopeSubsystem,
+      XboxController p_driverController) {
     m_driverController = p_driverController;
     m_telescopeSubsystem = p_telescopeSubsystem;
     addRequirements(m_telescopeSubsystem);
@@ -29,11 +32,14 @@ public class TelescopeCommand extends CommandBase {
   @Override
   public void execute() {
 
-    double xboxValue = -Limiter.bound((Limiter.deadzone(m_driverController.getLeftY(),
-    ArmConstants.ARM_INPUT_DEADZONE)), -.5, .5);
+    double xboxValue =
+        -Limiter.bound(
+            (Limiter.deadzone(m_driverController.getLeftY(), ArmConstants.ARM_INPUT_DEADZONE)),
+            -.5,
+            .5);
 
-    if(xboxValue != 0.0){
-    // System.out.println("xbox value: " + xboxValue + "====================");
+    if (xboxValue != 0.0) {
+      // System.out.println("xbox value: " + xboxValue + "====================");
     }
 
     m_telescopeSubsystem.setTelescope(xboxValue);

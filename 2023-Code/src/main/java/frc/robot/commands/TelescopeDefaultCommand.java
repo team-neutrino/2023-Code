@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
 
@@ -15,11 +14,12 @@ public class TelescopeDefaultCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
 
   /** Creates a new TelescopeDefaultCommand. */
-  public TelescopeDefaultCommand(TelescopeSubsystem p_telescopeSubsystem, ArmSubsystem p_armSubsystem) {
+  public TelescopeDefaultCommand(
+      TelescopeSubsystem p_telescopeSubsystem, ArmSubsystem p_armSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_telescopeSubsystem = p_telescopeSubsystem;
     m_armSubsystem = p_armSubsystem;
-    
+
     addRequirements(m_telescopeSubsystem);
   }
 

@@ -42,7 +42,8 @@ public class ScoreThenMove extends SequentialCommandGroup {
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem,
-      XboxController p_driverController, TelescopeSubsystem p_telescopeSubsystem) {
+      XboxController p_driverController,
+      TelescopeSubsystem p_telescopeSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
 
     forwardBackArray =
@@ -61,7 +62,8 @@ public class ScoreThenMove extends SequentialCommandGroup {
         new ArmToAngleCommand(
             p_armSubsystem,
             p_pidController,
-            p_driverController, p_telescopeSubsystem,
+            p_driverController,
+            p_telescopeSubsystem,
             ArmConstants.BACK_MID,
             true,
             false,

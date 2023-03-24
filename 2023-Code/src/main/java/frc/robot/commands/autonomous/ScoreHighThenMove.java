@@ -46,7 +46,8 @@ public class ScoreHighThenMove extends SequentialCommandGroup {
       LEDSubsystem p_ledSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       IntakeManager p_intakeManager,
-      XboxController p_driverController, TelescopeSubsystem p_telescopeSubsystem) {
+      XboxController p_driverController,
+      TelescopeSubsystem p_telescopeSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
@@ -70,7 +71,8 @@ public class ScoreHighThenMove extends SequentialCommandGroup {
         new ArmToAngleCommand(
             p_armSubsystem,
             p_pidController,
-            p_driverController, p_telescopeSubsystem,
+            p_driverController,
+            p_telescopeSubsystem,
             ArmConstants.BACK_MID,
             true,
             false,

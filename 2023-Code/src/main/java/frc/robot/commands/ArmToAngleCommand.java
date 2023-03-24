@@ -30,7 +30,8 @@ public class ArmToAngleCommand extends CommandBase {
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem,
       ViennaPIDController p_pidController,
-      XboxController p_driverController, TelescopeSubsystem p_telescopeSubsystem,
+      XboxController p_driverController,
+      TelescopeSubsystem p_telescopeSubsystem,
       double p_targetAngle) {
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
@@ -44,7 +45,8 @@ public class ArmToAngleCommand extends CommandBase {
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem,
       ViennaPIDController p_pidController,
-      XboxController p_drivController, TelescopeSubsystem p_telescopeSubsystem,
+      XboxController p_drivController,
+      TelescopeSubsystem p_telescopeSubsystem,
       double p_targetAngle,
       boolean p_auton,
       boolean p_backCheck,
@@ -65,23 +67,19 @@ public class ArmToAngleCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if(m_driverController.getStartButton()){
+    if (m_driverController.getStartButton()) {
       started = !started;
     }
 
-    if( m_backCheck && started && m_ledSubsystem.getColor() == LEDColor.PURPLE){
+    if (m_backCheck && started && m_ledSubsystem.getColor() == LEDColor.PURPLE) {
       armAngle = ArmConstants.BACK_HIGH_CUBE;
-    }
-    else if(m_backCheck &&  !started && m_ledSubsystem.getColor() == LEDColor.PURPLE) {
+    } else if (m_backCheck && !started && m_ledSubsystem.getColor() == LEDColor.PURPLE) {
       armAngle = ArmConstants.BACK_MID_CUBE;
-    }
-    else{
+    } else {
       armAngle = m_targetAngle;
     }
 
-    voltage =
-        m_pidController.run(
-            m_armSubsystem.getAbsoluteArmPosition(), armAngle);
+    voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), armAngle);
     m_armSubsystem.smartArmSet(voltage);
   }
 

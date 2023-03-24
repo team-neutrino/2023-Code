@@ -53,7 +53,8 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem,
-      XboxController p_driverController, TelescopeSubsystem p_telescopeSubsystem) {
+      XboxController p_driverController,
+      TelescopeSubsystem p_telescopeSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
     if (DriverStationInfo.getAlliance() == Alliance.Red) {
       inverted = true;
@@ -93,7 +94,8 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
         new ArmToAngleCommand(
             p_armSubsystem,
             p_pidController,
-            p_driverController, p_telescopeSubsystem,
+            p_driverController,
+            p_telescopeSubsystem,
             ArmConstants.BACK_MID,
             true,
             false,
@@ -103,7 +105,8 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
             new ArmToAngleCommand(
                 p_armSubsystem,
                 p_pidController,
-                p_driverController, p_telescopeSubsystem,
+                p_driverController,
+                p_telescopeSubsystem,
                 ArmConstants.FORWARD_MID,
                 false,
                 false,
@@ -112,13 +115,18 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
             new IntakeGatherModeCommand(p_intakeSubsystem, p_intakeManager, true)),
         new InstantCommand(p_intakeSubsystem::stopIntake, p_intakeSubsystem),
         new ArmGatherModeCommand(
-                p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem, p_telescopeSubsystem, p_pidController)
+                p_armSubsystem,
+                p_scoringSubsystem,
+                p_intakeSubsystem,
+                p_telescopeSubsystem,
+                p_pidController)
             .withTimeout(2),
         runThatBackCommand,
         new ArmToAngleCommand(
             p_armSubsystem,
             p_pidController,
-            p_driverController, p_telescopeSubsystem,
+            p_driverController,
+            p_telescopeSubsystem,
             ArmConstants.BACK_MID,
             true,
             false,
@@ -127,7 +135,8 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
         new ArmToAngleCommand(
                 p_armSubsystem,
                 p_pidController,
-                p_driverController, p_telescopeSubsystem,
+                p_driverController,
+                p_telescopeSubsystem,
                 ArmConstants.FORWARD_MID,
                 true,
                 false,

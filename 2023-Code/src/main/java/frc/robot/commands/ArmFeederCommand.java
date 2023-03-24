@@ -11,7 +11,6 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
-import frc.robot.util.EnumConstants.LEDColor;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmFeederCommand extends CommandBase {
@@ -28,7 +27,8 @@ public class ArmFeederCommand extends CommandBase {
   public ArmFeederCommand(
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
-      ViennaPIDController p_pidController, TelescopeSubsystem p_telescopeSubsystem,
+      ViennaPIDController p_pidController,
+      TelescopeSubsystem p_telescopeSubsystem,
       LEDSubsystem p_ledSubsystem) {
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
@@ -46,12 +46,12 @@ public class ArmFeederCommand extends CommandBase {
 
   @Override
   public void execute() {
-      voltage =
-          m_pidController.armRun(
-              m_armSubsystem.getAbsoluteArmPosition(),
-              ArmConstants.FEEDER,
-              m_telescopeSubsystem.getTelescopingExtension());
-      m_armSubsystem.smartArmSet(voltage);
+    voltage =
+        m_pidController.armRun(
+            m_armSubsystem.getAbsoluteArmPosition(),
+            ArmConstants.FEEDER,
+            m_telescopeSubsystem.getTelescopingExtension());
+    m_armSubsystem.smartArmSet(voltage);
 
     if (m_scoringSubsystem.detectedGamePiece()) {
       hasGamePiece++;

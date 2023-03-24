@@ -45,7 +45,8 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
       LEDSubsystem p_ledSubsystem,
-      XboxController p_driverController, TelescopeSubsystem p_telescopeSubsystem) {
+      XboxController p_driverController,
+      TelescopeSubsystem p_telescopeSubsystem) {
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(
@@ -73,14 +74,19 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
         new ArmToAngleCommand(
             p_armSubsystem,
             p_pidController,
-            p_driverController, p_telescopeSubsystem,
+            p_driverController,
+            p_telescopeSubsystem,
             ArmConstants.BACK_MID,
             true,
             false,
             p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(.75),
         new ArmToAngleCommand(
-                p_armSubsystem, p_pidController, p_driverController, p_telescopeSubsystem, ArmConstants.FORWARD_MID)
+                p_armSubsystem,
+                p_pidController,
+                p_driverController,
+                p_telescopeSubsystem,
+                ArmConstants.FORWARD_MID)
             .withTimeout(1),
         moveForwardCommand,
         new NavXBalance(p_drivetrainSubsystem),
