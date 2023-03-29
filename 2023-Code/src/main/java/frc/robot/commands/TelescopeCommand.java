@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
@@ -12,9 +13,8 @@ public class TelescopeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private boolean m_isExtending;
 
-  public TelescopeCommand(ArmSubsystem p_armSubsystem, boolean p_isExtending) {
-    m_armSubsystem = p_armSubsystem;
-
+  public TelescopeCommand(SubsystemContainer p_subsystemContainer, boolean p_isExtending) {
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_isExtending = p_isExtending;
   }
 

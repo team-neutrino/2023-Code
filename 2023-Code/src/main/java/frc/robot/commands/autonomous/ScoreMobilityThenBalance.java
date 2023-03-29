@@ -63,7 +63,8 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true, false),
+        new ArmToAngleCommand(
+            p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true, false),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(.75),
         new ArmToAngleCommand(p_subsystemContainer, p_pidController, ArmConstants.FORWARD_MID)
             .withTimeout(1),
