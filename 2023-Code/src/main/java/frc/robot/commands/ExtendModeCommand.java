@@ -26,16 +26,6 @@ public class ExtendModeCommand extends CommandBase {
 
   @Override
   public void execute() {
-    /* if arm is front and past the forward great divide OR if arm is back and is past the back great divide
-     * set telescoping out to the max (restricted inside the setTelescope) */
-
-    // if ((m_armSubsystem.getArmVoltage() > 0
-    //         && m_armSubsystem.getAbsoluteArmPosition() > ArmConstants.FORWARD_ARM_HEIGHT_LIMIT)
-    //     || (m_armSubsystem.getArmVoltage() < 0
-    //         && m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT))
-    // {
-    //   m_telescopeSubsystem.setTelescope(.3);
-    // }
     m_telescopeSubsystem.extendTelescoping();
   }
 
