@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import javax.swing.text.StyleConstants.ColorConstants;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -172,29 +174,15 @@ public class RobotContainer {
   private final ScoringCloseCommand m_scoringCloseCommand =
       new ScoringCloseCommand(m_subsystemContainer);
   private final ScoringOpenCommand m_scoringOpenCommand =
-      new ScoringOpenCommand(m_scoringSubsystem, m_intakeManager);
+      new ScoringOpenCommand(m_subsystemContainer, m_intakeManager);
   private final ArmToAngleCommand m_armToForwardMid =
-      new ArmToAngleCommand(
-          m_armSubsystem,
-          m_armPidController,
-          ArmConstants.FORWARD_MID,
-          false,
-          false,
-          m_ledSubsystem);
+      new ArmToAngleCommand(m_subsystemContainer, m_armPidController, ArmConstants.FORWARD_MID, false, false);
   private final ArmToAngleCommand m_armToForwardDown =
-      new ArmToAngleCommand(
-          m_armSubsystem,
-          m_armPidController,
-          ArmConstants.FORWARD_DOWN,
-          false,
-          false,
-          m_ledSubsystem);
+      new ArmToAngleCommand(m_subsystemContainer, m_armPidController, ArmConstants.FORWARD_DOWN, false, false);
   private final ArmToAngleCommand m_armToBackMid =
-      new ArmToAngleCommand(
-          m_armSubsystem, m_armPidController, ArmConstants.BACK_MID, false, true, m_ledSubsystem);
+      new ArmToAngleCommand(m_subsystemContainer, m_armPidController, ArmConstants.BACK_MID, false, true);
   private final ArmToAngleCommand m_armToBackDown =
-      new ArmToAngleCommand(
-          m_armSubsystem, m_armPidController, ArmConstants.BACK_DOWN, false, false, m_ledSubsystem);
+      new ArmToAngleCommand(m_subsystemContainer, m_armPidController, ArmConstants.BACK_DOWN, false, false);
   private final TelescopeCommand m_telescopeExtendCommand =
       new TelescopeCommand(m_armSubsystem, true);
   private final TelescopeCommand m_telescopeRetractCommand =
@@ -237,22 +225,15 @@ public class RobotContainer {
     m_upArrow.whileTrue(m_telescopeExtendCommand);
     m_downArrow.whileTrue(m_telescopeRetractCommand);
     m_rightArrow.onTrue(
-        new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
+        new LEDCommand(m_subsystemContainer, LEDColor.PURPLE, m_driverStationInfo));
     m_leftArrow.onTrue(
-        new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
+        new LEDCommand(m_subsystemContainer, LEDColor.YELLOW, m_driverStationInfo));
   }
 
   public Command getAutonomousCommand() {
-    m_driveTrainSubsystem.resetOdometry();
-    return new ScoreMoveAutoGather(
-            m_driveTrainSubsystem,
-            m_armPidController,
-            m_armSubsystem,
-            m_scoringSubsystem,
-            m_intakeSubsystem,
-            m_intakeManager,
-            m_ledSubsystem)
-        .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+    m_drivetrainSubsystem.resetOdometry();
+    return new ScoreMoveAutoGather(m_subsystemContainer, m_armPidController, m_intakeManager)
+        .andThen(new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
     // return m_shuffleboardSubsystem
     //     .getAutoSelected()
     //     .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));

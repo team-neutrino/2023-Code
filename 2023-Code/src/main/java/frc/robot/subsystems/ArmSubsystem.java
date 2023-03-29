@@ -25,8 +25,8 @@ public class ArmSubsystem extends SubsystemBase {
   private DutyCycleEncoder m_positionEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
   private Encoder m_telescopingEncoder =
       new Encoder(
-          Constants.DigitalConstants.TELESCOPING_ENCODERA,
-          Constants.DigitalConstants.TELESCOPING_ENCODERB);
+          DigitalConstants.TELESCOPING_ENCODERA,
+          DigitalConstants.TELESCOPING_ENCODERB);
 
   private SparkMaxLimitSwitch m_limitSwitch;
 
@@ -58,17 +58,17 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public double limitArmAmount(double voltage) {
-    if (voltage < -Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
-      voltage = -Constants.ArmConstants.ARM_OUTPUT_LIMIT;
-    } else if (voltage > Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
-      voltage = Constants.ArmConstants.ARM_OUTPUT_LIMIT;
+    if (voltage < -ArmConstants.ARM_OUTPUT_LIMIT) {
+      voltage = -ArmConstants.ARM_OUTPUT_LIMIT;
+    } else if (voltage > ArmConstants.ARM_OUTPUT_LIMIT) {
+      voltage = ArmConstants.ARM_OUTPUT_LIMIT;
     }
     return voltage;
   }
 
   public void limitHeight() {
-    if ((getAbsoluteArmPosition() <= Constants.ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
-            && getAbsoluteArmPosition() >= Constants.ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)
+    if ((getAbsoluteArmPosition() <= ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
+            && getAbsoluteArmPosition() >= ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)
         && getEncoderDistance() <= 0) {
       setTelescope(ArmConstants.TELESCOPE_HEIGHT_LIMIT_RETRACT_SPEED);
     }
@@ -110,9 +110,9 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void setTelescope(double p_output) {
-    if (p_output < 0 || getEncoderDistance() > Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT) {
+    if (p_output < 0 || getEncoderDistance() > ArmConstants.TELESCOPE_EXTEND_LIMIT) {
       m_telescopingMotor.set(p_output);
-    } else if (getEncoderDistance() <= Constants.ArmConstants.TELESCOPE_EXTEND_LIMIT) {
+    } else if (getEncoderDistance() <= ArmConstants.TELESCOPE_EXTEND_LIMIT) {
       m_telescopingMotor.set(0);
     }
   }
