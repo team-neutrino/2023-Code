@@ -42,7 +42,7 @@ public class IntakeDefaultCommand extends CommandBase {
 
       // code for squeezing & unsqueezing is controlled by arm position due to problem with
       // intake squeezing ball right after arm gets ahold of it and partly pulling it out.
-      if (!m_intakeSubsystem.detectedGamePiece()) {
+      if (!m_intakeSubsystem.unDebouncedDetectedGamePiece()) {
         m_intakeSubsystem.unsqueeze();
       } else {
         // in case we're holding a game piece, we want to keep a hold of it
