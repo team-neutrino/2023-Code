@@ -51,10 +51,8 @@ public class TelescopeSubsystem extends SubsystemBase {
   public void setTelescope(double p_output) {
     if ((p_output < 0 || getTelescopingExtension() > ArmConstants.TELESCOPE_EXTEND_LIMIT)) {
       m_telescopingMotor.set(p_output);
-      // System.out.println("output===========" + p_output);
     } else {
       m_telescopingMotor.set(0);
-      // System.out.println("=============output===========");
     }
   }
 

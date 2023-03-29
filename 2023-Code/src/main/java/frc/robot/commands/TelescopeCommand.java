@@ -39,10 +39,6 @@ public class TelescopeCommand extends CommandBase {
             -.5,
             .5);
 
-    if (xboxValue != 0.0) {
-      // System.out.println("xbox value: " + xboxValue + "====================");
-    }
-
     m_telescopeSubsystem.setTelescope(xboxValue);
   }
 
@@ -56,7 +52,6 @@ public class TelescopeCommand extends CommandBase {
     if ((m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
             && m_armSubsystem.getAbsoluteArmPosition() > ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)
         || m_armSubsystem.getAbsoluteArmPosition() > 84) {
-      System.out.println("end!");
       return true;
     }
     return false;

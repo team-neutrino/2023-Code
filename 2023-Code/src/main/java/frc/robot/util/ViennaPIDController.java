@@ -118,7 +118,6 @@ public class ViennaPIDController {
     double derivative = (error - previousError) / PIDConstants.dt;
     previousError = error;
 
-    //double ff = m_f * armExtension * Math.cos(armAngle)
     double ff = desiredPos * m_f;
 
     double pAlteration =
@@ -126,7 +125,6 @@ public class ViennaPIDController {
 
     double output = (pAlteration + m_p) * error + m_i * m_iState + m_d * derivative + ff;
 
-    // System.out.println("output: " + output);
     return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
   }
 }

@@ -34,7 +34,6 @@ public class IntakeGatherModeCommand extends CommandBase {
 
     if (m_intakeManager.managerApproved()) {
       m_intakeSubsystem.setIntakeDown();
-      // System.out.println( !m_intakeSubsystem.detectedGamePiece() + " " + m_intakeSubsystem.isIntakeDown() );
 
       if (!m_intakeSubsystem.detectedGamePiece() && m_intakeSubsystem.isIntakeDown()) {
         m_intakeSubsystem.unsqueeze();
