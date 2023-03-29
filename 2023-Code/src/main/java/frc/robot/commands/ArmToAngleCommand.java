@@ -75,11 +75,9 @@ public class ArmToAngleCommand extends CommandBase {
       armAngle = ArmConstants.BACK_HIGH_CUBE;
     } else if (m_backCheck && started && m_ledSubsystem.getColor() == LEDColor.YELLOW) {
       armAngle = ArmConstants.BACK_HIGH_CONE;
-    }
-     else if (m_backCheck && started == false && m_ledSubsystem.getColor() == LEDColor.PURPLE) {
+    } else if (m_backCheck && started == false && m_ledSubsystem.getColor() == LEDColor.PURPLE) {
       armAngle = ArmConstants.BACK_MID_CUBE;
-    } 
-    else {
+    } else {
       armAngle = m_targetAngle;
     }
 

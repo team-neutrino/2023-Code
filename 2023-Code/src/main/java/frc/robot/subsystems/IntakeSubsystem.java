@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import javax.lang.model.util.ElementScanner14;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
@@ -104,16 +102,15 @@ public class IntakeSubsystem extends SubsystemBase {
     return hasGamePiece > 10;
   }
 
-
-  public void gamePieceBeamBroken(){
-    if(!getBeamBreak() && isIntakeDown()){
+  public void gamePieceBeamBroken() {
+    if (!getBeamBreak() && isIntakeDown()) {
       hasGamePiece++;
-    } else{
+    } else {
       hasGamePiece = 0;
     }
   }
 
-  public void resetDebouncer(){
+  public void resetDebouncer() {
     hasGamePiece = 0;
   }
 

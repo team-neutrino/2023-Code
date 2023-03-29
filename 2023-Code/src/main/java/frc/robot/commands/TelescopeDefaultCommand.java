@@ -30,13 +30,6 @@ public class TelescopeDefaultCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // double armEncoderPosition = m_armSubsystem.getArmEncoder().getAbsolutePosition() * 100;
-    // if ((armEncoderPosition >= ArmConstants.FORWARD_FLOOR_ARM_ANGLE_LIMIT
-    //         || (armEncoderPosition <= ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
-    //             && armEncoderPosition >= ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT))
-    //     && m_telescopeSubsystem.getTelescopingExtension() <= 0) {
-    //   m_telescopeSubsystem.setTelescope(ArmConstants.TELESCOPE_HEIGHT_LIMIT_RETRACT_SPEED);
-    // }
     m_telescopeSubsystem.retractTelescoping();
   }
 

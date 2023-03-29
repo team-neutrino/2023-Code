@@ -107,7 +107,6 @@ public class ViennaPIDController {
     return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
   }
 
-
   public double armRun(double realPos, double desiredPos, double armExtension) {
     double error = desiredPos - realPos;
 
