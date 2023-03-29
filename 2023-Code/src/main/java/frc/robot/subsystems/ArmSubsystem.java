@@ -24,9 +24,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   private DutyCycleEncoder m_positionEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
   private Encoder m_telescopingEncoder =
-      new Encoder(
-          DigitalConstants.TELESCOPING_ENCODERA,
-          DigitalConstants.TELESCOPING_ENCODERB);
+      new Encoder(DigitalConstants.TELESCOPING_ENCODERA, DigitalConstants.TELESCOPING_ENCODERB);
 
   private SparkMaxLimitSwitch m_limitSwitch;
 
