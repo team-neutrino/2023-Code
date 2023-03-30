@@ -8,16 +8,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmDefaultCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ViennaPIDController m_pidController;
+  private TelescopeSubsystem m_telescopeSubsystem;
 
   public ArmDefaultCommand(
       SubsystemContainer p_subsystemContainer, ViennaPIDController p_pidController) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_pidController = p_pidController;
+    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     addRequirements(m_armSubsystem);
   }
 
@@ -26,15 +29,15 @@ public class ArmDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_armSubsystem.limitHeight();
     m_armSubsystem.smartArmSet(
-        m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.FORWARD_MID));
+        m_pidController.armRun(
+            m_armSubsystem.getAbsoluteArmPosition(),
+            ArmConstants.FORWARD_MID,
+            m_telescopeSubsystem.getTelescopingExtension()));
   }
 
   @Override
-  public void end(boolean interrupted) {
-    m_armSubsystem.turnTelescopeOff();
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {
