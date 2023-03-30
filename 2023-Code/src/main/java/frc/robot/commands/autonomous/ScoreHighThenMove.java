@@ -4,19 +4,19 @@
 
 package frc.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.TrajectoryConfigConstants;
-import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.ScoringOpenCommand;
+import frc.robot.commands.TelescopeCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
@@ -27,61 +27,58 @@ import java.util.Arrays;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ScoreThenMoveThenAutoGather extends SequentialCommandGroup {
+public class ScoreHighThenMove extends SequentialCommandGroup {
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
-  private ArrayList<PoseTriplet> toGamePieceArray;
-  private ArrayList<PoseTriplet> leaveCommunity;
-  private ArrayList<PoseTriplet> runThatBack;
-  private RamseteCommand toGamePieceCommand;
-  private RamseteCommand runThatBackCommand;
+  private ArmSubsystem m_armSubsystem;
+  private ViennaPIDController m_pidController;
+  private LEDSubsystem m_ledSubsystem;
+  private ScoringSubsystem m_scoringSubsystem;
+  private IntakeManager m_intakeManager;
 
-  /** Creates a new TestAutonGeneratedTrajectory. */
-  public ScoreThenMoveThenAutoGather(
+  private RamseteCommand moveForwardCommand;
+
+  /** Creates a new ScoreHighThenMove. */
+  public ScoreHighThenMove(
       DriveTrainSubsystem p_drivetrainSubsystem,
-      ViennaPIDController p_pidController,
       ArmSubsystem p_armSubsystem,
+      ViennaPIDController p_pidController,
+      LEDSubsystem p_ledSubsystem,
       ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
-      LEDSubsystem p_ledSubsystem) {
+      XboxController p_driverController,
+      TelescopeSubsystem p_telescopeSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
+    m_armSubsystem = p_armSubsystem;
+    m_pidController = p_pidController;
+    m_ledSubsystem = p_ledSubsystem;
+    m_scoringSubsystem = p_scoringSubsystem;
+    m_intakeManager = p_intakeManager;
 
-    toGamePieceArray =
+    ArrayList<PoseTriplet> moveForwardArray =
         new ArrayList<PoseTriplet>(
             Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4, 0, 0)));
 
-    runThatBack =
-        new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(4, 0, 0), new PoseTriplet(0, 0, 0)));
-
-    toGamePieceCommand =
+    moveForwardCommand =
         AutonomousUtil.generateRamseteFromPoses(
-            toGamePieceArray,
+            moveForwardArray,
             m_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
-    runThatBackCommand =
-        AutonomousUtil.generateRamseteFromPoses(
-            runThatBack,
-            p_drivetrainSubsystem,
-            TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmToAngleCommand(
-            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new ParallelRaceGroup(
-            new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager),
-            new TimerCommand(2)),
-        toGamePieceCommand,
-        new ParallelRaceGroup(
-            new ArmGatherModeCommand(
-                p_armSubsystem, p_scoringSubsystem, p_intakeSubsystem, p_pidController),
-            new TimerCommand(2)),
-        runThatBackCommand,
-        new ArmToAngleCommand(
-            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true));
+            p_armSubsystem,
+            p_pidController,
+            p_driverController,
+            p_telescopeSubsystem,
+            ArmConstants.BACK_MID,
+            true,
+            false,
+            p_ledSubsystem),
+        new TelescopeCommand(p_armSubsystem, p_telescopeSubsystem, p_driverController),
+        new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(2),
+        moveForwardCommand);
   }
 }

@@ -4,34 +4,39 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.EnumConstants.LEDColor;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmToAngleCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ViennaPIDController m_pidController;
+  private XboxController m_driverController;
+  private TelescopeSubsystem m_telescopeSubsystem;
   private double m_targetAngle;
-  private ScoringSubsystem m_ScoringSubsystem;
   private double voltage;
   private LEDSubsystem m_ledSubsystem;
   private boolean m_auton = false;
-  private boolean m_endAuton = false;
 
-  private boolean m_buttoncheck = false;
+  private boolean m_backCheck = false;
+  private boolean started = false;
+  private double armAngle;
 
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem,
       ViennaPIDController p_pidController,
-      ScoringSubsystem p_ScoringSubsystem,
+      XboxController p_driverController,
+      TelescopeSubsystem p_telescopeSubsystem,
       double p_targetAngle) {
     m_armSubsystem = p_armSubsystem;
-    m_ScoringSubsystem = p_ScoringSubsystem;
     m_pidController = p_pidController;
+    m_driverController = p_driverController;
+    m_telescopeSubsystem = p_telescopeSubsystem;
     m_targetAngle = p_targetAngle;
 
     addRequirements(m_armSubsystem);
@@ -40,34 +45,19 @@ public class ArmToAngleCommand extends CommandBase {
   public ArmToAngleCommand(
       ArmSubsystem p_armSubsystem,
       ViennaPIDController p_pidController,
+      XboxController p_drivController,
+      TelescopeSubsystem p_telescopeSubsystem,
       double p_targetAngle,
       boolean p_auton,
-      boolean p_buttoncheck,
+      boolean p_backCheck,
       LEDSubsystem p_ledSubsystem) {
     m_armSubsystem = p_armSubsystem;
     m_pidController = p_pidController;
+    m_driverController = p_drivController;
+    m_telescopeSubsystem = p_telescopeSubsystem;
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
-    m_endAuton = false;
-    m_buttoncheck = p_buttoncheck;
-    m_ledSubsystem = p_ledSubsystem;
-    addRequirements(m_armSubsystem);
-  }
-
-  public ArmToAngleCommand(
-      ArmSubsystem p_armSubsystem,
-      ViennaPIDController p_pidController,
-      double p_targetAngle,
-      boolean p_auton,
-      boolean p_endAuton,
-      boolean p_buttoncheck,
-      LEDSubsystem p_ledSubsystem) {
-    m_armSubsystem = p_armSubsystem;
-    m_pidController = p_pidController;
-    m_targetAngle = p_targetAngle;
-    m_auton = p_auton;
-    m_endAuton = p_endAuton;
-    m_buttoncheck = p_buttoncheck;
+    m_backCheck = p_backCheck;
     m_ledSubsystem = p_ledSubsystem;
     addRequirements(m_armSubsystem);
   }
@@ -77,36 +67,32 @@ public class ArmToAngleCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (m_buttoncheck) {
+    if (m_driverController.getStartButton()) {
+      started = true;
+    }
 
-      if (m_ledSubsystem.getColor() == LEDColor.PURPLE) {
-        voltage =
-            m_pidController.run(
-                m_armSubsystem.getAbsolutePosition(), Constants.ArmConstants.QUASI_BACK_MID);
-        m_armSubsystem.smartSet(voltage);
-      }
-      if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
-        voltage =
-            m_pidController.run(
-                m_armSubsystem.getAbsolutePosition(), Constants.ArmConstants.BACK_MID);
-        m_armSubsystem.smartSet(voltage);
-      }
+    if (m_backCheck && started && m_ledSubsystem.getColor() == LEDColor.PURPLE) {
+      armAngle = ArmConstants.BACK_HIGH_CUBE;
+    } else if (m_backCheck && started && m_ledSubsystem.getColor() == LEDColor.YELLOW) {
+      armAngle = ArmConstants.BACK_HIGH_CONE;
+    } else if (m_backCheck && started == false && m_ledSubsystem.getColor() == LEDColor.PURPLE) {
+      armAngle = ArmConstants.BACK_MID_CUBE;
     } else {
-      voltage = m_pidController.run(m_armSubsystem.getAbsolutePosition(), m_targetAngle);
-      m_armSubsystem.smartSet(voltage);
+      armAngle = m_targetAngle;
     }
 
-    if (m_endAuton) {
-      m_ScoringSubsystem.openScoring();
-    }
+    voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), armAngle);
+    m_armSubsystem.smartArmSet(voltage);
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    started = false;
+  }
 
   @Override
   public boolean isFinished() {
-    if (Math.abs(m_armSubsystem.getAbsolutePosition() - m_targetAngle) < 1 && m_auton) {
+    if (Math.abs(m_armSubsystem.getAbsoluteArmPosition() - m_targetAngle) < 1 && m_auton) {
       return true;
     }
     return false;

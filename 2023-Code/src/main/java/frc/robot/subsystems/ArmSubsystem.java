@@ -5,11 +5,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -19,33 +16,35 @@ import frc.robot.Constants.MotorConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
-  private CANSparkMax m_armMotor = new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
-  private RelativeEncoder m_encoder = m_armMotor.getEncoder();
-  private DutyCycleEncoder m_externalEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
-  private SparkMaxPIDController m_pidController = m_armMotor.getPIDController();
+  private CANSparkMax m_positionMotor =
+      new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
+
+  private DutyCycleEncoder m_positionEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
 
   public ArmSubsystem() {
-    m_armMotor.restoreFactoryDefaults();
-    m_armMotor.setIdleMode(IdleMode.kBrake);
+    m_positionMotor.restoreFactoryDefaults();
+    m_positionMotor.restoreFactoryDefaults();
+    m_positionMotor.setIdleMode(IdleMode.kBrake);
+    m_positionMotor.setIdleMode(IdleMode.kBrake);
   }
 
-  public double getAbsolutePosition() {
-    return m_externalEncoder.getAbsolutePosition() * 100;
+  public double getAbsoluteArmPosition() {
+    return m_positionEncoder.getAbsolutePosition() * 100;
   }
 
-  public void turnOff() {
-    m_armMotor.setVoltage(0);
+  public void turnArmOff() {
+    m_positionMotor.setVoltage(0);
   }
 
-  public void setVoltage(double voltage) {
-    m_armMotor.setVoltage(voltage);
+  public void setArmVoltage(double voltage) {
+    m_positionMotor.setVoltage(voltage);
   }
 
-  public void set(double voltage) {
-    m_armMotor.set(voltage);
+  public void setArm(double voltage) {
+    m_positionMotor.set(voltage);
   }
 
-  public double limitAmount(double voltage) {
+  public double limitArmAmount(double voltage) {
     if (voltage < -Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
       voltage = -Constants.ArmConstants.ARM_OUTPUT_LIMIT;
     } else if (voltage > Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
@@ -54,31 +53,27 @@ public class ArmSubsystem extends SubsystemBase {
     return voltage;
   }
 
-  public void smartSet(double desiredVoltage) {
-    if ((getAbsolutePosition() >= ArmConstants.ARM_FRONTMOST && desiredVoltage > 0)
-        || (getAbsolutePosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
-      set(0.0);
+  public void smartArmSet(double desiredVoltage) {
+    if ((getAbsoluteArmPosition() >= ArmConstants.ARM_FRONTMOST && desiredVoltage > 0)
+        || (getAbsoluteArmPosition() <= ArmConstants.ARM_BACKMOST && desiredVoltage < 0)) {
+      setArm(0.0);
     } else {
-      set(desiredVoltage);
+      setArm(desiredVoltage);
     }
   }
 
-  public void setReference(double rotations) {
-    m_pidController.setReference(rotations, ControlType.kPosition);
-  }
-
-  public double getVoltage() {
-    double appliedOutput = m_armMotor.getAppliedOutput();
-    double busVoltage = m_armMotor.getBusVoltage();
+  public double getArmVoltage() {
+    double appliedOutput = m_positionMotor.getAppliedOutput();
+    double busVoltage = m_positionMotor.getBusVoltage();
     return appliedOutput * busVoltage; // chiefdelphi.com/t/get-voltage-from-spark-max/344136/3
   }
 
-  public double getPosition() {
-    return m_encoder.getPosition();
+  public DutyCycleEncoder getArmEncoder() {
+    return m_positionEncoder;
   }
 
-  public boolean atPosition(double targetPosition) {
-    if (Math.abs(getAbsolutePosition() - targetPosition) < ArmConstants.ARM_DEADZONE) {
+  public boolean atArmPosition(double targetPosition) {
+    if (Math.abs(getAbsoluteArmPosition() - targetPosition) < ArmConstants.ARM_DEADZONE) {
       return true;
     }
     return false;

@@ -5,18 +5,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 
-/** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+public class TelescopeDefaultCommand extends CommandBase {
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public ExampleCommand() {
+  private TelescopeSubsystem m_telescopeSubsystem;
+  private ArmSubsystem m_armSubsystem;
+
+  /** Creates a new TelescopeDefaultCommand. */
+  public TelescopeDefaultCommand(
+      TelescopeSubsystem p_telescopeSubsystem, ArmSubsystem p_armSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_telescopeSubsystem = p_telescopeSubsystem;
+    m_armSubsystem = p_armSubsystem;
+
+    addRequirements(m_telescopeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +29,9 @@ public class ExampleCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_telescopeSubsystem.retractTelescoping();
+  }
 
   // Called once the command ends or is interrupted.
   @Override

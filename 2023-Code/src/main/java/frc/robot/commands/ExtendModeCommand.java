@@ -8,21 +8,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
-import frc.robot.util.ViennaPIDController;
 
-public class ArmDefaultCommand extends CommandBase {
+public class ExtendModeCommand extends CommandBase {
+
   private ArmSubsystem m_armSubsystem;
-  private ViennaPIDController m_pidController;
   private TelescopeSubsystem m_telescopeSubsystem;
 
-  public ArmDefaultCommand(
-      ArmSubsystem p_armSubsystem,
-      TelescopeSubsystem p_telescopeSubsystem,
-      ViennaPIDController p_pidController) {
-    m_armSubsystem = p_armSubsystem;
-    m_pidController = p_pidController;
+  public ExtendModeCommand(TelescopeSubsystem p_telescopeSubsystem, ArmSubsystem p_armSubsystem) {
     m_telescopeSubsystem = p_telescopeSubsystem;
-    addRequirements(m_armSubsystem);
+    m_armSubsystem = p_armSubsystem;
+
+    addRequirements(m_telescopeSubsystem);
   }
 
   @Override
@@ -30,11 +26,7 @@ public class ArmDefaultCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_armSubsystem.smartArmSet(
-        m_pidController.armRun(
-            m_armSubsystem.getAbsoluteArmPosition(),
-            ArmConstants.FORWARD_MID,
-            m_telescopeSubsystem.getTelescopingExtension()));
+    m_telescopeSubsystem.extendTelescoping();
   }
 
   @Override
@@ -42,6 +34,11 @@ public class ArmDefaultCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    if ((m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
+            && m_armSubsystem.getAbsoluteArmPosition() > ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)
+        || m_armSubsystem.getAbsoluteArmPosition() > 84) {
+      return true;
+    }
     return false;
   }
 }

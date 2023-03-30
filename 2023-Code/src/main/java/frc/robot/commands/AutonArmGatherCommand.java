@@ -9,12 +9,14 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.ViennaPIDController;
 
 public class AutonArmGatherCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
   private IntakeSubsystem m_intakeSubsystem;
+  private TelescopeSubsystem m_telescopeSubsystem;
   private ViennaPIDController m_pidController;
   private boolean detective;
 
@@ -22,10 +24,12 @@ public class AutonArmGatherCommand extends CommandBase {
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
+      TelescopeSubsystem p_telescopeSubsystem,
       ViennaPIDController p_pidController) {
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
     m_intakeSubsystem = p_intakeSubsystem;
+    m_telescopeSubsystem = p_telescopeSubsystem;
     m_pidController = p_pidController;
     detective = false;
 
@@ -45,13 +49,19 @@ public class AutonArmGatherCommand extends CommandBase {
       }
       m_intakeSubsystem.runIntake();
       m_scoringSubsystem.openScoring();
-      m_armSubsystem.smartSet(
-          m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.ARM_FRONTMOST));
+      m_armSubsystem.smartArmSet(
+          m_pidController.armRun(
+              m_armSubsystem.getAbsoluteArmPosition(),
+              ArmConstants.ARM_FRONTMOST,
+              m_telescopeSubsystem.getTelescopingExtension()));
     } else {
       m_intakeSubsystem.stopIntake();
       m_scoringSubsystem.closeScoring();
-      m_armSubsystem.smartSet(
-          m_pidController.run(m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID));
+      m_armSubsystem.smartArmSet(
+          m_pidController.armRun(
+              m_armSubsystem.getAbsoluteArmPosition(),
+              ArmConstants.FORWARD_MID,
+              m_telescopeSubsystem.getTelescopingExtension()));
     }
   }
 
@@ -63,7 +73,7 @@ public class AutonArmGatherCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     if (m_intakeSubsystem.detectedGamePiece()
-        && Math.abs(m_armSubsystem.getAbsolutePosition() - ArmConstants.FORWARD_MID) < 1) {
+        && Math.abs(m_armSubsystem.getAbsoluteArmPosition() - ArmConstants.FORWARD_MID) < 1) {
       return true;
     }
     return false;

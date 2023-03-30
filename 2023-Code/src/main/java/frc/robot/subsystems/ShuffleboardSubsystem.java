@@ -9,6 +9,7 @@ import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.cscore.VideoException;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -16,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.autonomous.ScoreHighThenMove;
 import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
 import frc.robot.commands.autonomous.ScoreThenMove;
 import frc.robot.util.DriverStationInfo;
@@ -24,9 +25,11 @@ import frc.robot.util.IntakeManager;
 import frc.robot.util.SavePoseCommand;
 import frc.robot.util.ViennaPIDController;
 import java.io.IOException;
+import java.util.Map;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
+  private ShuffleboardTab m_troubleshootingTab;
   private GenericEntry m_driveTrainVariables[] = new GenericEntry[11];
   private GenericEntry m_limelightVariables[] = new GenericEntry[8];
   private GenericEntry m_driverStationInfoVariables[] = new GenericEntry[9];
@@ -49,6 +52,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private IntakeSubsystem m_intake;
   private ViennaPIDController m_pidController;
   private IntakeManager m_intakeManager;
+  private XboxController m_driverController;
+  private TelescopeSubsystem m_telescopeSubsystem;
 
   public ShuffleboardSubsystem(
       DriverStationInfo p_driverStationInfo,
@@ -59,7 +64,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       IntakeSubsystem p_intake,
       LEDSubsystem p_LED,
       ViennaPIDController p_pidController,
-      IntakeManager p_intakeManager) {
+      IntakeManager p_intakeManager,
+      XboxController p_driverController,
+      TelescopeSubsystem p_telescopeSubsystem) {
 
     m_driveTrainSubsystem = p_driveTrainSubsystem;
     // m_limelight = p_limelight;
@@ -70,10 +77,14 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_pidController = p_pidController;
     m_intakeManager = p_intakeManager;
     m_driverStationInfo = p_driverStationInfo;
+    m_driverController = p_driverController;
+    m_telescopeSubsystem = p_telescopeSubsystem;
     m_drivestationTab = Shuffleboard.getTab("Driverstation Tab");
+    m_troubleshootingTab = Shuffleboard.getTab("Troubleshooting Tab");
 
     setUpSelector();
     driveStationTab();
+    troubleshootingTab();
     setCommandButtons(); // This is SmartDashboard. Find way to make it not.
   }
 
@@ -99,96 +110,113 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
-    m_armVariables[0].setDouble(m_arm.getAbsolutePosition());
+    m_armVariables[0].setDouble(m_arm.getAbsoluteArmPosition());
   }
 
   private void driveStationTab() {
     m_drivestationTab = Shuffleboard.getTab("Drivestation Tab123");
 
     m_LEDVariables[0] =
-        m_drivestationTab.add("LED Color", "Off").withPosition(8, 1).withSize(2, 1).getEntry();
-
-    m_driveTrainVariables[0] =
-        m_drivestationTab.add("RMotor 1 Pos", 0).withPosition(0, 0).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[1] =
-        m_drivestationTab.add("RMotor 2 Pos", 0).withPosition(1, 0).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[2] =
-        m_drivestationTab.add("LMotor 1 Pos", 0).withPosition(0, 1).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[3] =
-        m_drivestationTab.add("LMotor 2 Pos", 0).withPosition(1, 1).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[4] =
-        m_drivestationTab.add("RMotor 1 Vel", 0).withPosition(0, 2).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[5] =
-        m_drivestationTab.add("RMotor 2 Vel", 0).withPosition(1, 2).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[6] =
-        m_drivestationTab.add("LMotor 1 Vel", 0).withPosition(0, 3).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[7] =
-        m_drivestationTab.add("LMotor 2 Vel", 0).withPosition(1, 3).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[8] =
-        m_drivestationTab.add("NavX Pitch", 0).withPosition(2, 2).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[9] =
-        m_drivestationTab.add("NavX Roll", 0).withPosition(2, 3).withSize(1, 1).getEntry();
-
-    m_driveTrainVariables[10] =
-        m_drivestationTab.add("NavX Yaw", 0).withPosition(2, 4).withSize(1, 1).getEntry();
+        m_drivestationTab.add("LED Color", "Off").withPosition(8, 3).withSize(2, 1).getEntry();
 
     m_scoringVariables[0] =
-        m_drivestationTab.add("Grabber Release", 0).withPosition(2, 0).withSize(1, 1).getEntry();
+        m_drivestationTab.add("Grabber Release", 0).withPosition(0, 0).withSize(1, 1).getEntry();
 
     m_scoringVariables[1] =
-        m_drivestationTab.add("Intake Down ", 0).withPosition(2, 1).withSize(1, 1).getEntry();
+        m_drivestationTab.add("Intake Down ", 0).withPosition(0, 1).withSize(1, 1).getEntry();
 
     m_scoringVariables[3] =
-        m_drivestationTab.add("Squeeze", 0).withPosition(3, 0).withSize(1, 1).getEntry();
+        m_drivestationTab.add("Squeeze", 0).withPosition(1, 0).withSize(1, 1).getEntry();
 
     m_driverStationInfoVariables[0] =
-        m_drivestationTab.add("Match Time", 0).withPosition(4, 0).withSize(4, 2).getEntry();
-
+        m_drivestationTab
+            .add("Match Time", 0)
+            .withPosition(2, 0)
+            .withSize(6, 4)
+            .withWidget(BuiltInWidgets.kDial)
+            .withProperties(Map.of("min", 0, "max", 150))
+            .getEntry();
     m_driverStationInfoVariables[1] =
         m_drivestationTab
             .add("Game Piece", "No Piece")
-            .withPosition(8, 2)
+            .withPosition(0, 2)
             .withSize(2, 2)
             .getEntry();
 
     m_armVariables[0] =
-        m_drivestationTab.add("Arm Position", 0).withPosition(3, 2).withSize(1, 1).getEntry();
+        m_drivestationTab.add("Arm Position", 0).withPosition(1, 1).withSize(1, 1).getEntry();
 
     m_drivestationTab
         .add("Autonomous Chooser", m_autoChooser)
         .withWidget(BuiltInWidgets.kComboBoxChooser)
-        .withPosition(8, 0)
+        .withPosition(10, 3)
         .withSize(2, 1);
-
-    m_limelightVariables[0] =
-        m_drivestationTab.add("Distance", 0).withPosition(3, 1).withSize(1, 1).getEntry();
 
     try {
       LLFeed = new HttpCamera("limelight", "http://10.39.28.92", HttpCameraKind.kMJPGStreamer);
       CameraServer.startAutomaticCapture(LLFeed);
       m_drivestationTab
           .add(LLFeed)
-          .withPosition(4, 2)
+          .withPosition(8, 0)
           .withSize(4, 3)
           .withWidget(BuiltInWidgets.kCameraStream);
     } catch (VideoException e) {
     }
   }
 
+  private void troubleshootingTab() {
+    m_troubleshootingTab = Shuffleboard.getTab("Troubleshooting Tab");
+
+    m_driveTrainVariables[0] =
+        m_troubleshootingTab.add("RMotor 1 Pos", 0).withPosition(0, 0).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[1] =
+        m_troubleshootingTab.add("RMotor 2 Pos", 0).withPosition(1, 0).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[2] =
+        m_troubleshootingTab.add("LMotor 1 Pos", 0).withPosition(0, 1).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[3] =
+        m_troubleshootingTab.add("LMotor 2 Pos", 0).withPosition(1, 1).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[4] =
+        m_troubleshootingTab.add("RMotor 1 Vel", 0).withPosition(0, 2).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[5] =
+        m_troubleshootingTab.add("RMotor 2 Vel", 0).withPosition(1, 2).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[6] =
+        m_troubleshootingTab.add("LMotor 1 Vel", 0).withPosition(0, 3).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[7] =
+        m_troubleshootingTab.add("LMotor 2 Vel", 0).withPosition(1, 3).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[8] =
+        m_troubleshootingTab.add("NavX Pitch", 0).withPosition(2, 0).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[9] =
+        m_troubleshootingTab.add("NavX Roll", 0).withPosition(2, 1).withSize(1, 1).getEntry();
+
+    m_driveTrainVariables[10] =
+        m_troubleshootingTab.add("NavX Yaw", 0).withPosition(2, 2).withSize(1, 1).getEntry();
+
+    m_limelightVariables[0] =
+        m_troubleshootingTab.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
+  }
+
   public void setUpSelector() {
     m_autoChooser.setDefaultOption(
         "Default",
         new ScoreMobilityThenBalance(
-            m_driveTrainSubsystem, m_pidController, m_arm, m_scoring, m_intake, null, m_LED));
+            m_driveTrainSubsystem,
+            m_pidController,
+            m_arm,
+            m_scoring,
+            m_intake,
+            null,
+            m_LED,
+            m_driverController,
+            m_telescopeSubsystem));
     m_autoChooser.addOption(
         "Balance Mobility",
         new ScoreMobilityThenBalance(
@@ -198,9 +226,11 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             m_scoring,
             m_intake,
             m_intakeManager,
-            m_LED));
+            m_LED,
+            m_driverController,
+            m_telescopeSubsystem));
     m_autoChooser.addOption(
-        "Score then Move",
+        "Score Mid then Move",
         new ScoreThenMove(
             m_driveTrainSubsystem,
             m_pidController,
@@ -208,17 +238,24 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             m_scoring,
             m_intake,
             m_intakeManager,
-            m_LED));
+            m_LED,
+            m_driverController,
+            m_telescopeSubsystem));
+    m_autoChooser.addOption(
+        "Score High then Move",
+        new ScoreHighThenMove(
+            m_driveTrainSubsystem,
+            m_arm,
+            m_pidController,
+            m_LED,
+            m_scoring,
+            m_intakeManager,
+            m_driverController,
+            m_telescopeSubsystem));
   }
 
   public Command getAutoSelected() {
     return m_autoChooser.getSelected();
-  }
-
-  public void setUpAutoSelector() {
-    m_autonSelector.addOption("Example Auto 1", new ExampleCommand());
-    m_autonSelector.addOption("Example Auto 2", new ExampleCommand());
-    m_autonSelector.addOption("Example Auto 2", new ExampleCommand());
   }
 
   public Command getAuto() {
