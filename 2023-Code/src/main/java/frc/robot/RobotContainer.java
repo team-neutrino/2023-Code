@@ -184,9 +184,9 @@ public class RobotContainer {
   private final ArmToAngleCommand m_armToBackDown =
       new ArmToAngleCommand(m_subsystemContainer, m_armPidController, ArmConstants.BACK_DOWN, false, false);
   private final TelescopeCommand m_telescopeExtendCommand =
-      new TelescopeCommand(m_armSubsystem, true);
+      new TelescopeCommand(m_subsystemContainer, true);
   private final TelescopeCommand m_telescopeRetractCommand =
-      new TelescopeCommand(m_armSubsystem, false);
+      new TelescopeCommand(m_subsystemContainer, false);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
