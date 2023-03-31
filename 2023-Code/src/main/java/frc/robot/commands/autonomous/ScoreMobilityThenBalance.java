@@ -14,7 +14,6 @@ import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.NavXBalance;
 import frc.robot.commands.ScoringOpenCommand;
-import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
@@ -31,8 +30,6 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
   private ArrayList<PoseTriplet> reEnterCommunity;
   private RamseteCommand reEnterCommunityCommand;
   private RamseteCommand moveForwardCommand;
-
-  private DriveTrainSubsystem m_drivetrainSubsystem;
 
   /** Creates a new TestAutonGeneratedTrajectory. */
   public ScoreMobilityThenBalance(
@@ -52,13 +49,13 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
     moveForwardCommand =
         AutonomousUtil.generateRamseteFromPoses(
             forwardBackArray,
-            m_drivetrainSubsystem,
+            p_subsystemContainer.getDriveTrainSubsystem(),
             TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG);
 
     reEnterCommunityCommand =
         AutonomousUtil.generateRamseteFromPoses(
             reEnterCommunity,
-            m_drivetrainSubsystem,
+            p_subsystemContainer.getDriveTrainSubsystem(),
             TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
 
     // Add your commands in the addCommands() call, e.g.
