@@ -10,11 +10,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.TrajectoryConfigConstants;
 import frc.robot.commands.ArmToAngleCommand;
-import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.ScoringOpenCommand;
+import frc.robot.commands.TelescopeCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
@@ -28,44 +27,58 @@ import java.util.Arrays;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ScoreThenBalance extends SequentialCommandGroup {
+public class ScoreHighThenMove extends SequentialCommandGroup {
 
-  private ArrayList<PoseTriplet> moveForwardArray;
+  private DriveTrainSubsystem m_drivetrainSubsystem;
+  private ArmSubsystem m_armSubsystem;
+  private ViennaPIDController m_pidController;
+  private LEDSubsystem m_ledSubsystem;
+  private ScoringSubsystem m_scoringSubsystem;
+  private IntakeManager m_intakeManager;
+
   private RamseteCommand moveForwardCommand;
 
-  public ScoreThenBalance(
+  /** Creates a new ScoreHighThenMove. */
+  public ScoreHighThenMove(
       DriveTrainSubsystem p_drivetrainSubsystem,
-      ViennaPIDController p_armPIDController,
       ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem,
-      IntakeSubsystem p_intakeSubsystem,
-      IntakeManager p_intakeManager,
+      ViennaPIDController p_pidController,
       LEDSubsystem p_ledSubsystem,
+      ScoringSubsystem p_scoringSubsystem,
+      IntakeManager p_intakeManager,
       XboxController p_driverController,
       TelescopeSubsystem p_telescopeSubsystem) {
+    m_drivetrainSubsystem = p_drivetrainSubsystem;
+    m_armSubsystem = p_armSubsystem;
+    m_pidController = p_pidController;
+    m_ledSubsystem = p_ledSubsystem;
+    m_scoringSubsystem = p_scoringSubsystem;
+    m_intakeManager = p_intakeManager;
 
-    moveForwardArray =
+    ArrayList<PoseTriplet> moveForwardArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(2, 0, 0)));
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4, 0, 0)));
 
     moveForwardCommand =
         AutonomousUtil.generateRamseteFromPoses(
             moveForwardArray,
-            p_drivetrainSubsystem,
+            m_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
+    // Add your commands in the addCommands() call, e.g.
+    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmToAngleCommand(
             p_armSubsystem,
-            p_armPIDController,
+            p_pidController,
             p_driverController,
             p_telescopeSubsystem,
             ArmConstants.BACK_MID,
             true,
             false,
             p_ledSubsystem),
+        new TelescopeCommand(p_armSubsystem, p_telescopeSubsystem, p_driverController),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(2),
-        moveForwardCommand,
-        new AutoBalanceCommand(p_drivetrainSubsystem));
+        moveForwardCommand);
   }
 }

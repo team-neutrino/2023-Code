@@ -8,21 +8,25 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmAdjustCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private XboxController m_driverController;
   private ViennaPIDController m_pidController;
+  private TelescopeSubsystem m_telescopeSubsystem;
   private double targetAngle;
 
   public ArmAdjustCommand(
       ArmSubsystem p_armSubsystem,
+      TelescopeSubsystem p_telescopeSubsystem,
       XboxController p_driverController,
       ViennaPIDController p_pidController) {
     m_pidController = p_pidController;
     m_armSubsystem = p_armSubsystem;
     m_driverController = p_driverController;
+    m_telescopeSubsystem = p_telescopeSubsystem;
     targetAngle = m_armSubsystem.getAbsoluteArmPosition();
 
     addRequirements(m_armSubsystem);
@@ -35,19 +39,17 @@ public class ArmAdjustCommand extends CommandBase {
   public void execute() {
     double voltage = 0;
 
-    if (m_driverController.getRightY() < -Constants.ArmConstants.ARM_INPUT_DEADZONE) {
+    if (Math.abs(m_driverController.getRightX()) > Constants.ArmConstants.ARM_INPUT_DEADZONE) {
       voltage =
           m_armSubsystem.limitArmAmount(
-              m_driverController.getRightY() / Constants.ArmConstants.SCALE_FACTOR);
-      targetAngle = m_armSubsystem.getAbsoluteArmPosition();
-    } else if (m_driverController.getRightY() > Constants.ArmConstants.ARM_INPUT_DEADZONE) {
-      voltage =
-          m_armSubsystem.limitArmAmount(
-              m_driverController.getRightY() / Constants.ArmConstants.SCALE_FACTOR);
+              -m_driverController.getRightX() / Constants.ArmConstants.SCALE_FACTOR);
       targetAngle = m_armSubsystem.getAbsoluteArmPosition();
     } else {
-      int position = (int) m_armSubsystem.getAbsoluteArmPosition();
-      voltage = m_pidController.run(position, targetAngle);
+      voltage =
+          m_pidController.armRun(
+              m_armSubsystem.getAbsoluteArmPosition(),
+              targetAngle,
+              m_telescopeSubsystem.getTelescopingExtension());
     }
     m_armSubsystem.smartArmSet(voltage);
   }

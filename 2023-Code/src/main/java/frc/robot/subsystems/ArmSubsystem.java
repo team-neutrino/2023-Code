@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxLimitSwitch;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -19,24 +18,14 @@ public class ArmSubsystem extends SubsystemBase {
 
   private CANSparkMax m_positionMotor =
       new CANSparkMax(MotorConstants.ARM_MOTOR, MotorType.kBrushless);
-  private CANSparkMax m_telescopingMotor =
-      new CANSparkMax(MotorConstants.TELESCOPING_MOTOR, MotorType.kBrushless);
 
   private DutyCycleEncoder m_positionEncoder = new DutyCycleEncoder(DigitalConstants.ARM_ENCODER);
-  private DutyCycleEncoder m_telescopingEncoder =
-      new DutyCycleEncoder(DigitalConstants.TELESCOPING_ENCODER);
-
-  private SparkMaxLimitSwitch m_limitSwitch;
 
   public ArmSubsystem() {
     m_positionMotor.restoreFactoryDefaults();
-    m_telescopingMotor.restoreFactoryDefaults();
+    m_positionMotor.restoreFactoryDefaults();
     m_positionMotor.setIdleMode(IdleMode.kBrake);
-    m_telescopingMotor.setIdleMode(IdleMode.kBrake);
-    m_telescopingMotor.setInverted(true);
-    m_limitSwitch =
-        m_telescopingMotor.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyClosed);
-    m_limitSwitch.enableLimitSwitch(true);
+    m_positionMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public double getAbsoluteArmPosition() {
@@ -79,32 +68,15 @@ public class ArmSubsystem extends SubsystemBase {
     return appliedOutput * busVoltage; // chiefdelphi.com/t/get-voltage-from-spark-max/344136/3
   }
 
+  public DutyCycleEncoder getArmEncoder() {
+    return m_positionEncoder;
+  }
+
   public boolean atArmPosition(double targetPosition) {
     if (Math.abs(getAbsoluteArmPosition() - targetPosition) < ArmConstants.ARM_DEADZONE) {
       return true;
     }
     return false;
-  }
-
-  public double getAbsoluteTelescopePosistion() {
-    return m_telescopingEncoder.getAbsolutePosition();
-  }
-
-  public void turnTelescopeOff() {
-    m_telescopingMotor.setVoltage(0);
-  }
-
-  public void setTelescopeVoltage(double p_voltage) {
-    m_telescopingMotor.setVoltage(p_voltage);
-  }
-
-  public void setTelescope(double p_output) {
-    m_telescopingMotor.set(p_output);
-  }
-
-  public boolean getSwitch() {
-    return false;
-    // return m_limitSwitch.get();
   }
 
   @Override

@@ -9,23 +9,27 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmGatherModeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
   private IntakeSubsystem m_intakeSubsystem;
+  private TelescopeSubsystem m_telescopeSubsystem;
   private ViennaPIDController m_pidController;
 
   public ArmGatherModeCommand(
       ArmSubsystem p_armSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
+      TelescopeSubsystem p_telescopeSubsystem,
       ViennaPIDController p_pidController) {
     m_armSubsystem = p_armSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
     m_intakeSubsystem = p_intakeSubsystem;
     m_pidController = p_pidController;
+    m_telescopeSubsystem = p_telescopeSubsystem;
 
     addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
   }
@@ -37,7 +41,10 @@ public class ArmGatherModeCommand extends CommandBase {
   public void execute() {
     m_intakeSubsystem.setIntakeDown();
     m_armSubsystem.smartArmSet(
-        m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.ARM_FRONTMOST));
+        m_pidController.armRun(
+            m_armSubsystem.getAbsoluteArmPosition(),
+            ArmConstants.ARM_FRONTMOST,
+            m_telescopeSubsystem.getTelescopingExtension()));
 
     if (m_armSubsystem.getAbsoluteArmPosition() >= ArmConstants.GATHER_POSITION) {
       if (m_intakeSubsystem.isIntakeDown()) {

@@ -22,6 +22,8 @@ public class IntakeSubsystem extends SubsystemBase {
       new CANSparkMax(
           MotorConstants.INTAKEMOTOR, MotorType.kBrushless); // motor type subject to change;
 
+  private int hasGamePiece = 0;
+
   /** Encoder for the wheels on the intake */
   private RelativeEncoder m_wheelsEncoder;
 
@@ -83,6 +85,10 @@ public class IntakeSubsystem extends SubsystemBase {
     return m_beamBreak.get();
   }
 
+  public boolean unDebouncedDetectedGamePiece() {
+    return !m_beamBreak.get();
+  }
+
   public boolean isIntakeDown() {
     return m_intakeDownSensor.get();
   }
@@ -93,7 +99,19 @@ public class IntakeSubsystem extends SubsystemBase {
    * @return True if a game piece is present.
    */
   public boolean detectedGamePiece() {
-    return !getBeamBreak();
+    return hasGamePiece > 10;
+  }
+
+  public void gamePieceBeamBroken() {
+    if (!getBeamBreak() && isIntakeDown()) {
+      hasGamePiece++;
+    } else {
+      hasGamePiece = 0;
+    }
+  }
+
+  public void resetDebouncer() {
+    hasGamePiece = 0;
   }
 
   /** Pushes the intake out a little */
@@ -139,5 +157,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    gamePieceBeamBroken();
+  }
 }

@@ -4,6 +4,7 @@
 
 package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
@@ -17,6 +18,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
@@ -42,7 +44,9 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
       ScoringSubsystem p_scoringSubsystem,
       IntakeSubsystem p_intakeSubsystem,
       IntakeManager p_intakeManager,
-      LEDSubsystem p_ledSubsystem) {
+      LEDSubsystem p_ledSubsystem,
+      XboxController p_driverController,
+      TelescopeSubsystem p_telescopeSubsystem) {
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(
@@ -68,10 +72,21 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmToAngleCommand(
-            p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+            p_armSubsystem,
+            p_pidController,
+            p_driverController,
+            p_telescopeSubsystem,
+            ArmConstants.BACK_MID,
+            true,
+            false,
+            p_ledSubsystem),
         new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(.75),
         new ArmToAngleCommand(
-                p_armSubsystem, p_pidController, p_scoringSubsystem, ArmConstants.FORWARD_MID)
+                p_armSubsystem,
+                p_pidController,
+                p_driverController,
+                p_telescopeSubsystem,
+                ArmConstants.FORWARD_MID)
             .withTimeout(1),
         moveForwardCommand,
         new NavXBalance(p_drivetrainSubsystem),
