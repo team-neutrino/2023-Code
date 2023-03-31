@@ -17,7 +17,6 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
-import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
@@ -65,9 +64,13 @@ public class ScoreHighThenMove extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(p_subsystemContainer, p_pidController, p_driverController, ArmConstants.BACK_MID,
-        true,
-        false),
+        new ArmToAngleCommand(
+            p_subsystemContainer,
+            p_pidController,
+            p_driverController,
+            ArmConstants.BACK_MID,
+            true,
+            false),
         new TelescopeCommand(p_subsystemContainer, p_driverController),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(2),
         moveForwardCommand);

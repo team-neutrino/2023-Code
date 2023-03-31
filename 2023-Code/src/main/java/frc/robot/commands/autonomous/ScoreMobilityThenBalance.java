@@ -15,7 +15,6 @@ import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.NavXBalance;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
@@ -65,11 +64,16 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(p_subsystemContainer, p_pidController, p_driverController, ArmConstants.BACK_MID,
-        true,
-        false),
+        new ArmToAngleCommand(
+            p_subsystemContainer,
+            p_pidController,
+            p_driverController,
+            ArmConstants.BACK_MID,
+            true,
+            false),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(.75),
-        new ArmToAngleCommand(p_subsystemContainer, p_pidController, p_driverController, ArmConstants.FORWARD_MID)
+        new ArmToAngleCommand(
+                p_subsystemContainer, p_pidController, p_driverController, ArmConstants.FORWARD_MID)
             .withTimeout(1),
         moveForwardCommand,
         new NavXBalance(p_subsystemContainer),
