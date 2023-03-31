@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.Limiter;
@@ -18,12 +19,10 @@ public class TelescopeCommand extends CommandBase {
   private boolean m_isExtending;
 
   public TelescopeCommand(
-      ArmSubsystem p_armSubsystem,
-      TelescopeSubsystem p_telescopeSubsystem,
-      XboxController p_driverController) {
+      SubsystemContainer p_subsystemContainer, XboxController p_driverController) {
     m_driverController = p_driverController;
-    m_telescopeSubsystem = p_telescopeSubsystem;
-    m_armSubsystem = p_armSubsystem;
+    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     addRequirements(m_telescopeSubsystem);
   }
 

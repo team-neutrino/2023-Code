@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
@@ -45,10 +44,10 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public double limitArmAmount(double voltage) {
-    if (voltage < -Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
-      voltage = -Constants.ArmConstants.ARM_OUTPUT_LIMIT;
-    } else if (voltage > Constants.ArmConstants.ARM_OUTPUT_LIMIT) {
-      voltage = Constants.ArmConstants.ARM_OUTPUT_LIMIT;
+    if (voltage < -ArmConstants.ARM_OUTPUT_LIMIT) {
+      voltage = -ArmConstants.ARM_OUTPUT_LIMIT;
+    } else if (voltage > ArmConstants.ARM_OUTPUT_LIMIT) {
+      voltage = ArmConstants.ARM_OUTPUT_LIMIT;
     }
     return voltage;
   }

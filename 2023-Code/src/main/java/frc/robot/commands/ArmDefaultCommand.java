@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.ViennaPIDController;
@@ -16,12 +17,10 @@ public class ArmDefaultCommand extends CommandBase {
   private TelescopeSubsystem m_telescopeSubsystem;
 
   public ArmDefaultCommand(
-      ArmSubsystem p_armSubsystem,
-      TelescopeSubsystem p_telescopeSubsystem,
-      ViennaPIDController p_pidController) {
-    m_armSubsystem = p_armSubsystem;
+      SubsystemContainer p_subsystemContainer, ViennaPIDController p_pidController) {
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_pidController = p_pidController;
-    m_telescopeSubsystem = p_telescopeSubsystem;
+    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     addRequirements(m_armSubsystem);
   }
 

@@ -4,17 +4,20 @@
 
 package frc.robot.util;
 
-import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeManager {
   private ArmSubsystem m_armSubsystem;
-  private IntakeSubsystem m_intakeSubystem;
+  private IntakeSubsystem m_intakeSubsystem;
+  private SubsystemContainer m_subsystemContainer;
 
-  public IntakeManager(ArmSubsystem p_armSubsystem, IntakeSubsystem p_intakeSubsystem) {
-    m_armSubsystem = p_armSubsystem;
-    m_intakeSubystem = p_intakeSubsystem;
+  public IntakeManager(SubsystemContainer p_subsystemContainer) {
+    m_subsystemContainer = p_subsystemContainer;
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
   }
 
   /**
@@ -24,7 +27,7 @@ public class IntakeManager {
    * @return If it is OK to run intake-dependant commands.
    */
   public boolean managerApproved() {
-    return m_armSubsystem.getAbsoluteArmPosition() <= Constants.ArmConstants.INTAKE_RUNNABLE;
+    return m_armSubsystem.getAbsoluteArmPosition() <= ArmConstants.INTAKE_RUNNABLE;
   }
 
   /**
@@ -33,7 +36,7 @@ public class IntakeManager {
    */
   public void setIntakeDownWithArmCheck() {
     if (managerApproved()) {
-      m_intakeSubystem.setIntakeDown();
+      m_intakeSubsystem.setIntakeDown();
     }
   }
 
@@ -43,7 +46,7 @@ public class IntakeManager {
    */
   public void setIntakeUpWithArmCheck() {
     if (managerApproved()) {
-      m_intakeSubystem.setIntakeUp();
+      m_intakeSubsystem.setIntakeUp();
     }
   }
 }

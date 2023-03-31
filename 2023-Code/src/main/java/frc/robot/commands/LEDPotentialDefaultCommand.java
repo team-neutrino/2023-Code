@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.util.DriverStationInfo;
 
@@ -10,7 +11,9 @@ public class LEDPotentialDefaultCommand extends CommandBase {
   private LEDSubsystem m_ledSubsystem;
   private DriverStationInfo m_driverStationInfo;
 
-  public LEDPotentialDefaultCommand() {}
+  public LEDPotentialDefaultCommand(SubsystemContainer p_subsystemContainer) {
+    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
+  }
 
   @Override
   public void initialize() {

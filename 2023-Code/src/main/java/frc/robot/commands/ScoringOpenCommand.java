@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.IntakeManager;
 
@@ -12,8 +13,9 @@ public class ScoringOpenCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
   private IntakeManager m_intakeManager;
 
-  public ScoringOpenCommand(ScoringSubsystem p_scoringSubsystem, IntakeManager p_intakeManager) {
-    m_scoringSubsystem = p_scoringSubsystem;
+  public ScoringOpenCommand(
+      SubsystemContainer p_subsystemContainer, IntakeManager p_intakeManager) {
+    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_intakeManager = p_intakeManager;
     addRequirements(m_scoringSubsystem);
   }

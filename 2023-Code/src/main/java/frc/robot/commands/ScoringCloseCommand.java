@@ -5,13 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ScoringSubsystem;
 
 public class ScoringCloseCommand extends CommandBase {
   private ScoringSubsystem m_scoringSubsystem;
 
-  public ScoringCloseCommand(ScoringSubsystem p_scoringSubsystem) {
-    m_scoringSubsystem = p_scoringSubsystem;
+  public ScoringCloseCommand(SubsystemContainer p_subsystemContainer) {
+    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     addRequirements(m_scoringSubsystem);
   }
 

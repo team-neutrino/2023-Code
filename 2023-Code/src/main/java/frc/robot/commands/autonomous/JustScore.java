@@ -4,14 +4,10 @@
 
 package frc.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants.ArmConstants;
 import frc.robot.SubsystemContainer;
 import frc.robot.TrajectoryConfigConstants;
-import frc.robot.commands.ArmToAngleCommand;
-import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -23,23 +19,26 @@ import frc.robot.util.ViennaPIDController;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ScoreThenMove extends SequentialCommandGroup {
+public class JustScore extends SequentialCommandGroup {
 
-  private DriveTrainSubsystem m_drivetrainSubsystem;
+  private ArrayList<PoseTriplet> moveBackArray;
   private ArrayList<PoseTriplet> forwardBackArray;
+
+  private RamseteCommand moveBackCommand;
   private RamseteCommand forwardBackCommand;
 
+  private DriveTrainSubsystem m_drivetrainSubsystem;
+
   /** Creates a new TestAutonGeneratedTrajectory. */
-  public ScoreThenMove(
+  public JustScore(
       SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
-      IntakeManager p_intakeManager,
-      XboxController p_driverController) {
+      IntakeManager p_intakeManager) {
     m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4, 0, 0)));
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(2, 0, 0)));
 
     forwardBackCommand =
         AutonomousUtil.generateRamseteFromPoses(
@@ -47,17 +46,22 @@ public class ScoreThenMove extends SequentialCommandGroup {
             m_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
+    moveBackArray =
+        new ArrayList<PoseTriplet>(
+            Arrays.asList(new PoseTriplet(2, 0, 0), new PoseTriplet(0, 0, 0)));
+
+    moveBackCommand =
+        AutonomousUtil.generateRamseteFromPoses(
+            moveBackArray,
+            m_drivetrainSubsystem,
+            TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(
-            p_subsystemContainer,
-            p_pidController,
-            p_driverController,
-            ArmConstants.BACK_MID,
-            true,
-            false),
-        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(2),
-        forwardBackCommand);
+        forwardBackCommand, moveBackCommand
+        // new ArmToAngleCommand(
+        //     p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
+        // new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true)
+        );
   }
 }

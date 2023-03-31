@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
@@ -16,8 +17,8 @@ import frc.robot.util.ViennaPIDController;
 public class ArmFeederCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
-  private ViennaPIDController m_pidController;
   private LEDSubsystem m_ledSubsystem;
+  private ViennaPIDController m_pidController;
   private TelescopeSubsystem m_telescopeSubsystem;
   private double voltage;
   private double hasGamePiece;
@@ -25,17 +26,16 @@ public class ArmFeederCommand extends CommandBase {
   private double time = 1.5;
 
   public ArmFeederCommand(
-      ArmSubsystem p_armSubsystem,
-      ScoringSubsystem p_scoringSubsystem,
+      SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
-      TelescopeSubsystem p_telescopeSubsystem,
       LEDSubsystem p_ledSubsystem) {
-    m_armSubsystem = p_armSubsystem;
-    m_scoringSubsystem = p_scoringSubsystem;
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_pidController = p_pidController;
-    m_ledSubsystem = p_ledSubsystem;
-    m_telescopeSubsystem = p_telescopeSubsystem;
+    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
+    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_timer = new Timer();
+    addRequirements(m_armSubsystem, m_scoringSubsystem);
   }
 
   @Override

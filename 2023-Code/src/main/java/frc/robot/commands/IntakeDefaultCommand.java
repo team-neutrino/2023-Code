@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.util.IntakeManager;
 
@@ -13,15 +14,16 @@ import frc.robot.util.IntakeManager;
  * intake is up and stopped.
  */
 public class IntakeDefaultCommand extends CommandBase {
-  /** An object of the intake subsystem. */
   IntakeSubsystem m_intakeSubsystem;
-
   IntakeManager m_intakeManager;
+  SubsystemContainer m_subsystemContainer;
 
-  /** Constructor, creates a new IntakeDefaultCommand. */
-  public IntakeDefaultCommand(IntakeSubsystem p_intakeSubsystem, IntakeManager p_inIntakeManager) {
-    m_intakeSubsystem = p_intakeSubsystem;
-    m_intakeManager = p_inIntakeManager;
+  public IntakeDefaultCommand(
+      SubsystemContainer p_subsystemContainer, IntakeManager p_intakeManager) {
+
+    m_subsystemContainer = p_subsystemContainer;
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
+    m_intakeManager = p_intakeManager;
 
     addRequirements(m_intakeSubsystem);
   }
@@ -35,18 +37,18 @@ public class IntakeDefaultCommand extends CommandBase {
    */
   @Override
   public void execute() {
-    m_intakeSubsystem.stopIntake();
+    m_subsystemContainer.getIntakeSubsystem().stopIntake();
 
     if (m_intakeManager.managerApproved()) {
       m_intakeManager.setIntakeUpWithArmCheck();
 
       // code for squeezing & unsqueezing is controlled by arm position due to problem with
       // intake squeezing ball right after arm gets ahold of it and partly pulling it out.
-      if (!m_intakeSubsystem.unDebouncedDetectedGamePiece()) {
-        m_intakeSubsystem.unsqueeze();
+      if (!m_subsystemContainer.getIntakeSubsystem().unDebouncedDetectedGamePiece()) {
+        m_subsystemContainer.getIntakeSubsystem().unsqueeze();
       } else {
         // in case we're holding a game piece, we want to keep a hold of it
-        m_intakeSubsystem.squeeze();
+        m_subsystemContainer.getIntakeSubsystem().squeeze();
       }
     }
   }

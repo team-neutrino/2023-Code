@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.util.ViennaPIDController;
 
@@ -14,8 +15,8 @@ public class MoveForwardPIDCommand extends CommandBase {
   private double baseSpeed = 0.3;
   /** Creates a new MoveForwardPIDCommand. */
   public MoveForwardPIDCommand(
-      DriveTrainSubsystem p_driveTrianSubsystem, ViennaPIDController p_movePIDController) {
-    m_driveTrainSubsystem = p_driveTrianSubsystem;
+      SubsystemContainer p_subsystemContainer, ViennaPIDController p_movePIDController) {
+    m_driveTrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
     m_movePIDController = p_movePIDController;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_driveTrainSubsystem);

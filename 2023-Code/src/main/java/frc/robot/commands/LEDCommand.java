@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.DriverStationInfo;
@@ -14,13 +15,12 @@ public class LEDCommand extends CommandBase {
   private boolean hasBroken = false;
 
   public LEDCommand(
-      LEDSubsystem p_ledSubsystem,
+      SubsystemContainer p_subsystemContainer,
       LEDColor p_colorMode,
-      ScoringSubsystem p_scoringSubsystem,
       DriverStationInfo p_DriverStationInfo) {
-    m_ledSubsystem = p_ledSubsystem;
+    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
+    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_colorMode = p_colorMode;
-    m_scoringSubsystem = p_scoringSubsystem;
     addRequirements(m_ledSubsystem);
   }
 

@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class MoveForwardCommand extends CommandBase {
@@ -14,8 +15,8 @@ public class MoveForwardCommand extends CommandBase {
 
   /** Creates a new MoveForwardCommand. */
   public MoveForwardCommand(
-      DriveTrainSubsystem p_driveTrainSubsystem, double p_distance, double p_motorPower) {
-    m_driveTrainSubsystem = p_driveTrainSubsystem;
+      SubsystemContainer p_subsystemContainer, double p_distance, double p_motorPower) {
+    m_driveTrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
     m_distance = p_distance;
     m_motorPower = p_motorPower;
     // Use addRequirements() here to declare subsystem dependencies.
