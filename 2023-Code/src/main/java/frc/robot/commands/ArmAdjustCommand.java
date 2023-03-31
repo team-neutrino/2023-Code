@@ -33,7 +33,9 @@ public class ArmAdjustCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    targetAngle = m_armSubsystem.getAbsoluteArmPosition();
+  }
 
   @Override
   public void execute() {
