@@ -64,6 +64,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       XboxController p_driverController) {
 
     // m_limelight = p_limelight;
+    m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
+    m_subsystemContainer = p_subsystemContainer;
     m_scoring = p_subsystemContainer.getScoringSubsystem();
     m_arm = p_subsystemContainer.getArmSubsystem();
     m_intake = p_subsystemContainer.getIntakeSubsystem();

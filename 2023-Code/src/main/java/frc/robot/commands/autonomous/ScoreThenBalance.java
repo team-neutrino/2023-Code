@@ -36,6 +36,8 @@ public class ScoreThenBalance extends SequentialCommandGroup {
       IntakeManager p_intakeManager,
       XboxController p_driverController) {
 
+        m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
+
     moveForwardArray =
         new ArrayList<PoseTriplet>(
             Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(2, 0, 0)));

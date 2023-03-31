@@ -11,16 +11,15 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeManager {
   private ArmSubsystem m_armSubsystem;
-  private IntakeSubsystem m_intakeSubystem;
-
-  public IntakeManager(ArmSubsystem p_armSubsystem, IntakeSubsystem p_intakeSubsystem) {
-    m_armSubsystem = p_armSubsystem;
-    m_intakeSubystem = p_intakeSubsystem;
-  }
+  private IntakeSubsystem m_intakeSubsystem;
+  private SubsystemContainer m_subsystemContainer;
 
   public IntakeManager(SubsystemContainer p_subsystemContainer) {
+    m_subsystemContainer = p_subsystemContainer;
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
   }
+
 
   /**
    * If the arm is down, then we DO NOT want to put the intake down or up because it will collide
@@ -38,7 +37,7 @@ public class IntakeManager {
    */
   public void setIntakeDownWithArmCheck() {
     if (managerApproved()) {
-      m_intakeSubystem.setIntakeDown();
+      m_intakeSubsystem.setIntakeDown();
     }
   }
 
@@ -48,7 +47,7 @@ public class IntakeManager {
    */
   public void setIntakeUpWithArmCheck() {
     if (managerApproved()) {
-      m_intakeSubystem.setIntakeUp();
+      m_intakeSubsystem.setIntakeUp();
     }
   }
 }
