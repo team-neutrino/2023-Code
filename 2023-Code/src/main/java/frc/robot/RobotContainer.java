@@ -127,16 +127,9 @@ public class RobotContainer {
       new ShuffleboardSubsystem(
           m_subsystemContainer,
           m_driverStationInfo,
-          m_drivetrainSubsystem,
-          m_scoringSubsystem,
-          m_limelightSubsystem,
-          m_armSubsystem,
-          m_intakeSubsystem,
-          m_ledSubsystem,
           m_armPidController,
           m_intakeManager,
-          m_driverController,
-          m_telescopeSubsystem);
+          m_driverController);
 
   // DEFAULT COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand =
