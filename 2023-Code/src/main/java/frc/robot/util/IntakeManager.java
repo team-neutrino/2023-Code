@@ -20,7 +20,6 @@ public class IntakeManager {
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
   }
 
-
   /**
    * If the arm is down, then we DO NOT want to put the intake down or up because it will collide
    * with the arm
