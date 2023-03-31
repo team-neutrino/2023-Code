@@ -115,7 +115,6 @@ public class RobotContainer {
           m_intakeSubsystem,
           m_ledSubsystem);
 
-
   // UTIL
   private final ViennaPIDController m_armPidController =
       new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
@@ -153,13 +152,17 @@ public class RobotContainer {
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_subsystemContainer);
   private final ScoreMobilityThenBalance m_scoreMobilityThenBalance =
-      new ScoreMobilityThenBalance(m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
+      new ScoreMobilityThenBalance(
+          m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
   private final ScoreThenMove m_scoreThenMove =
-      new ScoreThenMove(m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
+      new ScoreThenMove(
+          m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
   private final ScoreThenBalance m_scoreThenBalanece =
-      new ScoreThenBalance(m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
+      new ScoreThenBalance(
+          m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
   private final ScoreMoveAutoGather m_scoreThenMoveThenAutoGather =
-      new ScoreMoveAutoGather(m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
+      new ScoreMoveAutoGather(
+          m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
 
   // INTAKE COMMANDS
   private final IntakeReverseCommand m_intakeReverseCommand =
@@ -184,21 +187,37 @@ public class RobotContainer {
       new ArmFeederCommand(m_subsystemContainer, m_armPidController, m_ledSubsystem);
 
   private final ArmToAngleCommand m_armToForwardMid =
-      new ArmToAngleCommand(m_subsystemContainer, m_armPidController, m_driverController, ArmConstants.FORWARD_MID,
-      false,
-      true);
+      new ArmToAngleCommand(
+          m_subsystemContainer,
+          m_armPidController,
+          m_driverController,
+          ArmConstants.FORWARD_MID,
+          false,
+          true);
   private final ArmToAngleCommand m_armToForwardDown =
-      new ArmToAngleCommand(m_subsystemContainer, m_armPidController, m_driverController, ArmConstants.FORWARD_DOWN,
-      false,
-      false);
+      new ArmToAngleCommand(
+          m_subsystemContainer,
+          m_armPidController,
+          m_driverController,
+          ArmConstants.FORWARD_DOWN,
+          false,
+          false);
   private final ArmToAngleCommand m_armToBackMid =
-      new ArmToAngleCommand(m_subsystemContainer, m_armPidController, m_driverController, ArmConstants.BACK_MID,
-      false,
-      true);
+      new ArmToAngleCommand(
+          m_subsystemContainer,
+          m_armPidController,
+          m_driverController,
+          ArmConstants.BACK_MID,
+          false,
+          true);
   private final ArmToAngleCommand m_armToBackDown =
-      new ArmToAngleCommand(m_subsystemContainer, m_armPidController, m_driverController, ArmConstants.BACK_DOWN,
-      false,
-      false);
+      new ArmToAngleCommand(
+          m_subsystemContainer,
+          m_armPidController,
+          m_driverController,
+          ArmConstants.BACK_DOWN,
+          false,
+          false);
 
   private final TelescopeDefaultCommand m_TelescopeDefaultCommand =
       new TelescopeDefaultCommand(m_telescopeSubsystem, m_armSubsystem);
@@ -242,15 +261,14 @@ public class RobotContainer {
     m_rightBumper.whileTrue(m_intakeReverseCommand);
 
     // LED Buttons
-    m_rightArrow.onTrue(
-        new LEDCommand(m_subsystemContainer, LEDColor.PURPLE, m_driverStationInfo));
-    m_leftArrow.onTrue(
-        new LEDCommand(m_subsystemContainer, LEDColor.YELLOW, m_driverStationInfo));
+    m_rightArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.PURPLE, m_driverStationInfo));
+    m_leftArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.YELLOW, m_driverStationInfo));
   }
 
   public Command getAutonomousCommand() {
     m_drivetrainSubsystem.resetOdometry();
-    return new ScoreMoveAutoGather(m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController)
+    return new ScoreMoveAutoGather(
+            m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController)
         .andThen(new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
     // return m_shuffleboardSubsystem
     //     .getAutoSelected()

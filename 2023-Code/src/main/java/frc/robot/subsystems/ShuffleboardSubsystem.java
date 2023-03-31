@@ -210,16 +210,20 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   public void setUpSelector() {
     m_autoChooser.setDefaultOption(
         "Default",
-        new ScoreMobilityThenBalance(m_subsystemContainer, m_pidController, m_intakeManager, m_driverController));
+        new ScoreMobilityThenBalance(
+            m_subsystemContainer, m_pidController, m_intakeManager, m_driverController));
     m_autoChooser.addOption(
         "Balance Mobility",
-        new ScoreMobilityThenBalance(m_subsystemContainer, m_pidController, m_intakeManager, m_driverController));
+        new ScoreMobilityThenBalance(
+            m_subsystemContainer, m_pidController, m_intakeManager, m_driverController));
     m_autoChooser.addOption(
         "Score Mid then Move",
-        new ScoreThenMove(m_subsystemContainer, m_pidController, m_intakeManager, m_driverController));
+        new ScoreThenMove(
+            m_subsystemContainer, m_pidController, m_intakeManager, m_driverController));
     m_autoChooser.addOption(
         "Score High then Move",
-        new ScoreHighThenMove(m_subsystemContainer, m_pidController, m_intakeManager, m_driverController));
+        new ScoreHighThenMove(
+            m_subsystemContainer, m_pidController, m_intakeManager, m_driverController));
   }
 
   public Command getAutoSelected() {

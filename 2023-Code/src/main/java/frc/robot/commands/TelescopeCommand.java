@@ -18,8 +18,8 @@ public class TelescopeCommand extends CommandBase {
   private XboxController m_driverController;
   private boolean m_isExtending;
 
-  public TelescopeCommand(SubsystemContainer p_subsystemContainer,
-      XboxController p_driverController) {
+  public TelescopeCommand(
+      SubsystemContainer p_subsystemContainer, XboxController p_driverController) {
     m_driverController = p_driverController;
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
