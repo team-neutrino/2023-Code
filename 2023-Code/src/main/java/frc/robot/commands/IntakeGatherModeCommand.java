@@ -48,6 +48,7 @@ public class IntakeGatherModeCommand extends CommandBase {
     if (!m_auton) {
       m_intakeSubsystem.stopIntake();
     }
+    m_intakeSubsystem.resetDebouncer();
     // TODO remove potentially, does the same thing as IntakeDefaultCommand
   }
 

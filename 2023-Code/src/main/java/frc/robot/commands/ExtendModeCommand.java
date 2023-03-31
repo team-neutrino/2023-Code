@@ -4,25 +4,20 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
-import frc.robot.util.Limiter;
 
-public class TelescopeCommand extends CommandBase {
+public class ExtendModeCommand extends CommandBase {
+
   private ArmSubsystem m_armSubsystem;
   private TelescopeSubsystem m_telescopeSubsystem;
-  private XboxController m_driverController;
-  private boolean m_isExtending;
 
-  public TelescopeCommand(SubsystemContainer p_subsystemContainer,
-      XboxController p_driverController) {
-    m_driverController = p_driverController;
-    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
-    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+  public ExtendModeCommand(TelescopeSubsystem p_telescopeSubsystem, ArmSubsystem p_armSubsystem) {
+    m_telescopeSubsystem = p_telescopeSubsystem;
+    m_armSubsystem = p_armSubsystem;
+
     addRequirements(m_telescopeSubsystem);
   }
 
@@ -31,20 +26,11 @@ public class TelescopeCommand extends CommandBase {
 
   @Override
   public void execute() {
-
-    double xboxValue =
-        -Limiter.bound(
-            (Limiter.deadzone(m_driverController.getLeftY(), ArmConstants.ARM_INPUT_DEADZONE)),
-            -.5,
-            .5);
-
-    m_telescopeSubsystem.setTelescope(xboxValue);
+    m_telescopeSubsystem.extendTelescoping();
   }
 
   @Override
-  public void end(boolean interrupted) {
-    m_telescopeSubsystem.turnTelescopeOff();
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {

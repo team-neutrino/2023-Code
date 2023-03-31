@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.MotorConstants;
@@ -50,6 +51,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private RelativeEncoder m_encoderRight2;
   private Joystick m_leftJoystick;
   private Joystick m_rightJoystick;
+  private JoystickButton m_driveBackwards;
   private MotorControllerGroup m_motorGroupRight =
       new MotorControllerGroup(m_motorRight1, m_motorRight2);
   private MotorControllerGroup m_motorGroupLeft =
@@ -59,6 +61,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick) {
     m_leftJoystick = p_leftJoystick;
     m_rightJoystick = p_rightJoystick;
+    m_driveBackwards = new JoystickButton(m_rightJoystick, 13);
 
     m_encoderLeft1 = initializeMotor(m_motorLeft1, true);
     m_encoderLeft2 = initializeMotor(m_motorLeft2, true);
@@ -175,7 +178,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
       m_motorGroupRight.set(turboAccel(deadzone(rightMotorInput)));
     }
     /* if the top of the joystick is held  */
-    else if (m_rightJoystick.getTop()) {
+    else if (m_driveBackwards.getAsBoolean()) {
       m_motorGroupLeft.set(-deadzone(rightMotorInput));
       m_motorGroupRight.set(-deadzone(leftMotorInput));
     } else {

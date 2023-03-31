@@ -5,6 +5,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -18,6 +19,7 @@ import frc.robot.commands.IntakeGatherModeCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
@@ -45,10 +47,10 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
   public ScoreMoveAutoGather(
       SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
-      IntakeManager p_intakeManager) {
+      IntakeManager p_intakeManager,
+      XboxController p_driverController) {
     m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
-
     if (DriverStationInfo.getAlliance() == Alliance.Red) {
       inverted = true;
     }
@@ -84,21 +86,29 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(
-            p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true, false),
+        new ArmToAngleCommand(p_subsystemContainer, p_pidController, p_driverController, ArmConstants.BACK_MID,
+        true,
+        false),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(.5),
         new ParallelRaceGroup(
-            new ArmToAngleCommand(
-                p_subsystemContainer, p_pidController, ArmConstants.FORWARD_MID, false, false),
+            new ArmToAngleCommand(p_subsystemContainer, p_pidController, p_driverController, ArmConstants.FORWARD_MID,
+            false,
+            false),
             toGamePieceCommand,
             new IntakeGatherModeCommand(p_subsystemContainer, p_intakeManager, true)),
-        new InstantCommand(m_intakeSubsystem::stopIntake, m_intakeSubsystem),
-        new ArmGatherModeCommand(p_subsystemContainer, p_pidController).withTimeout(2),
+        new InstantCommand(p_subsystemContainer.getIntakeSubsystem()::stopIntake),
+        new ArmGatherModeCommand(
+                p_subsystemContainer,
+                p_pidController)
+            .withTimeout(2),
         runThatBackCommand,
-        new ArmToAngleCommand(
-            p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true, false),
+        new ArmToAngleCommand(p_subsystemContainer, p_pidController, p_driverController, ArmConstants.BACK_MID,
+        true,
+        false),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(1),
-        new ArmToAngleCommand(
-            p_subsystemContainer, p_pidController, ArmConstants.FORWARD_MID, true, false));
+        new ArmToAngleCommand(p_subsystemContainer, p_pidController, p_driverController, ArmConstants.FORWARD_MID,
+        true,
+        false)
+            .alongWith(new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)));
   }
 }

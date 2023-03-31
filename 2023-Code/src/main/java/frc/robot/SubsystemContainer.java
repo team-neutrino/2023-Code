@@ -10,7 +10,7 @@ import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
 
 public class SubsystemContainer {
-  private DriveTrainSubsystem m_driveTrainSubsystem;
+  private DriveTrainSubsystem m_drivetrainSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
   private LimelightSubsystem m_limelightSubsystem;
   private ArmSubsystem m_armSubsystem;
@@ -22,13 +22,13 @@ public class SubsystemContainer {
   public SubsystemContainer(
       TelescopeSubsystem p_telescopeSubsystem,
       PneumaticSubsystem p_pneumaticSubsystem,
-      DriveTrainSubsystem p_driveTrainSubsystem,
+      DriveTrainSubsystem p_drivetrainSubsystem,
       ScoringSubsystem p_scoringSubsystem,
       LimelightSubsystem p_limelLimelightSubsystem,
       ArmSubsystem p_armSubsystem,
       IntakeSubsystem p_intakeSubsystem,
       LEDSubsystem p_ledSubsystem) {
-    m_driveTrainSubsystem = p_driveTrainSubsystem;
+    m_drivetrainSubsystem = p_drivetrainSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
     m_limelightSubsystem = p_limelLimelightSubsystem;
     m_armSubsystem = p_armSubsystem;
@@ -39,7 +39,7 @@ public class SubsystemContainer {
   }
 
   public DriveTrainSubsystem getDriveTrainSubsystem() {
-    return m_driveTrainSubsystem;
+    return m_drivetrainSubsystem;
   }
 
   public ScoringSubsystem getScoringSubsystem() {

@@ -9,24 +9,30 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
+import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmFeederCommand extends CommandBase {
-  ArmSubsystem m_armSubsystem;
-  ScoringSubsystem m_scoringSubsystem;
-  ViennaPIDController m_pidController;
-  double voltage;
-  double hasGamePiece;
-  Timer m_timer;
-  double time = 1.5;
-  SubsystemContainer m_subsystemContainer;
+  private ArmSubsystem m_armSubsystem;
+  private ScoringSubsystem m_scoringSubsystem;
+  private LEDSubsystem m_ledSubsystem;
+  private ViennaPIDController m_pidController;
+  private TelescopeSubsystem m_telescopeSubsystem;
+  private double voltage;
+  private double hasGamePiece;
+  private Timer m_timer;
+  private double time = 1.5;
 
-  public ArmFeederCommand(
-      SubsystemContainer p_subsystemContainer, ViennaPIDController p_pidController) {
+  public ArmFeederCommand(SubsystemContainer p_subsystemContainer,
+      ViennaPIDController p_pidController,
+      LEDSubsystem p_ledSubsystem) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_pidController = p_pidController;
+    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
+    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_timer = new Timer();
     addRequirements(m_armSubsystem, m_scoringSubsystem);
   }
@@ -39,8 +45,12 @@ public class ArmFeederCommand extends CommandBase {
 
   @Override
   public void execute() {
-    voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), ArmConstants.FEEDER);
-    m_armSubsystem.setArm(voltage);
+    voltage =
+        m_pidController.armRun(
+            m_armSubsystem.getAbsoluteArmPosition(),
+            ArmConstants.FEEDER,
+            m_telescopeSubsystem.getTelescopingExtension());
+    m_armSubsystem.smartArmSet(voltage);
 
     if (m_scoringSubsystem.detectedGamePiece()) {
       hasGamePiece++;
@@ -48,7 +58,7 @@ public class ArmFeederCommand extends CommandBase {
       hasGamePiece = 0;
     }
 
-    if (m_scoringSubsystem.detectedGamePiece() && m_timer.get() > time && hasGamePiece > 18) {
+    if (m_scoringSubsystem.detectedGamePiece() && m_timer.get() > time && hasGamePiece > 6) {
       m_scoringSubsystem.closeScoring();
     } else {
       m_scoringSubsystem.openScoring();
