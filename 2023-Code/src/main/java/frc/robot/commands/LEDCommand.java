@@ -41,7 +41,7 @@ public class LEDCommand extends CommandBase {
     }
     if (m_colorMode == LEDColor.YELLOW) {
       m_ledSubsystem.setToYellow();
-    }
+    }}
     // if (m_scoringSubsystem.detectedGamePiece()) {
     //   hasBroken = true;
     // }
@@ -49,7 +49,7 @@ public class LEDCommand extends CommandBase {
     //   m_ledSubsystem.setToOrange();
     //   hasBroken = false;
     // }
-  }
+  
 
   @Override
   public void end(boolean interrupted) {}
