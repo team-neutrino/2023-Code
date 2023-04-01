@@ -20,6 +20,7 @@ import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmFeederCommand;
 import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
+import frc.robot.commands.ArmToScoreCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
 import frc.robot.commands.ExtendModeCommand;
@@ -180,38 +181,18 @@ public class RobotContainer {
       new ArmFeederCommand(m_subsystemContainer, m_armPidController, m_ledSubsystem);
 
   private final ArmToAngleCommand m_armToForwardMid =
-      new ArmToAngleCommand(
-          m_subsystemContainer,
-          m_armPidController,
-          m_driverController,
-          ArmConstants.FORWARD_MID,
-          false,
-          true);
+      new ArmToAngleCommand(m_subsystemContainer, m_armPidController, ArmConstants.FORWARD_MID);
   private final ArmToAngleCommand m_armToForwardDown =
-      new ArmToAngleCommand(
-          m_subsystemContainer,
-          m_armPidController,
-          m_driverController,
-          ArmConstants.FORWARD_DOWN,
-          false,
-          false);
+      new ArmToAngleCommand(m_subsystemContainer, m_armPidController, ArmConstants.FORWARD_DOWN);
   private final ArmToAngleCommand m_armToBackMid =
-      new ArmToAngleCommand(
-          m_subsystemContainer,
-          m_armPidController,
-          m_driverController,
-          ArmConstants.BACK_MID,
-          false,
-          true);
+      new ArmToAngleCommand(m_subsystemContainer, m_armPidController, ArmConstants.BACK_MID);
   private final ArmToAngleCommand m_armToBackDown =
-      new ArmToAngleCommand(
-          m_subsystemContainer,
-          m_armPidController,
-          m_driverController,
-          ArmConstants.BACK_DOWN,
-          false,
-          false);
+      new ArmToAngleCommand(m_subsystemContainer, m_armPidController, ArmConstants.BACK_DOWN);
 
+  private final ArmToScoreCommand m_scoreHigh =
+      new ArmToScoreCommand(m_subsystemContainer, m_armPidController, m_driverController, true);
+  private final ArmToScoreCommand m_scoreMid =
+      new ArmToScoreCommand(m_subsystemContainer, m_armPidController, m_driverController, false);
   private final TelescopeDefaultCommand m_TelescopeDefaultCommand =
       new TelescopeDefaultCommand(m_telescopeSubsystem, m_armSubsystem);
 
@@ -256,6 +237,8 @@ public class RobotContainer {
     // LED Buttons
     m_rightArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.PURPLE, m_driverStationInfo));
     m_leftArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.YELLOW, m_driverStationInfo));
+    m_upArrow.onTrue(m_scoreHigh);
+    m_downArrow.onTrue(m_scoreMid);
   }
 
   public Command getAutonomousCommand() {

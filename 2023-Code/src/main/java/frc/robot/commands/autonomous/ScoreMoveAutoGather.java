@@ -85,42 +85,18 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new ArmToAngleCommand(
-            p_subsystemContainer,
-            p_pidController,
-            p_driverController,
-            ArmConstants.BACK_MID,
-            true,
-            false),
+        new ArmToAngleCommand(p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(.5),
         new ParallelRaceGroup(
-            new ArmToAngleCommand(
-                p_subsystemContainer,
-                p_pidController,
-                p_driverController,
-                ArmConstants.FORWARD_MID,
-                false,
-                false),
+            new ArmToAngleCommand(p_subsystemContainer, p_pidController, ArmConstants.FORWARD_MID),
             toGamePieceCommand,
             new IntakeGatherModeCommand(p_subsystemContainer, p_intakeManager, true)),
         new InstantCommand(p_subsystemContainer.getIntakeSubsystem()::stopIntake),
         new ArmGatherModeCommand(p_subsystemContainer, p_pidController).withTimeout(2),
         runThatBackCommand,
-        new ArmToAngleCommand(
-            p_subsystemContainer,
-            p_pidController,
-            p_driverController,
-            ArmConstants.BACK_MID,
-            true,
-            false),
+        new ArmToAngleCommand(p_subsystemContainer, p_pidController, ArmConstants.BACK_MID, true),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(1),
-        new ArmToAngleCommand(
-                p_subsystemContainer,
-                p_pidController,
-                p_driverController,
-                ArmConstants.FORWARD_MID,
-                true,
-                false)
+        new ArmToAngleCommand(p_subsystemContainer, p_pidController, ArmConstants.FORWARD_MID, true)
             .alongWith(new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)));
   }
 }

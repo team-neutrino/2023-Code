@@ -58,9 +58,13 @@ public final class Constants {
     public static final double FEEDER = 34.5;
 
     public static final double BACK_HIGH_CONE = 37.7;
+    public static final double BACK_HIGH_CUBE = 34;
 
     public static final double BACK_MID_CUBE = 30;
-    public static final double BACK_HIGH_CUBE = 34;
+    public static final double BACK_MID_CONE = 36.7;
+
+    public static final double FRONT_MID_CUBE = 30;
+    public static final double FRONT_MID_CONE = 36.7;
 
     // positions for cross subsystem interactions
     public static final double GATHER_POSITION = 91;
@@ -75,7 +79,6 @@ public final class Constants {
   }
 
   public static class TelescopeConstants {
-
     public static final double TELESCOPE_EXTEND_SPEED = 0.5; // note: setInverted is true
     public static final double TELESCOPE_RETRACT_SPEED = -0.5;
     public static final double TELESCOPE_EXTEND_LIMIT = -5500;
@@ -138,5 +141,9 @@ public final class Constants {
   public static class UtilConstants {
     public static final String UNIVERSAL_DIRECTORY =
         "\\src\\main\\java\\frc\\robot\\util\\trajectoryInput\\";
+  }
+
+  public static class LimelightConstants {
+    public static final double SCORING_DISTANCE = 1;
   }
 }
