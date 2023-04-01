@@ -10,22 +10,29 @@ import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.util.IntakeManager;
 
-public class IntakeReverseCommand extends CommandBase {
+public class IntakeCommand extends CommandBase {
 
-  // An object of the intake subsystem.
   private IntakeSubsystem m_intakeSubsystem;
   private IntakeManager m_intakeManager;
   private Timer timer;
-  private double squeeze_time;
+  private double m_time = 60 * 60 * 24;
 
-  public IntakeReverseCommand(
-      SubsystemContainer p_subsystemContainer, IntakeManager p_intakeManager) {
+  public IntakeCommand(SubsystemContainer p_subsystemContainer, IntakeManager p_intakeManager) {
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
 
-    // change and adjust this time to determine how long to intake squeezes & runs before unsquezing
-    squeeze_time = 1;
+    addRequirements(m_intakeSubsystem);
+  }
+
+  public IntakeCommand(
+      SubsystemContainer p_subsystemContainer,
+      IntakeSubsystem p_intakeSubsystem,
+      IntakeManager p_intakeManager,
+      double p_time) {
+    m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
+    m_intakeManager = p_intakeManager;
     timer = new Timer();
+    m_time = p_time;
 
     addRequirements(m_intakeSubsystem);
   }
@@ -38,14 +45,14 @@ public class IntakeReverseCommand extends CommandBase {
   @Override
   public void execute() {
     if (m_intakeManager.managerApproved()) {
-      m_intakeManager.setIntakeDownWithArmCheck();
-    }
-
-    if (m_intakeSubsystem.isIntakeDown()) {
-      if (timer.get() > squeeze_time) {
+      if (!m_intakeSubsystem.detectedGamePiece()) {
+        m_intakeSubsystem.runIntake();
+        m_intakeManager.setIntakeDownWithArmCheck();
         m_intakeSubsystem.unsqueeze();
+      } else {
+        m_intakeSubsystem.squeeze();
+        m_intakeSubsystem.stopIntake();
       }
-      m_intakeSubsystem.runIntakeReverse();
     }
   }
 
@@ -57,6 +64,9 @@ public class IntakeReverseCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    if (timer.get() >= m_time) {
+      return true;
+    }
     return false;
   }
 }

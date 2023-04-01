@@ -95,184 +95,145 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kLeftStick.value);
 
   // SUBSYSTEMS
-  private final DriveTrainSubsystem m_driveTrainSubsystem =
+  private final DriveTrainSubsystem m_drivetrainSubsystem =
       new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick);
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
   private final LimelightSubsystem m_limelightSubsystem = new LimelightSubsystem();
   private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
-  private final PneumaticSubsystem m_PneumaticSubsystem = new PneumaticSubsystem();
+  private final PneumaticSubsystem m_pneumaticSubsystem = new PneumaticSubsystem();
   private final TelescopeSubsystem m_telescopeSubsystem = new TelescopeSubsystem();
 
+  public SubsystemContainer m_subsystemContainer =
+      new SubsystemContainer(
+          m_telescopeSubsystem,
+          m_pneumaticSubsystem,
+          m_drivetrainSubsystem,
+          m_scoringSubsystem,
+          m_limelightSubsystem,
+          m_armSubsystem,
+          m_intakeSubsystem,
+          m_ledSubsystem);
+
   // UTIL
-  private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
   private final ViennaPIDController m_armPidController =
       new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
   private final ViennaPIDController m_armPidControllerAdjust =
       new ViennaPIDController(PIDConstants.ARM_P_ADJUST, PIDConstants.ARM_I, PIDConstants.ARM_D);
-  private IntakeManager m_intakeManager = new IntakeManager(m_armSubsystem, m_intakeSubsystem);
+  private final ViennaPIDController m_balancePidController =
+      new ViennaPIDController(
+          PIDConstants.BALANCE_P, PIDConstants.BALANCE_I, PIDConstants.BALANCE_D);
+  private final IntakeManager m_intakeManager = new IntakeManager(m_subsystemContainer);
+  private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
-  // SHUFFLEBOARD
   private final ShuffleboardSubsystem m_shuffleboardSubsystem =
       new ShuffleboardSubsystem(
+          m_subsystemContainer,
           m_driverStationInfo,
-          m_driveTrainSubsystem,
-          m_scoringSubsystem,
-          m_limelightSubsystem,
-          m_armSubsystem,
-          m_intakeSubsystem,
-          m_ledSubsystem,
           m_armPidController,
+          m_balancePidController,
           m_intakeManager,
-          m_driverController,
-          m_telescopeSubsystem);
+          m_driverController);
 
   // DEFAULT COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand =
-      new ArmDefaultCommand(m_armSubsystem, m_telescopeSubsystem, m_armPidController);
+      new ArmDefaultCommand(m_subsystemContainer, m_armPidController);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
-      new DriveTrainDefaultCommand(m_driveTrainSubsystem, m_leftJoystick, m_rightJoystick);
+      new DriveTrainDefaultCommand(m_subsystemContainer, m_leftJoystick, m_rightJoystick);
   private final IntakeDefaultCommand m_intakeDefaultCommand =
-      new IntakeDefaultCommand(m_intakeSubsystem, m_intakeManager);
+      new IntakeDefaultCommand(m_subsystemContainer, m_intakeManager);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
-      new ScoringDefaultCommand(m_scoringSubsystem);
+      new ScoringDefaultCommand(m_subsystemContainer);
 
   private final PlayerstationLineupCommand m_playerstationLineupCommand =
       new PlayerstationLineupCommand(
-          m_driveTrainSubsystem,
-          m_limelightSubsystem,
-          m_scoringSubsystem,
-          m_intakeManager,
-          m_armSubsystem,
-          m_armPidController);
+          m_subsystemContainer, m_intakeManager, m_armPidController, m_driverController);
 
   private final AutoBalanceCommand m_autoBalanceCommand =
-      new AutoBalanceCommand(m_driveTrainSubsystem);
+      new AutoBalanceCommand(m_subsystemContainer, m_balancePidController);
   private final ScoreMobilityThenBalance m_scoreMobilityThenBalance =
       new ScoreMobilityThenBalance(
-          m_driveTrainSubsystem,
+          m_subsystemContainer,
           m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
+          m_balancePidController,
           m_intakeManager,
-          m_ledSubsystem,
-          m_driverController,
-          m_telescopeSubsystem);
+          m_driverController);
   private final ScoreThenMove m_scoreThenMove =
       new ScoreThenMove(
-          m_driveTrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem,
-          m_driverController,
-          m_telescopeSubsystem);
+          m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
   private final ScoreThenBalance m_scoreThenBalanece =
       new ScoreThenBalance(
-          m_driveTrainSubsystem,
+          m_subsystemContainer,
           m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
+          m_balancePidController,
           m_intakeManager,
-          m_ledSubsystem,
-          m_driverController,
-          m_telescopeSubsystem);
+          m_driverController);
   private final ScoreMoveAutoGather m_scoreThenMoveThenAutoGather =
       new ScoreMoveAutoGather(
-          m_driveTrainSubsystem,
-          m_armPidController,
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_intakeManager,
-          m_ledSubsystem,
-          m_driverController,
-          m_telescopeSubsystem);
+          m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
 
   // INTAKE COMMANDS
   private final IntakeReverseCommand m_intakeReverseCommand =
-      new IntakeReverseCommand(m_intakeSubsystem, m_intakeManager);
+      new IntakeReverseCommand(m_subsystemContainer, m_intakeManager);
   private final IntakeSqueezeCommand m_intakeSqueezeCommand =
-      new IntakeSqueezeCommand(m_intakeSubsystem);
+      new IntakeSqueezeCommand(m_subsystemContainer);
   private final IntakeGatherModeCommand m_intakeGatherModeCommand =
-      new IntakeGatherModeCommand(m_intakeSubsystem, m_intakeManager, false);
+      new IntakeGatherModeCommand(m_subsystemContainer, m_intakeManager, false);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
-      new IntakeHybridModeCommand(m_intakeSubsystem, m_intakeManager);
+      new IntakeHybridModeCommand(m_subsystemContainer, m_intakeManager);
 
   // SCORING COMMANDS
   private final ScoringCloseCommand m_scoringCloseCommand =
-      new ScoringCloseCommand(m_scoringSubsystem);
+      new ScoringCloseCommand(m_subsystemContainer);
   private final ScoringOpenCommand m_scoringOpenCommand =
-      new ScoringOpenCommand(m_scoringSubsystem, m_intakeManager);
+      new ScoringOpenCommand(m_subsystemContainer, m_intakeManager);
 
   // ARM COMMANDS
   private final ArmGatherModeCommand m_armGatherModeCommand =
-      new ArmGatherModeCommand(
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_intakeSubsystem,
-          m_telescopeSubsystem,
-          m_armPidController);
+      new ArmGatherModeCommand(m_subsystemContainer, m_armPidController);
   private final ArmFeederCommand m_armFeederCommand =
-      new ArmFeederCommand(
-          m_armSubsystem,
-          m_scoringSubsystem,
-          m_armPidController,
-          m_telescopeSubsystem,
-          m_ledSubsystem);
+      new ArmFeederCommand(m_subsystemContainer, m_armPidController, m_ledSubsystem);
 
   private final ArmToAngleCommand m_armToForwardMid =
       new ArmToAngleCommand(
-          m_armSubsystem,
+          m_subsystemContainer,
           m_armPidController,
           m_driverController,
-          m_telescopeSubsystem,
           ArmConstants.FORWARD_MID,
           false,
-          true,
-          m_ledSubsystem);
+          true);
   private final ArmToAngleCommand m_armToForwardDown =
       new ArmToAngleCommand(
-          m_armSubsystem,
+          m_subsystemContainer,
           m_armPidController,
           m_driverController,
-          m_telescopeSubsystem,
           ArmConstants.FORWARD_DOWN,
           false,
-          false,
-          m_ledSubsystem);
+          false);
   private final ArmToAngleCommand m_armToBackMid =
       new ArmToAngleCommand(
-          m_armSubsystem,
+          m_subsystemContainer,
           m_armPidController,
           m_driverController,
-          m_telescopeSubsystem,
-          ArmConstants.BACK_HIGH_CONE,
+          ArmConstants.BACK_MID,
           false,
-          true,
-          m_ledSubsystem);
+          true);
   private final ArmToAngleCommand m_armToBackDown =
       new ArmToAngleCommand(
-          m_armSubsystem,
+          m_subsystemContainer,
           m_armPidController,
           m_driverController,
-          m_telescopeSubsystem,
           ArmConstants.BACK_DOWN,
           false,
-          false,
-          m_ledSubsystem);
+          false);
 
   private final TelescopeDefaultCommand m_TelescopeDefaultCommand =
       new TelescopeDefaultCommand(m_telescopeSubsystem, m_armSubsystem);
 
   // TELESCOPING ARM COMMANDS
   private final TelescopeCommand m_telescopeCommand =
-      new TelescopeCommand(m_armSubsystem, m_telescopeSubsystem, m_driverController);
+      new TelescopeCommand(m_subsystemContainer, m_driverController);
   private final ExtendModeCommand m_extendModeCommand =
       new ExtendModeCommand(m_telescopeSubsystem, m_armSubsystem);
 
@@ -282,7 +243,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    m_driveTrainSubsystem.setDefaultCommand(m_driveTrainDefaultCommand);
+    m_drivetrainSubsystem.setDefaultCommand(m_driveTrainDefaultCommand);
     m_scoringSubsystem.setDefaultCommand(m_scoringDefaultCommand);
     m_intakeSubsystem.setDefaultCommand(m_intakeDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
@@ -299,42 +260,31 @@ public class RobotContainer {
 
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(
-        new ArmAdjustCommand(
-            m_armSubsystem, m_telescopeSubsystem, m_driverController, m_armPidControllerAdjust));
+        new ArmAdjustCommand(m_subsystemContainer, m_driverController, m_armPidControllerAdjust));
     m_leftJoystickButton.toggleOnTrue(m_telescopeCommand);
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
     m_leftBumper.whileTrue(m_armFeederCommand);
-//remember to look up a different joystick button for playerstationlineup
+    // remember to look up a different joystick button for playerstationlineup
     m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
     m_rightBumper.whileTrue(m_intakeReverseCommand);
 
     // LED Buttons
-    m_rightArrow.onTrue(
-        new LEDCommand(m_ledSubsystem, LEDColor.PURPLE, m_scoringSubsystem, m_driverStationInfo));
-    m_leftArrow.onTrue(
-        new LEDCommand(m_ledSubsystem, LEDColor.YELLOW, m_scoringSubsystem, m_driverStationInfo));
+    m_rightArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.PURPLE, m_driverStationInfo));
+    m_leftArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.YELLOW, m_driverStationInfo));
   }
 
   public Command getAutonomousCommand() {
-    m_driveTrainSubsystem.resetOdometry();
+    m_drivetrainSubsystem.resetOdometry();
     return new ScoreMoveAutoGather(
-            m_driveTrainSubsystem,
-            m_armPidController,
-            m_armSubsystem,
-            m_scoringSubsystem,
-            m_intakeSubsystem,
-            m_intakeManager,
-            m_ledSubsystem,
-            m_driverController,
-            m_telescopeSubsystem)
-        .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
+            m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController)
+        .andThen(new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
     // return m_shuffleboardSubsystem
     //     .getAutoSelected()
     //     .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
   }
 
   public void resetNavX() {
-    m_driveTrainSubsystem.getNavX().zeroYaw();
+    m_drivetrainSubsystem.getNavX().zeroYaw();
   }
 }

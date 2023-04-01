@@ -6,7 +6,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.ViennaPIDController;
@@ -19,30 +20,31 @@ public class ArmAdjustCommand extends CommandBase {
   private double targetAngle;
 
   public ArmAdjustCommand(
-      ArmSubsystem p_armSubsystem,
-      TelescopeSubsystem p_telescopeSubsystem,
+      SubsystemContainer p_subsystemContainer,
       XboxController p_driverController,
       ViennaPIDController p_pidController) {
     m_pidController = p_pidController;
-    m_armSubsystem = p_armSubsystem;
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_driverController = p_driverController;
-    m_telescopeSubsystem = p_telescopeSubsystem;
+    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     targetAngle = m_armSubsystem.getAbsoluteArmPosition();
 
     addRequirements(m_armSubsystem);
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    targetAngle = m_armSubsystem.getAbsoluteArmPosition();
+  }
 
   @Override
   public void execute() {
     double voltage = 0;
 
-    if (Math.abs(m_driverController.getRightX()) > Constants.ArmConstants.ARM_INPUT_DEADZONE) {
+    if (Math.abs(m_driverController.getRightX()) > ArmConstants.ARM_INPUT_DEADZONE) {
       voltage =
           m_armSubsystem.limitArmAmount(
-              -m_driverController.getRightX() / Constants.ArmConstants.SCALE_FACTOR);
+              -m_driverController.getRightX() / ArmConstants.SCALE_FACTOR);
       targetAngle = m_armSubsystem.getAbsoluteArmPosition();
     } else {
       voltage =

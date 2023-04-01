@@ -1,7 +1,7 @@
 package frc.robot.util;
 
-import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.PIDConstants;
+import frc.robot.Constants.TelescopeConstants;
 
 public class ViennaPIDController {
 
@@ -120,7 +120,7 @@ public class ViennaPIDController {
     double ff = desiredPos * m_f;
 
     double pAlteration =
-        PIDConstants.ARM_EXTENSION_P * armExtension / ArmConstants.TELESCOPE_EXTEND_LIMIT;
+        PIDConstants.ARM_EXTENSION_P * armExtension / TelescopeConstants.TELESCOPE_EXTEND_LIMIT;
 
     double output = (pAlteration + m_p) * error + m_i * m_iState + m_d * derivative + ff;
 

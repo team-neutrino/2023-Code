@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
@@ -28,38 +29,35 @@ public class ArmToAngleCommand extends CommandBase {
   private double armAngle;
 
   public ArmToAngleCommand(
-      ArmSubsystem p_armSubsystem,
+      SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
       XboxController p_driverController,
-      TelescopeSubsystem p_telescopeSubsystem,
       double p_targetAngle) {
-    m_armSubsystem = p_armSubsystem;
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_pidController = p_pidController;
     m_driverController = p_driverController;
-    m_telescopeSubsystem = p_telescopeSubsystem;
+    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_targetAngle = p_targetAngle;
 
-    addRequirements(m_armSubsystem);
+    addRequirements(m_armSubsystem, m_telescopeSubsystem);
   }
 
   public ArmToAngleCommand(
-      ArmSubsystem p_armSubsystem,
+      SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
       XboxController p_drivController,
-      TelescopeSubsystem p_telescopeSubsystem,
       double p_targetAngle,
       boolean p_auton,
-      boolean p_backCheck,
-      LEDSubsystem p_ledSubsystem) {
-    m_armSubsystem = p_armSubsystem;
+      boolean p_backCheck) {
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_pidController = p_pidController;
     m_driverController = p_drivController;
-    m_telescopeSubsystem = p_telescopeSubsystem;
+    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
     m_backCheck = p_backCheck;
-    m_ledSubsystem = p_ledSubsystem;
-    addRequirements(m_armSubsystem);
+    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
+    addRequirements(m_armSubsystem, m_ledSubsystem, m_telescopeSubsystem);
   }
 
   @Override

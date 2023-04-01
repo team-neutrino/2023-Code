@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.TrajectoryConfigConstants;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.ScoringOpenCommand;
@@ -16,7 +17,6 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
-import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
@@ -40,19 +40,15 @@ public class ScoreHighThenMove extends SequentialCommandGroup {
 
   /** Creates a new ScoreHighThenMove. */
   public ScoreHighThenMove(
-      DriveTrainSubsystem p_drivetrainSubsystem,
-      ArmSubsystem p_armSubsystem,
+      SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
-      LEDSubsystem p_ledSubsystem,
-      ScoringSubsystem p_scoringSubsystem,
       IntakeManager p_intakeManager,
-      XboxController p_driverController,
-      TelescopeSubsystem p_telescopeSubsystem) {
-    m_drivetrainSubsystem = p_drivetrainSubsystem;
-    m_armSubsystem = p_armSubsystem;
+      XboxController p_driverController) {
+    m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_pidController = p_pidController;
-    m_ledSubsystem = p_ledSubsystem;
-    m_scoringSubsystem = p_scoringSubsystem;
+    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
+    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_intakeManager = p_intakeManager;
 
     ArrayList<PoseTriplet> moveForwardArray =
@@ -69,16 +65,14 @@ public class ScoreHighThenMove extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmToAngleCommand(
-            p_armSubsystem,
+            p_subsystemContainer,
             p_pidController,
             p_driverController,
-            p_telescopeSubsystem,
             ArmConstants.BACK_MID,
             true,
-            false,
-            p_ledSubsystem),
-        new TelescopeCommand(p_armSubsystem, p_telescopeSubsystem, p_driverController),
-        new ScoringOpenCommand(p_scoringSubsystem, p_intakeManager).withTimeout(2),
+            false),
+        new TelescopeCommand(p_subsystemContainer, p_driverController),
+        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(2),
         moveForwardCommand);
   }
 }

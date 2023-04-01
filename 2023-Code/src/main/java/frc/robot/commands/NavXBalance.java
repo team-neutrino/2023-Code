@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class NavXBalance extends CommandBase {
@@ -13,8 +14,8 @@ public class NavXBalance extends CommandBase {
   double TILTED = -14;
 
   /** Creates a new NavXBalance. */
-  public NavXBalance(DriveTrainSubsystem p_DriveTrainSubsystem) {
-    m_DriveTrainSubsystem = p_DriveTrainSubsystem;
+  public NavXBalance(SubsystemContainer p_subsystemContainer) {
+    m_DriveTrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
