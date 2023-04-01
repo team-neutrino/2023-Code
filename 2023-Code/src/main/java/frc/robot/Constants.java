@@ -66,14 +66,18 @@ public final class Constants {
     public static final double SCALE_FACTOR = 5;
     public static final double ARM_INPUT_DEADZONE = 0.5;
 
+    public static final double FORWARD_ARM_HEIGHT_LIMIT = 73; // actual limit 69
+    public static final double BACKWARD_ARM_HEIGHT_LIMIT = 40; // actual limit 44
+    public static final double FORWARD_FLOOR_ARM_ANGLE_LIMIT = 90;
+  }
+
+  public static class TelescopeConstants {
+
     public static final double TELESCOPE_EXTEND_SPEED = 0.5; // note: setInverted is true
     public static final double TELESCOPE_RETRACT_SPEED = -0.5;
     public static final double TELESCOPE_EXTEND_LIMIT = -5500;
     public static final double TELESCOPING_DEADZONE = 250;
 
-    public static final double FORWARD_ARM_HEIGHT_LIMIT = 73; // actual limit 69
-    public static final double BACKWARD_ARM_HEIGHT_LIMIT = 40; // actual limit 44
-    public static final double FORWARD_FLOOR_ARM_ANGLE_LIMIT = 90;
     public static final double TELESCOPE_HEIGHT_LIMIT_RETRACT_SPEED = -0.85;
   }
 
