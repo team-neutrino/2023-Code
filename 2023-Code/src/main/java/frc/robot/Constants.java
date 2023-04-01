@@ -62,9 +62,9 @@ public final class Constants {
     public static final double BACK_MID_CUBE = 30;
     public static final double BACK_HIGH_CUBE = 34;
 
-     // positions for cross subsystem interactions
-     public static final double GATHER_POSITION = 91;
-     public static final double INTAKE_RUNNABLE = 84;
+    // positions for cross subsystem interactions
+    public static final double GATHER_POSITION = 91;
+    public static final double INTAKE_RUNNABLE = 84;
 
     // utility constants
     public static final double ARM_DEADZONE = 1;
