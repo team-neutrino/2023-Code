@@ -10,9 +10,9 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxLimitSwitch;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
+import frc.robot.Constants.TelescopeConstants;
 
 public class TelescopeSubsystem extends SubsystemBase {
   private CANSparkMax m_telescopingMotor =
@@ -49,7 +49,7 @@ public class TelescopeSubsystem extends SubsystemBase {
   }
 
   public void setTelescope(double p_output) {
-    if ((p_output < 0 || getTelescopingExtension() > ArmConstants.TELESCOPE_EXTEND_LIMIT)) {
+    if ((p_output < 0 || getTelescopingExtension() > TelescopeConstants.TELESCOPE_EXTEND_LIMIT)) {
       m_telescopingMotor.set(p_output);
     } else {
       m_telescopingMotor.set(0);
@@ -57,11 +57,11 @@ public class TelescopeSubsystem extends SubsystemBase {
   }
 
   public void retractTelescoping() {
-    setTelescope(ArmConstants.TELESCOPE_RETRACT_SPEED);
+    setTelescope(TelescopeConstants.TELESCOPE_RETRACT_SPEED);
   }
 
   public void extendTelescoping() {
-    setTelescope(ArmConstants.TELESCOPE_EXTEND_SPEED);
+    setTelescope(TelescopeConstants.TELESCOPE_EXTEND_SPEED);
   }
 
   public boolean isPressed() {
