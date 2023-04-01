@@ -25,6 +25,7 @@ public class ArmGatherModeCommand extends CommandBase {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
+    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_pidController = p_pidController;
     addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);
   }
