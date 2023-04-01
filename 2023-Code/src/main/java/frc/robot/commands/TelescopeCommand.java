@@ -16,7 +16,6 @@ public class TelescopeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private TelescopeSubsystem m_telescopeSubsystem;
   private XboxController m_driverController;
-  private boolean m_isExtending;
 
   public TelescopeCommand(
       SubsystemContainer p_subsystemContainer, XboxController p_driverController) {

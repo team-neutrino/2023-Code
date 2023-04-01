@@ -17,7 +17,6 @@ import frc.robot.util.ViennaPIDController;
 public class ArmFeederCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
-  private LEDSubsystem m_ledSubsystem;
   private ViennaPIDController m_pidController;
   private TelescopeSubsystem m_telescopeSubsystem;
   private double voltage;
@@ -32,7 +31,6 @@ public class ArmFeederCommand extends CommandBase {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_pidController = p_pidController;
-    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_timer = new Timer();
     addRequirements(m_armSubsystem, m_scoringSubsystem);
