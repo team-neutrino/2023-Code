@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -34,6 +33,7 @@ import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.commands.TelescopeCommand;
 import frc.robot.commands.TelescopeDefaultCommand;
+import frc.robot.commands.autonomous.ScoreHighThenMove;
 import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
 import frc.robot.commands.autonomous.ScoreMoveAutoGather;
 import frc.robot.commands.autonomous.ScoreThenBalance;
@@ -140,21 +140,26 @@ public class RobotContainer {
       new IntakeDefaultCommand(m_subsystemContainer, m_intakeManager);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_subsystemContainer);
+  private final TelescopeDefaultCommand m_TelescopeDefaultCommand =
+      new TelescopeDefaultCommand(m_telescopeSubsystem, m_armSubsystem);
 
   // AUTON COMMANDS
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_subsystemContainer);
+  private ScoreHighThenMove m_scoreHighThenMove =
+      new ScoreHighThenMove(
+          m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
   private final ScoreMobilityThenBalance m_scoreMobilityThenBalance =
       new ScoreMobilityThenBalance(
           m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
-  private final ScoreThenMove m_scoreThenMove =
-      new ScoreThenMove(
+  private final ScoreMoveAutoGather m_scoreThenMoveThenAutoGather =
+      new ScoreMoveAutoGather(
           m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
   private final ScoreThenBalance m_scoreThenBalanece =
       new ScoreThenBalance(
           m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
-  private final ScoreMoveAutoGather m_scoreThenMoveThenAutoGather =
-      new ScoreMoveAutoGather(
+  private final ScoreThenMove m_scoreThenMove =
+      new ScoreThenMove(
           m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController);
 
   // INTAKE COMMANDS
@@ -178,6 +183,8 @@ public class RobotContainer {
       new ArmGatherModeCommand(m_subsystemContainer, m_armPidController);
   private final ArmFeederCommand m_armFeederCommand =
       new ArmFeederCommand(m_subsystemContainer, m_armPidController, m_ledSubsystem);
+  private final ArmAdjustCommand m_armAdjustCommand =
+      new ArmAdjustCommand(m_subsystemContainer, m_driverController, m_armPidController);
 
   private final ArmToAngleCommand m_armToForwardMid =
       new ArmToAngleCommand(
@@ -212,9 +219,6 @@ public class RobotContainer {
           false,
           false);
 
-  private final TelescopeDefaultCommand m_TelescopeDefaultCommand =
-      new TelescopeDefaultCommand(m_telescopeSubsystem, m_armSubsystem);
-
   // TELESCOPING ARM COMMANDS
   private final TelescopeCommand m_telescopeCommand =
       new TelescopeCommand(m_subsystemContainer, m_driverController);
@@ -243,8 +247,7 @@ public class RobotContainer {
     m_buttonBack.whileTrue(m_scoringOpenCommand);
 
     // used for small adjustments of the arm
-    m_rightStickButton.toggleOnTrue(
-        new ArmAdjustCommand(m_subsystemContainer, m_driverController, m_armPidControllerAdjust));
+    m_rightStickButton.toggleOnTrue(m_armAdjustCommand);
     m_leftJoystickButton.toggleOnTrue(m_telescopeCommand);
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
@@ -260,9 +263,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     m_drivetrainSubsystem.resetOdometry();
-    return new ScoreMoveAutoGather(
-            m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController)
-        .andThen(new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
+    return m_scoreThenMoveThenAutoGather;
     // return m_shuffleboardSubsystem
     //     .getAutoSelected()
     //     .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
