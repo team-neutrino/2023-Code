@@ -4,10 +4,12 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.TrajectoryConfigConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -24,26 +26,27 @@ import java.util.Arrays;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class PlayerstationLineupCommand extends ParallelCommandGroup {
+  private SubsystemContainer m_subsystemContainer;
   private DriveTrainSubsystem m_drivetrainSubsystem;
   private LimelightSubsystem m_limelightSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
   private IntakeManager m_intakeManager;
   private ArmSubsystem m_armSubsystem;
   private ViennaPIDController m_pidController;
+  private XboxController m_controller;
   /** Creates a new PlayerstationLineupCommand. */
   public PlayerstationLineupCommand(
-      DriveTrainSubsystem p_drivetrainSubsystem,
-      LimelightSubsystem p_limelightSubsystem,
-      ScoringSubsystem p_scoringSubsystem,
+      SubsystemContainer p_subsystemContainer,
       IntakeManager p_intakeManager,
-      ArmSubsystem p_armSubsystem,
-      ViennaPIDController p_pidController) {
-    m_drivetrainSubsystem = p_drivetrainSubsystem;
-    m_limelightSubsystem = p_limelightSubsystem;
-    m_scoringSubsystem = p_scoringSubsystem;
-    m_intakeManager = p_intakeManager;
-    m_armSubsystem = p_armSubsystem;
+      ViennaPIDController p_pidController,
+      XboxController p_controller) {
+    m_drivetrainSubsystem = m_subsystemContainer.getDriveTrainSubsystem();
+    m_limelightSubsystem = m_subsystemContainer.getLimelightSubsystem();
+    m_scoringSubsystem = m_subsystemContainer.getScoringSubsystem();
+    m_armSubsystem = m_subsystemContainer.getArmSubsystem();
     m_pidController = p_pidController;
+    m_controller = m_controller;
+    m_subsystemContainer = p_subsystemContainer;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
@@ -56,7 +59,7 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
           new ScoringOpenCommand(m_scoringSubsystem, m_intakeManager),
           moveForward(initialDistance - DrivetrainConstants.ARM_LENGTH),
           new ArmToAngleCommand(
-              m_armSubsystem, m_pidController, m_scoringSubsystem, ArmConstants.PLAYERSTATION));
+              m_subsystemContainer, m_pidController, m_controller, ArmConstants.FEEDER));
     }
   }
 
