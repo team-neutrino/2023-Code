@@ -2,13 +2,14 @@ package frc.robot.util;
 
 import frc.robot.Constants.PIDConstants;
 import frc.robot.Constants.TelescopeConstants;
+import frc.robot.subsystems.ArmSubsystem;
 
 public class ViennaPIDController {
 
   private double m_p;
   private double m_i;
   private double m_d;
-  private double m_f;
+  private double m_ff;
 
   private double m_iState;
 
@@ -20,28 +21,28 @@ public class ViennaPIDController {
     m_p = p_p;
     m_i = 0;
     m_d = 0;
-    m_f = 0;
+    m_ff = 0;
   }
 
   public ViennaPIDController(double p_p, double p_i) {
     m_p = p_p;
     m_i = p_i;
     m_d = 0;
-    m_f = 0;
+    m_ff = 0;
   }
 
   public ViennaPIDController(double p_p, double p_i, double p_d) {
     m_p = p_p;
     m_i = p_i;
     m_d = p_d;
-    m_f = 0;
+    m_ff = 0;
   }
 
-  public ViennaPIDController(double p_p, double p_i, double p_d, double p_f) {
+  public ViennaPIDController(double p_p, double p_i, double p_d, double p_ff) {
     m_p = p_p;
     m_i = p_i;
     m_d = p_d;
-    m_f = p_f;
+    m_ff = p_ff;
   }
 
   public double getP() {
@@ -56,8 +57,8 @@ public class ViennaPIDController {
     return m_d;
   }
 
-  public double getF() {
-    return m_f;
+  public double getFF() {
+    return m_ff;
   }
 
   public void setP(double p_p) {
@@ -72,6 +73,10 @@ public class ViennaPIDController {
     m_d = p_d;
   }
 
+  public void setFF(double p_ff) {
+    m_ff = p_ff;
+  }
+
   public double run(double realPos, double desiredPos) {
     double error = desiredPos - realPos;
 
@@ -82,7 +87,7 @@ public class ViennaPIDController {
     double derivative = (error - previousError) / PIDConstants.dt;
     previousError = error;
 
-    double ff = desiredPos * m_f;
+    double ff = desiredPos * m_ff;
 
     double output = m_p * error + m_i * m_iState + m_d * derivative + ff;
 
@@ -100,10 +105,10 @@ public class ViennaPIDController {
     double derivative = (error - previousError) / PIDConstants.dt;
     previousError = error;
 
-    double ff = desiredPos * m_f;
+    /* Feedforward calculation */
+    double ff = desiredPos * m_ff;
 
     double output = m_p * error + m_i * m_iState + m_d * derivative + ff;
-
     return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
   }
 
@@ -117,13 +122,13 @@ public class ViennaPIDController {
     double derivative = (error - previousError) / PIDConstants.dt;
     previousError = error;
 
-    double ff = desiredPos * m_f;
+    /* Feedforward calculation */
+    double ff = m_ff * armExtension * Math.cos(ArmSubsystem.encoderToRadians(realPos));
 
     double pAlteration =
         PIDConstants.ARM_EXTENSION_P * armExtension / TelescopeConstants.TELESCOPE_EXTEND_LIMIT;
 
     double output = (pAlteration + m_p) * error + m_i * m_iState + m_d * derivative + ff;
-
     return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
   }
 }

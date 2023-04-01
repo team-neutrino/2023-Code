@@ -117,9 +117,8 @@ public class RobotContainer {
 
   // UTIL
   private final ViennaPIDController m_armPidController =
-      new ViennaPIDController(PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D);
-  private final ViennaPIDController m_armPidControllerAdjust =
-      new ViennaPIDController(PIDConstants.ARM_P_ADJUST, PIDConstants.ARM_I, PIDConstants.ARM_D);
+      new ViennaPIDController(
+          PIDConstants.ARM_P, PIDConstants.ARM_I, PIDConstants.ARM_D, PIDConstants.ARM_FF);
   private final IntakeManager m_intakeManager = new IntakeManager(m_subsystemContainer);
   private final DriverStationInfo m_driverStationInfo = new DriverStationInfo();
 
@@ -244,7 +243,7 @@ public class RobotContainer {
 
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(
-        new ArmAdjustCommand(m_subsystemContainer, m_driverController, m_armPidControllerAdjust));
+        new ArmAdjustCommand(m_subsystemContainer, m_driverController, m_armPidController));
     m_leftJoystickButton.toggleOnTrue(m_telescopeCommand);
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
