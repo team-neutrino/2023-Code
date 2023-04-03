@@ -51,7 +51,6 @@ public class ScoreThenBalance extends SequentialCommandGroup {
     addCommands(
         new ArmToAngleCommand(
             p_subsystemContainer,
-            p_pidController,
             p_driverController,
             ArmConstants.BACK_MID,
             true,

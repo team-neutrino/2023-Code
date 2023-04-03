@@ -12,6 +12,7 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.EnumConstants.LEDColor;
+import frc.robot.util.ViennaContainer;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmToAngleCommand extends CommandBase {
@@ -30,11 +31,10 @@ public class ArmToAngleCommand extends CommandBase {
 
   public ArmToAngleCommand(
       SubsystemContainer p_subsystemContainer,
-      ViennaPIDController p_pidController,
       XboxController p_driverController,
       double p_targetAngle) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
-    m_pidController = p_pidController;
+    m_pidController = ViennaContainer.getArmSetPositionController();
     m_driverController = p_driverController;
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_targetAngle = p_targetAngle;
@@ -44,14 +44,13 @@ public class ArmToAngleCommand extends CommandBase {
 
   public ArmToAngleCommand(
       SubsystemContainer p_subsystemContainer,
-      ViennaPIDController p_pidController,
-      XboxController p_drivController,
+      XboxController p_driverController,
       double p_targetAngle,
       boolean p_auton,
       boolean p_backCheck) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
-    m_pidController = p_pidController;
-    m_driverController = p_drivController;
+    m_pidController = ViennaContainer.getArmSetPositionController();
+    m_driverController = p_driverController;
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
