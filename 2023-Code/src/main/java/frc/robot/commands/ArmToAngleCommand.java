@@ -57,7 +57,7 @@ public class ArmToAngleCommand extends CommandBase {
     m_auton = p_auton;
     m_backCheck = p_backCheck;
     m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
-    addRequirements(m_armSubsystem, m_ledSubsystem, m_telescopeSubsystem);
+    addRequirements(m_armSubsystem, m_telescopeSubsystem);
   }
 
   @Override
@@ -79,10 +79,9 @@ public class ArmToAngleCommand extends CommandBase {
       armAngle = m_targetAngle;
     }
 
-    voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), armAngle);
-    System.out.println("pid voltage: " + voltage);
+    System.out.println(armAngle);
 
-    System.out.println("real voltage: " + m_armSubsystem.getArmVoltage());
+    voltage = m_pidController.armRun(m_armSubsystem.getAbsoluteArmPosition(), armAngle, m_telescopeSubsystem.getTelescopingExtension());
     m_armSubsystem.smartArmSet(voltage);
   }
 
