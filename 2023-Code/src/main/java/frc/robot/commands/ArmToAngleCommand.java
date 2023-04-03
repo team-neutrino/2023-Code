@@ -80,6 +80,9 @@ public class ArmToAngleCommand extends CommandBase {
     }
 
     voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), armAngle);
+    System.out.println("pid voltage: " + voltage);
+
+    System.out.println("real voltage: " + m_armSubsystem.getArmVoltage());
     m_armSubsystem.smartArmSet(voltage);
   }
 
