@@ -133,7 +133,7 @@ public class RobotContainer {
 
   // DEFAULT COMMANDS
   private final ArmDefaultCommand m_armDefaultCommand =
-      new ArmDefaultCommand(m_subsystemContainer, m_armPidController);
+      new ArmDefaultCommand(m_subsystemContainer);
   private final DriveTrainDefaultCommand m_driveTrainDefaultCommand =
       new DriveTrainDefaultCommand(m_subsystemContainer, m_leftJoystick, m_rightJoystick);
   private final IntakeDefaultCommand m_intakeDefaultCommand =
@@ -175,14 +175,13 @@ public class RobotContainer {
 
   // ARM COMMANDS
   private final ArmGatherModeCommand m_armGatherModeCommand =
-      new ArmGatherModeCommand(m_subsystemContainer, m_armPidController);
+      new ArmGatherModeCommand(m_subsystemContainer);
   private final ArmFeederCommand m_armFeederCommand =
-      new ArmFeederCommand(m_subsystemContainer, m_armPidController, m_ledSubsystem);
+      new ArmFeederCommand(m_subsystemContainer);
 
   private final ArmToAngleCommand m_armToForwardMid =
       new ArmToAngleCommand(
           m_subsystemContainer,
-          m_armPidController,
           m_driverController,
           ArmConstants.FORWARD_MID,
           false,
@@ -190,7 +189,6 @@ public class RobotContainer {
   private final ArmToAngleCommand m_armToForwardDown =
       new ArmToAngleCommand(
           m_subsystemContainer,
-          m_armPidController,
           m_driverController,
           ArmConstants.FORWARD_DOWN,
           false,
@@ -198,7 +196,6 @@ public class RobotContainer {
   private final ArmToAngleCommand m_armToBackMid =
       new ArmToAngleCommand(
           m_subsystemContainer,
-          m_armPidController,
           m_driverController,
           ArmConstants.BACK_MID,
           false,
@@ -206,7 +203,6 @@ public class RobotContainer {
   private final ArmToAngleCommand m_armToBackDown =
       new ArmToAngleCommand(
           m_subsystemContainer,
-          m_armPidController,
           m_driverController,
           ArmConstants.BACK_DOWN,
           false,
@@ -219,7 +215,7 @@ public class RobotContainer {
   private final TelescopeCommand m_telescopeCommand =
       new TelescopeCommand(m_subsystemContainer, m_driverController);
   private final ExtendModeCommand m_extendModeCommand =
-      new ExtendModeCommand(m_telescopeSubsystem, m_armSubsystem);
+      new ExtendModeCommand(m_subsystemContainer);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -244,7 +240,7 @@ public class RobotContainer {
 
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(
-        new ArmAdjustCommand(m_subsystemContainer, m_driverController, m_armPidControllerAdjust));
+        new ArmAdjustCommand(m_subsystemContainer, m_driverController));
     m_leftJoystickButton.toggleOnTrue(m_telescopeCommand);
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
