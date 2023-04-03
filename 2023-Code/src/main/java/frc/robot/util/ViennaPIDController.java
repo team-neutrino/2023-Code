@@ -122,13 +122,15 @@ public class ViennaPIDController {
     double derivative = (error - previousError) / PIDConstants.dt;
     previousError = error;
 
-    /* Feedforward calculation */
-    double ff = m_ff * armExtension * Math.cos(ArmSubsystem.encoderToRadians(realPos));
-
     double pAlteration =
-        PIDConstants.ARM_EXTENSION_P * armExtension / TelescopeConstants.TELESCOPE_EXTEND_LIMIT;
+    PIDConstants.ARM_EXTENSION_P * armExtension/ TelescopeConstants.TELESCOPE_EXTEND_LIMIT;
+
+    /* Feedforward calculation */
+    double ff = m_ff * Math.cos(ArmSubsystem.encoderToRadians(realPos)) + pAlteration;
+    System.out.println("ff: " + m_ff);
 
     double output = (pAlteration + m_p) * error + m_i * m_iState + m_d * derivative + ff;
+    System.out.println("output: " + output);
     return Limiter.bound(output, PIDConstants.MIN_OUTPUT, PIDConstants.MAX_OUTPUT);
   }
 }
