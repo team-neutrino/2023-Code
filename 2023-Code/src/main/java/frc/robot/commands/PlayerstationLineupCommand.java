@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -34,39 +35,52 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
   private ArmSubsystem m_armSubsystem;
   private ViennaPIDController m_pidController;
   private XboxController m_controller;
+  private PoseTriplet m_initialPoseTriplet;
+  private PoseTriplet m_targetPoseTriplet;
+
   /** Creates a new PlayerstationLineupCommand. */
   public PlayerstationLineupCommand(
       SubsystemContainer p_subsystemContainer,
       IntakeManager p_intakeManager,
       ViennaPIDController p_pidController,
       XboxController p_controller) {
+    m_subsystemContainer = p_subsystemContainer;
     m_drivetrainSubsystem = m_subsystemContainer.getDriveTrainSubsystem();
     m_limelightSubsystem = m_subsystemContainer.getLimelightSubsystem();
     m_scoringSubsystem = m_subsystemContainer.getScoringSubsystem();
     m_armSubsystem = m_subsystemContainer.getArmSubsystem();
     m_pidController = p_pidController;
-    m_controller = m_controller;
+    m_controller = p_controller;
     m_subsystemContainer = p_subsystemContainer;
+
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
     // ON START OF COMMAND CALL
     // double initialTx = m_limelightSubsystem.getTx();
     double initialDistance = m_limelightSubsystem.getDistance(); // in meters
+    Pose2d initialPose = m_drivetrainSubsystem.getPose2d();
+
+    m_initialPoseTriplet = new PoseTriplet(
+      initialPose.getX(), 
+      initialPose.getY(), 
+      m_drivetrainSubsystem.getYaw());
+
+    m_targetPoseTriplet = new PoseTriplet(
+      initialPose.getX() + initialDistance - DrivetrainConstants.ARM_LENGTH, 
+      initialPose.getY(),
+      m_drivetrainSubsystem.getYaw());
 
     if (m_drivetrainSubsystem.isAngleAcceptable()) {
       addCommands(
-          new ScoringOpenCommand(m_scoringSubsystem, m_intakeManager),
-          moveForward(initialDistance - DrivetrainConstants.ARM_LENGTH),
-          new ArmToAngleCommand(
-              m_subsystemContainer, m_pidController, m_controller, ArmConstants.FEEDER));
+          moveForward(),
+          new ArmFeederCommand(p_subsystemContainer, p_pidController));
     }
   }
 
-  private RamseteCommand moveForward(double desiredDistance) {
+  private RamseteCommand moveForward() {
     ArrayList<PoseTriplet> moveForwardTrajectoryArray =
-        new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(0, desiredDistance, 0)));
+        new ArrayList<PoseTriplet>(Arrays.asList(m_initialPoseTriplet, m_targetPoseTriplet));
     RamseteCommand moveForwardCommand =
         AutonomousUtil.generateRamseteFromPoses(
             moveForwardTrajectoryArray,

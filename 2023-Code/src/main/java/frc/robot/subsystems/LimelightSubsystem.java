@@ -55,7 +55,7 @@ public class LimelightSubsystem extends SubsystemBase {
   }
 
   public double[] getCamTran() {
-    return limelight.getEntry("camtran").getDoubleArray(new double[] {});
+    return limelight.getEntry("camerapose_targetspace").getDoubleArray(new double[] {});
   }
 
   public double getDistance() {
@@ -68,14 +68,15 @@ public class LimelightSubsystem extends SubsystemBase {
    * may be used in the shuffleboard subsystem so left here at the wish of Cale.
    */
   public void printCamTran() {
-    if (cycle % 40 == 0) {
+    if (cycle % 100 == 0) {
       double[] camTran = getCamTran();
       System.out.println("Translation X: " + camTran[0]);
       System.out.println("Translation Y: " + camTran[1]);
-      System.out.println("Translation Z: " + camTran[2]);
-      System.out.println("Rotation Pitch: " + camTran[3]);
-      System.out.println("Rotation Yall: " + camTran[4]);
-      System.out.println("Rotation Roll: " + camTran[5]);
+      System.out.println("-------------------------");
+      // System.out.println("Translation Z: " + camTran[2]);
+      // System.out.println("Rotation Pitch: " + camTran[3]);
+      // System.out.println("Rotation Yall: " + camTran[4]);
+      // System.out.println("Rotation Roll: " + camTran[5]);
     }
   }
 

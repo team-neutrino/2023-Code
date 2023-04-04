@@ -193,7 +193,7 @@ public class RobotContainer {
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(m_subsystemContainer, m_armPidController);
   private final ArmFeederCommand m_armFeederCommand =
-      new ArmFeederCommand(m_subsystemContainer, m_armPidController, m_ledSubsystem);
+      new ArmFeederCommand(m_subsystemContainer, m_armPidController);
 
   private final ArmToAngleCommand m_armToForwardMid =
       new ArmToAngleCommand(
