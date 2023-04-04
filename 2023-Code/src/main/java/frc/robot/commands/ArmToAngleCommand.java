@@ -79,9 +79,11 @@ public class ArmToAngleCommand extends CommandBase {
       armAngle = m_targetAngle;
     }
 
-    System.out.println(armAngle);
-
-    voltage = m_pidController.armRun(m_armSubsystem.getAbsoluteArmPosition(), armAngle, m_telescopeSubsystem.getTelescopingExtension());
+    voltage =
+        m_pidController.armRun(
+            m_armSubsystem.getAbsoluteArmPosition(),
+            armAngle,
+            m_telescopeSubsystem.getTelescopingExtension());
     m_armSubsystem.smartArmSet(voltage);
   }
 
