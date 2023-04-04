@@ -5,7 +5,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants.ArmConstants;
@@ -22,6 +26,7 @@ import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -30,13 +35,8 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
   private SubsystemContainer m_subsystemContainer;
   private DriveTrainSubsystem m_drivetrainSubsystem;
   private LimelightSubsystem m_limelightSubsystem;
-  private ScoringSubsystem m_scoringSubsystem;
-  private IntakeManager m_intakeManager;
-  private ArmSubsystem m_armSubsystem;
-  private ViennaPIDController m_pidController;
-  private XboxController m_controller;
-  private PoseTriplet m_initialPoseTriplet;
-  private PoseTriplet m_targetPoseTriplet;
+
+  private Trajectory trajectory;
 
   /** Creates a new PlayerstationLineupCommand. */
   public PlayerstationLineupCommand(
@@ -47,45 +47,49 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
     m_subsystemContainer = p_subsystemContainer;
     m_drivetrainSubsystem = m_subsystemContainer.getDriveTrainSubsystem();
     m_limelightSubsystem = m_subsystemContainer.getLimelightSubsystem();
-    m_scoringSubsystem = m_subsystemContainer.getScoringSubsystem();
-    m_armSubsystem = m_subsystemContainer.getArmSubsystem();
-    m_pidController = p_pidController;
-    m_controller = p_controller;
     m_subsystemContainer = p_subsystemContainer;
 
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-
-    // ON START OF COMMAND CALL
-    // double initialTx = m_limelightSubsystem.getTx();
-    double initialDistance = m_limelightSubsystem.getTargetPoseZ(); // in meters
+    double initialDistanceToAprilTag = m_limelightSubsystem.getTargetPoseZ(); // in meters
     Pose2d initialPose = m_drivetrainSubsystem.getPose2d();
+    Pose2d finalPose = 
+      new Pose2d(
+        initialPose.getX() + initialDistanceToAprilTag, 
+        initialPose.getY(), 
+        initialPose.getRotation());
 
-    m_initialPoseTriplet = new PoseTriplet(
-      initialPose.getX(), 
-      initialPose.getY(), 
-      m_drivetrainSubsystem.getYaw());
+    Pose2d finalTestPose = 
+      new Pose2d(
+        initialPose.getX() + 2,
+        initialPose.getY(),
+        initialPose.getRotation()
+      );
 
-    m_targetPoseTriplet = new PoseTriplet(
-      initialPose.getX() + initialDistance - DrivetrainConstants.ARM_LENGTH, 
-      initialPose.getY(),
-      m_drivetrainSubsystem.getYaw());
+    trajectory = TrajectoryGenerator.generateTrajectory(
+      List.of(initialPose, finalPose), 
+      TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
-    if (m_drivetrainSubsystem.isAngleAcceptable()) {
-      addCommands(
-          moveForward(),
-          new ArmFeederCommand(p_subsystemContainer, p_pidController));
-    }
+    Trajectory testTrajectory = TrajectoryGenerator.generateTrajectory(
+      List.of(initialPose, finalTestPose),
+      TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG);
+
+    RamseteCommand testRamsete = AutonomousUtil.generateRamseteCommand(
+      testTrajectory, m_drivetrainSubsystem);
+
+    // if (m_drivetrainSubsystem.isAngleAcceptable()) {
+    //   addCommands(
+    //     AutonomousUtil.generateRamseteCommand(
+    //       trajectory,
+    //       m_drivetrainSubsystem),
+    //     new ArmFeederCommand(p_subsystemContainer, p_pidController));
+    addCommands(
+      testRamsete,
+      new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0))
+    );
   }
 
   private RamseteCommand moveForward() {
-    ArrayList<PoseTriplet> moveForwardTrajectoryArray =
-        new ArrayList<PoseTriplet>(Arrays.asList(m_initialPoseTriplet, m_targetPoseTriplet));
-    RamseteCommand moveForwardCommand =
-        AutonomousUtil.generateRamseteFromPoses(
-            moveForwardTrajectoryArray,
-            m_drivetrainSubsystem,
-            TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
-    return moveForwardCommand;
+    return AutonomousUtil.generateRamseteCommand(
+      trajectory,
+      m_drivetrainSubsystem);
   }
 }

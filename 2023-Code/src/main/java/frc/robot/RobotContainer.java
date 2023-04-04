@@ -249,6 +249,8 @@ public class RobotContainer {
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
     m_telescopeSubsystem.setDefaultCommand(m_TelescopeDefaultCommand);
 
+    m_upArrow.onTrue(m_playerstationLineupCommand);
+
     // BUTTONS
     m_buttonB.toggleOnTrue(m_armToForwardMid);
     m_buttonY.toggleOnTrue(m_armToForwardDown);
