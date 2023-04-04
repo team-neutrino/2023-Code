@@ -34,11 +34,11 @@ public class ArmToAngleCommand extends CommandBase {
       XboxController p_driverController,
       double p_targetAngle) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
+    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
     m_pidController = p_pidController;
     m_driverController = p_driverController;
-    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_targetAngle = p_targetAngle;
-
     addRequirements(m_armSubsystem, m_telescopeSubsystem);
   }
 
@@ -50,13 +50,13 @@ public class ArmToAngleCommand extends CommandBase {
       boolean p_auton,
       boolean p_backCheck) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
+    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
+    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
     m_pidController = p_pidController;
     m_driverController = p_drivController;
-    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
     m_backCheck = p_backCheck;
-    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
     addRequirements(m_armSubsystem, m_telescopeSubsystem);
   }
 
