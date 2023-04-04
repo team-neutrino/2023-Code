@@ -56,6 +56,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private XboxController m_driverController;
   private TelescopeSubsystem m_telescopeSubsystem;
   private ViennaPIDController m_balancePidController;
+  private LimelightSubsystem m_limelightSubsystem;
 
   public ShuffleboardSubsystem(
       SubsystemContainer p_subsystemContainer,
@@ -72,6 +73,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_arm = p_subsystemContainer.getArmSubsystem();
     m_intake = p_subsystemContainer.getIntakeSubsystem();
     m_LED = p_subsystemContainer.getLedSubsystem();
+    m_limelightSubsystem = p_subsystemContainer.getLimelightSubsystem();
     m_armPidController = p_armPidController;
     m_intakeManager = p_intakeManager;
     m_driverStationInfo = p_driverStationInfo;
@@ -109,6 +111,13 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
     m_armVariables[0].setDouble(m_arm.getAbsoluteArmPosition());
+
+    setLimelightVariables();
+  }
+
+  public void setLimelightVariables() {
+    m_limelightVariables[0].setDouble(m_limelightSubsystem.getTargetPoseX());
+    m_limelightVariables[1].setDouble(m_limelightSubsystem.getTargetPoseZ());
   }
 
   private void driveStationTab() {
@@ -202,7 +211,10 @@ public class ShuffleboardSubsystem extends SubsystemBase {
         m_troubleshootingTab.add("NavX Yaw", 0).withPosition(2, 2).withSize(1, 1).getEntry();
 
     m_limelightVariables[0] =
-        m_troubleshootingTab.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
+        m_troubleshootingTab.add("CamPose X", 0).withPosition(2, 3).withSize(1, 1).getEntry();
+
+    m_limelightVariables[1] =
+        m_troubleshootingTab.add("CamPose Z", 0).withPosition(2, 5).withSize(1, 1).getEntry();
   }
 
   public void setUpSelector() {

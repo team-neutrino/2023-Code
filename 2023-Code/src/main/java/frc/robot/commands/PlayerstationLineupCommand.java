@@ -58,7 +58,7 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
 
     // ON START OF COMMAND CALL
     // double initialTx = m_limelightSubsystem.getTx();
-    double initialDistance = m_limelightSubsystem.getDistance(); // in meters
+    double initialDistance = m_limelightSubsystem.getTargetPoseZ(); // in meters
     Pose2d initialPose = m_drivetrainSubsystem.getPose2d();
 
     m_initialPoseTriplet = new PoseTriplet(
