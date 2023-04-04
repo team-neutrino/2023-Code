@@ -126,8 +126,11 @@ public class ViennaPIDController {
     PIDConstants.ARM_EXTENSION_P * armExtension/ TelescopeConstants.TELESCOPE_EXTEND_LIMIT;
 
     /* Feedforward calculation */
-    double ff = m_ff * Math.cos(ArmSubsystem.encoderToRadians(realPos)) + pAlteration;
-    System.out.println("ff: " + m_ff);
+    double ff = - m_ff * Math.sin(ArmSubsystem.encoderToRadians(realPos)) + pAlteration;
+
+    System.out.println("degrees " + (180/Math.PI)*ArmSubsystem.encoderToRadians(realPos));
+
+    // System.out.println("ff: " + m_ff);
 
     double output = (pAlteration + m_p) * error + m_i * m_iState + m_d * derivative + ff;
     System.out.println("output: " + output);

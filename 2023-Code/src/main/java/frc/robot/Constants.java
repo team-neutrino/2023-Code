@@ -91,7 +91,7 @@ public final class Constants {
     public static final double ARM_EXTENSION_P = .02; //was .02
     public static final double ARM_I = 0;
     public static final double ARM_D = 0;
-    public static final double ARM_FF = .4; //was .01
+    public static final double ARM_FF = .01; //was .01
 
     public static final double BALANCE_P = 0.1;
     public static final double BALANCE_I = 0;
