@@ -21,8 +21,7 @@ import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class ScoreHighThenMove extends SequentialCommandGroup {
 

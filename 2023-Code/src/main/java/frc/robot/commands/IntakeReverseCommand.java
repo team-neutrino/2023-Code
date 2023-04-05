@@ -12,7 +12,6 @@ import frc.robot.util.IntakeManager;
 
 public class IntakeReverseCommand extends CommandBase {
 
-  // An object of the intake subsystem.
   private IntakeSubsystem m_intakeSubsystem;
   private IntakeManager m_intakeManager;
   private Timer timer;
@@ -23,7 +22,6 @@ public class IntakeReverseCommand extends CommandBase {
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_intakeManager = p_intakeManager;
 
-    // change and adjust this time to determine how long to intake squeezes & runs before unsquezing
     squeeze_time = 1;
     timer = new Timer();
 
