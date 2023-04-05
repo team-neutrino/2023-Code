@@ -30,11 +30,13 @@ public class AutoBalanceCommand extends CommandBase {
     error = desiredPos - m_drivetrain.getRoll();
     if (Math.abs(error) <= DrivetrainConstants.AUTO_BALANCE_DEADZONE) {
       error = 0;
+      previousError = 0;
     }
     voltage =
         error * PIDConstants.BALANCE_P
             + PIDConstants.BALANCE_I * (integral += (error * PIDConstants.dt))
             + PIDConstants.BALANCE_D * (error - previousError) / PIDConstants.dt;
+    System.out.println("voltage: " + voltage);
     m_drivetrain.setVoltage(-voltage, -voltage);
     previousError = error;
   }
