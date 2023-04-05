@@ -255,6 +255,7 @@ public class RobotContainer {
     // LED Buttons
     m_rightArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.PURPLE, m_driverStationInfo));
     m_leftArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.YELLOW, m_driverStationInfo));
+    m_downArrow.onTrue(new AutoBalanceCommand(m_subsystemContainer));
   }
 
   public Command getAutonomousCommand() {
