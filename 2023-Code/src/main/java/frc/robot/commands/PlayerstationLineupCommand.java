@@ -6,26 +6,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.SubsystemContainer;
 import frc.robot.TrajectoryConfigConstants;
-import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
-import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
-import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -51,29 +43,26 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
 
     double initialDistanceToAprilTag = m_limelightSubsystem.getTargetPoseZ(); // in meters
     Pose2d initialPose = m_drivetrainSubsystem.getPose2d();
-    Pose2d finalPose = 
-      new Pose2d(
-        initialPose.getX() + initialDistanceToAprilTag, 
-        initialPose.getY(), 
-        initialPose.getRotation());
+    Pose2d finalPose =
+        new Pose2d(
+            initialPose.getX() + initialDistanceToAprilTag,
+            initialPose.getY(),
+            initialPose.getRotation());
 
-    Pose2d finalTestPose = 
-      new Pose2d(
-        initialPose.getX() + 2,
-        initialPose.getY(),
-        initialPose.getRotation()
-      );
+    Pose2d finalTestPose =
+        new Pose2d(initialPose.getX() + 2, initialPose.getY(), initialPose.getRotation());
 
-    trajectory = TrajectoryGenerator.generateTrajectory(
-      List.of(initialPose, finalPose), 
-      TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
+    trajectory =
+        TrajectoryGenerator.generateTrajectory(
+            List.of(initialPose, finalPose), TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
-    Trajectory testTrajectory = TrajectoryGenerator.generateTrajectory(
-      List.of(initialPose, finalTestPose),
-      TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG);
+    Trajectory testTrajectory =
+        TrajectoryGenerator.generateTrajectory(
+            List.of(initialPose, finalTestPose),
+            TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG);
 
-    RamseteCommand testRamsete = AutonomousUtil.generateRamseteCommand(
-      testTrajectory, m_drivetrainSubsystem);
+    RamseteCommand testRamsete =
+        AutonomousUtil.generateRamseteCommand(testTrajectory, m_drivetrainSubsystem);
 
     // if (m_drivetrainSubsystem.isAngleAcceptable()) {
     //   addCommands(
@@ -81,15 +70,10 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
     //       trajectory,
     //       m_drivetrainSubsystem),
     //     new ArmFeederCommand(p_subsystemContainer, p_pidController));
-    addCommands(
-      testRamsete,
-      new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0))
-    );
+    addCommands(testRamsete, new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
   }
 
   private RamseteCommand moveForward() {
-    return AutonomousUtil.generateRamseteCommand(
-      trajectory,
-      m_drivetrainSubsystem);
+    return AutonomousUtil.generateRamseteCommand(trajectory, m_drivetrainSubsystem);
   }
 }
