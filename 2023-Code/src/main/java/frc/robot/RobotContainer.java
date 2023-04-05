@@ -158,33 +158,36 @@ public class RobotContainer {
     m_buttonY.toggleOnTrue(
         Commands.startEnd(
             () ->
-        m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(),
-        ArmConstants.FORWARD_DOWN)),
-                () ->
-        m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(),
-        ArmConstants.FORWARD_MID)),
-                m_armSubsystem
-        ));
+                m_armSubsystem.smartSet(
+                    m_armPidController.run(
+                        m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_DOWN)),
+            () ->
+                m_armSubsystem.smartSet(
+                    m_armPidController.run(
+                        m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID)),
+            m_armSubsystem));
     m_buttonX.toggleOnTrue(
         Commands.startEnd(
             () ->
-    m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(),
-    ArmConstants.BACK_MID)),
+                m_armSubsystem.smartSet(
+                    m_armPidController.run(
+                        m_armSubsystem.getAbsolutePosition(), ArmConstants.BACK_MID)),
             () ->
-    m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(),
-    ArmConstants.FORWARD_MID)),
-            m_armSubsystem
-        ));
+                m_armSubsystem.smartSet(
+                    m_armPidController.run(
+                        m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID)),
+            m_armSubsystem));
     m_buttonA.toggleOnTrue(
         Commands.startEnd(
             () ->
-    m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(),
-    ArmConstants.BACK_DOWN)),
+                m_armSubsystem.smartSet(
+                    m_armPidController.run(
+                        m_armSubsystem.getAbsolutePosition(), ArmConstants.BACK_DOWN)),
             () ->
-    m_armSubsystem.smartSet(m_armPidController.run(m_armSubsystem.getAbsolutePosition(),
-    ArmConstants.FORWARD_MID)),
-            m_armSubsystem
-        ));
+                m_armSubsystem.smartSet(
+                    m_armPidController.run(
+                        m_armSubsystem.getAbsolutePosition(), ArmConstants.FORWARD_MID)),
+            m_armSubsystem));
 
     // used for small adjustments of the arm
     m_upArrow.whileTrue(new ArmAdjustCommand(m_armSubsystem, .2));

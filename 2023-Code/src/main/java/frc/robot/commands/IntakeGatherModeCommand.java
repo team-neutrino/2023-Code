@@ -42,11 +42,12 @@ public class IntakeGatherModeCommand extends CommandBase {
     if (m_intakeSubsystem.detectedGamePiece()) {
       m_intakeSubsystem.stopIntake();
       m_armSubsystem.setReference(Constants.ArmConstants.FORWARD_DOWN);
-      if (Math.abs(Constants.ArmConstants.FORWARD_DOWN - m_armSubsystem.getPosition()) <= Constants.ArmConstants.ARM_DEADZONE) {
+      if (Math.abs(Constants.ArmConstants.FORWARD_DOWN - m_armSubsystem.getPosition())
+          <= Constants.ArmConstants.ARM_DEADZONE) {
         m_scoringSubsystem.closeScoring();
       }
     }
-   }
+  }
 
   @Override
   public void end(boolean interrupted) {}
