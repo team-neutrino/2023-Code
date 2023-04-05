@@ -78,6 +78,10 @@ public class ArmSubsystem extends SubsystemBase {
     return false;
   }
 
+  public static double encoderToRadians(double armEncoderTicks) {
+    return -.02 * Math.PI * armEncoderTicks + 2.12 * Math.PI;
+  }
+
   @Override
   public void periodic() {}
 }

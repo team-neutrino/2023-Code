@@ -40,58 +40,62 @@ public final class Constants {
   }
 
   public static class ArmConstants {
-    public static final double UP = 56;
-    public static final double FEEDER = 34.5;
-
+    // positions for xbox abxy default
     public static final double FORWARD_DOWN = 94;
-
+    public static final double FORWARD_MID = 80.5;
+    public static final double BACK_MID = 36.7;
     public static final double BACK_DOWN = 18;
 
-    public static final double FORWARD_MID = 80.5;
+    // position of physical and nonphysical limits
+    public static final double ARM_BACKMOST = 18;
+    public static final double ARM_FRONTMOST = 95;
 
-    public static final double BACK_MID = 36.7;
-    // public static final double BACK_MID_CONE = 36.7;
+    public static final double FORWARD_ARM_HEIGHT_LIMIT = 73; // actual limit 69
+    public static final double BACKWARD_ARM_HEIGHT_LIMIT = 40; // actual limit 44
+    public static final double FORWARD_FLOOR_ARM_ANGLE_LIMIT = 90;
+
+    // positions for scoring and feeding
+    public static final double FEEDER = 34.5;
+
     public static final double BACK_HIGH_CONE = 37.7;
 
     public static final double BACK_MID_CUBE = 30;
     public static final double BACK_HIGH_CUBE = 34;
 
-    public static final double ARM_DEADZONE = 1;
-    public static final double CONE_ADDITION = 3;
-
-    public static final double ARM_BACKMOST = 18;
-    public static final double ARM_FRONTMOST = 95;
-
+    // positions for cross subsystem interactions
     public static final double GATHER_POSITION = 91;
     public static final double INTAKE_RUNNABLE = 84;
+
+    // utility constants
+    public static final double ARM_DEADZONE = 1;
 
     public static final double ARM_OUTPUT_LIMIT = 0.2;
     public static final double SCALE_FACTOR = 5;
     public static final double ARM_INPUT_DEADZONE = 0.5;
+  }
+
+  public static class TelescopeConstants {
 
     public static final double TELESCOPE_EXTEND_SPEED = 0.5; // note: setInverted is true
     public static final double TELESCOPE_RETRACT_SPEED = -0.5;
     public static final double TELESCOPE_EXTEND_LIMIT = -5500;
     public static final double TELESCOPING_DEADZONE = 250;
 
-    public static final double FORWARD_ARM_HEIGHT_LIMIT = 73; // actual limit 69
-    public static final double BACKWARD_ARM_HEIGHT_LIMIT = 40; // actual limit 44
-    public static final double FORWARD_FLOOR_ARM_ANGLE_LIMIT = 90;
     public static final double TELESCOPE_HEIGHT_LIMIT_RETRACT_SPEED = -0.85;
   }
 
   public static class PIDConstants {
     public static final double dt = 20;
-    public static final double ARM_P = 0.06;
-    public static final double ARM_P_ADJUST = 0.02;
-    public static final double ARM_EXTENSION_P = .02;
+    public static final double ARM_P = 0.04; // was .06
+    public static final double ARM_P_ADJUST = 0.02; // was .02
+    public static final double ARM_EXTENSION_P = .02; // was .02
     public static final double ARM_I = 0;
     public static final double ARM_D = 0;
-    public static final double ARM_FF = .01;
+    public static final double ARM_FF = .045; // was .01
 
     public static final double BALANCE_P = 0.1;
     public static final double BALANCE_I = 0;
-    public static final double BALANCE_D = 0;
+    public static final double BALANCE_D = 50;
 
     public static final double MIN_OUTPUT = -.3;
     public static final double MAX_OUTPUT = .3;
@@ -105,7 +109,7 @@ public final class Constants {
 
   public static class DrivetrainConstants {
     public static final double JOYSTICK_DEADZONE = 0.1;
-    public static final double AUTO_BALANCE_DEADZONE = .4;
+    public static final double AUTO_BALANCE_DEADZONE = 5;
     public static final double BALANCE_MOTOR_POWER = -.3;
   }
 
