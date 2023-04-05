@@ -12,8 +12,7 @@ public class TelescopeDefaultCommand extends CommandBase {
 
   private TelescopeSubsystem m_telescopeSubsystem;
 
-  public TelescopeDefaultCommand(
-      SubsystemContainer p_subsystemContainer) {
+  public TelescopeDefaultCommand(SubsystemContainer p_subsystemContainer) {
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     addRequirements(m_telescopeSubsystem);
   }

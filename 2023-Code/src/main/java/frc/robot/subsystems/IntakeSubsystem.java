@@ -18,8 +18,7 @@ import frc.robot.Constants.PneumaticsConstants;
 public class IntakeSubsystem extends SubsystemBase {
 
   private CANSparkMax m_wheelsMotor =
-      new CANSparkMax(
-          MotorConstants.INTAKEMOTOR, MotorType.kBrushless);
+      new CANSparkMax(MotorConstants.INTAKEMOTOR, MotorType.kBrushless);
 
   private int hasGamePiece = 0;
 

@@ -7,9 +7,9 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.SubsystemContainer;
 import frc.robot.TrajectoryConfigConstants;
-import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -56,9 +56,15 @@ public class JustScore extends SequentialCommandGroup {
             m_drivetrainSubsystem,
             TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
     addCommands(
-        forwardBackCommand, moveBackCommand,
-        new ArmToAngleCommand(p_subsystemContainer, p_pidController, p_driverController, ArmConstants.BACK_MID, true, false),
-        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)
-        );
+        forwardBackCommand,
+        moveBackCommand,
+        new ArmToAngleCommand(
+            p_subsystemContainer,
+            p_pidController,
+            p_driverController,
+            ArmConstants.BACK_MID,
+            true,
+            false),
+        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager));
   }
 }
