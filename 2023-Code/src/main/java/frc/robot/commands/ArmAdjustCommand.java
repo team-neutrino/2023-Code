@@ -11,6 +11,7 @@ import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.ViennaContainer;
+import frc.robot.util.Limiter;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmAdjustCommand extends CommandBase {
@@ -42,17 +43,14 @@ public class ArmAdjustCommand extends CommandBase {
     double voltage = 0;
 
     if (Math.abs(m_driverController.getRightX()) > ArmConstants.ARM_INPUT_DEADZONE) {
-      voltage =
-          m_armSubsystem.limitArmAmount(
-              -m_driverController.getRightX() / ArmConstants.SCALE_FACTOR);
-      targetAngle = m_armSubsystem.getAbsoluteArmPosition();
-    } else {
-      voltage =
-          m_pidController.armRun(
-              m_armSubsystem.getAbsoluteArmPosition(),
-              targetAngle,
-              m_telescopeSubsystem.getTelescopingExtension());
+      targetAngle += Limiter.bound(m_driverController.getRightX(), .2);
     }
+
+    voltage =
+        m_pidController.armRun(
+            m_armSubsystem.getAbsoluteArmPosition(),
+            targetAngle,
+            m_telescopeSubsystem.getTelescopingExtension());
     m_armSubsystem.smartArmSet(voltage);
   }
 

@@ -35,10 +35,10 @@ public class ArmToAngleCommand extends CommandBase {
       double p_targetAngle) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_pidController = ViennaContainer.getArmSetPositionController();
-    m_driverController = p_driverController;
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
+    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
+    m_driverController = p_driverController;
     m_targetAngle = p_targetAngle;
-
     addRequirements(m_armSubsystem, m_telescopeSubsystem);
   }
 
@@ -52,11 +52,11 @@ public class ArmToAngleCommand extends CommandBase {
     m_pidController = ViennaContainer.getArmSetPositionController();
     m_driverController = p_driverController;
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
+    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
     m_backCheck = p_backCheck;
-    m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
-    addRequirements(m_armSubsystem, m_ledSubsystem, m_telescopeSubsystem);
+    addRequirements(m_armSubsystem, m_telescopeSubsystem);
   }
 
   @Override
@@ -78,7 +78,11 @@ public class ArmToAngleCommand extends CommandBase {
       armAngle = m_targetAngle;
     }
 
-    voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), armAngle);
+    voltage =
+        m_pidController.armRun(
+            m_armSubsystem.getAbsoluteArmPosition(),
+            armAngle,
+            m_telescopeSubsystem.getTelescopingExtension());
     m_armSubsystem.smartArmSet(voltage);
   }
 
