@@ -211,7 +211,7 @@ public class RobotContainer {
           false);
 
   private final TelescopeDefaultCommand m_TelescopeDefaultCommand =
-      new TelescopeDefaultCommand(m_telescopeSubsystem, m_armSubsystem);
+      new TelescopeDefaultCommand(m_subsystemContainer);
 
   // TELESCOPING ARM COMMANDS
   private final TelescopeCommand m_telescopeCommand =

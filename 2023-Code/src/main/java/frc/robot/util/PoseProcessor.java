@@ -3,8 +3,7 @@ package frc.robot.util;
 import frc.robot.Constants;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class PoseProcessor {
 
@@ -31,7 +30,6 @@ public class PoseProcessor {
       }
       scanner.close();
     } catch (FileNotFoundException e) {
-      // System.out.println("Scanner reading error");
       e.printStackTrace();
     }
     return poseArray;

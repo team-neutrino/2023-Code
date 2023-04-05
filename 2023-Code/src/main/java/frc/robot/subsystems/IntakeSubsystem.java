@@ -17,27 +17,22 @@ import frc.robot.Constants.PneumaticsConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  /** Motor for the wheels of the intake system */
   private CANSparkMax m_wheelsMotor =
       new CANSparkMax(
-          MotorConstants.INTAKEMOTOR, MotorType.kBrushless); // motor type subject to change;
+          MotorConstants.INTAKEMOTOR, MotorType.kBrushless);
 
   private int hasGamePiece = 0;
 
-  /** Encoder for the wheels on the intake */
   private RelativeEncoder m_wheelsEncoder;
 
-  /** Encoder for the up-down motion of the intake */
   private RelativeEncoder m_upDownEncoder;
 
-  /** Solenoid for the intake, controls the in-out motion */
   private Solenoid m_upDownSolenoid =
       new Solenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.UP_DOWN_SOLENOID);
 
   private Solenoid m_squeezeSolenoid =
       new Solenoid(PneumaticsModuleType.CTREPCM, PneumaticsConstants.IN_OUT_SOLENOID);
 
-  /** Beam break to detect if a game piece is present in the intake (to squeeeeze) */
   private DigitalInput m_beamBreak = new DigitalInput(DigitalConstants.INTAKE_BEAMBREAK);
 
   private DigitalInput m_intakeDownSensor =
