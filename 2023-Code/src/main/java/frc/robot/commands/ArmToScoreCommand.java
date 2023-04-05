@@ -21,9 +21,7 @@ public class ArmToScoreCommand extends CommandBase {
   private TelescopeSubsystem m_telescopeSubsystem;
   private LEDSubsystem m_ledSubsystem;
   private LimelightSubsystem m_limelightSubsystem;
-
   private ViennaPIDController m_pidController;
-  private XboxController m_driverController;
 
   private double targetArmAngle;
   private double voltage;
@@ -40,10 +38,7 @@ public class ArmToScoreCommand extends CommandBase {
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_limelightSubsystem = p_subsystemContainer.getLimelightSubsystem();
     m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
-
     m_pidController = p_pidController;
-    m_driverController = p_drivController;
-
     m_scoreHigh = p_scoreHigh;
     addRequirements(m_armSubsystem, m_ledSubsystem, m_telescopeSubsystem);
   }
@@ -55,10 +50,10 @@ public class ArmToScoreCommand extends CommandBase {
   public void execute() {
 
     /* There is no valid target on the back  */
-    if (m_limelightSubsystem.getDistance() > LimelightConstants.SCORING_DISTANCE) {
-      m_scoreBack = false;
-    } else {
+    if (m_limelightSubsystem.getDistance() < LimelightConstants.SCORING_DISTANCE) {
       m_scoreBack = true;
+    } else {
+      m_scoreBack = false;
     }
 
     /* score high from the back */
@@ -84,6 +79,10 @@ public class ArmToScoreCommand extends CommandBase {
 
     voltage = m_pidController.run(m_armSubsystem.getAbsoluteArmPosition(), targetArmAngle);
     m_armSubsystem.smartArmSet(voltage);
+
+    if(m_armSubsystem.atArmPosition(targetArmAngle)){
+
+    }
   }
 
   @Override
