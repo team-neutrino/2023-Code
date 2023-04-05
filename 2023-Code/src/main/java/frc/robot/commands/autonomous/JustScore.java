@@ -29,7 +29,6 @@ public class JustScore extends SequentialCommandGroup {
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
 
-  /** Creates a new TestAutonGeneratedTrajectory. */
   public JustScore(
       SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
