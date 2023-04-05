@@ -59,11 +59,13 @@ public class LimelightSubsystem extends SubsystemBase {
   }
 
   public double getTargetPoseX() {
-    return getTargetPose()[0];
+    return 0;
+    // return getTargetPose()[0];
   }
 
   public double getTargetPoseZ() {
-    return getTargetPose()[2] * LIMELIGHT_TO_METER_CONVERSION;
+    return 0;
+    // return getTargetPose()[2] * LIMELIGHT_TO_METER_CONVERSION;
   }
 
   /* is a print that access and prints the full array that is accessed when getting the camTran. Inert for right now,
