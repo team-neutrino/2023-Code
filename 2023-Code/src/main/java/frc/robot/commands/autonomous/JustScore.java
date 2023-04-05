@@ -4,20 +4,20 @@
 
 package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.SubsystemContainer;
 import frc.robot.TrajectoryConfigConstants;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.commands.ArmToAngleCommand;
+import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class JustScore extends SequentialCommandGroup {
 
@@ -33,6 +33,7 @@ public class JustScore extends SequentialCommandGroup {
   public JustScore(
       SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
+      XboxController p_driverController,
       IntakeManager p_intakeManager) {
     m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
 
@@ -55,13 +56,10 @@ public class JustScore extends SequentialCommandGroup {
             moveBackArray,
             m_drivetrainSubsystem,
             TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        forwardBackCommand, moveBackCommand
-        // new ArmToAngleCommand(
-        //     p_armSubsystem, p_pidController, ArmConstants.BACK_MID, true, false, p_ledSubsystem),
-        // new ScoringOpenCommand(p_scoringSubsystem, p_intakeSubsystem, p_intakeManager, 2, true)
+        forwardBackCommand, moveBackCommand,
+        new ArmToAngleCommand(p_subsystemContainer, p_pidController, p_driverController, ArmConstants.BACK_MID, true, false),
+        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)
         );
   }
 }
