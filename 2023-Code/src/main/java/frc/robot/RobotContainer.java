@@ -239,7 +239,7 @@ public class RobotContainer {
 
     // used for small adjustments of the arm
     m_rightStickButton.toggleOnTrue(
-        new ArmAdjustCommand(m_subsystemContainer, m_driverController, m_armPidController));
+        new ArmAdjustCommand(m_subsystemContainer, m_driverController));
     m_leftJoystickButton.toggleOnTrue(m_telescopeCommand);
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
