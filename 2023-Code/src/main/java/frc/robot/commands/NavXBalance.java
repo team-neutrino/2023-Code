@@ -10,34 +10,28 @@ import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class NavXBalance extends CommandBase {
-  DriveTrainSubsystem m_DriveTrainSubsystem;
+  DriveTrainSubsystem m_drivetrainSubsystem;
   double TILTED = -14;
 
-  /** Creates a new NavXBalance. */
   public NavXBalance(SubsystemContainer p_subsystemContainer) {
-    m_DriveTrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
-    // Use addRequirements() here to declare subsystem dependencies.
+    m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_DriveTrainSubsystem.setMotors(
+    m_drivetrainSubsystem.setMotors(
         DrivetrainConstants.BALANCE_MOTOR_POWER, DrivetrainConstants.BALANCE_MOTOR_POWER);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (m_DriveTrainSubsystem.getRoll() < TILTED) {
+    if (m_drivetrainSubsystem.getRoll() < TILTED) {
       return true;
     }
     return false;
