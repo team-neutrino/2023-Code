@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // Instantiate our RobotContainer.  This will all our button bindings, and put our
     // autonomous chooser on the dashboard.
     DriverStation.silenceJoystickConnectionWarning(true);
     m_robotContainer = new RobotContainer();
@@ -77,6 +77,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    m_robotContainer.resetNavX();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
