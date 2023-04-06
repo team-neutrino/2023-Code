@@ -5,16 +5,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
-public class NavXBalance extends CommandBase {
-  DriveTrainSubsystem m_drivetrainSubsystem;
-  double TILTED = -14;
+public class MoveForwardCommand extends CommandBase {
+  private DriveTrainSubsystem m_drivetrainSubsystem;
+  private double m_distance;
+  private double m_motorPower;
 
-  public NavXBalance(SubsystemContainer p_subsystemContainer) {
+  public MoveForwardCommand(
+      SubsystemContainer p_subsystemContainer, double p_distance, double p_motorPower) {
     m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
+    m_distance = p_distance;
+    m_motorPower = p_motorPower;
+    addRequirements(m_drivetrainSubsystem);
   }
 
   @Override
@@ -22,8 +26,7 @@ public class NavXBalance extends CommandBase {
 
   @Override
   public void execute() {
-    m_drivetrainSubsystem.setMotors(
-        DrivetrainConstants.BALANCE_MOTOR_POWER, DrivetrainConstants.BALANCE_MOTOR_POWER);
+    m_drivetrainSubsystem.setMotors(m_motorPower, m_motorPower);
   }
 
   @Override
@@ -31,7 +34,7 @@ public class NavXBalance extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if (m_drivetrainSubsystem.getRoll() < TILTED) {
+    if (m_drivetrainSubsystem.getL1Pos() >= m_distance) {
       return true;
     }
     return false;

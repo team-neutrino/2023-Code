@@ -105,15 +105,7 @@ public class RobotContainer {
   private final TelescopeSubsystem m_telescopeSubsystem = new TelescopeSubsystem();
 
   public SubsystemContainer m_subsystemContainer =
-      new SubsystemContainer(
-          m_telescopeSubsystem,
-          m_pneumaticSubsystem,
-          m_drivetrainSubsystem,
-          m_scoringSubsystem,
-          m_limelightSubsystem,
-          m_armSubsystem,
-          m_intakeSubsystem,
-          m_ledSubsystem);
+      new SubsystemContainer(m_telescopeSubsystem, m_drivetrainSubsystem, m_scoringSubsystem, m_limelightSubsystem, m_armSubsystem, m_intakeSubsystem, m_ledSubsystem));
 
   // UTIL
   private final ViennaPIDController m_armPidController =
@@ -208,7 +200,7 @@ public class RobotContainer {
           false);
 
   private final TelescopeDefaultCommand m_TelescopeDefaultCommand =
-      new TelescopeDefaultCommand(m_telescopeSubsystem, m_armSubsystem);
+      new TelescopeDefaultCommand(m_subsystemContainer);
 
   // TELESCOPING ARM COMMANDS
   private final TelescopeCommand m_telescopeCommand =

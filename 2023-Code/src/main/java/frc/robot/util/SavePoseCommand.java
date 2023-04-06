@@ -12,13 +12,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SavePoseCommand extends InstantCommand {
   private DriveTrainSubsystem m_driveTrainSubsystem;
   private String m_filename;
-  // private BufferedWriter writer;
 
   public SavePoseCommand(DriveTrainSubsystem p_driveTrainSubsystem, String p_filename)
       throws IOException {
@@ -37,7 +33,6 @@ public class SavePoseCommand extends InstantCommand {
     }
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     Pose2d currentPose = m_driveTrainSubsystem.getPose2d();

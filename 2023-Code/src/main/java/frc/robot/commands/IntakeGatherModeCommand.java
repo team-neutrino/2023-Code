@@ -9,7 +9,6 @@ import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.util.IntakeManager;
 
-/** This command will transfer game piece from intake to arm */
 public class IntakeGatherModeCommand extends CommandBase {
   private IntakeSubsystem m_intakeSubsystem;
   private IntakeManager m_intakeManager;
@@ -49,7 +48,6 @@ public class IntakeGatherModeCommand extends CommandBase {
       m_intakeSubsystem.stopIntake();
     }
     m_intakeSubsystem.resetDebouncer();
-    // TODO remove potentially, does the same thing as IntakeDefaultCommand
   }
 
   @Override

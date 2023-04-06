@@ -24,14 +24,8 @@ import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-
-// FOR BLUE PATH
 public class ScoreMoveAutoGather extends SequentialCommandGroup {
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
@@ -42,7 +36,6 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
   private RamseteCommand runThatBackCommand;
   private boolean inverted = false;
 
-  /** Creates a new TestAutonGeneratedTrajectory. */
   public ScoreMoveAutoGather(
       SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
@@ -82,8 +75,6 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
             TrajectoryConfigConstants.K_MAX_SPEED_BACKWARD_CONFIG,
             inverted);
 
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmToAngleCommand(
             p_subsystemContainer,

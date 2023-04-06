@@ -9,7 +9,6 @@ import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.util.IntakeManager;
 
-/** Command will intake the game piece without transfering it to the arm */
 public class IntakeHybridModeCommand extends CommandBase {
   IntakeSubsystem m_intakeSubsystem;
   IntakeManager m_intakeManager;
@@ -32,7 +31,6 @@ public class IntakeHybridModeCommand extends CommandBase {
       m_intakeSubsystem.runIntake();
     }
 
-    // TODO move this logic into isFinished because it's duplicate code from intakeDefaultCommand
     if (m_intakeSubsystem.detectedGamePiece()) {
       m_intakeSubsystem.stopIntake();
       m_intakeSubsystem.squeeze();

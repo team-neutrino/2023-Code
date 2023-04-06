@@ -19,7 +19,6 @@ public class LEDSubsystem extends SubsystemBase {
   private int m_LEDLength = 58;
   private Timer timer = new Timer();
 
-  /** Creates a new LEDSubsystem. */
   public LEDSubsystem() {
     m_addressableLED = new AddressableLED(PWMConstants.LED_PORT);
     m_LEDBuffer = new AddressableLEDBuffer(m_LEDLength);
@@ -89,7 +88,6 @@ public class LEDSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
     m_addressableLED.setData(m_LEDBuffer);
   }
 }
