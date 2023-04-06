@@ -22,8 +22,7 @@ public class AutonArmGatherCommand extends CommandBase {
   private ViennaPIDController m_pidController;
   private boolean detective;
 
-  public AutonArmGatherCommand(
-      SubsystemContainer p_subsystemContainer) {
+  public AutonArmGatherCommand(SubsystemContainer p_subsystemContainer) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();

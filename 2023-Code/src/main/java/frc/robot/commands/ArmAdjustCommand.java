@@ -10,8 +10,8 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
-import frc.robot.util.ViennaContainer;
 import frc.robot.util.Limiter;
+import frc.robot.util.ViennaContainer;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmAdjustCommand extends CommandBase {
@@ -22,8 +22,7 @@ public class ArmAdjustCommand extends CommandBase {
   private double targetAngle;
 
   public ArmAdjustCommand(
-      SubsystemContainer p_subsystemContainer,
-      XboxController p_driverController) {
+      SubsystemContainer p_subsystemContainer, XboxController p_driverController) {
     m_pidController = ViennaContainer.getArmAdjustController();
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_driverController = p_driverController;

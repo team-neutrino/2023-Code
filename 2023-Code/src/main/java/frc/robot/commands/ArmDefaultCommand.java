@@ -17,8 +17,7 @@ public class ArmDefaultCommand extends CommandBase {
   private ViennaPIDController m_pidController;
   private TelescopeSubsystem m_telescopeSubsystem;
 
-  public ArmDefaultCommand(
-      SubsystemContainer p_subsystemContainer) {
+  public ArmDefaultCommand(SubsystemContainer p_subsystemContainer) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_pidController = ViennaContainer.getArmSetPositionController();
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
