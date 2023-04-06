@@ -100,12 +100,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
   }
 
   public void resetOdometry() {
-    resetEncoders();
     m_diffDriveOdometry.resetPosition(
         Rotation2d.fromDegrees(getYaw()),
         m_encoderLeft1.getPosition(),
         m_encoderRight1.getPosition(),
         m_diffDriveOdometry.getPoseMeters());
+        resetEncoders();
   }
 
   public double getR1Pos() {

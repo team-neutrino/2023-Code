@@ -46,27 +46,23 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
     m_subsystemContainer = p_subsystemContainer;
 
     // double initialDistanceToAprilTag = m_limelightSubsystem.getTargetPoseZ(); // in meters
-    Pose2d initialPose = m_drivetrainSubsystem.getPose2d();
+
+    
     // Pose2d finalPose =
     //     new Pose2d(
     //         initialPose.getX() + initialDistanceToAprilTag,
     //         initialPose.getY(),
     //         initialPose.getRotation());
 
-    Pose2d finalTestPose =
-        new Pose2d(initialPose.getX() + 1, initialPose.getY(), initialPose.getRotation());
+    
 
     // trajectory =
     //     TrajectoryGenerator.generateTrajectory(
     //         List.of(initialPose, finalPose), TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
-    Trajectory testTrajectory =
-        TrajectoryGenerator.generateTrajectory(
-            List.of(initialPose, finalTestPose),
-            TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG);
+    
 
-    RamseteCommand testRamsete =
-        AutonomousUtil.generateRamseteCommand(testTrajectory, m_drivetrainSubsystem);
+    
 
     // ArrayList<PoseTriplet> forwardBackArray =
     //   new ArrayList<PoseTriplet>(
@@ -84,10 +80,25 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
     //       trajectory,
     //       m_drivetrainSubsystem),
     //     new ArmFeederCommand(p_subsystemContainer, p_pidController));
-    addCommands(new InstantCommand(() -> System.out.println("testetste")), testRamsete, new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
+    addCommands(
+      testInitialize(), new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
   }
 
-  private RamseteCommand moveForward() {
-    return AutonomousUtil.generateRamseteCommand(trajectory, m_drivetrainSubsystem);
+  private RamseteCommand testInitialize() {
+    System.out.println("TEST INITIALIZED");
+    Pose2d initialPose = m_drivetrainSubsystem.getPose2d();
+    Pose2d finalTestPose =
+        new Pose2d(initialPose.getX() + 1, initialPose.getY(), initialPose.getRotation());
+    System.out.println("initialPose: " + initialPose);
+    System.out.println("finalPose: " + finalTestPose);
+
+    Trajectory testTrajectory =
+      TrajectoryGenerator.generateTrajectory(
+          List.of(initialPose, finalTestPose),
+          TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG);
+
+    RamseteCommand testRamsete =
+      AutonomousUtil.generateRamseteCommand(testTrajectory, m_drivetrainSubsystem);
+    return testRamsete;
   }
 }

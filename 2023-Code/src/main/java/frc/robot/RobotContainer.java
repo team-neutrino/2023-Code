@@ -146,10 +146,6 @@ public class RobotContainer {
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_subsystemContainer);
 
-  private final PlayerstationLineupCommand m_playerstationLineupCommand =
-      new PlayerstationLineupCommand(
-          m_subsystemContainer, m_intakeManager, m_armPidController, m_driverController);
-
   private final AutoBalanceCommand m_autoBalanceCommand =
       new AutoBalanceCommand(m_subsystemContainer, m_balancePidController);
   private final ScoreMobilityThenBalance m_scoreMobilityThenBalance =
@@ -249,7 +245,8 @@ public class RobotContainer {
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
     m_telescopeSubsystem.setDefaultCommand(m_TelescopeDefaultCommand);
 
-    m_upArrow.onTrue(m_playerstationLineupCommand);
+    m_upArrow.onTrue(new PlayerstationLineupCommand(m_subsystemContainer, m_intakeManager, m_armPidController, m_driverController));
+    m_downArrow.onTrue(new InstantCommand(m_drivetrainSubsystem::resetOdometry).alongWith(new InstantCommand(this::resetNavX)));
 
     // BUTTONS
     m_buttonB.toggleOnTrue(m_armToForwardMid);
