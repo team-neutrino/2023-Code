@@ -59,12 +59,7 @@ public class JustScore extends SequentialCommandGroup {
         forwardBackCommand,
         moveBackCommand,
         new ArmToAngleCommand(
-            p_subsystemContainer,
-            p_pidController,
-            p_driverController,
-            ArmConstants.BACK_MID,
-            true,
-            false),
+            p_subsystemContainer, p_driverController, ArmConstants.BACK_MID, true, false),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager));
   }
 }
