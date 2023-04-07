@@ -113,7 +113,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_drivestationTab = Shuffleboard.getTab("Drivestation Tab123");
 
     m_LEDVariables[0] =
-        m_drivestationTab.add("LED Color", "Off").withPosition(8, 3).withSize(2, 1).getEntry();
+        m_drivestationTab.add("LED Color", "Off").withPosition(0, 3).withSize(2, 1).getEntry();
 
     m_scoringVariables[0] =
         m_drivestationTab.add("Grabber Release", 0).withPosition(0, 0).withSize(1, 1).getEntry();
@@ -128,7 +128,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
         m_drivestationTab
             .add("Match Time", 0)
             .withPosition(2, 0)
-            .withSize(6, 4)
+            .withSize(3, 2)
             .withWidget(BuiltInWidgets.kDial)
             .withProperties(Map.of("min", 0, "max", 150))
             .getEntry();
@@ -136,7 +136,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
         m_drivestationTab
             .add("Game Piece", "No Piece")
             .withPosition(0, 2)
-            .withSize(2, 2)
+            .withSize(2, 1)
             .getEntry();
 
     m_armVariables[0] =
@@ -145,16 +145,17 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_drivestationTab
         .add("Autonomous Chooser", m_autoChooser)
         .withWidget(BuiltInWidgets.kComboBoxChooser)
-        .withPosition(10, 3)
+        .withPosition(5, 0)
         .withSize(2, 1);
+    
 
     try {
       LLFeed = new HttpCamera("limelight", "http://10.39.28.92", HttpCameraKind.kMJPGStreamer);
       CameraServer.startAutomaticCapture(LLFeed);
       m_drivestationTab
           .add(LLFeed)
-          .withPosition(8, 0)
-          .withSize(4, 3)
+          .withPosition(2, 2)
+          .withSize(3, 2)
           .withWidget(BuiltInWidgets.kCameraStream);
     } catch (VideoException e) {
     }
