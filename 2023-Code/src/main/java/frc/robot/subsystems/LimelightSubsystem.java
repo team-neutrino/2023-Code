@@ -64,7 +64,7 @@ public class LimelightSubsystem extends SubsystemBase {
   }
 
   public double getTargetPoseZ() {
-    return 0;
+    return 2;
     // return getTargetPose()[2] * LIMELIGHT_TO_METER_CONVERSION;
   }
 

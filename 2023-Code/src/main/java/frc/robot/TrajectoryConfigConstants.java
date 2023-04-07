@@ -31,7 +31,7 @@ public class TrajectoryConfigConstants {
           new SimpleMotorFeedforward(
               KS_VOLTS, KV_VOLT_SECONDS_PER_METER, KA_VOLT_SECONDS_SQUARED_PER_METER),
           K_DRIVE_KINEMATICS,
-          K_MAX_VOLTAGE);
+          K_MAX_VOLTAGE); 
 
   public static TrajectoryConfig trajectoryConfigMeabhGenerator(
       double maxSpeed, double maxAcceleration, boolean isReversed) {

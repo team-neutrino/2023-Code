@@ -5,9 +5,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -44,36 +46,6 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
     m_drivetrainSubsystem = m_subsystemContainer.getDriveTrainSubsystem();
     m_limelightSubsystem = m_subsystemContainer.getLimelightSubsystem();
     m_subsystemContainer = p_subsystemContainer;
-
-    // double initialDistanceToAprilTag = m_limelightSubsystem.getTargetPoseZ(); // in meters
-
-    
-    // Pose2d finalPose =
-    //     new Pose2d(
-    //         initialPose.getX() + initialDistanceToAprilTag,
-    //         initialPose.getY(),
-    //         initialPose.getRotation());
-
-    
-
-    // trajectory =
-    //     TrajectoryGenerator.generateTrajectory(
-    //         List.of(initialPose, finalPose), TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
-
-    
-
-    
-
-    // ArrayList<PoseTriplet> forwardBackArray =
-    //   new ArrayList<PoseTriplet>(
-    //       Arrays.asList(new PoseTriplet(initialPose.getX(), 0, 0), new PoseTriplet(2, 0, 0)));
-
-    // RamseteCommand forwardBackCommand =
-    //     AutonomousUtil.generateRamseteFromPoses(
-    //         forwardBackArray,
-    //         m_drivetrainSubsystem,
-    //         TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
-
     // if (m_drivetrainSubsystem.isAngleAcceptable()) {
     //   addCommands(
     //     AutonomousUtil.generateRamseteCommand(
@@ -81,24 +53,29 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
     //       m_drivetrainSubsystem),
     //     new ArmFeederCommand(p_subsystemContainer, p_pidController));
     addCommands(
-      testInitialize(), new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
+      new InstantCommand(this::testInitialize), new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
   }
 
-  private RamseteCommand testInitialize() {
-    System.out.println("TEST INITIALIZED");
+  private void testInitialize() {
     Pose2d initialPose = m_drivetrainSubsystem.getPose2d();
+    Rotation2d initialRotation = initialPose.getRotation();
+    double initialDistanceToAprilTag = m_limelightSubsystem.getTargetPoseZ();
+
     Pose2d finalTestPose =
-        new Pose2d(initialPose.getX() + 1, initialPose.getY(), initialPose.getRotation());
+        new Pose2d(
+          initialPose.getX() + initialDistanceToAprilTag*initialRotation.getCos(), 
+          initialPose.getY() + initialDistanceToAprilTag*initialRotation.getSin(), 
+          initialPose.getRotation());
     System.out.println("initialPose: " + initialPose);
     System.out.println("finalPose: " + finalTestPose);
 
     Trajectory testTrajectory =
       TrajectoryGenerator.generateTrajectory(
           List.of(initialPose, finalTestPose),
-          TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG);
+          TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
     RamseteCommand testRamsete =
       AutonomousUtil.generateRamseteCommand(testTrajectory, m_drivetrainSubsystem);
-    return testRamsete;
+    CommandScheduler.getInstance().schedule(testRamsete);
   }
 }
