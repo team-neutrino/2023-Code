@@ -27,10 +27,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
 
-  public DriveTrainSubsystem(DriveTrainSubsystem p_drivetrainSubsystem) {
-    m_drivetrainSubsystem = p_drivetrainSubsystem;
-  }
-
   // ODOMETRY
   private DifferentialDriveOdometry m_diffDriveOdometry;
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
@@ -45,17 +41,20 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private CANSparkMax m_motorRight2 =
       new CANSparkMax(MotorConstants.MOTOR_RIGHT2, MotorType.kBrushless);
 
+      private MotorControllerGroup m_motorGroupRight =
+      new MotorControllerGroup(m_motorRight1, m_motorRight2);
+  private MotorControllerGroup m_motorGroupLeft =
+      new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
+
   private RelativeEncoder m_encoderLeft1;
   private RelativeEncoder m_encoderLeft2;
   private RelativeEncoder m_encoderRight1;
   private RelativeEncoder m_encoderRight2;
+
   private Joystick m_leftJoystick;
   private Joystick m_rightJoystick;
   private JoystickButton m_driveBackwards;
-  private MotorControllerGroup m_motorGroupRight =
-      new MotorControllerGroup(m_motorRight1, m_motorRight2);
-  private MotorControllerGroup m_motorGroupLeft =
-      new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
+  private boolean isDriveBackwards = false;
 
   /** Creates a new Drivetrain. */
   public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick) {
@@ -178,7 +177,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
       m_motorGroupRight.set(turboAccel(deadzone(rightMotorInput)));
     }
     /* if the top of the joystick is held  */
-    else if (m_driveBackwards.getAsBoolean()) {
+    else if (isDriveBackwards) {
       m_motorGroupLeft.set(-deadzone(rightMotorInput));
       m_motorGroupRight.set(-deadzone(leftMotorInput));
     } else {
@@ -205,6 +204,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if(m_driveBackwards.getAsBoolean()){
+      isDriveBackwards = true;
+    }
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
   }
