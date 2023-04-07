@@ -56,6 +56,7 @@ public final class Constants {
 
     // positions for scoring and feeding
     public static final double FEEDER = 34.5;
+    public static final double FORWARD_FEEDER = 70; //change
 
     public static final double BACK_HIGH_CONE = 37.7;
 
@@ -80,6 +81,7 @@ public final class Constants {
     public static final double TELESCOPE_RETRACT_SPEED = -0.5;
     public static final double TELESCOPE_EXTEND_LIMIT = -5500;
     public static final double TELESCOPING_DEADZONE = 250;
+    public static final double FORWARD_FEEDER_LENGTH = 100;
 
     public static final double TELESCOPE_HEIGHT_LIMIT_RETRACT_SPEED = -0.85;
   }

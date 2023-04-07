@@ -18,6 +18,7 @@ import frc.robot.Constants.PIDConstants;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmFeederCommand;
+import frc.robot.commands.ArmForwardFeederCommand;
 import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
@@ -175,7 +176,7 @@ public class RobotContainer {
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(m_subsystemContainer, m_armPidController);
   private final ArmFeederCommand m_armFeederCommand =
-      new ArmFeederCommand(m_subsystemContainer, m_armPidController, m_ledSubsystem);
+      new ArmFeederCommand(m_subsystemContainer, m_armPidController);
 
   private final ArmToAngleCommand m_armToForwardMid =
       new ArmToAngleCommand(
@@ -218,6 +219,8 @@ public class RobotContainer {
       new TelescopeCommand(m_subsystemContainer, m_driverController);
   private final ExtendModeCommand m_extendModeCommand =
       new ExtendModeCommand(m_telescopeSubsystem, m_armSubsystem);
+  private final ArmForwardFeederCommand m_armForwardFeederCommand =
+      new ArmForwardFeederCommand(m_subsystemContainer, m_armPidController);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -254,7 +257,11 @@ public class RobotContainer {
     // LED Buttons
     m_rightArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.PURPLE, m_driverStationInfo));
     m_leftArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.YELLOW, m_driverStationInfo));
-  }
+
+    // TESTING
+    m_upArrow.whileTrue(m_armForwardFeederCommand);
+
+}
 
   public Command getAutonomousCommand() {
     m_drivetrainSubsystem.resetOdometry();

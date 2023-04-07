@@ -7,13 +7,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.TelescopeConstants;
 import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.ViennaPIDController;
 
-public class ArmFeederCommand extends CommandBase {
+public class ArmForwardFeederCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ScoringSubsystem m_scoringSubsystem;
   private ViennaPIDController m_pidController;
@@ -23,7 +24,7 @@ public class ArmFeederCommand extends CommandBase {
   private Timer m_timer;
   private double time = 1.5;
 
-  public ArmFeederCommand(
+  public ArmForwardFeederCommand(
       SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
@@ -45,9 +46,11 @@ public class ArmFeederCommand extends CommandBase {
     voltage =
         m_pidController.armRun(
             m_armSubsystem.getAbsoluteArmPosition(),
-            ArmConstants.FEEDER,
+            ArmConstants.FORWARD_FEEDER,
             m_telescopeSubsystem.getTelescopingExtension());
     m_armSubsystem.smartArmSet(voltage);
+    m_telescopeSubsystem.setForwardExtension(TelescopeConstants.FORWARD_FEEDER_LENGTH);
+    
 
     if (m_scoringSubsystem.detectedGamePiece()) {
       hasGamePiece++;
