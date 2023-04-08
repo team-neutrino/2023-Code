@@ -18,7 +18,6 @@ import frc.robot.Constants.PIDConstants;
 import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmFeederCommand;
-import frc.robot.commands.ArmForwardFeederCommand;
 import frc.robot.commands.ArmGatherModeCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
@@ -176,9 +175,8 @@ public class RobotContainer {
   private final ArmGatherModeCommand m_armGatherModeCommand =
       new ArmGatherModeCommand(m_subsystemContainer, m_armPidController);
   private final ArmFeederCommand m_armFeederCommand =
-      new ArmFeederCommand(m_subsystemContainer, m_armPidController);
-  private final ArmForwardFeederCommand m_ArmForwardFeederCommand =
-      new ArmForwardFeederCommand(m_subsystemContainer, m_armPidController);
+      new ArmFeederCommand(m_subsystemContainer, m_armPidController, m_ledSubsystem);
+
   private final ArmToAngleCommand m_armToForwardMid =
       new ArmToAngleCommand(
           m_subsystemContainer,
@@ -249,7 +247,6 @@ public class RobotContainer {
     m_leftTrigger.whileTrue(
         new SequentialCommandGroup(m_intakeGatherModeCommand, m_armGatherModeCommand));
     m_leftBumper.whileTrue(m_armFeederCommand);
-    m_upArrow.whileTrue(m_ArmForwardFeederCommand);
 
     m_rightTrigger.whileTrue(m_intakeHybridModeCommand);
     m_rightBumper.whileTrue(m_intakeReverseCommand);
