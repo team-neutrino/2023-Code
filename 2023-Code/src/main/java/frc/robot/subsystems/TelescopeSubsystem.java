@@ -82,14 +82,6 @@ public class TelescopeSubsystem extends SubsystemBase {
     }
   }
 
-  public void setForwardExtension(double p_length) {
-    if (getTelescopingExtension() > p_length) {
-      extendTelescoping();
-    } else {
-      turnTelescopeOff();
-    }
-  }
-
   @Override
   public void periodic() {
     resetEncoder();
