@@ -72,7 +72,7 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
     Trajectory testTrajectory =
       TrajectoryGenerator.generateTrajectory(
           List.of(initialPose, finalTestPose),
-          TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
+          TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
 
     RamseteCommand testRamsete =
       AutonomousUtil.generateRamseteCommand(testTrajectory, m_drivetrainSubsystem);
