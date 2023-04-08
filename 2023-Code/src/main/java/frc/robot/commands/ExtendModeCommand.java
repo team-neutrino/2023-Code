@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
 
@@ -14,9 +15,9 @@ public class ExtendModeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private TelescopeSubsystem m_telescopeSubsystem;
 
-  public ExtendModeCommand(TelescopeSubsystem p_telescopeSubsystem, ArmSubsystem p_armSubsystem) {
-    m_telescopeSubsystem = p_telescopeSubsystem;
-    m_armSubsystem = p_armSubsystem;
+  public ExtendModeCommand(SubsystemContainer p_subsystemContainer) {
+    m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
+    m_armSubsystem = p_subsystemContainer.getArmSubsystem();
 
     addRequirements(m_telescopeSubsystem);
   }

@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
+import frc.robot.util.ViennaContainer;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmFeederCommand extends CommandBase {
@@ -24,13 +24,10 @@ public class ArmFeederCommand extends CommandBase {
   private Timer m_timer;
   private double time = 1.5;
 
-  public ArmFeederCommand(
-      SubsystemContainer p_subsystemContainer,
-      ViennaPIDController p_pidController,
-      LEDSubsystem p_ledSubsystem) {
+  public ArmFeederCommand(SubsystemContainer p_subsystemContainer) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
-    m_pidController = p_pidController;
+    m_pidController = ViennaContainer.getArmSetPositionController();
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_timer = new Timer();
     addRequirements(m_armSubsystem, m_scoringSubsystem);

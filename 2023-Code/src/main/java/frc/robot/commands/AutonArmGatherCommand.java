@@ -11,6 +11,7 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
+import frc.robot.util.ViennaContainer;
 import frc.robot.util.ViennaPIDController;
 
 public class AutonArmGatherCommand extends CommandBase {
@@ -21,13 +22,12 @@ public class AutonArmGatherCommand extends CommandBase {
   private ViennaPIDController m_pidController;
   private boolean detective;
 
-  public AutonArmGatherCommand(
-      SubsystemContainer p_subsystemContainer, ViennaPIDController p_pidController) {
+  public AutonArmGatherCommand(SubsystemContainer p_subsystemContainer) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_intakeSubsystem = p_subsystemContainer.getIntakeSubsystem();
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
-    m_pidController = p_pidController;
+    m_pidController = ViennaContainer.getArmSetPositionController();
     detective = false;
 
     addRequirements(m_armSubsystem, m_scoringSubsystem, m_intakeSubsystem);

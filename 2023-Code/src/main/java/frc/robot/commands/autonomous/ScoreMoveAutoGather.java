@@ -77,41 +77,21 @@ public class ScoreMoveAutoGather extends SequentialCommandGroup {
 
     addCommands(
         new ArmToAngleCommand(
-            p_subsystemContainer,
-            p_pidController,
-            p_driverController,
-            ArmConstants.BACK_MID,
-            true,
-            false),
+            p_subsystemContainer, p_driverController, ArmConstants.BACK_MID, true, false),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(.5),
         new ParallelRaceGroup(
             new ArmToAngleCommand(
-                p_subsystemContainer,
-                p_pidController,
-                p_driverController,
-                ArmConstants.FORWARD_MID,
-                false,
-                false),
+                p_subsystemContainer, p_driverController, ArmConstants.FORWARD_MID, false, false),
             toGamePieceCommand,
             new IntakeGatherModeCommand(p_subsystemContainer, p_intakeManager, true)),
         new InstantCommand(p_subsystemContainer.getIntakeSubsystem()::stopIntake),
-        new ArmGatherModeCommand(p_subsystemContainer, p_pidController).withTimeout(2),
+        new ArmGatherModeCommand(p_subsystemContainer).withTimeout(2),
         runThatBackCommand,
         new ArmToAngleCommand(
-            p_subsystemContainer,
-            p_pidController,
-            p_driverController,
-            ArmConstants.BACK_MID,
-            true,
-            false),
+            p_subsystemContainer, p_driverController, ArmConstants.BACK_MID, true, false),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(1),
         new ArmToAngleCommand(
-                p_subsystemContainer,
-                p_pidController,
-                p_driverController,
-                ArmConstants.FORWARD_MID,
-                true,
-                false)
+                p_subsystemContainer, p_driverController, ArmConstants.FORWARD_MID, true, false)
             .alongWith(new ScoringOpenCommand(p_subsystemContainer, p_intakeManager)));
   }
 }

@@ -3,14 +3,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.EnumConstants.LEDColor;
 
 public class LEDCommand extends CommandBase {
 
   private LEDSubsystem m_ledSubsystem;
-  private ScoringSubsystem m_scoringSubsystem;
   private LEDColor m_colorMode;
   private boolean hasBroken = false;
 
@@ -19,7 +17,6 @@ public class LEDCommand extends CommandBase {
       LEDColor p_colorMode,
       DriverStationInfo p_DriverStationInfo) {
     m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
-    m_scoringSubsystem = p_subsystemContainer.getScoringSubsystem();
     m_colorMode = p_colorMode;
     addRequirements(m_ledSubsystem);
   }
@@ -42,13 +39,6 @@ public class LEDCommand extends CommandBase {
     if (m_colorMode == LEDColor.YELLOW) {
       m_ledSubsystem.setToYellow();
     }
-    // if (m_scoringSubsystem.detectedGamePiece()) {
-    //   hasBroken = true;
-    // }
-    // if (!m_scoringSubsystem.detectedGamePiece() && hasBroken) {
-    //   m_ledSubsystem.setToOrange();
-    //   hasBroken = false;
-    // }
   }
 
   @Override

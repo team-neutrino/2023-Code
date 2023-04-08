@@ -58,12 +58,7 @@ public class ScoreHighThenMove extends SequentialCommandGroup {
 
     addCommands(
         new ArmToAngleCommand(
-            p_subsystemContainer,
-            p_pidController,
-            p_driverController,
-            ArmConstants.BACK_MID,
-            true,
-            false),
+            p_subsystemContainer, p_driverController, ArmConstants.BACK_MID, true, false),
         new TelescopeCommand(p_subsystemContainer, p_driverController),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(2),
         moveForwardCommand);
