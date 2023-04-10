@@ -57,19 +57,28 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
   private void testInitialize() {
     Pose2d initialPose = m_drivetrainSubsystem.getPose2d();
     Rotation2d initialRotation = initialPose.getRotation();
-    double initialDistanceToAprilTag = m_limelightSubsystem.getTargetPoseZ();
+    double initialZToAprilTag = m_limelightSubsystem.getTargetPoseZ();
+    double initialXToAprilTag = m_limelightSubsystem.getTargetPoseX();
+    double angleToFaceAprilTag = Math.atan2(initialZToAprilTag, initialXToAprilTag);
+    Rotation2d angleSum = Rotation2d.fromRadians(initialPose.getRotation().getRadians() + angleToFaceAprilTag);
 
-    Pose2d finalTestPose =
+    Pose2d aprilTagPose =
         new Pose2d(
-          initialPose.getX() + initialDistanceToAprilTag*initialRotation.getCos(), 
-          initialPose.getY() + initialDistanceToAprilTag*initialRotation.getSin(), 
-          initialPose.getRotation());
+          initialPose.getX() + initialZToAprilTag,
+          initialPose.getY() + initialXToAprilTag, 
+          angleSum);
+
+    Pose2d finalRotatedPose =
+      new Pose2d(
+        initialPose.getX() + initialZToAprilTag,
+        initialPose.getY() + initialXToAprilTag, 
+        Rotation2d.fromRadians(angleSum.getRadians() + m_limelightSubsystem.getTx()));
     System.out.println("initialPose: " + initialPose);
-    System.out.println("finalPose: " + finalTestPose);
+    System.out.println("finalPose: " + aprilTagPose);
 
     Trajectory testTrajectory =
       TrajectoryGenerator.generateTrajectory(
-          List.of(initialPose, finalTestPose),
+          List.of(initialPose, aprilTagPose, finalRotatedPose),
           TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
 
     RamseteCommand testRamsete =
