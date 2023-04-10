@@ -212,12 +212,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (Math.abs(getYaw() - DrivetrainConstants.PLAYERSTATION_ANGLE)
-        < DrivetrainConstants.ANGLE_DEADZONE) {
-      angleAcceptable = true;
-    } else {
-      angleAcceptable = false;
-    }
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
   }

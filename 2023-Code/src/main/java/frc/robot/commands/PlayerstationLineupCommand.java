@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.SubsystemContainer;
 import frc.robot.TrajectoryConfigConstants;
+import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.util.AutonomousUtil;
@@ -46,14 +47,11 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
     m_drivetrainSubsystem = m_subsystemContainer.getDriveTrainSubsystem();
     m_limelightSubsystem = m_subsystemContainer.getLimelightSubsystem();
     m_subsystemContainer = p_subsystemContainer;
-    // if (m_drivetrainSubsystem.isAngleAcceptable()) {
-    //   addCommands(
-    //     AutonomousUtil.generateRamseteCommand(
-    //       trajectory,
-    //       m_drivetrainSubsystem),
-    //     new ArmFeederCommand(p_subsystemContainer, p_pidController));
-    addCommands(
-      new InstantCommand(this::testInitialize), new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
+
+    if (Math.abs(m_drivetrainSubsystem.getYaw() - DrivetrainConstants.PLAYERSTATION_ANGLE) < DrivetrainConstants.ANGLE_DEADZONE) {
+      addCommands(
+        new InstantCommand(this::testInitialize), new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
+    }
   }
 
   private void testInitialize() {
