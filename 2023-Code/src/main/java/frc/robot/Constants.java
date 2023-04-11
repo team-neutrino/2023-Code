@@ -58,6 +58,7 @@ public final class Constants {
     public static final double FEEDER = 34.5;
 
     public static final double BACK_HIGH_CONE = 37.7;
+    public static final double BACK_MID_CONE = 33.7; //PLACEHOLDER VALUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     public static final double BACK_MID_CUBE = 30;
     public static final double BACK_HIGH_CUBE = 34;
