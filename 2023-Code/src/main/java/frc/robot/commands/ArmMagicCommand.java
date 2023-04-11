@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.SubsystemContainer;
@@ -42,18 +41,18 @@ public class ArmMagicCommand extends CommandBase {
   @Override
   public void execute() {
 
-    if (m_ledSubsystem.getColor() == LEDColor.PURPLE) {    
+    if (m_ledSubsystem.getColor() == LEDColor.PURPLE) {
       if (m_high) {
         armAngle = ArmConstants.BACK_HIGH_CUBE;
       } else {
         armAngle = ArmConstants.BACK_MID_CUBE;
       }
-    } else if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {     
+    } else if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
       if (m_high) {
         armAngle = ArmConstants.BACK_HIGH_CONE;
       } else {
         armAngle = ArmConstants.BACK_MID_CONE;
-      }     
+      }
     } else {
       armAngle = m_armSubsystem.getAbsoluteArmPosition();
     }
@@ -64,7 +63,7 @@ public class ArmMagicCommand extends CommandBase {
             armAngle,
             m_telescopeSubsystem.getTelescopingExtension());
     m_armSubsystem.smartArmSet(voltage);
-    if(m_high) {
+    if (m_high) {
       m_telescopeSubsystem.extendTelescoping();
     } else {
       m_telescopeSubsystem.retractTelescoping();
@@ -72,8 +71,7 @@ public class ArmMagicCommand extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {
