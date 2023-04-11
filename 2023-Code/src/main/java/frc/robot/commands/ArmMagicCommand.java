@@ -17,6 +17,8 @@ public class ArmMagicCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private ViennaPIDController m_pidController;
   private TelescopeSubsystem m_telescopeSubsystem;
+  private LimelightSubsystem m_limelightSubsystem;
+
   private double voltage;
   private LEDSubsystem m_ledSubsystem;
   private boolean m_high = false;
@@ -30,6 +32,7 @@ public class ArmMagicCommand extends CommandBase {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
+    m_limelightSubsystem = p_subsystemContainer.getLimelightSubsystem();
     m_pidController = p_pidController;
     m_high = p_high;
     addRequirements(m_armSubsystem, m_telescopeSubsystem);
