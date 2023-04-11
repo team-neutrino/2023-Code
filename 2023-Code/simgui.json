@@ -58,6 +58,7 @@
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
       "/Shuffleboard/Drivestation Tab123/Autonomous Chooser": "String Chooser",
+      "/Shuffleboard/Drivestation Tab123/Autonomous Display": "String Chooser",
       "/SmartDashboard/Save Pose": "Command",
       "/SmartDashboard/TestCommand": "Command"
     },

@@ -18,8 +18,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.SubsystemContainer;
+import frc.robot.commands.autonomous.JustScore;
 import frc.robot.commands.autonomous.ScoreHighThenMove;
 import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
+import frc.robot.commands.autonomous.ScoreMoveAutoGather;
 import frc.robot.commands.autonomous.ScoreThenMove;
 import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
@@ -38,7 +40,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private GenericEntry m_armVariables[] = new GenericEntry[1];
   private GenericEntry m_intakeVariables[] = new GenericEntry[4];
   private GenericEntry m_LEDVariables[] = new GenericEntry[4];
-  private SendableChooser<Command> m_autonSelector = new SendableChooser<>();
+ // private SendableChooser<Command> m_autonSelector = new SendableChooser<>();
+  private GenericEntry m_autonDisiplay[] = new GenericEntry[1];
 
   public SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
@@ -107,6 +110,8 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
     m_armVariables[0].setDouble(m_arm.getAbsoluteArmPosition());
+
+    m_autonDisiplay[0].setString(displayAuton());
   }
 
   private void driveStationTab() {
@@ -142,11 +147,14 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_armVariables[0] =
         m_drivestationTab.add("Arm Position", 0).withPosition(1, 1).withSize(1, 1).getEntry();
 
-    m_drivestationTab
-        .add("Autonomous Chooser", m_autoChooser)
+   /* m_drivestationTab
+        .add("Autonomous Display", m_autoChooser)
         .withWidget(BuiltInWidgets.kComboBoxChooser)
-        .withPosition(5, 0)
-        .withSize(2, 1);
+        .withPosition(5, 1)
+        .withSize(2, 1); */
+    
+    m_autonDisiplay[0] =
+        m_drivestationTab.add("Current Auton", 0).withPosition(5,0).withSize(2,1).getEntry();
     
 
     try {
@@ -224,10 +232,6 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     return m_autoChooser.getSelected();
   }
 
-  public Command getAuto() {
-    return m_autonSelector.getSelected();
-  }
-
   private void setCommandButtons() {
     String filename = SmartDashboard.getString("trajectoryInput filename", "testInput.txt");
     try {
@@ -236,5 +240,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       System.out.println("File write error");
       e.printStackTrace();
     }
+  }
+
+  public String displayAuton() {
+     return getAutoSelected().getClass().getName();
   }
 }
