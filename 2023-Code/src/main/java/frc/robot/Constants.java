@@ -63,6 +63,8 @@ public final class Constants {
 
     public static final double BACK_MID_CUBE = 30;
     public static final double BACK_HIGH_CUBE = 34;
+    public static final double FRONT_MID_CUBE = 83; // PLACEHOLDER VALUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public static final double FRONT_MID_CONE = 79.3; //PLACEHOLDER VALUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // positions for cross subsystem interactions
     public static final double GATHER_POSITION = 91;

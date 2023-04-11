@@ -9,6 +9,7 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
 import frc.robot.util.EnumConstants.LEDColor;
 import frc.robot.util.ViennaPIDController;
@@ -43,18 +44,23 @@ public class ArmMagicCommand extends CommandBase {
 
   @Override
   public void execute() {
-
+    boolean backFacing = m_limelightSubsystem.getTv();
     if (m_ledSubsystem.getColor() == LEDColor.PURPLE) {
       if (m_high) {
         armAngle = ArmConstants.BACK_HIGH_CUBE;
-      } else {
+      } else if (backFacing) {
         armAngle = ArmConstants.BACK_MID_CUBE;
+      } else {
+        armAngle = ArmConstants.FRONT_MID_CUBE;
       }
+      
     } else if (m_ledSubsystem.getColor() == LEDColor.YELLOW) {
       if (m_high) {
         armAngle = ArmConstants.BACK_HIGH_CONE;
-      } else {
+      } else if(backFacing) {
         armAngle = ArmConstants.BACK_MID_CONE;
+      } else {
+        armAngle = ArmConstants.FRONT_MID_CONE;
       }
     } else {
       armAngle = m_armSubsystem.getAbsoluteArmPosition();

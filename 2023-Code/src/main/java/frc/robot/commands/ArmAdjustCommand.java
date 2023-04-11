@@ -45,6 +45,7 @@ public class ArmAdjustCommand extends CommandBase {
     if (Math.abs(m_driverController.getRightX()) > ArmConstants.ARM_INPUT_DEADZONE) {
       targetAngle += Limiter.bound(m_driverController.getRightX(), .2);
     }
+    System.out.println("arm angle is " + m_armSubsystem.getAbsoluteArmPosition());
 
     voltage =
         m_pidController.armRun(
