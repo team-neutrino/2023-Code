@@ -214,7 +214,7 @@ public class RobotContainer {
   private final ArmMagicCommand m_armMagicMid =
       new ArmMagicCommand(m_subsystemContainer, m_armPidController, false);
   private final ArmMagicCommand m_armMagicHigh =
-      new ArmMagicCommand(m_subsystemContainer, m_armPidController, false);
+      new ArmMagicCommand(m_subsystemContainer, m_armPidController, true);
 
   private final TelescopeDefaultCommand m_TelescopeDefaultCommand =
       new TelescopeDefaultCommand(m_subsystemContainer);
