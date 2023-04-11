@@ -64,7 +64,7 @@ public class ArmMagicCommand extends CommandBase {
             m_telescopeSubsystem.getTelescopingExtension());
     m_armSubsystem.smartArmSet(voltage);
     if (m_high) {
-      m_telescopeSubsystem.extendTelescoping();
+      m_telescopeSubsystem.extendTelescoping(m_armSubsystem.getAbsoluteArmPosition());
     } else {
       m_telescopeSubsystem.retractTelescoping();
     }

@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
 
@@ -33,5 +32,7 @@ public class ExtendModeCommand extends CommandBase {
   public void end(boolean interrupted) {}
 
   @Override
-  public boolean isFinished() {return false;}
+  public boolean isFinished() {
+    return false;
+  }
 }
