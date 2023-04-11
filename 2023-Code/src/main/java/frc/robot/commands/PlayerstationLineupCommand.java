@@ -72,7 +72,7 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
       new Pose2d(
         initialPose.getX() + initialZToAprilTag,
         initialPose.getY() + initialXToAprilTag, 
-        Rotation2d.fromRadians(angleSum.getRadians() + m_limelightSubsystem.getTx()));
+        Rotation2d.fromDegrees(angleSum.getDegrees() + m_limelightSubsystem.getTx()));
     System.out.println("initialPose: " + initialPose);
     System.out.println("finalPose: " + aprilTagPose);
 
