@@ -37,7 +37,7 @@ public class TelescopeCommand extends CommandBase {
             -.5,
             .5);
 
-    m_telescopeSubsystem.setTelescope(xboxValue);
+    m_telescopeSubsystem.setTelescope(xboxValue, m_armSubsystem.getAbsoluteArmPosition());
   }
 
   @Override
@@ -46,12 +46,5 @@ public class TelescopeCommand extends CommandBase {
   }
 
   @Override
-  public boolean isFinished() {
-    if ((m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
-            && m_armSubsystem.getAbsoluteArmPosition() > ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)
-        || m_armSubsystem.getAbsoluteArmPosition() > 84) {
-      return true;
-    }
-    return false;
-  }
+  public boolean isFinished() {return false;}
 }

@@ -26,19 +26,12 @@ public class ExtendModeCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_telescopeSubsystem.extendTelescoping();
+    m_telescopeSubsystem.extendTelescoping(m_armSubsystem.getAbsoluteArmPosition());
   }
 
   @Override
   public void end(boolean interrupted) {}
 
   @Override
-  public boolean isFinished() {
-    if ((m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
-            && m_armSubsystem.getAbsoluteArmPosition() > ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)
-        || m_armSubsystem.getAbsoluteArmPosition() > 84) {
-      return true;
-    }
-    return false;
-  }
+  public boolean isFinished() {return false;}
 }
