@@ -30,7 +30,6 @@ public class TelescopeCommand extends CommandBase {
 
   @Override
   public void execute() {
-    System.out.println("telescope command running");
     double xboxValue =
         -Limiter.bound(
             (Limiter.deadzone(m_driverController.getLeftY(), ArmConstants.ARM_INPUT_DEADZONE)),
