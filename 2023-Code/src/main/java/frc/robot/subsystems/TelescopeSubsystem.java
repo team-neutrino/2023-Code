@@ -78,7 +78,8 @@ public class TelescopeSubsystem extends SubsystemBase {
   private boolean canExtend(double armPos) {
     if ((armPos < ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
             && armPos > ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)
-        || armPos > 84 || armPos < 30) {
+        || armPos > 84
+        || armPos < 30) {
       return false;
     }
     return true;

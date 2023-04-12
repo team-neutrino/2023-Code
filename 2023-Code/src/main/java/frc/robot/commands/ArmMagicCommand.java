@@ -40,7 +40,7 @@ public class ArmMagicCommand extends CommandBase {
 
   @Override
   public void execute() {
-    
+
     if (m_ledSubsystem.getColor() == LEDColor.PURPLE) {
       if (m_high) {
         armAngle = ArmConstants.BACK_HIGH_CUBE;
