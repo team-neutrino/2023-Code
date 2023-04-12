@@ -59,11 +59,10 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
             p_pidController,
             p_driverController,
             ArmConstants.BACK_MID,
-            true,
-            false),
+            true),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(.75),
         new ArmToAngleCommand(
-                p_subsystemContainer, p_pidController, p_driverController, ArmConstants.FORWARD_MID)
+                p_subsystemContainer, p_pidController, p_driverController, ArmConstants.FORWARD_MID, false)
             .withTimeout(1),
         moveForwardCommand,
         new NavXBalance(p_subsystemContainer),

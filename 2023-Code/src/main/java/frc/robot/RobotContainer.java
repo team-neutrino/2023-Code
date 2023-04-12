@@ -184,15 +184,13 @@ public class RobotContainer {
           m_armPidController,
           m_driverController,
           ArmConstants.FORWARD_MID,
-          false,
-          true);
+          false);
   private final ArmToAngleCommand m_armToForwardDown =
       new ArmToAngleCommand(
           m_subsystemContainer,
           m_armPidController,
           m_driverController,
           ArmConstants.FORWARD_DOWN,
-          false,
           false);
   private final ArmToAngleCommand m_armToBackMid =
       new ArmToAngleCommand(
@@ -200,15 +198,13 @@ public class RobotContainer {
           m_armPidController,
           m_driverController,
           ArmConstants.BACK_MID,
-          false,
-          true);
+          false);
   private final ArmToAngleCommand m_armToBackDown =
       new ArmToAngleCommand(
           m_subsystemContainer,
           m_armPidController,
           m_driverController,
           ArmConstants.BACK_DOWN,
-          false,
           false);
 
   private final ArmMagicCommand m_armMagicMid =

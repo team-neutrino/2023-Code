@@ -48,8 +48,7 @@ public class ScoreThenMove extends SequentialCommandGroup {
             p_pidController,
             p_driverController,
             ArmConstants.BACK_MID,
-            true,
-            false),
+            true),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(2),
         forwardBackCommand);
   }

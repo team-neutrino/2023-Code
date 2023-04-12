@@ -63,8 +63,7 @@ public class JustScore extends SequentialCommandGroup {
             p_pidController,
             p_driverController,
             ArmConstants.BACK_MID,
-            true,
-            false),
+            true),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager));
   }
 }
