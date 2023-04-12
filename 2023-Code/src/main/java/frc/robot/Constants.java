@@ -52,6 +52,8 @@ public final class Constants {
 
     public static final double FORWARD_ARM_HEIGHT_LIMIT = 73; // actual limit 69
     public static final double BACKWARD_ARM_HEIGHT_LIMIT = 40; // actual limit 44
+    public static final double FORWARD_ARM_EXTEND_LIMIT = 84; // must be greater than 80.5
+    public static final double BACKWARD_ARM_EXTEND_LIMIT = 30; // must be less than 36.7
     public static final double FORWARD_FLOOR_ARM_ANGLE_LIMIT = 90;
 
     // positions for scoring and feeding
