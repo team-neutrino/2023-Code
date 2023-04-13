@@ -50,7 +50,7 @@ public class TelescopeSubsystem extends SubsystemBase {
   }
 
   public void setTelescope(double p_output, double armPos) {
-    if (p_output > 0
+    if (p_output >= -0.1
         && !canExtend(armPos)) { // if we're trying to extend but we shouldn't, don't and retract
       retractTelescoping();
     } else if ((p_output < 0
@@ -70,7 +70,8 @@ public class TelescopeSubsystem extends SubsystemBase {
   }
 
   /**
-   * Helper method that tells whether we can safely extend the telescoping arm or not.
+   * Helper method that tells whether we can safely extend the telescoping arm or not. Checks
+   * against height limits and forward/backward limits to keep it from hitting the ground.
    *
    * @param armPos The current angle of the arm as given by getAbsoluteArmPosition.
    * @return Whether or not the arm can safely extend.
@@ -78,7 +79,8 @@ public class TelescopeSubsystem extends SubsystemBase {
   private boolean canExtend(double armPos) {
     if ((armPos < ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
             && armPos > ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)
-        || armPos > 84) {
+        || armPos > ArmConstants.FORWARD_ARM_EXTEND_LIMIT
+        || armPos < ArmConstants.BACKWARD_ARM_EXTEND_LIMIT) {
       return false;
     }
     return true;
