@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxLimitSwitch;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
 import frc.robot.Constants.TelescopeConstants;
@@ -48,8 +49,12 @@ public class TelescopeSubsystem extends SubsystemBase {
     m_telescopingMotor.setVoltage(p_voltage);
   }
 
-  public void setTelescope(double p_output) {
-    if ((p_output < 0 || getTelescopingExtension() > TelescopeConstants.TELESCOPE_EXTEND_LIMIT)) {
+  public void setTelescope(double p_output, double armPos) {
+    if (p_output >= -0.1
+        && !canExtend(armPos)) { // if we're trying to extend but we shouldn't, don't and retract
+      retractTelescoping();
+    } else if ((p_output < 0
+        || getTelescopingExtension() > TelescopeConstants.TELESCOPE_EXTEND_LIMIT)) {
       m_telescopingMotor.set(p_output);
     } else {
       m_telescopingMotor.set(0);
@@ -57,11 +62,28 @@ public class TelescopeSubsystem extends SubsystemBase {
   }
 
   public void retractTelescoping() {
-    setTelescope(TelescopeConstants.TELESCOPE_RETRACT_SPEED);
+    setTelescope(TelescopeConstants.TELESCOPE_RETRACT_SPEED, -1);
   }
 
-  public void extendTelescoping() {
-    setTelescope(TelescopeConstants.TELESCOPE_EXTEND_SPEED);
+  public void extendTelescoping(double armPos) {
+    setTelescope(TelescopeConstants.TELESCOPE_EXTEND_SPEED, armPos);
+  }
+
+  /**
+   * Helper method that tells whether we can safely extend the telescoping arm or not. Checks
+   * against height limits and forward/backward limits to keep it from hitting the ground.
+   *
+   * @param armPos The current angle of the arm as given by getAbsoluteArmPosition.
+   * @return Whether or not the arm can safely extend.
+   */
+  private boolean canExtend(double armPos) {
+    if ((armPos < ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
+            && armPos > ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)
+        || armPos > ArmConstants.FORWARD_ARM_EXTEND_LIMIT
+        || armPos < ArmConstants.BACKWARD_ARM_EXTEND_LIMIT) {
+      return false;
+    }
+    return true;
   }
 
   public boolean isPressed() {

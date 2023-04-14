@@ -39,7 +39,7 @@ public class ArmToAngleCommand extends CommandBase {
     m_pidController = p_pidController;
     m_driverController = p_driverController;
     m_targetAngle = p_targetAngle;
-    addRequirements(m_armSubsystem, m_telescopeSubsystem);
+    addRequirements(m_armSubsystem);
   }
 
   public ArmToAngleCommand(
@@ -57,7 +57,7 @@ public class ArmToAngleCommand extends CommandBase {
     m_targetAngle = p_targetAngle;
     m_auton = p_auton;
     m_backCheck = p_backCheck;
-    addRequirements(m_armSubsystem, m_telescopeSubsystem);
+    addRequirements(m_armSubsystem);
   }
 
   @Override

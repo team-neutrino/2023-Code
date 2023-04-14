@@ -19,6 +19,7 @@ import frc.robot.commands.ArmAdjustCommand;
 import frc.robot.commands.ArmDefaultCommand;
 import frc.robot.commands.ArmFeederCommand;
 import frc.robot.commands.ArmGatherModeCommand;
+import frc.robot.commands.ArmMagicCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.DriveTrainDefaultCommand;
@@ -108,7 +109,6 @@ public class RobotContainer {
   public SubsystemContainer m_subsystemContainer =
       new SubsystemContainer(
           m_telescopeSubsystem,
-          m_pneumaticSubsystem,
           m_drivetrainSubsystem,
           m_scoringSubsystem,
           m_limelightSubsystem,
@@ -224,8 +224,13 @@ public class RobotContainer {
           false,
           false);
 
+  private final ArmMagicCommand m_armMagicMid =
+      new ArmMagicCommand(m_subsystemContainer, m_armPidController, false);
+  private final ArmMagicCommand m_armMagicHigh =
+      new ArmMagicCommand(m_subsystemContainer, m_armPidController, true);
+
   private final TelescopeDefaultCommand m_TelescopeDefaultCommand =
-      new TelescopeDefaultCommand(m_telescopeSubsystem, m_armSubsystem);
+      new TelescopeDefaultCommand(m_subsystemContainer);
 
   // TELESCOPING ARM COMMANDS
   private final TelescopeCommand m_telescopeCommand =
@@ -271,6 +276,10 @@ public class RobotContainer {
     // LED Buttons
     m_rightArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.PURPLE, m_driverStationInfo));
     m_leftArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.YELLOW, m_driverStationInfo));
+
+    // Magic Button for Arm Movement
+    m_upArrow.onTrue(m_armMagicHigh);
+    m_downArrow.onTrue(m_armMagicMid);
   }
 
   public Command getAutonomousCommand() {

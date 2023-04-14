@@ -10,38 +10,33 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.util.ViennaPIDController;
 
 public class MoveForwardPIDCommand extends CommandBase {
-  private DriveTrainSubsystem m_driveTrainSubsystem;
+  private DriveTrainSubsystem m_drivetrainSubsystem;
   private ViennaPIDController m_movePIDController;
   private double baseSpeed = 0.3;
-  /** Creates a new MoveForwardPIDCommand. */
+
   public MoveForwardPIDCommand(
       SubsystemContainer p_subsystemContainer, ViennaPIDController p_movePIDController) {
-    m_driveTrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
+    m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
     m_movePIDController = p_movePIDController;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_driveTrainSubsystem);
+    addRequirements(m_drivetrainSubsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double output = 0;
-    double currentYaw = m_driveTrainSubsystem.getYaw();
+    double currentYaw = m_drivetrainSubsystem.getYaw();
     currentYaw = Math.round(currentYaw);
 
     output = m_movePIDController.run(currentYaw, 0);
-    m_driveTrainSubsystem.setMotors(baseSpeed - output, baseSpeed + output);
+    m_drivetrainSubsystem.setMotors(baseSpeed - output, baseSpeed + output);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

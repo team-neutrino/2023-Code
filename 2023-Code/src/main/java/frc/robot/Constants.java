@@ -52,12 +52,16 @@ public final class Constants {
 
     public static final double FORWARD_ARM_HEIGHT_LIMIT = 73; // actual limit 69
     public static final double BACKWARD_ARM_HEIGHT_LIMIT = 40; // actual limit 44
+    public static final double FORWARD_ARM_EXTEND_LIMIT = 84; // must be greater than 80.5
+    public static final double BACKWARD_ARM_EXTEND_LIMIT = 30; // must be less than 36.7
     public static final double FORWARD_FLOOR_ARM_ANGLE_LIMIT = 90;
 
     // positions for scoring and feeding
     public static final double FEEDER = 34.5;
 
     public static final double BACK_HIGH_CONE = 37.7;
+    public static final double BACK_MID_CONE =
+        33.7; // PLACEHOLDER VALUE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     public static final double BACK_MID_CUBE = 30;
     public static final double BACK_HIGH_CUBE = 34;
@@ -77,7 +81,7 @@ public final class Constants {
   public static class TelescopeConstants {
 
     public static final double TELESCOPE_EXTEND_SPEED = 0.5; // note: setInverted is true
-    public static final double TELESCOPE_RETRACT_SPEED = -0.5;
+    public static final double TELESCOPE_RETRACT_SPEED = -0.80;
     public static final double TELESCOPE_EXTEND_LIMIT = -5500;
     public static final double TELESCOPING_DEADZONE = 250;
 

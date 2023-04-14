@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
 
@@ -26,7 +25,7 @@ public class ExtendModeCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_telescopeSubsystem.extendTelescoping();
+    m_telescopeSubsystem.extendTelescoping(m_armSubsystem.getAbsoluteArmPosition());
   }
 
   @Override
@@ -34,11 +33,6 @@ public class ExtendModeCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if ((m_armSubsystem.getAbsoluteArmPosition() < ArmConstants.FORWARD_ARM_HEIGHT_LIMIT
-            && m_armSubsystem.getAbsoluteArmPosition() > ArmConstants.BACKWARD_ARM_HEIGHT_LIMIT)
-        || m_armSubsystem.getAbsoluteArmPosition() > 84) {
-      return true;
-    }
     return false;
   }
 }

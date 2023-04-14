@@ -9,38 +9,32 @@ import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class MoveForwardCommand extends CommandBase {
-  private DriveTrainSubsystem m_driveTrainSubsystem;
+  private DriveTrainSubsystem m_drivetrainSubsystem;
   private double m_distance;
   private double m_motorPower;
 
-  /** Creates a new MoveForwardCommand. */
   public MoveForwardCommand(
       SubsystemContainer p_subsystemContainer, double p_distance, double p_motorPower) {
-    m_driveTrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
+    m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
     m_distance = p_distance;
     m_motorPower = p_motorPower;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_driveTrainSubsystem);
+    addRequirements(m_drivetrainSubsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_driveTrainSubsystem.setMotors(m_motorPower, m_motorPower);
+    m_drivetrainSubsystem.setMotors(m_motorPower, m_motorPower);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (m_driveTrainSubsystem.getL1Pos() >= m_distance) {
+    if (m_drivetrainSubsystem.getL1Pos() >= m_distance) {
       return true;
     }
     return false;
