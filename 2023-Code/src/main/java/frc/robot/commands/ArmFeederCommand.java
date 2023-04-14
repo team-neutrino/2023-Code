@@ -33,7 +33,7 @@ public class ArmFeederCommand extends CommandBase {
     m_pidController = p_pidController;
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_timer = new Timer();
-    addRequirements(m_armSubsystem, m_scoringSubsystem);
+    addRequirements(m_armSubsystem);
   }
 
   @Override
