@@ -34,6 +34,7 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
   private SubsystemContainer m_subsystemContainer;
   private DriveTrainSubsystem m_drivetrainSubsystem;
   private LimelightSubsystem m_limelightSubsystem;
+  private boolean m_isRight;
 
   private Trajectory trajectory;
 
@@ -42,28 +43,42 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
       SubsystemContainer p_subsystemContainer,
       IntakeManager p_intakeManager,
       ViennaPIDController p_pidController,
-      XboxController p_controller) {
+      XboxController p_controller,
+      boolean isRight) {
     m_subsystemContainer = p_subsystemContainer;
     m_drivetrainSubsystem = m_subsystemContainer.getDriveTrainSubsystem();
     m_limelightSubsystem = m_subsystemContainer.getLimelightSubsystem();
     m_subsystemContainer = p_subsystemContainer;
+    m_isRight = isRight;
 
-    if (Math.abs(m_drivetrainSubsystem.getYaw() - DrivetrainConstants.PLAYERSTATION_ANGLE) < DrivetrainConstants.ANGLE_DEADZONE) {
+    if (true){//Math.abs(m_drivetrainSubsystem.getYaw() - DrivetrainConstants.PLAYERSTATION_ANGLE) < DrivetrainConstants.ANGLE_DEADZONE) {
       addCommands(
-        new InstantCommand(this::testInitialize), new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
+        new InstantCommand(() -> this.testInitialize(isRight)), 
+        //new InstantCommand(this::finalAngleAdjust),
+        new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
     }
   }
 
-  private void testInitialize() {
+  private void testInitialize(boolean isRight) {
     Pose2d initialPose = m_drivetrainSubsystem.getPose2d();
     Rotation2d initialRotation = initialPose.getRotation();
     double initialDistanceToAprilTag = m_limelightSubsystem.getTargetPoseZ();
+    double initialHorizontalOffset = m_limelightSubsystem.getTargetPoseX();
+    double limelightMeasuredAngle = m_limelightSubsystem.getTx();
+    Rotation2d adjustRotation = Rotation2d.fromDegrees(initialRotation.getDegrees() - limelightMeasuredAngle);
+    double offset;
+    if(isRight) {
+      offset = 1;
+    }
+    else {
+      offset = -0.6;
+    }
 
     Pose2d finalTestPose =
         new Pose2d(
           initialPose.getX() + initialDistanceToAprilTag*initialRotation.getCos(), 
-          initialPose.getY() + initialDistanceToAprilTag*initialRotation.getSin(), 
-          initialPose.getRotation());
+          initialPose.getY() + initialDistanceToAprilTag*initialRotation.getSin() + initialHorizontalOffset*.5 + offset, 
+          Rotation2d.fromDegrees(0));
     System.out.println("initialPose: " + initialPose);
     System.out.println("finalPose: " + finalTestPose);
 
@@ -71,6 +86,31 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
       TrajectoryGenerator.generateTrajectory(
           List.of(initialPose, finalTestPose),
           TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
+
+    RamseteCommand testRamsete =
+      AutonomousUtil.generateRamseteCommand(testTrajectory, m_drivetrainSubsystem);
+    CommandScheduler.getInstance().schedule(testRamsete);
+  }
+
+  private void finalAngleAdjust() {
+    Pose2d initialPose = m_drivetrainSubsystem.getPose2d();
+    Rotation2d initialRotation = initialPose.getRotation();
+    double limelightMeasuredAngle = m_limelightSubsystem.getTx();
+    double adjustAngle = initialRotation.getDegrees() + limelightMeasuredAngle;
+    System.out.println("adjustAngle: " + adjustAngle);
+
+    Pose2d finalTestPose =
+        new Pose2d(
+          initialPose.getX() + 0.05, 
+          initialPose.getY() + 0.05, 
+          Rotation2d.fromDegrees(adjustAngle + initialRotation.getDegrees()));
+    System.out.println("initialPose: " + initialPose);
+    System.out.println("finalPose: " + finalTestPose);
+
+    Trajectory testTrajectory =
+      TrajectoryGenerator.generateTrajectory(
+          List.of(initialPose, finalTestPose),
+          TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG);
 
     RamseteCommand testRamsete =
       AutonomousUtil.generateRamseteCommand(testTrajectory, m_drivetrainSubsystem);

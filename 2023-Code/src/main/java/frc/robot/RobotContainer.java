@@ -245,8 +245,8 @@ public class RobotContainer {
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
     m_telescopeSubsystem.setDefaultCommand(m_TelescopeDefaultCommand);
 
-    m_upArrow.onTrue(new PlayerstationLineupCommand(m_subsystemContainer, m_intakeManager, m_armPidController, m_driverController));
-    m_downArrow.onTrue(new InstantCommand(m_drivetrainSubsystem::resetOdometry).alongWith(new InstantCommand(this::resetNavX)));
+    m_upArrow.onTrue(new PlayerstationLineupCommand(m_subsystemContainer, m_intakeManager, m_armPidController, m_driverController, true));
+    m_downArrow.onTrue(new PlayerstationLineupCommand(m_subsystemContainer, m_intakeManager, m_armPidController, m_driverController, false));
 
     // BUTTONS
     m_buttonB.toggleOnTrue(m_armToForwardMid);

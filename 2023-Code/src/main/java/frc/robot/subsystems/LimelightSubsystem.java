@@ -14,6 +14,7 @@ public class LimelightSubsystem extends SubsystemBase {
   private NetworkTable limelight;
   private int cycle = 0;
   private double LIMELIGHT_TO_METER_CONVERSION = 1.455;
+  private double HORIZONTAL_LIMELIGHT_TO_METER_CONVERSION = 1;
 
   /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem() {
@@ -59,8 +60,11 @@ public class LimelightSubsystem extends SubsystemBase {
   }
 
   public double getTargetPoseX() {
-    return 0;
-    // return getTargetPose()[0];
+    if(getTv()) {
+      return getTargetPose()[0] * HORIZONTAL_LIMELIGHT_TO_METER_CONVERSION;
+    }
+    else
+      return 0;
   }
 
   public double getTargetPoseZ() {
@@ -68,7 +72,8 @@ public class LimelightSubsystem extends SubsystemBase {
     if(getTv()) {
       // System.out.println("GET TV TRUE");
       // System.out.println(-getTargetPose()[2] * LIMELIGHT_TO_METER_CONVERSION);
-      return -getTargetPose()[2] * LIMELIGHT_TO_METER_CONVERSION + 1;
+      //System.out.println("TRUE LIMELIGHT");
+      return -getTargetPose()[2] * LIMELIGHT_TO_METER_CONVERSION + 1.17;
     }
     else
       return 0;
