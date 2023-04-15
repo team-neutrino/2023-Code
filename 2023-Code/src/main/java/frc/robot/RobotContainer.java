@@ -95,6 +95,11 @@ public class RobotContainer {
   private final JoystickButton m_leftJoystickButton =
       new JoystickButton(m_driverController, XboxController.Button.kLeftStick.value);
 
+  private final JoystickButton m_rightElijah =
+      new JoystickButton(m_rightJoystick, 14);
+  private final JoystickButton m_leftElijah =
+      new JoystickButton(m_leftJoystick, 14);
+
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_drivetrainSubsystem =
       new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick);
@@ -250,8 +255,8 @@ public class RobotContainer {
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
     m_telescopeSubsystem.setDefaultCommand(m_TelescopeDefaultCommand);
 
-    m_upArrow.onTrue(new PlayerstationLineupCommand(m_subsystemContainer, m_intakeManager, m_armPidController, m_driverController, true));
-    m_downArrow.onTrue(new PlayerstationLineupCommand(m_subsystemContainer, m_intakeManager, m_armPidController, m_driverController, false));
+    m_rightElijah.onTrue(new PlayerstationLineupCommand(m_subsystemContainer, m_intakeManager, m_armPidController, m_driverController, true));
+    m_leftElijah.onTrue(new PlayerstationLineupCommand(m_subsystemContainer, m_intakeManager, m_armPidController, m_driverController, false));
 
     // BUTTONS
     m_buttonB.toggleOnTrue(m_armToForwardMid);

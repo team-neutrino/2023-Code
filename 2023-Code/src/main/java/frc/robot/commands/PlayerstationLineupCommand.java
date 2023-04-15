@@ -71,7 +71,7 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
       offset = 1;
     }
     else {
-      offset = -0.6;
+      offset = -0.4;
     }
 
     Pose2d finalTestPose =
