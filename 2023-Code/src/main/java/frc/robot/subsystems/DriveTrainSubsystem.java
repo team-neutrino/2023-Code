@@ -25,6 +25,10 @@ import frc.robot.util.Limiter;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
+  double straightMotorSpeed = -0.2;
+  double turnMotorSpeed = 0.05;
+
+
   private DriveTrainSubsystem m_drivetrainSubsystem;
 
   public DriveTrainSubsystem(DriveTrainSubsystem p_drivetrainSubsystem) {
@@ -186,6 +190,111 @@ public class DriveTrainSubsystem extends SubsystemBase {
       m_motorGroupRight.set(deadzone(rightMotorInput));
     }
   }
+
+  public boolean setMotorPosition(
+    double motorset, double p_rmotorPosition, double p_lmotorPosition) {
+  motorset = motorset * 15;
+  double rmotorPosition = getR1Pos();
+  double lmotorPosition = getL1Pos();
+  boolean stop = false;
+
+  if (rmotorPosition < p_rmotorPosition + motorset
+      && lmotorPosition < p_lmotorPosition + motorset) {
+    m_motorGroupRight.set(straightMotorSpeed);
+    m_motorGroupLeft.set(straightMotorSpeed);
+    //System.out.println("Setpoint " + motorset);
+    //System.out.println("starting position " + p_rmotorPosition);
+    //System.out.println("current position " + rmotorPosition);
+  } else {
+    m_motorGroupRight.set(0);
+    m_motorGroupLeft.set(0);
+    stop = true;
+  }
+  return stop;
+  /*
+  while (getR1Pos() < rmotorPosition + rmotorset && getL1Pos() < lmotorPosition + lmotorset) {
+    m_motorGroupRight.set(0.3);
+    m_motorGroupLeft.set(0.3);
+  }
+  */
+}
+
+public boolean turnMotor(double motorset, double rmotorPosition, double lmotorPosition) {
+  boolean stop = false;
+  if (motorset > 0) {
+    stop = turnMotorRight(Math.abs(motorset), rmotorPosition, lmotorPosition);
+    //System.out.println("turning motor right");
+  } else if (motorset < 0) {
+    stop = turnMotorLeft(Math.abs(motorset), rmotorPosition, lmotorPosition);
+    //System.out.println("turning motor left");
+  }
+  return stop;
+}
+
+public boolean turnMotorRight(double motorset, double p_rmotorPosition, double p_lmotorPosition) {
+  motorset = motorset * 20 / Math.PI;
+  double rmotorPosition = getR1Pos();
+  double lmotorPosition = getL1Pos();
+  boolean stop = false;
+
+  if (rmotorPosition > p_rmotorPosition - motorset
+      && lmotorPosition < p_lmotorPosition + motorset) {
+    //System.out.println("setpoint " + (p_rmotorPosition - motorset));
+    //System.out.println("initial position " + p_rmotorPosition);
+    //System.out.println("current position r" + rmotorPosition);
+    m_motorGroupRight.set(-1*turnMotorSpeed);
+    m_motorGroupLeft.set(turnMotorSpeed);
+  } else {
+    m_motorGroupRight.set(0);
+
+    m_motorGroupLeft.set(0);
+    stop = true;
+    //System.out.println("rmotor position " + rmotorPosition);
+    //System.out.println("lmotor position " + lmotorPosition);
+    //System.out.println("setpoint " + (p_rmotorPosition - motorset));
+
+  }
+  return stop;
+
+  /*
+  while (getR1Pos() > rmotorPosition - motorset && getL1Pos() < lmotorPosition + motorset) {
+    m_motorGroupRight.set(-0.05);
+    m_motorGroupLeft.set(0.05);
+  }
+  */
+}
+
+public boolean turnMotorLeft(double motorset, double p_rmotorPosition, double p_lmotorPosition) {
+  motorset = motorset * 20 / Math.PI;
+  double rmotorPosition = getR1Pos();
+  double lmotorPosition = getL1Pos();
+  boolean stop = false;
+
+  if (rmotorPosition < p_rmotorPosition + motorset
+      && lmotorPosition > p_lmotorPosition - motorset) {
+    //System.out.println("setpoint " + (p_rmotorPosition - motorset));
+    //System.out.println("initial position " + p_rmotorPosition);
+    //System.out.println("current position r " + rmotorPosition);
+    m_motorGroupRight.set(turnMotorSpeed);
+    m_motorGroupLeft.set(-1*turnMotorSpeed);
+  } else {
+    m_motorGroupRight.set(0);
+    m_motorGroupLeft.set(0);
+    stop = true;
+    //System.out.println("rmotor position " + rmotorPosition);
+    //System.out.println("lmotor position " + lmotorPosition);
+    //System.out.println("setpoint " + (p_rmotorPosition + motorset));
+  }
+  return stop;
+
+  /*
+  while (getR1Pos() < rmotorPosition + motorset && getL1Pos() > lmotorPosition - motorset) {
+    m_motorGroupRight.set(0.05);
+    m_motorGroupLeft.set(-0.05);
+  }
+  */
+}
+
 
   public double deadzone(double joystickY) {
     return Limiter.deadzone(joystickY, DrivetrainConstants.JOYSTICK_DEADZONE);
