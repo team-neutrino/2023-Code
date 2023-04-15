@@ -17,7 +17,6 @@ public class ScoringSubsystem extends SubsystemBase {
 
   private DigitalInput m_beamBreak = new DigitalInput(Constants.DigitalConstants.GRABBER_BEAMBREAK);
 
-  /** Creates a new PneumaticsSubsystem. */
   public ScoringSubsystem() {}
 
   public void toggleSolenoid() {

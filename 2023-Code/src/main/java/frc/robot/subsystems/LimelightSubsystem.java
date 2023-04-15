@@ -16,7 +16,6 @@ public class LimelightSubsystem extends SubsystemBase {
   private double LIMELIGHT_TO_METER_CONVERSION = 1.455;
   private double HORIZONTAL_LIMELIGHT_TO_METER_CONVERSION = 1;
 
-  /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem() {
     // global instance of the network table and gets the limelight table
     limelight = NetworkTableInstance.getDefault().getTable("limelight");
@@ -35,7 +34,7 @@ public class LimelightSubsystem extends SubsystemBase {
     return false;
   }
 
-  // gets id of the april tag that is detected
+  // gets ID of the april tag that is detected
   public double getID() {
     return limelight.getEntry("tid").getDouble(0.0);
   }

@@ -21,12 +21,8 @@ import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ScoreHighThenMove extends SequentialCommandGroup {
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
@@ -38,7 +34,6 @@ public class ScoreHighThenMove extends SequentialCommandGroup {
 
   private RamseteCommand moveForwardCommand;
 
-  /** Creates a new ScoreHighThenMove. */
   public ScoreHighThenMove(
       SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
@@ -61,8 +56,6 @@ public class ScoreHighThenMove extends SequentialCommandGroup {
             m_drivetrainSubsystem,
             TrajectoryConfigConstants.K_MAX_SPEED_FORWARD_CONFIG);
 
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ArmToAngleCommand(
             p_subsystemContainer,
