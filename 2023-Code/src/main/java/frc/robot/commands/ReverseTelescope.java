@@ -11,7 +11,7 @@ import frc.robot.subsystems.TelescopeSubsystem;
 
 public class ReverseTelescope extends CommandBase {
   TelescopeSubsystem m_telescopeSubsystem;
-  Timer m_timer;
+  Timer m_timer = new Timer();
   double m_time;
   /** Creates a new ReverseTelescope. */
   public ReverseTelescope(SubsystemContainer p_subsystemContainer, double p_time) {
@@ -35,7 +35,10 @@ public class ReverseTelescope extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_timer.restart();
+    m_timer.stop();
+  }
 
   // Returns true when the command should end.
   @Override

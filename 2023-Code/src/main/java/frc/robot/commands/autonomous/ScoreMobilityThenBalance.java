@@ -15,6 +15,7 @@ import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.NavXBalance;
 import frc.robot.commands.ReverseTelescope;
+import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.commands.TelescopeCommand;
 import frc.robot.util.AutonomousUtil;
@@ -57,24 +58,28 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
             TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
 
     addCommands(
+        new ArmToAngleCommand(
+            p_subsystemContainer,
+            p_pidController,
+            p_driverController,
+            ArmConstants.BACK_HIGH_CONE,
+            true,
+            false),
         new ParallelCommandGroup(
             new ArmToAngleCommand(
                 p_subsystemContainer,
                 p_pidController,
                 p_driverController,
-                ArmConstants.BACK_MID,
+                ArmConstants.BACK_HIGH_CONE,
                 true,
                 false),
-            new TelescopeCommand(p_subsystemContainer, p_driverController, true)),
-        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(.75),
-        new ParallelCommandGroup(
-            new ArmToAngleCommand(
-                    p_subsystemContainer,
-                    p_pidController,
-                    p_driverController,
-                    ArmConstants.FORWARD_MID)
-                .withTimeout(1),
-            new ReverseTelescope(p_subsystemContainer, 2)),
+            new SequentialCommandGroup(
+                new TelescopeCommand(p_subsystemContainer, p_driverController, true),
+                new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(.75))),
+        new ReverseTelescope(p_subsystemContainer, 1),
+        new ScoringCloseCommand(p_subsystemContainer).withTimeout(.75),
+        new ArmToAngleCommand(
+            p_subsystemContainer, p_pidController, p_driverController, 92, true, false),
         moveForwardCommand,
         new NavXBalance(p_subsystemContainer),
         new AutoBalanceCommand(p_subsystemContainer));

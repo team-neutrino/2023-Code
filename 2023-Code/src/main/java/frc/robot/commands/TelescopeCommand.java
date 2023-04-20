@@ -19,7 +19,7 @@ public class TelescopeCommand extends CommandBase {
   private TelescopeSubsystem m_telescopeSubsystem;
   private XboxController m_driverController;
   private boolean m_isAuton;
-  private Timer m_timer;
+  private Timer m_timer = new Timer();
 
   public TelescopeCommand(
       SubsystemContainer p_subsystemContainer,
@@ -28,7 +28,7 @@ public class TelescopeCommand extends CommandBase {
     m_driverController = p_driverController;
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
-    p_isAuton = m_isAuton;
+    m_isAuton = p_isAuton;
     addRequirements(m_telescopeSubsystem);
   }
 
@@ -41,9 +41,10 @@ public class TelescopeCommand extends CommandBase {
 
   @Override
   public void execute() {
+    System.out.println(m_telescopeSubsystem.getTelescopingExtension());
     if (m_isAuton) {
       if (m_telescopeSubsystem.getTelescopingExtension()
-          <= TelescopeConstants.TELESCOPING_AUTON_HIGH) {
+          >= TelescopeConstants.TELESCOPING_AUTON_HIGH) {
         m_telescopeSubsystem.setTelescope(
             TelescopeConstants.TELESCOPE_EXTEND_SPEED, m_armSubsystem.getAbsoluteArmPosition());
       } else {
@@ -69,7 +70,7 @@ public class TelescopeCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if (m_timer.get() >= 3) {
+    if (m_timer.get() >= 1) {
       return true;
     }
     return false;
