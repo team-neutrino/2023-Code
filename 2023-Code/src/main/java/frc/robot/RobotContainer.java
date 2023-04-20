@@ -221,7 +221,7 @@ public class RobotContainer {
 
   // TELESCOPING ARM COMMANDS
   private final TelescopeCommand m_telescopeCommand =
-      new TelescopeCommand(m_subsystemContainer, m_driverController);
+      new TelescopeCommand(m_subsystemContainer, m_driverController, false);
   private final ExtendModeCommand m_extendModeCommand =
       new ExtendModeCommand(m_telescopeSubsystem, m_armSubsystem);
 
