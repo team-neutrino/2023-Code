@@ -70,7 +70,7 @@ public class TelescopeCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if (m_timer.get() >= 1) {
+    if (m_timer.get() >= 2) {
       return true;
     }
     return false;
