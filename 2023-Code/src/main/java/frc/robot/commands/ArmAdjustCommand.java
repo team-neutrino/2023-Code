@@ -43,7 +43,7 @@ public class ArmAdjustCommand extends CommandBase {
     double voltage = 0;
 
     if (Math.abs(m_driverController.getRightX()) > ArmConstants.ARM_INPUT_DEADZONE) {
-      targetAngle += Limiter.bound(m_driverController.getRightX(), .2);
+      targetAngle += Limiter.bound(-m_driverController.getRightX(), .2);
     }
 
     voltage =

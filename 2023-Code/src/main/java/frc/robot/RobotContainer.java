@@ -268,9 +268,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     m_drivetrainSubsystem.resetOdometry();
-    return new ScoreMoveAutoGather(
-            m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController)
-        .andThen(new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
+    return m_scoreThenMoveThenAutoGather.andThen(new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
     // return m_shuffleboardSubsystem
     //     .getAutoSelected()
     //     .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
