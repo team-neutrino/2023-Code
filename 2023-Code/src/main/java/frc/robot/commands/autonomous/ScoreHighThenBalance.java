@@ -22,7 +22,7 @@ import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
 import java.util.*;
 
-public class ScoreMobilityThenBalance extends SequentialCommandGroup {
+public class ScoreHighThenBalance extends SequentialCommandGroup {
 
   private ArrayList<PoseTriplet> forwardBackArray;
   private ArrayList<PoseTriplet> reEnterCommunity;
