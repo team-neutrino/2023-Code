@@ -20,18 +20,21 @@ public class ArmMagicCommand extends CommandBase {
   private double voltage;
   private LEDSubsystem m_ledSubsystem;
   private boolean m_high = false;
+  private boolean m_auton = false;
 
   private double armAngle;
 
   public ArmMagicCommand(
       SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
-      boolean p_high) {
+      boolean p_high,
+      boolean p_auton) {
     m_armSubsystem = p_subsystemContainer.getArmSubsystem();
     m_telescopeSubsystem = p_subsystemContainer.getTelescopeSubsystem();
     m_ledSubsystem = p_subsystemContainer.getLedSubsystem();
     m_pidController = p_pidController;
     m_high = p_high;
+    m_auton = p_auton;
     addRequirements(m_armSubsystem, m_telescopeSubsystem);
   }
 
@@ -40,7 +43,6 @@ public class ArmMagicCommand extends CommandBase {
 
   @Override
   public void execute() {
-
     if (m_ledSubsystem.getColor() == LEDColor.PURPLE) {
       if (m_high) {
         armAngle = ArmConstants.BACK_HIGH_CUBE;
