@@ -56,14 +56,6 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
             TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
 
     addCommands(
-        new ArmMagicCommand(p_subsystemContainer, p_pidController, true, true).withTimeout(3),
-        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(0.3),
-        new ReverseTelescope(p_subsystemContainer, 0.5),
-        new ScoringCloseCommand(p_subsystemContainer).withTimeout(.75),
-        new ArmToAngleCommand(
-            p_subsystemContainer, p_pidController, p_driverController, 92, true, false),
-        moveForwardCommand,
-        new NavXBalance(p_subsystemContainer),
-        new AutoBalanceCommand(p_subsystemContainer));
+
   }
 }
