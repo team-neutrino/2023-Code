@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.SubsystemContainer;
 import frc.robot.TrajectoryConfigConstants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.ArmMagicCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.NavXBalance;
-import frc.robot.commands.ReverseTelescope;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.util.AutonomousUtil;
@@ -56,6 +56,19 @@ public class ScoreMobilityThenBalance extends SequentialCommandGroup {
             TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
 
     addCommands(
-
+        new ArmToAngleCommand(
+            p_subsystemContainer,
+            p_pidController,
+            p_driverController,
+            ArmConstants.BACK_MID,
+            true,
+            false),
+        new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(.75),
+        new ArmToAngleCommand(
+                p_subsystemContainer, p_pidController, p_driverController, ArmConstants.FORWARD_MID)
+            .withTimeout(1),
+        moveForwardCommand,
+        new NavXBalance(p_subsystemContainer),
+        new AutoBalanceCommand(p_subsystemContainer));
   }
 }
