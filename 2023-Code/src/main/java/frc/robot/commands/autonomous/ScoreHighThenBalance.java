@@ -29,7 +29,11 @@ public class ScoreHighThenBalance extends SequentialCommandGroup {
   private RamseteCommand reEnterCommunityCommand;
   private RamseteCommand moveForwardCommand;
 
+<<<<<<< Updated upstream
   public ScoreMobilityThenBalance(
+=======
+  public ScoreHighThenBalance(
+>>>>>>> Stashed changes
       SubsystemContainer p_subsystemContainer,
       ViennaPIDController p_pidController,
       IntakeManager p_intakeManager,
