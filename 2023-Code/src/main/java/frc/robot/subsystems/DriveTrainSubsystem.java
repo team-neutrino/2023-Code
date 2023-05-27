@@ -13,9 +13,11 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriverConstants;
@@ -34,6 +36,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
   // ODOMETRY
   private DifferentialDriveOdometry m_diffDriveOdometry;
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
+
+  private DifferentialDrivetrainSim m_diffDriveSim = new DifferentialDrivetrainSim(DCMotor.getNEO(3), 0.125, 6, 60, 0.0635, 0.635, null);
 
   // MOTORS
   private CANSparkMax m_motorLeft1 =
@@ -207,5 +211,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void periodic() {
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
+  }
+
+  @Override
+  public void simulationPeriodic()
+  {
+    m_diffDriveSim.setInputs()
   }
 }
