@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -29,10 +32,13 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.TrajectoryConfigConstants;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.MotorConstants;
+import frc.robot.util.AutonomousUtil;
 import frc.robot.util.Limiter;
+import frc.robot.util.PoseTriplet;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
@@ -50,6 +56,23 @@ public class DriveTrainSubsystem extends SubsystemBase {
   int simDevice = SimDeviceDataJNI.getSimDeviceHandle("navX-Sensor[0]");
   SimDouble angle = new SimDouble(SimDeviceDataJNI.getSimValueHandle(simDevice, "Yaw"));
   Field2d m_field = new Field2d();
+
+  private ArrayList<PoseTriplet> forwardBackArray =
+  new ArrayList<PoseTriplet>(
+    Arrays.asList(
+        new PoseTriplet(0, 0, 0),
+        new PoseTriplet(2.7, -0.10, -15.08),
+        new PoseTriplet(4.08, -0.22, -3.12)));
+
+  ArrayList<PoseTriplet> runThatBack =
+  new ArrayList<PoseTriplet>(
+      Arrays.asList(
+          new PoseTriplet(4.08, -0.22, -3.12),
+          new PoseTriplet(1.3, -0.08, 0.16),
+          new PoseTriplet(-.3, -.31, -.32)));
+
+  ArrayList<PoseTriplet> test1 = new ArrayList<PoseTriplet>(
+    Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4, 0, 0)));
 
   // ODOMETRY
   private DifferentialDriveOdometry m_diffDriveOdometry;
@@ -102,7 +125,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     resetOdometry();
 
     m_diffDriveSim =
-        new DifferentialDrivetrainSim(DCMotor.getNEO(2), 0.125, 6, 60, 0.0635, 0.635, null);
+        new DifferentialDrivetrainSim(DCMotor.getNEO(2), 8, 6, 60, 0.0635, 0.635, null);
 
     m_diffDriveSimTest = DifferentialDrivetrainSim.createKitbotSim(KitbotMotor.kDualCIMPerSide, KitbotGearing.k10p71, KitbotWheelSize.kSixInch, null);
 
@@ -110,6 +133,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
         new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
 
     SmartDashboard.putData("Field", m_field);
+    m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(test1, 
+    TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
+
+    //m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(runThatBack, 
+    //TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
@@ -271,7 +299,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
 
-    /* 
+    
     // can also use m_motorGroupLeft.get() to use through joysticks, etc.
     m_diffDriveSim.setInputs(
         Limiter.deadzone(m_driverController.getLeftY(), 0.1) * RobotController.getInputVoltage() * -1,
@@ -285,8 +313,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     encoderSimRight = m_diffDriveSim.getRightPositionMeters();
     angle.set(m_diffDriveSim.getHeading().getDegrees());
     navXSim = m_diffDriveSim.getHeading().getDegrees();
-    */
+    
 
+    /* 
     m_diffDriveSimTest.setInputs(
         Limiter.deadzone(m_driverController.getLeftY(), 0.1) * RobotController.getInputVoltage() * -1,
         Limiter.deadzone(m_driverController.getRightY(), 0.1) * RobotController.getInputVoltage() * -1);
@@ -296,6 +325,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     encoderSimLeft = m_diffDriveSimTest.getLeftPositionMeters();
     encoderSimRight = m_diffDriveSimTest.getRightPositionMeters();
     navXSim = m_diffDriveSimTest.getHeading().getDegrees();
+    */
   }
 
   public void simulationPrint() {
