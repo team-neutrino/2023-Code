@@ -15,7 +15,9 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -61,10 +63,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private MotorControllerGroup m_motorGroupLeft =
       new MotorControllerGroup(m_motorLeft1, m_motorLeft2);
 
+  private XboxController m_driverController;
+
   /** Creates a new Drivetrain. */
-  public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick) {
+  public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick, XboxController p_driverController) {
     m_leftJoystick = p_leftJoystick;
     m_rightJoystick = p_rightJoystick;
+
+    m_driverController = p_driverController;
+
     m_driveBackwards = new JoystickButton(m_rightJoystick, 13);
 
     m_encoderLeft1 = initializeMotor(m_motorLeft1, true);
@@ -159,6 +166,26 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return m_diffDriveOdometry.getPoseMeters();
   }
 
+  public CANSparkMax getMotorRight1()
+  {
+    return m_motorRight1;
+  }
+
+  public CANSparkMax getMotorRight2()
+  {
+    return m_motorRight2;
+  }
+
+  public CANSparkMax getMotorLeft1()
+  {
+    return m_motorLeft1;
+  }
+
+  public CANSparkMax getMotorLeft2()
+  {
+    return m_motorLeft2;
+  }
+
   public DifferentialDriveWheelSpeeds getDriveWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(getL1Vel(), getR1Vel());
   }
@@ -219,6 +246,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
   @Override
   public void simulationPeriodic()
   {
-    //m_diffDriveSim.setInputs()
+    //can also use m_motorGroupLeft.get() to use through joysticks, etc.
+    m_diffDriveSim.setInputs(m_driverController.getLeftY() * RobotController.getInputVoltage(), m_driverController.getRightY() * 
+    RobotController.getInputVoltage());
+
+    m_diffDriveSim.update(0.02);
   }
 }

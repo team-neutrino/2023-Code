@@ -95,8 +95,8 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kLeftStick.value);
 
   // SUBSYSTEMS
-  private final DriveTrainSubsystem m_drivetrainSubsystem =
-      new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick);
+  public final DriveTrainSubsystem m_drivetrainSubsystem =
+      new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick, m_driverController);
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ScoringSubsystem m_scoringSubsystem = new ScoringSubsystem();
