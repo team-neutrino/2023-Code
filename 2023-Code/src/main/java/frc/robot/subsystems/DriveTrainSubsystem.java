@@ -37,7 +37,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private DifferentialDriveOdometry m_diffDriveOdometry;
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
 
-  private DifferentialDrivetrainSim m_diffDriveSim = new DifferentialDrivetrainSim(DCMotor.getNEO(3), 0.125, 6, 60, 0.0635, 0.635, null);
+  private DifferentialDrivetrainSim m_diffDriveSim;
 
   // MOTORS
   private CANSparkMax m_motorLeft1 =
@@ -74,6 +74,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
     resetOdometry();
+
+    m_diffDriveSim = new DifferentialDrivetrainSim(DCMotor.getNEO(3), 0.125, 6, 60, 0.0635, 0.635, null);
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
@@ -211,11 +213,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void periodic() {
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
+
   }
 
   @Override
   public void simulationPeriodic()
   {
-    m_diffDriveSim.setInputs()
+    //m_diffDriveSim.setInputs()
   }
 }
