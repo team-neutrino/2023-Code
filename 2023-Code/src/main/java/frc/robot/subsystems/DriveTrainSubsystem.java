@@ -9,6 +9,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+
+import edu.wpi.first.hal.SimDouble;
+import edu.wpi.first.hal.simulation.SimDeviceDataJNI;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -35,11 +38,18 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
   }
 
+  //SIMULATION
+  double encoderSimLeft = 0;
+  double encoderSimRight = 0;
+  int simDevice = SimDeviceDataJNI.getSimDeviceHandle("navX-Sensor[0]");
+  SimDouble angle = new SimDouble(SimDeviceDataJNI.getSimValueHandle(simDevice, "Yaw"));
+
   // ODOMETRY
   private DifferentialDriveOdometry m_diffDriveOdometry;
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
 
   private DifferentialDrivetrainSim m_diffDriveSim;
+  DifferentialDriveOdometry m_diffDriveOdometrySim;
 
   // MOTORS
   private CANSparkMax m_motorLeft1 =
@@ -82,7 +92,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
     resetOdometry();
 
-    m_diffDriveSim = new DifferentialDrivetrainSim(DCMotor.getNEO(3), 0.125, 6, 60, 0.0635, 0.635, null);
+    m_diffDriveSim = new DifferentialDrivetrainSim(DCMotor.getNEO(2), 0.125, 6, 60, 0.0635, 0.635, null);
+
+    m_diffDriveOdometrySim = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
@@ -241,6 +253,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
 
+    m_diffDriveOdometrySim.update(getYawAsRotation(), encoderSimLeft, encoderSimRight);
   }
 
   @Override
@@ -251,5 +264,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     RobotController.getInputVoltage());
 
     m_diffDriveSim.update(0.02);
+
+    encoderSimLeft = m_diffDriveSim.getLeftPositionMeters();
+    encoderSimRight = m_diffDriveSim.getRightPositionMeters();
+    angle.set(m_diffDriveSim.getHeading().getDegrees());
   }
 }
