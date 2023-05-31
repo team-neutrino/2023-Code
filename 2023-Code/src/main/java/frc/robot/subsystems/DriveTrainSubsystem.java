@@ -9,7 +9,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-
 import edu.wpi.first.hal.SimDouble;
 import edu.wpi.first.hal.simulation.SimDeviceDataJNI;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -23,6 +22,11 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotGearing;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotMotor;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotWheelSize;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriverConstants;
@@ -38,17 +42,21 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
   }
 
-  //SIMULATION
+  // SIMULATION
   double encoderSimLeft = 0;
   double encoderSimRight = 0;
+  double navXSim = 0;
+  double cycle = 0;
   int simDevice = SimDeviceDataJNI.getSimDeviceHandle("navX-Sensor[0]");
   SimDouble angle = new SimDouble(SimDeviceDataJNI.getSimValueHandle(simDevice, "Yaw"));
+  Field2d m_field = new Field2d();
 
   // ODOMETRY
   private DifferentialDriveOdometry m_diffDriveOdometry;
   private AHRS m_navX = new AHRS(SPI.Port.kMXP);
 
   private DifferentialDrivetrainSim m_diffDriveSim;
+  DifferentialDrivetrainSim m_diffDriveSimTest;
   DifferentialDriveOdometry m_diffDriveOdometrySim;
 
   // MOTORS
@@ -76,7 +84,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private XboxController m_driverController;
 
   /** Creates a new Drivetrain. */
-  public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick, XboxController p_driverController) {
+  public DriveTrainSubsystem(
+      Joystick p_leftJoystick, Joystick p_rightJoystick, XboxController p_driverController) {
     m_leftJoystick = p_leftJoystick;
     m_rightJoystick = p_rightJoystick;
 
@@ -92,9 +101,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
     resetOdometry();
 
-    m_diffDriveSim = new DifferentialDrivetrainSim(DCMotor.getNEO(2), 0.125, 6, 60, 0.0635, 0.635, null);
+    m_diffDriveSim =
+        new DifferentialDrivetrainSim(DCMotor.getNEO(2), 0.125, 6, 60, 0.0635, 0.635, null);
 
-    m_diffDriveOdometrySim = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
+    m_diffDriveSimTest = DifferentialDrivetrainSim.createKitbotSim(KitbotMotor.kDualCIMPerSide, KitbotGearing.k10p71, KitbotWheelSize.kSixInch, null);
+
+    m_diffDriveOdometrySim =
+        new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
+
+    SmartDashboard.putData("Field", m_field);
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
@@ -178,23 +193,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return m_diffDriveOdometry.getPoseMeters();
   }
 
-  public CANSparkMax getMotorRight1()
-  {
+  public CANSparkMax getMotorRight1() {
     return m_motorRight1;
   }
 
-  public CANSparkMax getMotorRight2()
-  {
+  public CANSparkMax getMotorRight2() {
     return m_motorRight2;
   }
 
-  public CANSparkMax getMotorLeft1()
-  {
+  public CANSparkMax getMotorLeft1() {
     return m_motorLeft1;
   }
 
-  public CANSparkMax getMotorLeft2()
-  {
+  public CANSparkMax getMotorLeft2() {
     return m_motorLeft2;
   }
 
@@ -253,20 +264,57 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
 
-    m_diffDriveOdometrySim.update(getYawAsRotation(), encoderSimLeft, encoderSimRight);
+    m_diffDriveOdometrySim.update(Rotation2d.fromDegrees(navXSim), encoderSimLeft, encoderSimRight);
+    m_field.setRobotPose(m_diffDriveOdometrySim.getPoseMeters());
   }
 
   @Override
-  public void simulationPeriodic()
-  {
-    //can also use m_motorGroupLeft.get() to use through joysticks, etc.
-    m_diffDriveSim.setInputs(m_driverController.getLeftY() * RobotController.getInputVoltage(), m_driverController.getRightY() * 
-    RobotController.getInputVoltage());
+  public void simulationPeriodic() {
+
+    /* 
+    // can also use m_motorGroupLeft.get() to use through joysticks, etc.
+    m_diffDriveSim.setInputs(
+        Limiter.deadzone(m_driverController.getLeftY(), 0.1) * RobotController.getInputVoltage() * -1,
+        Limiter.deadzone(m_driverController.getRightY(), 0.1) * RobotController.getInputVoltage() * -1);
+    cycle++;
+    simulationPrint();
 
     m_diffDriveSim.update(0.02);
 
     encoderSimLeft = m_diffDriveSim.getLeftPositionMeters();
     encoderSimRight = m_diffDriveSim.getRightPositionMeters();
     angle.set(m_diffDriveSim.getHeading().getDegrees());
+    navXSim = m_diffDriveSim.getHeading().getDegrees();
+    */
+
+    m_diffDriveSimTest.setInputs(
+        Limiter.deadzone(m_driverController.getLeftY(), 0.1) * RobotController.getInputVoltage() * -1,
+        Limiter.deadzone(m_driverController.getRightY(), 0.1) * RobotController.getInputVoltage() * -1);
+
+    m_diffDriveSimTest.update(0.02);
+
+    encoderSimLeft = m_diffDriveSimTest.getLeftPositionMeters();
+    encoderSimRight = m_diffDriveSimTest.getRightPositionMeters();
+    navXSim = m_diffDriveSimTest.getHeading().getDegrees();
+  }
+
+  public void simulationPrint() {
+    if (cycle % 40 == 0) {
+      //System.out.println("left stick: " + m_driverController.getLeftY());
+      //System.out.println("right stick: " + m_driverController.getRightY());
+
+      //System.out.println("motor output left: " + Limiter.deadzone(m_driverController.getLeftY(), 0.1) * RobotController.getInputVoltage());
+      //System.out.println("motor output right: " + Limiter.deadzone(m_driverController.getRightY(), 0.1) * RobotController.getInputVoltage());
+
+      System.out.println("left velocity: " + m_diffDriveSimTest.getLeftVelocityMetersPerSecond());
+      System.out.println("right velocity: " + m_diffDriveSimTest.getRightVelocityMetersPerSecond());
+
+      //System.out.println("rio voltage " + RobotController.getInputVoltage());
+      //System.out.println("yaw: " + getYaw());
+      //System.out.println("sim output angle: " + m_diffDriveSim.getHeading().getDegrees());
+
+      //System.out.println("left encoder: " + encoderSimLeft);
+      //System.out.println("right encoder: " + encoderSimRight);
+    }
   }
 }

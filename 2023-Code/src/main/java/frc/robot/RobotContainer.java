@@ -55,7 +55,7 @@ import frc.robot.util.ViennaPIDController;
 
 public class RobotContainer {
   // CONTROLLERS
-  private final XboxController m_driverController = new XboxController(OperatorConstants.XBOX);
+  private final XboxController m_driverController = new XboxController(0);
   private final Joystick m_leftJoystick = new Joystick(OperatorConstants.JOYSTICK_LEFT);
   private final Joystick m_rightJoystick = new Joystick(OperatorConstants.JOYSTICK_RIGHT);
 
