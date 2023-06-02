@@ -15,6 +15,12 @@ public class PoseTriplet {
     m_angle = p_angle;
   }
 
+  public PoseTriplet(double p_coord1, double p_coord2, double p_angle, double multiple) {
+    m_coord1 = p_coord1 * multiple;
+    m_coord2 = p_coord2 * multiple;
+    m_angle = p_angle;
+  }
+
   public double getCoord1() {
     return m_coord1;
   }

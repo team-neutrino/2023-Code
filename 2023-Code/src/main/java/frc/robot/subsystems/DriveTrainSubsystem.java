@@ -133,11 +133,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
         new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
 
     SmartDashboard.putData("Field", m_field);
-    //m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(toGamePieceArray, 
-    //TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
-
-    m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(runThatBack, 
+    m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(toGamePieceArray, 
     TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
+
+    //m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(runThatBack, 
+    //TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
@@ -287,6 +287,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     return m_navX;
   }
 
+  public void setSimInputs(double leftInputs, double rightInputs) {
+    m_diffDriveSim.setInputs(leftInputs, rightInputs);
+  }
+
   @Override
   public void periodic() {
     m_diffDriveOdometry.update(
@@ -301,11 +305,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     
     // can also use m_motorGroupLeft.get() to use through joysticks, etc.
-    m_diffDriveSim.setInputs(
+   /*  m_diffDriveSim.setInputs(
         Limiter.deadzone(m_driverController.getLeftY(), 0.1) * RobotController.getInputVoltage() * -1,
         Limiter.deadzone(m_driverController.getRightY(), 0.1) * RobotController.getInputVoltage() * -1);
+        */
     cycle++;
     simulationPrint();
+    
 
     m_diffDriveSim.update(0.02);
 
@@ -336,6 +342,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
       //System.out.println("motor output left: " + Limiter.deadzone(m_driverController.getLeftY(), 0.1) * RobotController.getInputVoltage());
       //System.out.println("motor output right: " + Limiter.deadzone(m_driverController.getRightY(), 0.1) * RobotController.getInputVoltage());
 
+
+      
+      
       //System.out.println("left velocity: " + m_diffDriveSim.getLeftVelocityMetersPerSecond());
       //System.out.println("right velocity: " + m_diffDriveSim.getRightVelocityMetersPerSecond());
 
@@ -343,8 +352,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
       //System.out.println("yaw: " + getYaw());
       //System.out.println("sim output angle: " + m_diffDriveSim.getHeading().getDegrees());
 
-      System.out.println("left encoder: " + encoderSimLeft);
-      System.out.println("right encoder: " + encoderSimRight);
+      //System.out.println("left encoder: " + encoderSimLeft);
+      //System.out.println("right encoder: " + encoderSimRight);
     }
   }
 }

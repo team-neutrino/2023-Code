@@ -35,6 +35,7 @@ import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.commands.TelescopeCommand;
 import frc.robot.commands.TelescopeDefaultCommand;
+import frc.robot.commands.autonomous.TestSim;
 import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
 import frc.robot.commands.autonomous.ScoreMoveAutoGather;
 import frc.robot.commands.autonomous.ScoreThenBalance;
@@ -268,9 +269,9 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     m_drivetrainSubsystem.resetOdometry();
-    return new ScoreMoveAutoGather(
-            m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController)
-        .andThen(new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
+    return new TestSim(
+            m_subsystemContainer, m_armPidController, m_driverController, m_intakeManager)
+        .andThen(new InstantCommand(() -> m_drivetrainSubsystem.setSimInputs(0, 0)));
     // return m_shuffleboardSubsystem
     //     .getAutoSelected()
     //     .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));

@@ -19,6 +19,27 @@ import java.util.ArrayList;
 
 public class AutonomousUtil {
 
+  public static RamseteCommand generateRamseteCommandSim(
+      Trajectory trajectory, DriveTrainSubsystem p_drivetrainSubsystem) {
+    return new RamseteCommand(
+        trajectory,
+        p_drivetrainSubsystem::getPose2d,
+        new RamseteController(
+            TrajectoryConfigConstants.K_RAMSETE_BETA, TrajectoryConfigConstants.K_RAMSETE_ZETA),
+        new SimpleMotorFeedforward(
+            TrajectoryConfigConstants.KS_VOLTS,
+            TrajectoryConfigConstants.KV_VOLT_SECONDS_PER_METER),
+        TrajectoryConfigConstants.K_DRIVE_KINEMATICS,
+        p_drivetrainSubsystem::getDriveWheelSpeeds,
+        new PIDController(TrajectoryConfigConstants.KP_DRIVE_VEL, 0, 0),
+        new PIDController(TrajectoryConfigConstants.KP_DRIVE_VEL, 0, 0),
+        (leftVolts, rightVolts) -> {
+          System.out.println("Left volts: " + leftVolts + " | Right volts: " + rightVolts);
+          p_drivetrainSubsystem.setSimInputs(leftVolts, rightVolts);
+        },
+        p_drivetrainSubsystem);
+  }
+
   public static RamseteCommand generateRamseteCommand(
       Trajectory trajectory, DriveTrainSubsystem p_drivetrainSubsystem) {
     return new RamseteCommand(
@@ -74,6 +95,16 @@ public class AutonomousUtil {
         generateTrajectoryFromPoses(tripletList, trajectoryConfig, inverted);
     RamseteCommand generatedRamseteCommand =
         generateRamseteCommand(generatedTrajectory, p_drivetrainSubsystem);
+    return generatedRamseteCommand;
+  }
+
+  public static RamseteCommand generateRamseteFromPosesSim(
+      ArrayList<PoseTriplet> tripletList,
+      DriveTrainSubsystem p_drivetrainSubsystem,
+      TrajectoryConfig trajectoryConfig) {
+    Trajectory generatedTrajectory = generateTrajectoryFromPoses(tripletList, trajectoryConfig);
+    RamseteCommand generatedRamseteCommand =
+        generateRamseteCommandSim(generatedTrajectory, p_drivetrainSubsystem);
     return generatedRamseteCommand;
   }
 

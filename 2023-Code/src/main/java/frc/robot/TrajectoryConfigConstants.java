@@ -46,12 +46,15 @@ public class TrajectoryConfigConstants {
   public static final TrajectoryConfig K_MAX_SPEED_FORWARD_CONFIG =
       trajectoryConfigMeabhGenerator(
           K_MAX_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED, false);
+
   public static final TrajectoryConfig K_MAX_SPEED_BACKWARD_CONFIG =
       trajectoryConfigMeabhGenerator(
           K_MAX_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED, true);
+
   public static final TrajectoryConfig K_LESS_SPEED_FORWARD_CONFIG =
       trajectoryConfigMeabhGenerator(
           K_LESS_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED, false);
+          
   public static final TrajectoryConfig K_LESS_SPEED_BACKWARD_CONFIG =
       trajectoryConfigMeabhGenerator(
           K_LESS_SPEED_METERS_PER_SECOND, K_MAX_ACCELERATION_METERS_PER_SECOND_SQUARED, true);

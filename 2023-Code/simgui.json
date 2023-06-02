@@ -78,6 +78,7 @@
         "Robot": {
           "style": "Box/Image"
         },
+        "image": "C:\\Users\\abe\\Downloads\\2023-field.png",
         "trajectory": {
           "arrows": false,
           "style": "Line"
