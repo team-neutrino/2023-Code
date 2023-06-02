@@ -57,7 +57,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   SimDouble angle = new SimDouble(SimDeviceDataJNI.getSimValueHandle(simDevice, "Yaw"));
   Field2d m_field = new Field2d();
 
-  private ArrayList<PoseTriplet> forwardBackArray =
+  private ArrayList<PoseTriplet> toGamePieceArray =
   new ArrayList<PoseTriplet>(
     Arrays.asList(
         new PoseTriplet(0, 0, 0),
@@ -133,11 +133,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
         new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
 
     SmartDashboard.putData("Field", m_field);
-    m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(test1, 
-    TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
-
-    //m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(runThatBack, 
+    //m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(toGamePieceArray, 
     //TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
+
+    m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(runThatBack, 
+    TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
@@ -336,15 +336,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
       //System.out.println("motor output left: " + Limiter.deadzone(m_driverController.getLeftY(), 0.1) * RobotController.getInputVoltage());
       //System.out.println("motor output right: " + Limiter.deadzone(m_driverController.getRightY(), 0.1) * RobotController.getInputVoltage());
 
-      System.out.println("left velocity: " + m_diffDriveSimTest.getLeftVelocityMetersPerSecond());
-      System.out.println("right velocity: " + m_diffDriveSimTest.getRightVelocityMetersPerSecond());
+      //System.out.println("left velocity: " + m_diffDriveSim.getLeftVelocityMetersPerSecond());
+      //System.out.println("right velocity: " + m_diffDriveSim.getRightVelocityMetersPerSecond());
 
       //System.out.println("rio voltage " + RobotController.getInputVoltage());
       //System.out.println("yaw: " + getYaw());
       //System.out.println("sim output angle: " + m_diffDriveSim.getHeading().getDegrees());
 
-      //System.out.println("left encoder: " + encoderSimLeft);
-      //System.out.println("right encoder: " + encoderSimRight);
+      System.out.println("left encoder: " + encoderSimLeft);
+      System.out.println("right encoder: " + encoderSimRight);
     }
   }
 }

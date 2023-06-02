@@ -75,6 +75,13 @@
     },
     "windows": {
       "/SmartDashboard/Field": {
+        "Robot": {
+          "style": "Box/Image"
+        },
+        "trajectory": {
+          "arrows": false,
+          "style": "Line"
+        },
         "window": {
           "visible": true
         }
