@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PIDConstants;
+import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class RobotContainer {
   // CONTROLLERS
@@ -71,7 +72,7 @@ public class RobotContainer {
     configureBindings();
   }
 
-  private void configureBindings() {
+  private void configureBindings() {}
    
   
     // BUTTONS
@@ -80,6 +81,6 @@ public class RobotContainer {
     // used for small adjustments of the arm
    
   public void resetNavX() {
-    m_drivetrainSubsystem.getNavX().zeroYaw();
+    
   }
 }
