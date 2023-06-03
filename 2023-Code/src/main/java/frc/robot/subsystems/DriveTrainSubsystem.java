@@ -122,7 +122,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_encoderRight1 = initializeMotor(m_motorRight1, false);
     m_encoderRight2 = initializeMotor(m_motorRight2, false);
 
-    m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), 3, 3);
+    m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
     resetOdometry();
 
     m_diffDriveSim =
