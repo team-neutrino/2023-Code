@@ -31,7 +31,7 @@ public class TestSim extends SequentialCommandGroup {
     ArrayList<PoseTriplet> moveArray =
         new ArrayList<PoseTriplet>(
             Arrays.asList(
-                new PoseTriplet(5, 0, 0),
+                new PoseTriplet(0, 0, 0),
                 new PoseTriplet(2.7, -0.10, -15.08, .32),
                 new PoseTriplet(4.08, -0.22, -3.12, .32)));
 

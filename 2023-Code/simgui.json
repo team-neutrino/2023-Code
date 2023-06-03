@@ -1,27 +1,5 @@
 {
   "HALProvider": {
-    "Other Devices": {
-      "SPARK MAX [11]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [12]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [13]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [14]": {
-        "header": {
-          "open": true
-        }
-      }
-    },
     "Solenoids": {
       "window": {
         "visible": true
@@ -99,6 +77,15 @@
       },
       "Shuffleboard": {
         "Troubleshooting Tab": {
+          "open": true
+        },
+        "open": true
+      },
+      "SmartDashboard": {
+        "Field": {
+          "open": true
+        },
+        "Save Pose": {
           "open": true
         },
         "open": true

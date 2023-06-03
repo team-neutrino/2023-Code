@@ -269,6 +269,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     m_drivetrainSubsystem.resetOdometry();
+    m_drivetrainSubsystem.setAutonRunning();
     return new TestSim(
             m_subsystemContainer, m_armPidController, m_driverController, m_intakeManager)
         .andThen(new InstantCommand(() -> m_drivetrainSubsystem.setSimInputs(0, 0)));

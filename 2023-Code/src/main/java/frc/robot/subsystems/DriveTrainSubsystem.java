@@ -43,6 +43,7 @@ import frc.robot.util.PoseTriplet;
 public class DriveTrainSubsystem extends SubsystemBase {
 
   private DriveTrainSubsystem m_drivetrainSubsystem;
+  private boolean autonRunning;
 
   public DriveTrainSubsystem(DriveTrainSubsystem p_drivetrainSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
@@ -121,11 +122,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_encoderRight1 = initializeMotor(m_motorRight1, false);
     m_encoderRight2 = initializeMotor(m_motorRight2, false);
 
-    m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
+    m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), 3, 3);
     resetOdometry();
 
     m_diffDriveSim =
-        new DifferentialDrivetrainSim(DCMotor.getNEO(2), 8, 6, 60, 0.0635, 0.635, null);
+        new DifferentialDrivetrainSim(DCMotor.getNEO(2), 8, 6, 50, 0.0635, 0.635, null);
 
     m_diffDriveSimTest = DifferentialDrivetrainSim.createKitbotSim(KitbotMotor.kDualCIMPerSide, KitbotGearing.k10p71, KitbotWheelSize.kSixInch, null);
 
@@ -138,6 +139,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     //m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(runThatBack, 
     //TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
+      Pose2d newPose = new Pose2d(3, 3, Rotation2d.fromDegrees(0));
+
+    m_field.setRobotPose(newPose);
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
@@ -300,15 +304,21 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_field.setRobotPose(m_diffDriveOdometrySim.getPoseMeters());
   }
 
+  public void setAutonRunning() {
+    autonRunning = true;
+  }
+
   @Override
   public void simulationPeriodic() {
 
     
     // can also use m_motorGroupLeft.get() to use through joysticks, etc.
-   /*  m_diffDriveSim.setInputs(
+    if(!autonRunning) {
+      m_diffDriveSim.setInputs(
         Limiter.deadzone(m_driverController.getLeftY(), 0.1) * RobotController.getInputVoltage() * -1,
         Limiter.deadzone(m_driverController.getRightY(), 0.1) * RobotController.getInputVoltage() * -1);
-        */
+    }
+        
     cycle++;
     simulationPrint();
     
@@ -321,7 +331,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     navXSim = m_diffDriveSim.getHeading().getDegrees();
     
 
-    /* 
+     /* 
     m_diffDriveSimTest.setInputs(
         Limiter.deadzone(m_driverController.getLeftY(), 0.1) * RobotController.getInputVoltage() * -1,
         Limiter.deadzone(m_driverController.getRightY(), 0.1) * RobotController.getInputVoltage() * -1);
@@ -331,7 +341,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     encoderSimLeft = m_diffDriveSimTest.getLeftPositionMeters();
     encoderSimRight = m_diffDriveSimTest.getRightPositionMeters();
     navXSim = m_diffDriveSimTest.getHeading().getDegrees();
-    */
+    /* */
   }
 
   public void simulationPrint() {
