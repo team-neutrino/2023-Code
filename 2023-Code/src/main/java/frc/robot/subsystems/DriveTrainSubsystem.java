@@ -4,15 +4,16 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
-  /** Creates a new Drivetrain. */
-  public DriveTrainSubsystem(Joystick p_leftJoystick, Joystick p_rightJoystick) {
-    
-  }
+  //** Make motors here **//
+  CANSparkMax m_motor1;
+
 
   @Override
   public void periodic()
