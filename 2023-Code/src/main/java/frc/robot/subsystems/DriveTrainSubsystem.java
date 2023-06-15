@@ -7,9 +7,15 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrainSubsystem extends SubsystemBase {
+
+  public DriveTrainSubsystem(XboxController controller)
+  {
+    
+  }
 
   //** Make motors here **//
   CANSparkMax m_motor1 = new CANSparkMax(1, MotorType.kBrushless);
