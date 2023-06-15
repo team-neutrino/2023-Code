@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class DriveTrainSubsystem extends SubsystemBase {
 
   //** Make motors here **//
-  CANSparkMax m_motor1;
+  CANSparkMax m_motor1 = new CANSparkMax(1, MotorType.kBrushless);
 
 
   @Override
   public void periodic()
   {
-
+    m_motor1.set(0.1);
   }  
 }
