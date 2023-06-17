@@ -28,6 +28,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
   {
     //don't call both of these at the same time
     m_motor1.set(0.1);
-    m_motor1.set(m_joystick.getY());
+    //m_motor1.set(m_joystick.getY());
   }  
 }
