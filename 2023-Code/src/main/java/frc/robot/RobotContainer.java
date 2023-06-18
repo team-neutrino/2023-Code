@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PIDConstants;
-import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.Motor;
 
 public class RobotContainer {
   // CONTROLLERS
@@ -59,8 +59,7 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kLeftStick.value);
 
   // SUBSYSTEMS
-  //private final DriveTrainSubsystem m_drivetrainSubsystem =
-    //  new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick);
+ 
 
 
   // UTIL
