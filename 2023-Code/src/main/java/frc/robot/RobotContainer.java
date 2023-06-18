@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.PIDConstants;
-import frc.robot.subsystems.Motor;
+import frc.robot.subsystems.MotorSubsystem;
 
 public class RobotContainer {
   // CONTROLLERS
