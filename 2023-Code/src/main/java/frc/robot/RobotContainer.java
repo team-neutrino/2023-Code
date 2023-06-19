@@ -58,9 +58,8 @@ public class RobotContainer {
   private final JoystickButton m_leftJoystickButton =
       new JoystickButton(m_driverController, XboxController.Button.kLeftStick.value);
 
-  // SUBSYSTEMS
- 
-
+  // SUBSYSTEMS 
+  //** Make MotorSubsystem class object here **/
 
   // UTIL
  
