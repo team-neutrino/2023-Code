@@ -10,11 +10,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class DriveTrainSubsystem extends SubsystemBase {
+public class MotorSubsystem extends SubsystemBase {
 
   Joystick m_joystick;
 
-  public DriveTrainSubsystem(Joystick p_joystick)
+  public MotorSubsystem(Joystick p_joystick)
   {
     m_joystick = p_joystick;
   }
@@ -27,7 +27,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   public void periodic()
   {
     //don't call both of these at the same time
-    m_motor1.set(0.1);
-    //m_motor1.set(m_joystick.getY());
+    //m_motor1.set(0.1);
+    m_motor1.set(m_joystick.getY());
   }  
 }
