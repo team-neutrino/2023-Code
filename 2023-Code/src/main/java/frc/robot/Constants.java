@@ -99,7 +99,7 @@ public final class Constants {
 
     public static final double BALANCE_P = 0.1;
     public static final double BALANCE_I = 0;
-    public static final double BALANCE_D = 50;
+    public static final double BALANCE_D = 40;
 
     public static final double MIN_OUTPUT = -.3;
     public static final double MAX_OUTPUT = .3;

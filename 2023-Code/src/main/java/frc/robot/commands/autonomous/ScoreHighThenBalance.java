@@ -6,10 +6,12 @@ package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.SubsystemContainer;
 import frc.robot.TrajectoryConfigConstants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.ArmMagicCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
@@ -38,7 +40,7 @@ public class ScoreHighThenBalance extends SequentialCommandGroup {
 
     forwardBackArray =
         new ArrayList<PoseTriplet>(
-            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(3.8, 0, 0)));
+            Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(3.4, 0, 0)));
 
     reEnterCommunity =
         new ArrayList<PoseTriplet>(
@@ -60,11 +62,11 @@ public class ScoreHighThenBalance extends SequentialCommandGroup {
         new InstantCommand(p_subsystemContainer.getLedSubsystem()::setToYellow),
         new ArmMagicCommand(p_subsystemContainer, p_pidController, true, true).withTimeout(3),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(0.3),
-        new ReverseTelescope(p_subsystemContainer, 0.5),
+         new ReverseTelescope(p_subsystemContainer, 0.5),
         new ScoringCloseCommand(p_subsystemContainer).withTimeout(.75),
-        new ArmToAngleCommand(
-            p_subsystemContainer, p_pidController, p_driverController, 92, true, false),
-        moveForwardCommand,
+        new ParallelCommandGroup(new ArmToAngleCommand(
+            p_subsystemContainer, p_pidController, p_driverController, ArmConstants.FORWARD_MID, true, false).withTimeout(1),
+        moveForwardCommand),
         new NavXBalance(p_subsystemContainer),
         new AutoBalanceCommand(p_subsystemContainer));
   }
