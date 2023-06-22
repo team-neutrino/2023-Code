@@ -6,15 +6,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.PIDConstants;
 import frc.robot.subsystems.MotorSubsystem;
 
 public class RobotContainer {
@@ -59,13 +54,9 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kLeftStick.value);
 
   // SUBSYSTEMS
-  private final MotorSubsystem m_drivetrainSubsystem =
-      new MotorSubsystem(m_rightJoystick);
-
+  private final MotorSubsystem m_drivetrainSubsystem = new MotorSubsystem(m_rightJoystick);
 
   // UTIL
- 
-  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -73,14 +64,10 @@ public class RobotContainer {
   }
 
   private void configureBindings() {}
-   
-  
-    // BUTTONS
-  
 
-    // used for small adjustments of the arm
-   
-  public void resetNavX() {
-    
-  }
+  // BUTTONS
+
+  // used for small adjustments of the arm
+
+  public void resetNavX() {}
 }
