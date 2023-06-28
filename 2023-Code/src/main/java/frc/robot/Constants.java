@@ -123,7 +123,7 @@ public final class Constants {
     public static final int INTAKE_DOWN_BEAMBREAK = 2;
     public static final int TELESCOPING_ENCODERA = 7;
     public static final int TELESCOPING_ENCODERB = 8;
-    public static final int ARM_ENCODER = 9;
+    public static final int ARM_ENCODER = 1;
   }
 
   public static class PWMConstants {
