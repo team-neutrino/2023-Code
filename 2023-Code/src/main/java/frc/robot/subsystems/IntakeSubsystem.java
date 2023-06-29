@@ -153,5 +153,6 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     gamePieceBeamBroken();
+    System.out.println(getBeamBreak());
   }
 }

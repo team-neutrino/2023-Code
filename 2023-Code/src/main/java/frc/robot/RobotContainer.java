@@ -244,7 +244,7 @@ public class RobotContainer {
     m_buttonX.toggleOnTrue(m_armToBackMid);
     m_buttonA.toggleOnTrue(m_armToBackDown);
 
-    m_buttonStart.toggleOnTrue(m_extendModeCommand);
+
     m_buttonBack.whileTrue(m_scoringOpenCommand);
 
     // used for small adjustments of the arm
@@ -263,7 +263,6 @@ public class RobotContainer {
     m_leftArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.YELLOW, m_driverStationInfo));
 
     // Magic Button for Arm Movement
-    m_upArrow.onTrue(m_armMagicHigh);
     m_downArrow.onTrue(m_armMagicMid);
   }
 
