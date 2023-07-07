@@ -4,9 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -32,13 +29,13 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.TrajectoryConfigConstants;
 import frc.robot.Constants.DriverConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.MotorConstants;
-import frc.robot.util.AutonomousUtil;
 import frc.robot.util.Limiter;
 import frc.robot.util.PoseTriplet;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
@@ -59,21 +56,21 @@ public class DriveTrainSubsystem extends SubsystemBase {
   Field2d m_field = new Field2d();
 
   private ArrayList<PoseTriplet> toGamePieceArray =
-  new ArrayList<PoseTriplet>(
-    Arrays.asList(
-        new PoseTriplet(0, 0, 0),
-        new PoseTriplet(2.7, -0.10, -15.08),
-        new PoseTriplet(4.08, -0.22, -3.12)));
+      new ArrayList<PoseTriplet>(
+          Arrays.asList(
+              new PoseTriplet(0, 0, 0),
+              new PoseTriplet(2.7, -0.10, -15.08),
+              new PoseTriplet(4.08, -0.22, -3.12)));
 
   ArrayList<PoseTriplet> runThatBack =
-  new ArrayList<PoseTriplet>(
-      Arrays.asList(
-          new PoseTriplet(4.08, -0.22, -3.12),
-          new PoseTriplet(1.3, -0.08, 0.16),
-          new PoseTriplet(-.3, -.31, -.32)));
+      new ArrayList<PoseTriplet>(
+          Arrays.asList(
+              new PoseTriplet(4.08, -0.22, -3.12),
+              new PoseTriplet(1.3, -0.08, 0.16),
+              new PoseTriplet(-.3, -.31, -.32)));
 
-  ArrayList<PoseTriplet> test1 = new ArrayList<PoseTriplet>(
-    Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4, 0, 0)));
+  ArrayList<PoseTriplet> test1 =
+      new ArrayList<PoseTriplet>(Arrays.asList(new PoseTriplet(0, 0, 0), new PoseTriplet(4, 0, 0)));
 
   // ODOMETRY
   private DifferentialDriveOdometry m_diffDriveOdometry;
@@ -128,18 +125,20 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_diffDriveSim =
         new DifferentialDrivetrainSim(DCMotor.getNEO(2), 8, 6, 50, 0.0635, 0.635, null);
 
-    m_diffDriveSimTest = DifferentialDrivetrainSim.createKitbotSim(KitbotMotor.kDualCIMPerSide, KitbotGearing.k10p71, KitbotWheelSize.kSixInch, null);
+    m_diffDriveSimTest =
+        DifferentialDrivetrainSim.createKitbotSim(
+            KitbotMotor.kDualCIMPerSide, KitbotGearing.k10p71, KitbotWheelSize.kSixInch, null);
 
     m_diffDriveOdometrySim =
         new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
 
     SmartDashboard.putData("Field", m_field);
-    //m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(toGamePieceArray, 
-    //TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
+    // m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(toGamePieceArray,
+    // TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
 
-    //m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(runThatBack, 
-    //TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
-      Pose2d newPose = new Pose2d(3, 3, Rotation2d.fromDegrees(0));
+    // m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(runThatBack,
+    // TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
+    Pose2d newPose = new Pose2d(3, 3, Rotation2d.fromDegrees(0));
 
     m_field.setRobotPose(newPose);
   }
@@ -311,17 +310,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
 
-    
     // can also use m_motorGroupLeft.get() to use through joysticks, etc.
-    if(!autonRunning) {
+    if (!autonRunning) {
       m_diffDriveSim.setInputs(
-        Limiter.deadzone(m_driverController.getLeftY(), 0.1) * RobotController.getInputVoltage() * -1,
-        Limiter.deadzone(m_driverController.getRightY(), 0.1) * RobotController.getInputVoltage() * -1);
+          Limiter.deadzone(m_driverController.getLeftY(), 0.1)
+              * RobotController.getInputVoltage()
+              * -1,
+          Limiter.deadzone(m_driverController.getRightY(), 0.1)
+              * RobotController.getInputVoltage()
+              * -1);
     }
-        
+
     cycle++;
     simulationPrint();
-    
 
     m_diffDriveSim.update(0.02);
 
@@ -329,9 +330,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
     encoderSimRight = m_diffDriveSim.getRightPositionMeters();
     angle.set(m_diffDriveSim.getHeading().getDegrees());
     navXSim = m_diffDriveSim.getHeading().getDegrees();
-    
 
-     /* 
+    /*
     m_diffDriveSimTest.setInputs(
         Limiter.deadzone(m_driverController.getLeftY(), 0.1) * RobotController.getInputVoltage() * -1,
         Limiter.deadzone(m_driverController.getRightY(), 0.1) * RobotController.getInputVoltage() * -1);
@@ -346,24 +346,23 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public void simulationPrint() {
     if (cycle % 40 == 0) {
-      //System.out.println("left stick: " + m_driverController.getLeftY());
-      //System.out.println("right stick: " + m_driverController.getRightY());
+      // System.out.println("left stick: " + m_driverController.getLeftY());
+      // System.out.println("right stick: " + m_driverController.getRightY());
 
-      //System.out.println("motor output left: " + Limiter.deadzone(m_driverController.getLeftY(), 0.1) * RobotController.getInputVoltage());
-      //System.out.println("motor output right: " + Limiter.deadzone(m_driverController.getRightY(), 0.1) * RobotController.getInputVoltage());
+      // System.out.println("motor output left: " + Limiter.deadzone(m_driverController.getLeftY(),
+      // 0.1) * RobotController.getInputVoltage());
+      // System.out.println("motor output right: " +
+      // Limiter.deadzone(m_driverController.getRightY(), 0.1) * RobotController.getInputVoltage());
 
+      // System.out.println("left velocity: " + m_diffDriveSim.getLeftVelocityMetersPerSecond());
+      // System.out.println("right velocity: " + m_diffDriveSim.getRightVelocityMetersPerSecond());
 
-      
-      
-      //System.out.println("left velocity: " + m_diffDriveSim.getLeftVelocityMetersPerSecond());
-      //System.out.println("right velocity: " + m_diffDriveSim.getRightVelocityMetersPerSecond());
+      // System.out.println("rio voltage " + RobotController.getInputVoltage());
+      // System.out.println("yaw: " + getYaw());
+      // System.out.println("sim output angle: " + m_diffDriveSim.getHeading().getDegrees());
 
-      //System.out.println("rio voltage " + RobotController.getInputVoltage());
-      //System.out.println("yaw: " + getYaw());
-      //System.out.println("sim output angle: " + m_diffDriveSim.getHeading().getDegrees());
-
-      //System.out.println("left encoder: " + encoderSimLeft);
-      //System.out.println("right encoder: " + encoderSimRight);
+      // System.out.println("left encoder: " + encoderSimLeft);
+      // System.out.println("right encoder: " + encoderSimRight);
     }
   }
 }
