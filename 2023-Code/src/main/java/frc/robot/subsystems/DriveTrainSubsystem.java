@@ -134,8 +134,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
         new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
 
     SmartDashboard.putData("Field", m_field);
-    m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(toGamePieceArray, 
-    TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
+    //m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(toGamePieceArray, 
+    //TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
 
     //m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(runThatBack, 
     //TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));

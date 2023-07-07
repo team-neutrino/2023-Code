@@ -5,6 +5,17 @@
       "/Shuffleboard/Drivestation Tab123/Autonomous Chooser": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Save Pose": "Command"
+    },
+    "windows": {
+      "/SmartDashboard/Field": {
+        "trajectory": {
+          "arrows": false,
+          "style": "Line"
+        },
+        "window": {
+          "visible": true
+        }
+      }
     }
   },
   "NetworkTables Settings": {
