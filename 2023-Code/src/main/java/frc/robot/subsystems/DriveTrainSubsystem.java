@@ -122,6 +122,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_diffDriveOdometry = new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
     resetOdometry();
 
+    //initial pose??? (passed into the constructor for the odometrysim object as the last parameter... I think this "overrides" everything
+    //else?)
+    Pose2d newPose = new Pose2d(3, 3, Rotation2d.fromDegrees(0));
+
     m_diffDriveSim =
         new DifferentialDrivetrainSim(DCMotor.getNEO(2), 8, 6, 50, 0.0635, 0.635, null);
 
@@ -130,7 +134,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
             KitbotMotor.kDualCIMPerSide, KitbotGearing.k10p71, KitbotWheelSize.kSixInch, null);
 
     m_diffDriveOdometrySim =
-        new DifferentialDriveOdometry(getYawAsRotation(), getL1Pos(), getR1Pos());
+        new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0, newPose);
 
     SmartDashboard.putData("Field", m_field);
     // m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(toGamePieceArray,
@@ -138,9 +142,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     // m_field.getObject("trajectory").setTrajectory(AutonomousUtil.generateTrajectoryFromPoses(runThatBack,
     // TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
-    Pose2d newPose = new Pose2d(3, 3, Rotation2d.fromDegrees(0));
 
-    m_field.setRobotPose(newPose);
+    //m_field.setRobotPose(newPose);
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
@@ -300,11 +303,17 @@ public class DriveTrainSubsystem extends SubsystemBase {
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
 
     m_diffDriveOdometrySim.update(Rotation2d.fromDegrees(navXSim), encoderSimLeft, encoderSimRight);
-    m_field.setRobotPose(m_diffDriveOdometrySim.getPoseMeters());
+    m_field.getObject("Sim Robot").setPose(m_diffDriveOdometrySim.getPoseMeters());
+    //m_field.setRobotPose(m_diffDriveOdometrySim.getPoseMeters());
   }
 
   public void setAutonRunning() {
     autonRunning = true;
+  }
+
+  //find a way to implement this
+  public void setAutonOff() {
+    autonRunning = false;
   }
 
   @Override
@@ -320,6 +329,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
               * RobotController.getInputVoltage()
               * -1);
     }
+
+    // if (!autonRunning) {
+    //   m_diffDriveSim.setInputs(
+    //       Limiter.deadzone(m_motorGroupLeft.get(), 0.1),
+    //       Limiter.deadzone(m_motorGroupRight.get(), 0.1));
+    // }
 
     cycle++;
     simulationPrint();
