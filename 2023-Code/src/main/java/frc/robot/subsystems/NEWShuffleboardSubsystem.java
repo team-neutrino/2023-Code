@@ -4,14 +4,40 @@
 
 package frc.robot.subsystems;
 
+import java.util.Map;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class NEWShuffleboardSubsystem extends SubsystemBase {
   /** Creates a new NEWShuffleboardSubsystem. */
-  public NEWShuffleboardSubsystem() {}
+  DigitalInput limitSwitch = new DigitalInput(0);
+  private NEWShuffleboardSubsystem shuffleboardSubsystem;
+  private ShuffleboardTab mainTab;
+  
+  
+  public NEWShuffleboardSubsystem() {
+
+  }
+
+  public boolean limitSwitchPressed() {
+    return limitSwitch.get();
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    boolean isPressed = limitSwitchPressed();
+
+    mainTab.getLayout("Limit Switch Status", BuiltInLayouts.kList)
+    .withSize(2, 1)
+    .withPosition(0, 0)
+    .add("Status", isPressed ? "Engaged" : "Not Engaged")
+    .withWidget(BuiltInWidgets.kBooleanBox)
+    .withProperties(Map.of("colorWhenTrue", "green"))
+    .withProperties(Map.of("colorWhenFalse", "red"));
   }
 }
