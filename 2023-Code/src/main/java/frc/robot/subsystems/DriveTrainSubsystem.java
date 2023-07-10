@@ -54,6 +54,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   int simDevice = SimDeviceDataJNI.getSimDeviceHandle("navX-Sensor[0]");
   SimDouble angle = new SimDouble(SimDeviceDataJNI.getSimValueHandle(simDevice, "Yaw"));
   Field2d m_field = new Field2d();
+  Pose2d dumbPose = new Pose2d(-3, -3, Rotation2d.fromDegrees(0));
 
   private ArrayList<PoseTriplet> toGamePieceArray =
       new ArrayList<PoseTriplet>(
@@ -303,15 +304,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
 
     m_diffDriveOdometrySim.update(Rotation2d.fromDegrees(navXSim), encoderSimLeft, encoderSimRight);
+
     m_field.getObject("Sim Robot").setPose(m_diffDriveOdometrySim.getPoseMeters());
-    //m_field.setRobotPose(m_diffDriveOdometrySim.getPoseMeters());
+    m_field.setRobotPose(dumbPose);
   }
 
   public void setAutonRunning() {
     autonRunning = true;
   }
 
-  //find a way to implement this
+  //find a way to implement this (currently not in use)
   public void setAutonOff() {
     autonRunning = false;
   }
@@ -332,8 +334,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     // if (!autonRunning) {
     //   m_diffDriveSim.setInputs(
-    //       Limiter.deadzone(m_motorGroupLeft.get(), 0.1),
-    //       Limiter.deadzone(m_motorGroupRight.get(), 0.1));
+    //       Limiter.deadzone(m_motorGroupLeft.get() * RobotController.getInputVoltage(), 0.1),
+    //       Limiter.deadzone(m_motorGroupRight.get() * RobotController.getInputVoltage(), 0.1));
     // }
 
     cycle++;
