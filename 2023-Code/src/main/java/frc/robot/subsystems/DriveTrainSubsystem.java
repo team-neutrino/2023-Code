@@ -54,7 +54,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   int simDevice = SimDeviceDataJNI.getSimDeviceHandle("navX-Sensor[0]");
   SimDouble angle = new SimDouble(SimDeviceDataJNI.getSimValueHandle(simDevice, "Yaw"));
   Field2d m_field = new Field2d();
-  Pose2d dumbPose = new Pose2d(-3, -3, Rotation2d.fromDegrees(0));
+  Pose2d dumbPose = new Pose2d(3, 1, Rotation2d.fromDegrees(0));
 
   private ArrayList<PoseTriplet> toGamePieceArray =
       new ArrayList<PoseTriplet>(
@@ -145,6 +145,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     // TrajectoryConfigConstants.K_LESS_SPEED_FORWARD_CONFIG));
 
     //m_field.setRobotPose(newPose);
+
+    //this seems to do the trick :)
+    m_field.getRobotObject().close();
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
@@ -306,7 +309,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_diffDriveOdometrySim.update(Rotation2d.fromDegrees(navXSim), encoderSimLeft, encoderSimRight);
 
     m_field.getObject("Sim Robot").setPose(m_diffDriveOdometrySim.getPoseMeters());
-    m_field.setRobotPose(dumbPose);
+    //m_field.setRobotPose(m_diffDriveOdometrySim.getPoseMeters());
   }
 
   public void setAutonRunning() {
