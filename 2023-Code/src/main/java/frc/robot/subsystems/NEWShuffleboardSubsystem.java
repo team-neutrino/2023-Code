@@ -16,6 +16,7 @@ public class NEWShuffleboardSubsystem extends SubsystemBase {
   /** Creates a new NEWShuffleboardSubsystem. */
   DigitalInput limitSwitch = new DigitalInput(0);
   private NEWShuffleboardSubsystem shuffleboardSubsystem;
+  private DriveTrainSubsystem m_drivetrainSubsystem;
   private ShuffleboardTab mainTab;
   
   
@@ -39,5 +40,9 @@ public class NEWShuffleboardSubsystem extends SubsystemBase {
     .withWidget(BuiltInWidgets.kBooleanBox)
     .withProperties(Map.of("colorWhenTrue", "green"))
     .withProperties(Map.of("colorWhenFalse", "red"));
+
+    mainTab.getLayout("R1 Position", BuiltInLayouts.kList)
+    .withSize(1, 1)
+    .withPosition(1, 0);
   }
 }
