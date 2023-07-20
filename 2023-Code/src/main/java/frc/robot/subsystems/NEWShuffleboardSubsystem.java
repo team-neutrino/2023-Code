@@ -21,7 +21,8 @@ public class NEWShuffleboardSubsystem extends SubsystemBase {
   
   
   public NEWShuffleboardSubsystem() {
-
+    p_drivetrainSubsystem = m_drivetrainSubsystem;
+    mainTab = Shuffleboard.getTab("Glass Application");
   }
 
   public boolean limitSwitchPressed() {
@@ -32,6 +33,7 @@ public class NEWShuffleboardSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     boolean isPressed = limitSwitchPressed();
+    double R1Position = p_drivetrainSubsystem.getR1pos();
 
     mainTab.getLayout("Limit Switch Status", BuiltInLayouts.kList)
     .withSize(2, 1)
@@ -41,8 +43,10 @@ public class NEWShuffleboardSubsystem extends SubsystemBase {
     .withProperties(Map.of("colorWhenTrue", "green"))
     .withProperties(Map.of("colorWhenFalse", "red"));
 
-    mainTab.getLayout("R1 Position", BuiltInLayouts.kList)
+    mainTab.getLayout("Drivetrain Data", BuiltInLayouts.kList)
     .withSize(1, 1)
-    .withPosition(1, 0);
+    .withPosition(1, 0)
+    .add("R1 Position", R1Position)
+    .withWidget(BuiltInWidgets.kTextView);
   }
 }
