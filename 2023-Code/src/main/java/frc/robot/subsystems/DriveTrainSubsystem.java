@@ -16,6 +16,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.networktables.DoubleEntry;
+import edu.wpi.first.networktables.DoubleTopic;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SPI;
@@ -55,6 +58,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   SimDouble angle = new SimDouble(SimDeviceDataJNI.getSimValueHandle(simDevice, "Yaw"));
   Field2d m_field = new Field2d();
   Pose2d dumbPose = new Pose2d(3, 1, Rotation2d.fromDegrees(0));
+  DoubleEntry dbEntry;
 
   private ArrayList<PoseTriplet> toGamePieceArray =
       new ArrayList<PoseTriplet>(
@@ -148,6 +152,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     //this seems to do the trick :)
     m_field.getRobotObject().close();
+
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    DoubleTopic dbTopic = inst.getDoubleTopic("Position");
+
+
+    dbEntry = dbTopic.getEntry(0.0);
+
   }
 
   private RelativeEncoder initializeMotor(CANSparkMax p_motor, boolean p_inversion) {
@@ -309,7 +320,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_diffDriveOdometrySim.update(Rotation2d.fromDegrees(navXSim), encoderSimLeft, encoderSimRight);
 
     m_field.getObject("Sim Robot").setPose(m_diffDriveOdometrySim.getPoseMeters());
+    m_field.getObject("Real Robot").setPose(m_diffDriveOdometry.getPoseMeters());
     //m_field.setRobotPose(m_diffDriveOdometrySim.getPoseMeters());
+    dbEntry.set(m_diffDriveOdometrySim.getPoseMeters().getX());
   }
 
   public void setAutonRunning() {
