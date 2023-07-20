@@ -18,7 +18,6 @@ public class NEWShuffleboardSubsystem extends SubsystemBase {
   /** Creates a new NEWShuffleboardSubsystem. */
   DigitalInput limitSwitch = new DigitalInput(0);
   SubsystemContainer p_subsystemContainer;
-  private NEWShuffleboardSubsystem shuffleboardSubsystem;
   private DriveTrainSubsystem m_drivetrainSubsystem;
   private ShuffleboardTab mainTab;
   
