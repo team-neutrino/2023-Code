@@ -9,20 +9,23 @@ import java.util.Map;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.SubsystemContainer;
 
 public class NEWShuffleboardSubsystem extends SubsystemBase {
   /** Creates a new NEWShuffleboardSubsystem. */
   DigitalInput limitSwitch = new DigitalInput(0);
+  SubsystemContainer p_subsystemContainer;
   private NEWShuffleboardSubsystem shuffleboardSubsystem;
   private DriveTrainSubsystem m_drivetrainSubsystem;
   private ShuffleboardTab mainTab;
   
   
   public NEWShuffleboardSubsystem() {
-    p_drivetrainSubsystem = m_drivetrainSubsystem;
     mainTab = Shuffleboard.getTab("Glass Application");
+    m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
   }
 
   public boolean limitSwitchPressed() {
@@ -33,7 +36,7 @@ public class NEWShuffleboardSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     boolean isPressed = limitSwitchPressed();
-    double R1Position = p_drivetrainSubsystem.getR1pos();
+    double R1Position = m_drivetrainSubsystem.getR1Pos();
 
     mainTab.getLayout("Limit Switch Status", BuiltInLayouts.kList)
     .withSize(2, 1)
