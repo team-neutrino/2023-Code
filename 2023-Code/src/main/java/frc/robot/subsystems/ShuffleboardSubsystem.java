@@ -4,14 +4,19 @@
 
 package frc.robot.subsystems;
 
+import java.io.IOException;
+import java.util.Map;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.cscore.VideoException;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,8 +30,6 @@ import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.SavePoseCommand;
 import frc.robot.util.ViennaPIDController;
-import java.io.IOException;
-import java.util.Map;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
@@ -159,10 +162,15 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     } catch (VideoException e) {
     }
   }
-
   private void troubleshootingTab() {
     m_troubleshootingTab = Shuffleboard.getTab("Troubleshooting Tab");
 
+    ShuffleboardLayout drivetrainLayout = m_troubleshootingTab.getLayout("Motor Positions", BuiltInLayouts.kGrid)
+            .withPosition(0, 0)
+            .withSize(3, 4)
+            .withProperties(Map.of("Label position", "HIDDEN"));
+
+    drivetrainLayout.add("test", 0);
     m_drivetrainVariables[0] =
         m_troubleshootingTab.add("RMotor 1 Pos", 0).withPosition(0, 0).withSize(1, 1).getEntry();
 
@@ -198,7 +206,50 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     m_limelightVariables[0] =
         m_troubleshootingTab.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
-  }
+
+    // m_troubleshootingTab.add("Limelight Distance", 0).withPosition(3, 0).withSize(1, 1);
+}
+
+
+//   private void troubleshootingTab() {
+//     m_troubleshootingTab = Shuffleboard.getTab("Troubleshooting Tab");
+
+//     m_drivetrainVariables[0] =
+//         m_troubleshootingTab.add("RMotor 1 Pos", 0).withPosition(0, 0).withSize(1, 1).getEntry();
+
+//     m_drivetrainVariables[1] =
+//         m_troubleshootingTab.add("RMotor 2 Pos", 0).withPosition(1, 0).withSize(1, 1).getEntry();
+
+//     m_drivetrainVariables[2] =
+//         m_troubleshootingTab.add("LMotor 1 Pos", 0).withPosition(0, 1).withSize(1, 1).getEntry();
+
+//     m_drivetrainVariables[3] =
+//         m_troubleshootingTab.add("LMotor 2 Pos", 0).withPosition(1, 1).withSize(1, 1).getEntry();
+
+//     m_drivetrainVariables[4] =
+//         m_troubleshootingTab.add("RMotor 1 Vel", 0).withPosition(0, 2).withSize(1, 1).getEntry();
+
+//     m_drivetrainVariables[5] =
+//         m_troubleshootingTab.add("RMotor 2 Vel", 0).withPosition(1, 2).withSize(1, 1).getEntry();
+
+//     m_drivetrainVariables[6] =
+//         m_troubleshootingTab.add("LMotor 1 Vel", 0).withPosition(0, 3).withSize(1, 1).getEntry();
+
+//     m_drivetrainVariables[7] =
+//         m_troubleshootingTab.add("LMotor 2 Vel", 0).withPosition(1, 3).withSize(1, 1).getEntry();
+
+//     m_drivetrainVariables[8] =
+//         m_troubleshootingTab.add("NavX Pitch", 0).withPosition(2, 0).withSize(1, 1).getEntry();
+
+//     m_drivetrainVariables[9] =
+//         m_troubleshootingTab.add("NavX Roll", 0).withPosition(2, 1).withSize(1, 1).getEntry();
+
+//     m_drivetrainVariables[10] =
+//         m_troubleshootingTab.add("NavX Yaw", 0).withPosition(2, 2).withSize(1, 1).getEntry();
+
+//     m_limelightVariables[0] =
+//         m_troubleshootingTab.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
+//   }
 
   public void setUpSelector() {
     m_autoChooser.setDefaultOption(
