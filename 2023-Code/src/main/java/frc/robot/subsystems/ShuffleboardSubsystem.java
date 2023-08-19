@@ -91,17 +91,17 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    m_drivetrainVariables[0].setDouble(m_drivetrainSubsystem.getR1Pos());
-    m_drivetrainVariables[1].setDouble(m_drivetrainSubsystem.getR2Pos());
-    m_drivetrainVariables[2].setDouble(m_drivetrainSubsystem.getL1Pos());
-    m_drivetrainVariables[3].setDouble(m_drivetrainSubsystem.getL2Pos());
-    m_drivetrainVariables[4].setDouble(m_drivetrainSubsystem.getR1Vel());
-    m_drivetrainVariables[5].setDouble(m_drivetrainSubsystem.getR2Vel());
-    m_drivetrainVariables[6].setDouble(m_drivetrainSubsystem.getL1Vel());
-    m_drivetrainVariables[7].setDouble(m_drivetrainSubsystem.getL2Vel());
-    m_drivetrainVariables[8].setDouble(m_drivetrainSubsystem.getPitch());
-    m_drivetrainVariables[9].setDouble(m_drivetrainSubsystem.getRoll());
-    m_drivetrainVariables[10].setDouble(m_drivetrainSubsystem.getYaw());
+    // m_drivetrainVariables[0].setDouble(m_drivetrainSubsystem.getR1Pos());
+    // m_drivetrainVariables[1].setDouble(m_drivetrainSubsystem.getR2Pos());
+    // m_drivetrainVariables[2].setDouble(m_drivetrainSubsystem.getL1Pos());
+    // m_drivetrainVariables[3].setDouble(m_drivetrainSubsystem.getL2Pos());
+    // m_drivetrainVariables[4].setDouble(m_drivetrainSubsystem.getR1Vel());
+    // m_drivetrainVariables[5].setDouble(m_drivetrainSubsystem.getR2Vel());
+    // m_drivetrainVariables[6].setDouble(m_drivetrainSubsystem.getL1Vel());
+    // m_drivetrainVariables[7].setDouble(m_drivetrainSubsystem.getL2Vel());
+    // m_drivetrainVariables[8].setDouble(m_drivetrainSubsystem.getPitch());
+    // m_drivetrainVariables[9].setDouble(m_drivetrainSubsystem.getRoll());
+    // m_drivetrainVariables[10].setDouble(m_drivetrainSubsystem.getYaw());
 
     m_scoringVariables[0].setBoolean(m_scoring.getSolenoidValue());
 
@@ -167,89 +167,46 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     ShuffleboardLayout drivetrainLayout = m_troubleshootingTab.getLayout("Motor Positions", BuiltInLayouts.kGrid)
             .withPosition(0, 0)
-            .withSize(3, 4)
-            .withProperties(Map.of("Label position", "HIDDEN"));
+            .withSize(3, 4);
+            //.withProperties(Map.of("Label position", "HIDDEN"));
 
-    drivetrainLayout.add("test", 0);
     m_drivetrainVariables[0] =
-        m_troubleshootingTab.add("RMotor 1 Pos", 0).withPosition(0, 0).withSize(1, 1).getEntry();
+        drivetrainLayout.add("RMotor 1 Pos", 0).withPosition(0, 0).withSize(1, 1).getEntry();
 
     m_drivetrainVariables[1] =
-        m_troubleshootingTab.add("RMotor 2 Pos", 0).withPosition(1, 0).withSize(1, 1).getEntry();
+        drivetrainLayout.add("RMotor 2 Pos", 0).withPosition(1, 0).withSize(1, 1).getEntry();
 
     m_drivetrainVariables[2] =
-        m_troubleshootingTab.add("LMotor 1 Pos", 0).withPosition(0, 1).withSize(1, 1).getEntry();
+        drivetrainLayout.add("LMotor 1 Pos", 0).withPosition(0, 1).withSize(1, 1).getEntry();
 
     m_drivetrainVariables[3] =
-        m_troubleshootingTab.add("LMotor 2 Pos", 0).withPosition(1, 1).withSize(1, 1).getEntry();
+        drivetrainLayout.add("LMotor 2 Pos", 0).withPosition(1, 1).withSize(1, 1).getEntry();
 
     m_drivetrainVariables[4] =
-        m_troubleshootingTab.add("RMotor 1 Vel", 0).withPosition(0, 2).withSize(1, 1).getEntry();
+        drivetrainLayout.add("RMotor 1 Vel", 0).withPosition(0, 2).withSize(1, 1).getEntry();
 
     m_drivetrainVariables[5] =
-        m_troubleshootingTab.add("RMotor 2 Vel", 0).withPosition(1, 2).withSize(1, 1).getEntry();
+        drivetrainLayout.add("RMotor 2 Vel", 0).withPosition(1, 2).withSize(1, 1).getEntry();
 
     m_drivetrainVariables[6] =
-        m_troubleshootingTab.add("LMotor 1 Vel", 0).withPosition(0, 3).withSize(1, 1).getEntry();
+        drivetrainLayout.add("LMotor 1 Vel", 0).withPosition(0, 3).withSize(1, 1).getEntry();
 
     m_drivetrainVariables[7] =
-        m_troubleshootingTab.add("LMotor 2 Vel", 0).withPosition(1, 3).withSize(1, 1).getEntry();
+        drivetrainLayout.add("LMotor 2 Vel", 0).withPosition(1, 3).withSize(1, 1).getEntry();
 
     m_drivetrainVariables[8] =
-        m_troubleshootingTab.add("NavX Pitch", 0).withPosition(2, 0).withSize(1, 1).getEntry();
+        drivetrainLayout.add("NavX Pitch", 0).withPosition(2, 0).withSize(1, 1).getEntry();
 
     m_drivetrainVariables[9] =
-        m_troubleshootingTab.add("NavX Roll", 0).withPosition(2, 1).withSize(1, 1).getEntry();
+        drivetrainLayout.add("NavX Roll", 0).withPosition(2, 1).withSize(1, 1).getEntry();
 
     m_drivetrainVariables[10] =
-        m_troubleshootingTab.add("NavX Yaw", 0).withPosition(2, 2).withSize(1, 1).getEntry();
+        drivetrainLayout.add("NavX Yaw", 0).withPosition(2, 2).withSize(1, 1).getEntry();
 
     m_limelightVariables[0] =
-        m_troubleshootingTab.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
+        drivetrainLayout.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
 
-    // m_troubleshootingTab.add("Limelight Distance", 0).withPosition(3, 0).withSize(1, 1);
 }
-
-
-//   private void troubleshootingTab() {
-//     m_troubleshootingTab = Shuffleboard.getTab("Troubleshooting Tab");
-
-//     m_drivetrainVariables[0] =
-//         m_troubleshootingTab.add("RMotor 1 Pos", 0).withPosition(0, 0).withSize(1, 1).getEntry();
-
-//     m_drivetrainVariables[1] =
-//         m_troubleshootingTab.add("RMotor 2 Pos", 0).withPosition(1, 0).withSize(1, 1).getEntry();
-
-//     m_drivetrainVariables[2] =
-//         m_troubleshootingTab.add("LMotor 1 Pos", 0).withPosition(0, 1).withSize(1, 1).getEntry();
-
-//     m_drivetrainVariables[3] =
-//         m_troubleshootingTab.add("LMotor 2 Pos", 0).withPosition(1, 1).withSize(1, 1).getEntry();
-
-//     m_drivetrainVariables[4] =
-//         m_troubleshootingTab.add("RMotor 1 Vel", 0).withPosition(0, 2).withSize(1, 1).getEntry();
-
-//     m_drivetrainVariables[5] =
-//         m_troubleshootingTab.add("RMotor 2 Vel", 0).withPosition(1, 2).withSize(1, 1).getEntry();
-
-//     m_drivetrainVariables[6] =
-//         m_troubleshootingTab.add("LMotor 1 Vel", 0).withPosition(0, 3).withSize(1, 1).getEntry();
-
-//     m_drivetrainVariables[7] =
-//         m_troubleshootingTab.add("LMotor 2 Vel", 0).withPosition(1, 3).withSize(1, 1).getEntry();
-
-//     m_drivetrainVariables[8] =
-//         m_troubleshootingTab.add("NavX Pitch", 0).withPosition(2, 0).withSize(1, 1).getEntry();
-
-//     m_drivetrainVariables[9] =
-//         m_troubleshootingTab.add("NavX Roll", 0).withPosition(2, 1).withSize(1, 1).getEntry();
-
-//     m_drivetrainVariables[10] =
-//         m_troubleshootingTab.add("NavX Yaw", 0).withPosition(2, 2).withSize(1, 1).getEntry();
-
-//     m_limelightVariables[0] =
-//         m_troubleshootingTab.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
-//   }
 
   public void setUpSelector() {
     m_autoChooser.setDefaultOption(
