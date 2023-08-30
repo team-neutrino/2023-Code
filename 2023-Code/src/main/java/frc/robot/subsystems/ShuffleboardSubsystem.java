@@ -34,7 +34,9 @@ import frc.robot.util.ViennaPIDController;
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
   private ShuffleboardTab m_troubleshootingTab;
-  private GenericEntry m_drivetrainVariables[] = new GenericEntry[11];
+  private GenericEntry m_drivetrainVariables[] = new GenericEntry[4];
+  private GenericEntry m_drivetrainVariables2[] = new GenericEntry[4];
+  private GenericEntry m_drivetrainVariables3[] = new GenericEntry[3];
   private GenericEntry m_limelightVariables[] = new GenericEntry[8];
   private GenericEntry m_driverStationInfoVariables[] = new GenericEntry[9];
   private GenericEntry m_scoringVariables[] = new GenericEntry[11];
@@ -167,8 +169,20 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
     ShuffleboardLayout drivetrainLayout = m_troubleshootingTab.getLayout("Motor Positions", BuiltInLayouts.kGrid)
             .withPosition(0, 0)
-            .withSize(3, 4);
+            .withSize(2, 2);
             //.withProperties(Map.of("Label position", "HIDDEN"));
+
+    ShuffleboardLayout drivetrainLayout2 = m_troubleshootingTab.getLayout("Motor Velocity", BuiltInLayouts.kGrid)
+            .withPosition(0, 2)
+            .withSize(2, 2);
+
+    ShuffleboardLayout drivetrainLayout3 = m_troubleshootingTab.getLayout("NavX", BuiltInLayouts.kGrid)
+            .withPosition(2, 0)
+            .withSize(5, 2);
+            
+    ShuffleboardLayout drivetrainLayout4 = m_troubleshootingTab.getLayout("Distance", BuiltInLayouts.kGrid)
+            .withPosition(2, 2)
+            .withSize(5, 2);
 
     //PUSH THESE CHANGES
     m_drivetrainVariables[0] =
@@ -183,29 +197,29 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_drivetrainVariables[3] =
         drivetrainLayout.add("LMotor 2 Pos", 0).withPosition(1, 1).withSize(1, 1).getEntry();
 
-    m_drivetrainVariables[4] =
-        drivetrainLayout.add("RMotor 1 Vel", 0).withPosition(0, 2).withSize(1, 1).getEntry();
+    m_drivetrainVariables2[0] =
+        drivetrainLayout2.add("RMotor 1 Vel", 0).withPosition(0, 0).withSize(1, 1).getEntry();
 
-    m_drivetrainVariables[5] =
-        drivetrainLayout.add("RMotor 2 Vel", 0).withPosition(1, 2).withSize(1, 1).getEntry();
+    m_drivetrainVariables2[1] =
+        drivetrainLayout2.add("RMotor 2 Vel", 0).withPosition(0, 1).withSize(1, 1).getEntry();
 
-    m_drivetrainVariables[6] =
-        drivetrainLayout.add("LMotor 1 Vel", 0).withPosition(0, 3).withSize(1, 1).getEntry();
+    m_drivetrainVariables2[2] =
+        drivetrainLayout2.add("LMotor 1 Vel", 0).withPosition(1, 0).withSize(1, 1).getEntry();
 
-    m_drivetrainVariables[7] =
-        drivetrainLayout.add("LMotor 2 Vel", 0).withPosition(1, 3).withSize(1, 1).getEntry();
+    m_drivetrainVariables2[3] =
+        drivetrainLayout2.add("LMotor 2 Vel", 0).withPosition(1, 1).withSize(1, 1).getEntry();
 
-    m_drivetrainVariables[8] =
-        drivetrainLayout.add("NavX Pitch", 0).withPosition(2, 0).withSize(1, 1).getEntry();
+    m_drivetrainVariables3[0] =
+        drivetrainLayout3.add("NavX Pitch", 0).withPosition(0, 0).withSize(1, 1).getEntry();
 
-    m_drivetrainVariables[9] =
-        drivetrainLayout.add("NavX Roll", 0).withPosition(2, 1).withSize(1, 1).getEntry();
+    m_drivetrainVariables3[1] =
+        drivetrainLayout3.add("NavX Roll", 0).withPosition(1, 0).withSize(1, 1).getEntry();
 
-    m_drivetrainVariables[10] =
-        drivetrainLayout.add("NavX Yaw", 0).withPosition(2, 2).withSize(1, 1).getEntry();
+    m_drivetrainVariables3[2] =
+        drivetrainLayout3.add("NavX Yaw", 0).withPosition(2, 0).withSize(1, 1).getEntry();
 
-    m_limelightVariables[0] =
-        drivetrainLayout.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
+    // m_limelightVariables[0] =
+    //     drivetrainLayout4.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
 
 }
 
