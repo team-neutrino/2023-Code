@@ -211,16 +211,16 @@ public class ShuffleboardSubsystem extends SubsystemBase {
         drivetrainLayout2.add("LMotor 2 Vel", 0).withPosition(1, 1).withSize(1, 1).getEntry();
 
     m_drivetrainVariables3[0] =
-        drivetrainLayout3.add("NavX Pitch", 0).withPosition(0, 0).withSize(1, 1).getEntry();
+        drivetrainLayout3.add("NavX Pitch", 0).withPosition(0, 0).withSize(1, 1).withWidget(BuiltInWidgets.kGyro).getEntry();
 
     m_drivetrainVariables3[1] =
-        drivetrainLayout3.add("NavX Roll", 0).withPosition(1, 0).withSize(1, 1).getEntry();
+        drivetrainLayout3.add("NavX Roll", 0).withPosition(1, 0).withSize(1, 1).withWidget(BuiltInWidgets.kGyro).getEntry();
 
     m_drivetrainVariables3[2] =
-        drivetrainLayout3.add("NavX Yaw", 0).withPosition(2, 0).withSize(1, 1).getEntry();
+        drivetrainLayout3.add("NavX Yaw", 0).withPosition(2, 0).withSize(1, 1).withWidget(BuiltInWidgets.kGyro).getEntry();
 
-    // m_limelightVariables[0] =
-    //     drivetrainLayout4.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
+    m_limelightVariables[0] =
+        m_troubleshootingTab.add("Distance", 0).withPosition(2, 2).withSize(5, 2).withWidget(BuiltInWidgets.kNumberBar).getEntry();
 
 }
 
