@@ -167,6 +167,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private void troubleshootingTab() {
     m_troubleshootingTab = Shuffleboard.getTab("Troubleshooting Tab");
 
+    //PUSH THESE CHANGES
     ShuffleboardLayout drivetrainLayout = m_troubleshootingTab.getLayout("Motor Positions", BuiltInLayouts.kGrid)
             .withPosition(0, 0)
             .withSize(2, 2);
@@ -180,9 +181,9 @@ public class ShuffleboardSubsystem extends SubsystemBase {
             .withPosition(2, 0)
             .withSize(5, 2);
             
-    ShuffleboardLayout drivetrainLayout4 = m_troubleshootingTab.getLayout("Distance", BuiltInLayouts.kGrid)
-            .withPosition(2, 2)
-            .withSize(5, 2);
+    // ShuffleboardLayout drivetrainLayout4 = m_troubleshootingTab.getLayout("Distance", BuiltInLayouts.kGrid)
+    //         .withPosition(2, 2)
+    //         .withSize(5, 2);
 
     //PUSH THESE CHANGES
     m_drivetrainVariables[0] =
