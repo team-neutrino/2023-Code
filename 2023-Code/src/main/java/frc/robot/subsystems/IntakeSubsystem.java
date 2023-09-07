@@ -36,7 +36,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private DigitalInput m_intakeDownSensor =
       new DigitalInput(DigitalConstants.INTAKE_DOWN_BEAMBREAK);
-
+  private Boolean m_safety = false;
   /** Creates a new IntakeSubsystem and initializes the motor controllers. */
   public IntakeSubsystem() {
     m_wheelsMotor.restoreFactoryDefaults();
@@ -149,9 +149,19 @@ public class IntakeSubsystem extends SubsystemBase {
     m_upDownEncoder.setPosition(0);
     m_wheelsEncoder.setPosition(0);
   }
-
+  public boolean getSafety() {
+    return m_safety;
+  }
+  public void safetyTrue() {
+    m_safety = true;
+  }
+  public void setSafety(boolean p_goons) {
+    m_safety = p_goons ;
+  }
   @Override
   public void periodic() {
     gamePieceBeamBroken();
-  }
-}
+    System.out.println(getSafety());
+  } 
+ }
+

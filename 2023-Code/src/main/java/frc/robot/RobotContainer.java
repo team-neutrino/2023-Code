@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.simulation.JoystickSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -28,6 +29,7 @@ import frc.robot.commands.IntakeDefaultCommand;
 import frc.robot.commands.IntakeGatherModeCommand;
 import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
+import frc.robot.commands.IntakeSafetyState;
 import frc.robot.commands.IntakeSqueezeCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.ScoringCloseCommand;
@@ -93,7 +95,7 @@ public class RobotContainer {
       new JoystickButton(m_driverController, XboxController.Button.kRightStick.value);
   private final JoystickButton m_leftJoystickButton =
       new JoystickButton(m_driverController, XboxController.Button.kLeftStick.value);
-
+  private final JoystickButton m_rightJoystickButton = new JoystickButton(m_rightJoystick, 0);
   // SUBSYSTEMS
   private final DriveTrainSubsystem m_drivetrainSubsystem =
       new DriveTrainSubsystem(m_leftJoystick, m_rightJoystick);
@@ -165,6 +167,7 @@ public class RobotContainer {
       new IntakeGatherModeCommand(m_subsystemContainer, m_intakeManager, false);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
       new IntakeHybridModeCommand(m_subsystemContainer, m_intakeManager);
+  private final IntakeSafetyState m_intakeSafetyState = new IntakeSafetyState(m_subsystemContainer);
 
   // SCORING COMMANDS
   private final ScoringCloseCommand m_scoringCloseCommand =
@@ -264,6 +267,9 @@ public class RobotContainer {
     // Magic Button for Arm Movement
     m_upArrow.onTrue(m_armMagicHigh);
     m_downArrow.onTrue(m_armMagicMid);
+
+    boolean m_safetystate;
+    m_rightJoystickButton.toggleOnTrue(m_intakeSafetyState);
   }
 
   public Command getAutonomousCommand() {

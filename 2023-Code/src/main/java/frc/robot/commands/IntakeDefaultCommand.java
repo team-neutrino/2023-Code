@@ -17,6 +17,7 @@ public class IntakeDefaultCommand extends CommandBase {
   IntakeSubsystem m_intakeSubsystem;
   IntakeManager m_intakeManager;
   SubsystemContainer m_subsystemContainer;
+  boolean m_safetystate;
 
   public IntakeDefaultCommand(
       SubsystemContainer p_subsystemContainer, IntakeManager p_intakeManager) {
@@ -37,13 +38,19 @@ public class IntakeDefaultCommand extends CommandBase {
 
     if (m_intakeManager.managerApproved()) {
       m_intakeManager.setIntakeUpWithArmCheck();
+      
+      if(m_safetystate) {
 
-      if (!m_subsystemContainer.getIntakeSubsystem().unDebouncedDetectedGamePiece()) {
+      }
+      else {
+        
+        if (!m_subsystemContainer.getIntakeSubsystem().unDebouncedDetectedGamePiece()) {
         m_subsystemContainer.getIntakeSubsystem().unsqueeze();
       } else {
         m_subsystemContainer.getIntakeSubsystem().squeeze();
       }
     }
+  }
   }
 
   @Override
