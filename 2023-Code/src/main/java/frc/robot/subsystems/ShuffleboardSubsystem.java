@@ -44,7 +44,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
 
   private SubsystemContainer m_subsystemContainer;
   private DriveTrainSubsystem m_drivetrainSubsystem;
-  // private LimelightSubsystem m_limelight;
+  private LimelightSubsystem m_limelight;
   private ScoringSubsystem m_scoring;
   private DriverStationInfo m_driverStationInfo;
   private LEDSubsystem m_LED;
@@ -55,6 +55,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
   private IntakeManager m_intakeManager;
   private XboxController m_driverController;
   private TelescopeSubsystem m_telescopeSubsystem;
+private Object[] m_limelightVariabes;
 
   public ShuffleboardSubsystem(
       SubsystemContainer p_subsystemContainer,
@@ -63,7 +64,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
       IntakeManager p_intakeManager,
       XboxController p_driverController) {
 
-    // m_limelight = p_limelight;
+    m_limelight = p_subsystemContainer.getLimelightSubsystem();
     m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
     m_subsystemContainer = p_subsystemContainer;
     m_scoring = p_subsystemContainer.getScoringSubsystem();
@@ -107,6 +108,11 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_driverStationInfoVariables[0].setDouble(m_driverStationInfo.getMatchTime());
 
     m_armVariables[0].setDouble(m_arm.getAbsoluteArmPosition());
+
+    m_armVariables[0].setDouble(m_arm.getAbsoluteArmPosition());
+
+    m_limelightVariables[1].setDouble(m_limelight.getTx());
+    m_limelightVariables[2].setDouble(m_limelight.getTy());
   }
 
   private void driveStationTab() {
@@ -196,8 +202,14 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_drivetrainVariables[10] =
         m_troubleshootingTab.add("NavX Yaw", 0).withPosition(2, 2).withSize(1, 1).getEntry();
 
-    m_limelightVariables[0] =
-        m_troubleshootingTab.add("Distance", 0).withPosition(2, 3).withSize(1, 1).getEntry();
+    m_limelightVariables[1] =
+        m_troubleshootingTab.add("tx", 0).withPosition(2, 3).withSize(1, 1).getEntry();
+
+    m_limelightVariables[2] =
+        m_troubleshootingTab.add("ty", 0).withPosition(2, 3).withSize(1, 1).getEntry();
+
+    m_limelightVariables[3] =
+        m_troubleshootingTab.add("tid", 0).withPosition(2, 3).withSize(1, 1).getEntry();    
   }
 
   public void setUpSelector() {
