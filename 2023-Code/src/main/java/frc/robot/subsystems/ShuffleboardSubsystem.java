@@ -162,17 +162,25 @@ public class ShuffleboardSubsystem extends SubsystemBase {
         .withPosition(10, 3)
         .withSize(2, 1);
 
-    try {
-      LLFeed = new HttpCamera("limelight", "http://10.39.28.92", HttpCameraKind.kMJPGStreamer);
-      CameraServer.startAutomaticCapture(LLFeed);
-      m_drivestationTab
-          .add(LLFeed)
-          .withPosition(8, 0)
-          .withSize(4, 3)
-          .withWidget(BuiltInWidgets.kCameraStream);
-    } catch (VideoException e) {
-    }
-  }
+        try {
+            LLFeed =
+                new HttpCamera(
+                    "limelight", "http://limelight.local:5800/stream.mjpg", HttpCameraKind.kMJPGStreamer);
+            CameraServer.startAutomaticCapture(LLFeed);
+            m_drivestationTab
+                .add(LLFeed)
+                .withPosition(0, 3)
+                .withSize(3, 3)
+                .withWidget(BuiltInWidgets.kCameraStream);
+      
+            m_drivestationTab
+                .add(CameraServer.startAutomaticCapture())
+                .withPosition(3, 1)
+                .withSize(5, 5)
+                .withWidget(BuiltInWidgets.kCameraStream);
+          } catch (VideoException e) {
+          }
+        }
 
   private void troubleshootingTab() {
     m_troubleshootingTab = Shuffleboard.getTab("Troubleshooting Tab");

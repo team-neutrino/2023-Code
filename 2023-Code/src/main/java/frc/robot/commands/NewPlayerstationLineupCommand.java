@@ -30,7 +30,7 @@ import java.util.List;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class PlayerstationLineupCommand extends ParallelCommandGroup {
+public class NewPlayerstationLineupCommand extends ParallelCommandGroup {
   private SubsystemContainer m_subsystemContainer;
   private DriveTrainSubsystem m_drivetrainSubsystem;
   private LimelightSubsystem m_limelightSubsystem;
@@ -38,7 +38,7 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
   private Trajectory trajectory;
 
   /** Creates a new PlayerstationLineupCommand. */
-  public PlayerstationLineupCommand(
+  public NewPlayerstationLineupCommand(
       SubsystemContainer p_subsystemContainer,
       IntakeManager p_intakeManager,
       ViennaPIDController p_pidController,
@@ -48,7 +48,7 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
     m_limelightSubsystem = m_subsystemContainer.getLimelightSubsystem();
     m_subsystemContainer = p_subsystemContainer;
 
-    if (Math.abs(m_drivetrainSubsystem.getYaw() - DrivetrainConstants.PLAYERSTATION_ANGLE) < DrivetrainConstants.ANGLE_DEADZONE) {
+    if (Math.abs(m_drivetrainSubsystem.getYaw() - DrivetrainConstants.PLAYERSTATION_ANGLE) > DrivetrainConstants.ANGLE_DEADZONE) {
       addCommands(
         new InstantCommand(this::testInitialize), new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
     }
@@ -62,25 +62,25 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
     double initialZToAprilTag = m_limelightSubsystem.getTargetPoseZ();
     double initialXToAprilTag = m_limelightSubsystem.getTargetPoseX();
     double angleToFaceAprilTag = Math.atan2(initialZToAprilTag, initialXToAprilTag);
-    Rotation2d angleSum = Rotation2d.fromRadians(initialPose.getRotation().getRadians() + angleToFaceAprilTag);
+    Rotation2d desiredRobotAngle = Rotation2d.fromRadians(initialPose.getRotation().getRadians() + angleToFaceAprilTag); //maybe make all units same
 
     Pose2d aprilTagPose =
         new Pose2d(
           initialPose.getX() + initialZToAprilTag,
           initialPose.getY() + initialXToAprilTag, 
-          angleSum);
+          desiredRobotAngle);
 
-    Pose2d finalRotatedPose =
+    Pose2d desiredPose =
       new Pose2d(
         initialPose.getX() + initialZToAprilTag,
         initialPose.getY() + initialXToAprilTag, 
-        Rotation2d.fromDegrees(angleSum.getDegrees() + m_limelightSubsystem.getTx()));
+        Rotation2d.fromDegrees(desiredRobotAngle.getDegrees() + m_limelightSubsystem.getTx()));
     System.out.println("initialPose: " + initialPose);
     System.out.println("finalPose: " + aprilTagPose);
 
     Trajectory testTrajectory =
       TrajectoryGenerator.generateTrajectory(
-          List.of(initialPose, aprilTagPose, finalRotatedPose),
+          List.of(initialPose, aprilTagPose),//, desiredPose),
           TrajectoryConfigConstants.K_LESS_SPEED_BACKWARD_CONFIG);
 
     RamseteCommand testRamsete =
