@@ -34,6 +34,10 @@ public final class Constants {
     public static final int INTAKEMOTOR = 21;
     public static final double INTAKE_MOTOR_SPEED = .7;
 
+    //NEW INTAKE W
+    public static final int INTAKEMOTORW = 5;
+    public static final double INTAKEW_MOTOR_SPEED = .7;
+
     // ARM
     public static final int ARM_MOTOR = 31;
     public static final int TELESCOPING_MOTOR = 32;

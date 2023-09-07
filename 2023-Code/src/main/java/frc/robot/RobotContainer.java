@@ -30,6 +30,7 @@ import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.IntakeSqueezeCommand;
 import frc.robot.commands.LEDCommand;
+import frc.robot.commands.NewIntakeWSpinIn;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
@@ -44,6 +45,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.NewIntakeW;
 import frc.robot.subsystems.PneumaticSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
@@ -78,9 +80,8 @@ public class RobotContainer {
       new Trigger(() -> m_driverController.getLeftTriggerAxis() >= .5);
   private final Trigger m_rightTrigger =
       new Trigger(() -> m_driverController.getRightTriggerAxis() >= .5);
-
-  private final JoystickButton m_buttonStart =
-      new JoystickButton(m_driverController, XboxController.Button.kStart.value);
+  private final JoystickButton m_buttonStart = 
+        new JoystickButton(m_driverController, XboxController.Button.kStart.value);
   private final JoystickButton m_buttonBack =
       new JoystickButton(m_driverController, XboxController.Button.kBack.value);
 
@@ -104,6 +105,7 @@ public class RobotContainer {
   private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
   private final PneumaticSubsystem m_pneumaticSubsystem = new PneumaticSubsystem();
   private final TelescopeSubsystem m_telescopeSubsystem = new TelescopeSubsystem();
+  private final NewIntakeW m_NewIntakeW = new NewIntakeW();
 
   public SubsystemContainer m_subsystemContainer =
       new SubsystemContainer(
@@ -139,6 +141,8 @@ public class RobotContainer {
       new IntakeDefaultCommand(m_subsystemContainer, m_intakeManager);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_subsystemContainer);
+  private final NewIntakeWSubsystem m_newIntakeWSubsystem = 
+      new NewIntakeWSpinIn(m_subsystemContainer, m_NewIntakeW);
 
   // AUTON COMMANDS
   private final AutoBalanceCommand m_autoBalanceCommand =
