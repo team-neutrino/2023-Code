@@ -62,7 +62,7 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
     double initialZToAprilTag = m_limelightSubsystem.getTargetPoseZ();
     double initialXToAprilTag = m_limelightSubsystem.getTargetPoseX();
     double angleToFaceAprilTag = Math.atan2(initialZToAprilTag, initialXToAprilTag);
-    Rotation2d angleSum = Rotation2d.fromRadians(initialPose.getRotation().getRadians() + angleToFaceAprilTag);
+    Rotation2d angleSum = Rotation2d.fromRadians(initialRotation.getRadians() + angleToFaceAprilTag);
 
     Pose2d aprilTagPose =
         new Pose2d(
