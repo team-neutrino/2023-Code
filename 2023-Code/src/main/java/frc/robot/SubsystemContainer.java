@@ -5,6 +5,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.NewIntakeWSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
 
@@ -16,6 +17,7 @@ public class SubsystemContainer {
   private IntakeSubsystem m_intakeSubsystem;
   private LEDSubsystem m_ledSubsystem;
   private TelescopeSubsystem m_telescopeSubsystem;
+  public NewIntakeWSubsystem m_newIntakeWSubsystem;
 
   public SubsystemContainer(
       TelescopeSubsystem p_telescopeSubsystem,
@@ -24,7 +26,8 @@ public class SubsystemContainer {
       LimelightSubsystem p_limelLimelightSubsystem,
       ArmSubsystem p_armSubsystem,
       IntakeSubsystem p_intakeSubsystem,
-      LEDSubsystem p_ledSubsystem) {
+      LEDSubsystem p_ledSubsystem,
+      NewIntakeWSubsystem p_intakeWSubsystem) {
     m_drivetrainSubsystem = p_drivetrainSubsystem;
     m_scoringSubsystem = p_scoringSubsystem;
     m_limelightSubsystem = p_limelLimelightSubsystem;
@@ -32,6 +35,7 @@ public class SubsystemContainer {
     m_intakeSubsystem = p_intakeSubsystem;
     m_ledSubsystem = p_ledSubsystem;
     m_telescopeSubsystem = p_telescopeSubsystem;
+    m_newIntakeWSubsystem = p_intakeWSubsystem;
   }
 
   public DriveTrainSubsystem getDriveTrainSubsystem() {
@@ -60,5 +64,9 @@ public class SubsystemContainer {
 
   public TelescopeSubsystem getTelescopeSubsystem() {
     return m_telescopeSubsystem;
+  }
+
+  public NewIntakeWSubsystem getnewIntakeWSubstsytem() {
+    return null;
   }
 }
