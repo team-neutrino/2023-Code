@@ -48,7 +48,7 @@ public class PlayerstationLineupCommand extends ParallelCommandGroup {
     m_limelightSubsystem = m_subsystemContainer.getLimelightSubsystem();
     m_subsystemContainer = p_subsystemContainer;
 
-    if (Math.abs(m_drivetrainSubsystem.getYaw() - DrivetrainConstants.PLAYERSTATION_ANGLE) < DrivetrainConstants.ANGLE_DEADZONE) {
+    if (Math.abs(m_drivetrainSubsystem.getYaw() - DrivetrainConstants.PLAYERSTATION_ANGLE) > DrivetrainConstants.ANGLE_DEADZONE) {
       addCommands(
         new InstantCommand(this::testInitialize), new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
     }
