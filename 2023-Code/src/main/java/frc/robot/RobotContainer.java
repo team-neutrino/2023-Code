@@ -262,6 +262,7 @@ public class RobotContainer {
     m_leftArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.YELLOW, m_driverStationInfo));
 
     // Magic Button for Arm Movement
+    m_upArrow.onTrue(m_armMagicHigh);
     m_downArrow.onTrue(m_armMagicMid);
   }
 

@@ -82,7 +82,7 @@ public final class Constants {
 
     public static final double TELESCOPE_EXTEND_SPEED = 0.5; // note: setInverted is true
     public static final double TELESCOPE_RETRACT_SPEED = -0.80;
-    public static final double TELESCOPE_EXTEND_LIMIT = 4000;
+    public static final double TELESCOPE_EXTEND_LIMIT = 6500;
     public static final double TELESCOPING_DEADZONE = 250;
 
     public static final double TELESCOPE_HEIGHT_LIMIT_RETRACT_SPEED = -0.85;
