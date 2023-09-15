@@ -9,7 +9,7 @@ import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class TurnAroundCommand extends CommandBase {
-  DriveTrainSubsystem m_drivetrainSubsystem; 
+  DriveTrainSubsystem m_drivetrainSubsystem;
 
   public TurnAroundCommand(SubsystemContainer p_subsystemContainer) {
     m_drivetrainSubsystem = p_subsystemContainer.getDriveTrainSubsystem();
@@ -26,7 +26,7 @@ public class TurnAroundCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    
+
     return false;
   }
 }

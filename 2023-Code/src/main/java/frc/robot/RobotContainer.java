@@ -244,7 +244,6 @@ public class RobotContainer {
     m_buttonX.toggleOnTrue(m_armToBackMid);
     m_buttonA.toggleOnTrue(m_armToBackDown);
 
-    m_buttonStart.toggleOnTrue(m_extendModeCommand);
     m_buttonBack.whileTrue(m_scoringOpenCommand);
 
     // used for small adjustments of the arm
@@ -263,13 +262,14 @@ public class RobotContainer {
     m_leftArrow.onTrue(new LEDCommand(m_subsystemContainer, LEDColor.YELLOW, m_driverStationInfo));
 
     // Magic Button for Arm Movement
-    m_upArrow.onTrue(m_armMagicHigh);
     m_downArrow.onTrue(m_armMagicMid);
   }
 
   public Command getAutonomousCommand() {
     m_drivetrainSubsystem.resetOdometry();
-    return new ScoreHighThenBalance(m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController).andThen(new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
+    return new ScoreHighThenBalance(
+            m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController)
+        .andThen(new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
     // return m_shuffleboardSubsystem
     //     .getAutoSelected()
     //     .andThen(new InstantCommand(() -> m_driveTrainSubsystem.setVoltage(0, 0)));
