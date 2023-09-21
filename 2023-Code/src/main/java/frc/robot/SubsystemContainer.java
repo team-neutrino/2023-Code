@@ -67,6 +67,6 @@ public class SubsystemContainer {
   }
 
   public NewIntakeWSubsystem getnewIntakeWSubstsytem() {
-    return null;
+    return m_newIntakeWSubsystem;
   }
 }

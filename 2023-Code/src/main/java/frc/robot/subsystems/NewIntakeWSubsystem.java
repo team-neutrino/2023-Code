@@ -6,10 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.Constants.DigitalConstants;
 import frc.robot.Constants.MotorConstants;
 
 public class NewIntakeWSubsystem extends SubsystemBase {
@@ -17,14 +14,9 @@ public class NewIntakeWSubsystem extends SubsystemBase {
   private CANSparkMax m_intakeMotor =
       new CANSparkMax(MotorConstants.INTAKEMOTORW, MotorType.kBrushless);
 
-  private DigitalInput m_beamBreak = new DigitalInput(Constants.DigitalConstants.GRABBER_BEAMBREAK);
 
   public NewIntakeWSubsystem() {
     m_intakeMotor.restoreFactoryDefaults();
-  }
-
-  public boolean detectedGamePiece() {
-    return !m_beamBreak.get();
   }
 
   public void runMotor() {

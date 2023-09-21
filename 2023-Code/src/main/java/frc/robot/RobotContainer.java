@@ -31,6 +31,7 @@ import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.IntakeSqueezeCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.NewIntakeWDefaultCommand;
+import frc.robot.commands.NewIntakeWReverseCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
@@ -142,7 +143,7 @@ public class RobotContainer {
       new IntakeDefaultCommand(m_subsystemContainer, m_intakeManager);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_subsystemContainer);
-  private final NewIntakeWDefaultCommand m_newIntakeWSubsystem = 
+  private final NewIntakeWDefaultCommand m_newIntakeWDefaultCommand = 
       new NewIntakeWDefaultCommand(m_subsystemContainer, m_NewIntakeWSubsystem);
 
   // AUTON COMMANDS
@@ -170,6 +171,8 @@ public class RobotContainer {
       new IntakeGatherModeCommand(m_subsystemContainer, m_intakeManager, false);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
       new IntakeHybridModeCommand(m_subsystemContainer, m_intakeManager);
+  private final NewIntakeWReverseCommand m_IntakeWReverseCommand = 
+      new NewIntakeWReverseCommand(m_subsystemContainer);
 
   // SCORING COMMANDS
   private final ScoringCloseCommand m_scoringCloseCommand =
@@ -241,6 +244,7 @@ public class RobotContainer {
     m_intakeSubsystem.setDefaultCommand(m_intakeDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
     m_telescopeSubsystem.setDefaultCommand(m_TelescopeDefaultCommand);
+    m_NewIntakeWSubsystem.setDefaultCommand(m_newIntakeWDefaultCommand);
 
     // BUTTONS
     m_buttonB.toggleOnTrue(m_armToForwardMid);
@@ -248,7 +252,7 @@ public class RobotContainer {
     m_buttonX.toggleOnTrue(m_armToBackMid);
     m_buttonA.toggleOnTrue(m_armToBackDown);
 
-    m_buttonStart.toggleOnTrue(m_extendModeCommand);
+    m_buttonStart.whileTrue(m_IntakeWReverseCommand);
     m_buttonBack.whileTrue(m_scoringOpenCommand);
 
     // used for small adjustments of the arm
