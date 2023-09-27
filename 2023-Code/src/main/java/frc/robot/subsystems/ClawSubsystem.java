@@ -9,22 +9,22 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MotorConstants;
 
-public class NewIntakeWSubsystem extends SubsystemBase {
+public class ClawSubsystem extends SubsystemBase {
 
   private CANSparkMax m_intakeMotor =
       new CANSparkMax(MotorConstants.INTAKEMOTORW, MotorType.kBrushless);
 
 
-  public NewIntakeWSubsystem() {
+  public ClawSubsystem() {
     m_intakeMotor.restoreFactoryDefaults();
   }
 
-  public void runMotor() {
+  public void acquireCone() {
     m_intakeMotor.set(MotorConstants.INTAKEW_MOTOR_SPEED);
   }
 
   /** Runs the wheels motor in reverse. */
-  public void runMotorReverse() {
+  public void spitOutCone() {
     m_intakeMotor.set(-MotorConstants.INTAKEW_MOTOR_SPEED);
   }
 

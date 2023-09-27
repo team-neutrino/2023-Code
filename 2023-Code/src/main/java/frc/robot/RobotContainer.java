@@ -30,8 +30,8 @@ import frc.robot.commands.IntakeHybridModeCommand;
 import frc.robot.commands.IntakeReverseCommand;
 import frc.robot.commands.IntakeSqueezeCommand;
 import frc.robot.commands.LEDCommand;
-import frc.robot.commands.NewIntakeWDefaultCommand;
-import frc.robot.commands.NewIntakeWReverseCommand;
+import frc.robot.commands.acquireConeCommand;
+import frc.robot.commands.spitOutConeCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
@@ -46,7 +46,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
-import frc.robot.subsystems.NewIntakeWSubsystem;
+import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.PneumaticSubsystem;
 import frc.robot.subsystems.ScoringSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
@@ -106,7 +106,7 @@ public class RobotContainer {
   private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
   private final PneumaticSubsystem m_pneumaticSubsystem = new PneumaticSubsystem();
   private final TelescopeSubsystem m_telescopeSubsystem = new TelescopeSubsystem();
-  private final NewIntakeWSubsystem m_NewIntakeWSubsystem = new NewIntakeWSubsystem();
+  private final ClawSubsystem m_ClawSubsystem = new ClawSubsystem();
 
   public SubsystemContainer m_subsystemContainer =
       new SubsystemContainer(
@@ -117,7 +117,7 @@ public class RobotContainer {
           m_armSubsystem,
           m_intakeSubsystem,
           m_ledSubsystem,
-          m_NewIntakeWSubsystem);
+          m_ClawSubsystem);
 
   // UTIL
   private final ViennaPIDController m_armPidController =
@@ -143,8 +143,8 @@ public class RobotContainer {
       new IntakeDefaultCommand(m_subsystemContainer, m_intakeManager);
   private final ScoringDefaultCommand m_scoringDefaultCommand =
       new ScoringDefaultCommand(m_subsystemContainer);
-  private final NewIntakeWDefaultCommand m_newIntakeWDefaultCommand = 
-      new NewIntakeWDefaultCommand(m_subsystemContainer, m_NewIntakeWSubsystem);
+  private final acquireConeCommand m_acquireConeCommand = 
+      new acquireConeCommand(m_subsystemContainer, m_ClawSubsystem);
 
   // AUTON COMMANDS
   private final AutoBalanceCommand m_autoBalanceCommand =
@@ -171,8 +171,8 @@ public class RobotContainer {
       new IntakeGatherModeCommand(m_subsystemContainer, m_intakeManager, false);
   private final IntakeHybridModeCommand m_intakeHybridModeCommand =
       new IntakeHybridModeCommand(m_subsystemContainer, m_intakeManager);
-  private final NewIntakeWReverseCommand m_IntakeWReverseCommand = 
-      new NewIntakeWReverseCommand(m_subsystemContainer);
+  private final spitOutConeCommand m_IntakeWReverseCommand = 
+      new spitOutConeCommand(m_subsystemContainer);
 
   // SCORING COMMANDS
   private final ScoringCloseCommand m_scoringCloseCommand =
@@ -244,7 +244,7 @@ public class RobotContainer {
     m_intakeSubsystem.setDefaultCommand(m_intakeDefaultCommand);
     m_armSubsystem.setDefaultCommand(m_armDefaultCommand);
     m_telescopeSubsystem.setDefaultCommand(m_TelescopeDefaultCommand);
-    m_NewIntakeWSubsystem.setDefaultCommand(m_newIntakeWDefaultCommand);
+    m_ClawSubsystem.setDefaultCommand(m_acquireConeCommand);
 
     // BUTTONS
     m_buttonB.toggleOnTrue(m_armToForwardMid);
