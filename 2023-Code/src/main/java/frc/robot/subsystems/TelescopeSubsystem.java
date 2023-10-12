@@ -54,7 +54,7 @@ public class TelescopeSubsystem extends SubsystemBase {
         && !canExtend(armPos)) { // if we're trying to extend but we shouldn't, don't and retract
       retractTelescoping();
     } else if ((p_output < 0
-        || getTelescopingExtension() > TelescopeConstants.TELESCOPE_EXTEND_LIMIT)) {
+        || getTelescopingExtension() < TelescopeConstants.TELESCOPE_EXTEND_LIMIT)) {
       m_telescopingMotor.set(p_output);
     } else {
       m_telescopingMotor.set(0);

@@ -35,6 +35,7 @@ import frc.robot.commands.ScoringDefaultCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.commands.TelescopeCommand;
 import frc.robot.commands.TelescopeDefaultCommand;
+import frc.robot.commands.autonomous.ScoreHighThenBalance;
 import frc.robot.commands.autonomous.ScoreMobilityThenBalance;
 import frc.robot.commands.autonomous.ScoreMoveAutoGather;
 import frc.robot.commands.autonomous.ScoreThenBalance;
@@ -212,9 +213,9 @@ public class RobotContainer {
           false);
 
   private final ArmMagicCommand m_armMagicMid =
-      new ArmMagicCommand(m_subsystemContainer, m_armPidController, false);
+      new ArmMagicCommand(m_subsystemContainer, m_armPidController, false, false);
   private final ArmMagicCommand m_armMagicHigh =
-      new ArmMagicCommand(m_subsystemContainer, m_armPidController, true);
+      new ArmMagicCommand(m_subsystemContainer, m_armPidController, true, false);
 
   private final TelescopeDefaultCommand m_TelescopeDefaultCommand =
       new TelescopeDefaultCommand(m_subsystemContainer);
@@ -243,7 +244,6 @@ public class RobotContainer {
     m_buttonX.toggleOnTrue(m_armToBackMid);
     m_buttonA.toggleOnTrue(m_armToBackDown);
 
-    m_buttonStart.toggleOnTrue(m_extendModeCommand);
     m_buttonBack.whileTrue(m_scoringOpenCommand);
 
     // used for small adjustments of the arm
@@ -268,7 +268,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     m_drivetrainSubsystem.resetOdometry();
-    return new ScoreMoveAutoGather(
+    return new ScoreHighThenBalance(
             m_subsystemContainer, m_armPidController, m_intakeManager, m_driverController)
         .andThen(new InstantCommand(() -> m_drivetrainSubsystem.setVoltage(0, 0)));
     // return m_shuffleboardSubsystem

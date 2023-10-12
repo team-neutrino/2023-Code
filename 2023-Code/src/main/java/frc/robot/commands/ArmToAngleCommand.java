@@ -6,12 +6,10 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.ArmConstants;
 import frc.robot.SubsystemContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.TelescopeSubsystem;
-import frc.robot.util.EnumConstants.LEDColor;
 import frc.robot.util.ViennaPIDController;
 
 public class ArmToAngleCommand extends CommandBase {
@@ -65,20 +63,7 @@ public class ArmToAngleCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (m_driverController.getStartButton()) {
-      started = true;
-    }
-
-    if (m_backCheck && started && m_ledSubsystem.getColor() == LEDColor.PURPLE) {
-      armAngle = ArmConstants.BACK_HIGH_CUBE;
-    } else if (m_backCheck && started && m_ledSubsystem.getColor() == LEDColor.YELLOW) {
-      armAngle = ArmConstants.BACK_HIGH_CONE;
-    } else if (m_backCheck && started == false && m_ledSubsystem.getColor() == LEDColor.PURPLE) {
-      armAngle = ArmConstants.BACK_MID_CUBE;
-    } else {
-      armAngle = m_targetAngle;
-    }
-
+    armAngle = m_targetAngle;
     voltage =
         m_pidController.armRun(
             m_armSubsystem.getAbsoluteArmPosition(),
