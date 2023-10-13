@@ -106,12 +106,7 @@ public class TelescopeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-<<<<<<< Updated upstream
     resetEncoder();
-    System.out.println(getTelescopingExtension());
-=======
-    // resetEncoder();
     System.out.print(getTelescopingExtension());
->>>>>>> Stashed changes
   }
 }
