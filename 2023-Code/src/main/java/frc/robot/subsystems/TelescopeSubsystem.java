@@ -95,7 +95,7 @@ public class TelescopeSubsystem extends SubsystemBase {
   }
 
   public double getTelescopingExtension() {
-    return m_telescopingEncoder.getDistance();
+    return Math.abs(m_telescopingEncoder.getDistance());
   }
 
   public void resetEncoder() {
