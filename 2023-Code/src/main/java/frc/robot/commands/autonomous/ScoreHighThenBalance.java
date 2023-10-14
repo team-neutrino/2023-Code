@@ -22,6 +22,7 @@ import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
+import frc.robot.commands.RetractTelescopeCommand;
 import java.util.*;
 
 public class ScoreHighThenBalance extends SequentialCommandGroup {
@@ -59,10 +60,11 @@ public class ScoreHighThenBalance extends SequentialCommandGroup {
 
     addCommands(
         new InstantCommand(p_subsystemContainer.getLedSubsystem()::setToYellow),
-        new ArmMagicCommand(p_subsystemContainer, p_pidController, true, true).withTimeout(3),
+        new ArmMagicCommand(p_subsystemContainer, p_pidController, true, true).withTimeout(4),
         new ScoringOpenCommand(p_subsystemContainer, p_intakeManager).withTimeout(0.3),
         new ScoringCloseCommand(p_subsystemContainer).withTimeout(.75),
         new ParallelCommandGroup(
+            new RetractTelescopeCommand(p_subsystemContainer, p_driverController),
             new ArmToAngleCommand(
                     p_subsystemContainer,
                     p_pidController,
