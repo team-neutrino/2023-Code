@@ -16,13 +16,13 @@ import frc.robot.commands.ArmMagicCommand;
 import frc.robot.commands.ArmToAngleCommand;
 import frc.robot.commands.AutoBalanceCommand;
 import frc.robot.commands.NavXBalance;
+import frc.robot.commands.RetractTelescopeCommand;
 import frc.robot.commands.ScoringCloseCommand;
 import frc.robot.commands.ScoringOpenCommand;
 import frc.robot.util.AutonomousUtil;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.PoseTriplet;
 import frc.robot.util.ViennaPIDController;
-import frc.robot.commands.RetractTelescopeCommand;
 import java.util.*;
 
 public class ScoreHighThenBalance extends SequentialCommandGroup {

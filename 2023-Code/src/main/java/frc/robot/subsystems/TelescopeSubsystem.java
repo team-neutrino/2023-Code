@@ -24,6 +24,7 @@ public class TelescopeSubsystem extends SubsystemBase {
 
   private SparkMaxLimitSwitch m_limitSwitch;
   private int switchPressed = 0;
+
   public TelescopeSubsystem() {
     m_telescopingMotor.setIdleMode(IdleMode.kBrake);
 
@@ -104,10 +105,12 @@ public class TelescopeSubsystem extends SubsystemBase {
     } else {
       switchPressed = 0;
     }
-     if (m_limitSwitch.isPressed() && switchPressed > 15) {
-      m_telescopingEncoder.reset(); }
-     else {}
+    if (m_limitSwitch.isPressed() && switchPressed > 15) {
+      m_telescopingEncoder.reset();
+    } else {
+    }
   }
+
   public boolean isRetracting() {
     return m_telescopingMotor.get() < 0;
   }
