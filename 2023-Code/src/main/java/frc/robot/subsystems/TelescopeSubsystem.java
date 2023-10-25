@@ -118,6 +118,5 @@ public class TelescopeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     resetEncoder();
-    System.out.println(getTelescopingExtension());
   }
 }
