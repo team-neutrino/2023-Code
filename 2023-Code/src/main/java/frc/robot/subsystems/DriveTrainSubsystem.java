@@ -208,4 +208,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
     m_diffDriveOdometry.update(
         getYawAsRotation(), m_encoderLeft1.getPosition(), m_encoderRight1.getPosition());
   }
+
+  public void turnMotor(double limelightAdjust) {
+  }
+
+public void theta(double d) {
+}
 }
