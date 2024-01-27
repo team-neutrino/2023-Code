@@ -4,9 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.io.IOException;
-import java.util.Map;
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
@@ -30,6 +27,8 @@ import frc.robot.util.DriverStationInfo;
 import frc.robot.util.IntakeManager;
 import frc.robot.util.SavePoseCommand;
 import frc.robot.util.ViennaPIDController;
+import java.io.IOException;
+import java.util.Map;
 
 public class ShuffleboardSubsystem extends SubsystemBase {
   private ShuffleboardTab m_drivestationTab;
@@ -164,28 +163,36 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     } catch (VideoException e) {
     }
   }
+
   private void troubleshootingTab() {
     m_troubleshootingTab = Shuffleboard.getTab("Troubleshooting Tab");
 
-    //PUSH THESE CHANGES
-    ShuffleboardLayout drivetrainLayout = m_troubleshootingTab.getLayout("Motor Positions", BuiltInLayouts.kGrid)
+    // PUSH THESE CHANGES
+    ShuffleboardLayout drivetrainLayout =
+        m_troubleshootingTab
+            .getLayout("Motor Positions", BuiltInLayouts.kGrid)
             .withPosition(0, 0)
             .withSize(2, 2);
-            //.withProperties(Map.of("Label position", "HIDDEN"));
+    // .withProperties(Map.of("Label position", "HIDDEN"));
 
-    ShuffleboardLayout drivetrainLayout2 = m_troubleshootingTab.getLayout("Motor Velocity", BuiltInLayouts.kGrid)
+    ShuffleboardLayout drivetrainLayout2 =
+        m_troubleshootingTab
+            .getLayout("Motor Velocity", BuiltInLayouts.kGrid)
             .withPosition(0, 2)
             .withSize(2, 2);
 
-    ShuffleboardLayout drivetrainLayout3 = m_troubleshootingTab.getLayout("NavX", BuiltInLayouts.kGrid)
+    ShuffleboardLayout drivetrainLayout3 =
+        m_troubleshootingTab
+            .getLayout("NavX", BuiltInLayouts.kGrid)
             .withPosition(2, 0)
             .withSize(5, 2);
-            
-    // ShuffleboardLayout drivetrainLayout4 = m_troubleshootingTab.getLayout("Distance", BuiltInLayouts.kGrid)
+
+    // ShuffleboardLayout drivetrainLayout4 = m_troubleshootingTab.getLayout("Distance",
+    // BuiltInLayouts.kGrid)
     //         .withPosition(2, 2)
     //         .withSize(5, 2);
 
-    //PUSH THESE CHANGES
+    // PUSH THESE CHANGES
     m_drivetrainVariables[0] =
         drivetrainLayout.add("RMotor 1 Pos", 0).withPosition(0, 0).withSize(1, 1).getEntry();
 
@@ -222,7 +229,7 @@ public class ShuffleboardSubsystem extends SubsystemBase {
     m_limelightVariables[0] =
         m_troubleshootingTab.add("Distance", 0).withPosition(2, 2).withSize(5, 2).withWidget(BuiltInWidgets.kNumberBar).getEntry();
 
-}
+  }
 
   public void setUpSelector() {
     m_autoChooser.setDefaultOption(
